@@ -1,0 +1,1744 @@
+[
+ {
+  "hand": 1,
+  "commit": "74498cf90da03cb48b406d20a52c03f9f83c94c8df373a04dac5e1d694f0a4f9",
+  "dealer": [
+   "7S",
+   "QD"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "7S",
+       "8D",
+       "7D"
+      ],
+      "result": "bust",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "7S"
+   ],
+   [
+    "dealerUp",
+    "7S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "8D"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "7D"
+   ],
+   [
+    "reveal",
+    "QD"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "bust"
+   ]
+  ]
+ },
+ {
+  "hand": 2,
+  "commit": "1ce6652a93a6bb24bf1e5a9f669c5f8ef7c25f4ad6b7232a80fd070e9279b2bc",
+  "dealer": [
+   "6D",
+   "JS",
+   "4H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "KS",
+       "9C"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "KS"
+   ],
+   [
+    "dealerUp",
+    "6D"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "9C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "JS"
+   ],
+   [
+    "dealerHit",
+    "4H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 3,
+  "commit": "44f5a240c75f2192928dea94a2edef52def8d53504b394b4aa77b0eccfe74111",
+  "dealer": [
+   "8S",
+   "9D"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "TD",
+       "7H"
+      ],
+      "result": "push",
+      "ret": 1000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   0
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "TD"
+   ],
+   [
+    "dealerUp",
+    "8S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "7H"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "9D"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    1000,
+    "push"
+   ]
+  ]
+ },
+ {
+  "hand": 4,
+  "commit": "dfabe94cd9260079394d48176ee11049433eb75c3c93e82011263140896b2ec8",
+  "dealer": [
+   "9S",
+   "8C"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "5H",
+       "7S",
+       "TC"
+      ],
+      "result": "bust",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "5H"
+   ],
+   [
+    "dealerUp",
+    "9S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "7S"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "TC"
+   ],
+   [
+    "reveal",
+    "8C"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "bust"
+   ]
+  ]
+ },
+ {
+  "hand": 5,
+  "commit": "9578292fed66092ca33fcab7995ee68803899b14ee34eecd4a002e31c1e5b367",
+  "dealer": [
+   "8S",
+   "2C",
+   "2H",
+   "6H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "AC",
+       "6H",
+       "6D",
+       "8D"
+      ],
+      "result": "win",
+      "ret": 2000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "AC"
+   ],
+   [
+    "dealerUp",
+    "8S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "6H"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "6D"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "8D"
+   ],
+   [
+    "reveal",
+    "2C"
+   ],
+   [
+    "dealerHit",
+    "2H"
+   ],
+   [
+    "dealerHit",
+    "6H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    2000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 6,
+  "commit": "67ec7ae483be4823f0d645afdab7746412bfd74ebdd614dfc2f5abc7e2408a99",
+  "dealer": [
+   "9S",
+   "JH"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "8C",
+       "2D",
+       "TH"
+      ],
+      "result": "win",
+      "ret": 4000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   2000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "8C"
+   ],
+   [
+    "dealerUp",
+    "9S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "2D"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "double",
+    0,
+    0,
+    "TH",
+    2000
+   ],
+   [
+    "reveal",
+    "JH"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    4000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 7,
+  "commit": "813a3362d0d72a65460c053f1f3ba7ecd0504c04d1c264c41d0d5e4fb19c399d",
+  "dealer": [
+   "QC",
+   "6C",
+   "QD"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "7S",
+       "JC"
+      ],
+      "result": "win",
+      "ret": 2000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "7S"
+   ],
+   [
+    "dealerUp",
+    "QC"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "JC"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "6C"
+   ],
+   [
+    "dealerHit",
+    "QD"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    2000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 8,
+  "commit": "e8dcadba1f143202e7021157a6d9f8a169c57774121cf491456fc5b9ff0477a7",
+  "dealer": [
+   "5H",
+   "7D",
+   "5H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "JC",
+       "QC"
+      ],
+      "result": "win",
+      "ret": 2000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "JC"
+   ],
+   [
+    "dealerUp",
+    "5H"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "QC"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "7D"
+   ],
+   [
+    "dealerHit",
+    "5H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    2000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 9,
+  "commit": "e2176a2fb51a6619c6430724d02559f6dc0dd5b021df87c611d610ee4e03aa43",
+  "dealer": [
+   "3S",
+   "8H",
+   "JD"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "4S",
+       "4H",
+       "TC"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "4S"
+   ],
+   [
+    "dealerUp",
+    "3S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "4H"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "TC"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "8H"
+   ],
+   [
+    "dealerHit",
+    "JD"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 10,
+  "commit": "3f1d91f26d15b201a11ec80b811699db3921eb19c19e3f0cdd7958285b230d5e",
+  "dealer": [
+   "9D",
+   "2H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "6C",
+       "KS"
+      ],
+      "result": "surrender",
+      "ret": 500
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -500
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "6C"
+   ],
+   [
+    "dealerUp",
+    "9D"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "KS"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "surrender",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "2H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    500,
+    "surrender"
+   ]
+  ]
+ },
+ {
+  "hand": 11,
+  "commit": "b04ff358a90f5ac08bbab47785891e390d8768c81c91c823ad642ac22dfff604",
+  "dealer": [
+   "2H",
+   "3D"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "9D",
+       "3C",
+       "KD"
+      ],
+      "result": "bust",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "9D"
+   ],
+   [
+    "dealerUp",
+    "2H"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "3C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "KD"
+   ],
+   [
+    "reveal",
+    "3D"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "bust"
+   ]
+  ]
+ },
+ {
+  "hand": 12,
+  "commit": "3e395da4b7f9440b64f5672468dab736df5140d9a7c2b6df650f9eff077d59ff",
+  "dealer": [
+   "2C",
+   "TC",
+   "JC"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "JC",
+       "JH"
+      ],
+      "result": "win",
+      "ret": 2000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "JC"
+   ],
+   [
+    "dealerUp",
+    "2C"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "JH"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "TC"
+   ],
+   [
+    "dealerHit",
+    "JC"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    2000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 13,
+  "commit": "c6c92cea7e70a858c50614a3540ef6cfab7d0297ad1f0deb2f7902ab32babe6b",
+  "dealer": [
+   "QH",
+   "2D"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "6H",
+       "KD"
+      ],
+      "result": "surrender",
+      "ret": 500
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -500
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "6H"
+   ],
+   [
+    "dealerUp",
+    "QH"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "KD"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "surrender",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "2D"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    500,
+    "surrender"
+   ]
+  ]
+ },
+ {
+  "hand": 14,
+  "commit": "01806eb266a7ad9274f707ef3c26ef8f20481a56cd656bc51b433668ca55b655",
+  "dealer": [
+   "3H",
+   "4D",
+   "AC"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "TH",
+       "4S"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "TH"
+   ],
+   [
+    "dealerUp",
+    "3H"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "4S"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "4D"
+   ],
+   [
+    "dealerHit",
+    "AC"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 15,
+  "commit": "691d03e08ebc8430b4cac7fbaec51e0be43decb0f65948848641079975bc0ff0",
+  "dealer": [
+   "7D",
+   "AS"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "JS",
+       "5H",
+       "KS"
+      ],
+      "result": "bust",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "JS"
+   ],
+   [
+    "dealerUp",
+    "7D"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "5H"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "KS"
+   ],
+   [
+    "reveal",
+    "AS"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "bust"
+   ]
+  ]
+ },
+ {
+  "hand": 16,
+  "commit": "91856f3386a60377d1ec07ecddce104e5da9828833aa7ba238066240369ae913",
+  "dealer": [
+   "4C",
+   "8S",
+   "7H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "8H",
+       "AC"
+      ],
+      "result": "push",
+      "ret": 1000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   0
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "8H"
+   ],
+   [
+    "dealerUp",
+    "4C"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "AC"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "8S"
+   ],
+   [
+    "dealerHit",
+    "7H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    1000,
+    "push"
+   ]
+  ]
+ },
+ {
+  "hand": 17,
+  "commit": "2f5349130b46e2f1aba108d70f8e1e3afbd0943de760e0ddcd606ff06f16ac56",
+  "dealer": [
+   "9D",
+   "QH"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "8S",
+       "JS"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "8S"
+   ],
+   [
+    "dealerUp",
+    "9D"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "JS"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "QH"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 18,
+  "commit": "89aaa318523b9a1669a014f13d594384f9d57cfc846e0f3c46373d88b347a8de",
+  "dealer": [
+   "QC",
+   "TH"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "5D",
+       "5H",
+       "6S",
+       "9H"
+      ],
+      "result": "bust",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "5D"
+   ],
+   [
+    "dealerUp",
+    "QC"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "5H"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "6S"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "9H"
+   ],
+   [
+    "reveal",
+    "TH"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "bust"
+   ]
+  ]
+ },
+ {
+  "hand": 19,
+  "commit": "0b24836ee6d785380c145411cccc3b70824a5758d10f7d732441a0e2a4de09d4",
+  "dealer": [
+   "4S",
+   "5C",
+   "9H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "QS",
+       "6S"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "QS"
+   ],
+   [
+    "dealerUp",
+    "4S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "6S"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "5C"
+   ],
+   [
+    "dealerHit",
+    "9H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 20,
+  "commit": "2e8cada59ac59ad4c34315074721d177b8151af4df881b3dd43c2f86e1e8fa0e",
+  "dealer": [
+   "QC",
+   "QH"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "5S",
+       "4C",
+       "2D",
+       "9C"
+      ],
+      "result": "push",
+      "ret": 1000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   0
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "5S"
+   ],
+   [
+    "dealerUp",
+    "QC"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "4C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "2D"
+   ],
+   [
+    "hit",
+    0,
+    0,
+    "9C"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "QH"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    1000,
+    "push"
+   ]
+  ]
+ },
+ {
+  "hand": 21,
+  "commit": "282c683b12716f2a61e55b4378904dfcda7aaa066db3ceb24178bda0d4c4d934",
+  "dealer": [
+   "3S",
+   "8C",
+   "9H"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "KC",
+       "6D"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -1000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "KC"
+   ],
+   [
+    "dealerUp",
+    "3S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "6D"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "stand",
+    0,
+    0
+   ],
+   [
+    "reveal",
+    "8C"
+   ],
+   [
+    "dealerHit",
+    "9H"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 22,
+  "commit": "aaed5b2de4b6d802b636b8c51785ecb28cc0311f8364ab43ac6dcbcc2e05ab10",
+  "dealer": [
+   "KH",
+   "4H",
+   "KD"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "4S",
+       "7C",
+       "AC"
+      ],
+      "result": "win",
+      "ret": 4000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   2000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "4S"
+   ],
+   [
+    "dealerUp",
+    "KH"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "7C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "double",
+    0,
+    0,
+    "AC",
+    2000
+   ],
+   [
+    "reveal",
+    "4H"
+   ],
+   [
+    "dealerHit",
+    "KD"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    4000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 23,
+  "commit": "4d32a2b5bac9ff646b1be9f43fe5c0370a0254130b9f5da4d219ec71f28c4493",
+  "dealer": [
+   "3S",
+   "AS",
+   "6S"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "5S",
+       "4C",
+       "2S"
+      ],
+      "result": "lose",
+      "ret": 0
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   -2000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "5S"
+   ],
+   [
+    "dealerUp",
+    "3S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "4C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "double",
+    0,
+    0,
+    "2S",
+    2000
+   ],
+   [
+    "reveal",
+    "AS"
+   ],
+   [
+    "dealerHit",
+    "6S"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    0,
+    "lose"
+   ]
+  ]
+ },
+ {
+  "hand": 24,
+  "commit": "642ad0145f13412a275b5773bf8b6647779ae1cfc4292b271e34ca7de7393028",
+  "dealer": [
+   "5S",
+   "8D",
+   "TS"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "4H",
+       "6C",
+       "AS"
+      ],
+      "result": "win",
+      "ret": 4000
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   2000
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "4H"
+   ],
+   [
+    "dealerUp",
+    "5S"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "6C"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "double",
+    0,
+    0,
+    "AS",
+    2000
+   ],
+   [
+    "reveal",
+    "8D"
+   ],
+   [
+    "dealerHit",
+    "TS"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    4000,
+    "win"
+   ]
+  ]
+ },
+ {
+  "hand": 25,
+  "commit": "f06d9464d77d70a7ebbc261c4d2d58109b3cf25ce7615c510ed8bb4a69260655",
+  "dealer": [
+   "QH",
+   "9S"
+  ],
+  "seats": [
+   {
+    "seat": 0,
+    "hands": [
+     {
+      "cards": [
+       "AD",
+       "JS"
+      ],
+      "result": "blackjack",
+      "ret": 2500
+     }
+    ],
+    "ins": 0
+   }
+  ],
+  "net": [
+   1500
+  ],
+  "events": [
+   [
+    "deal",
+    0,
+    0,
+    "AD"
+   ],
+   [
+    "dealerUp",
+    "QH"
+   ],
+   [
+    "deal",
+    0,
+    0,
+    "JS"
+   ],
+   [
+    "dealerHole"
+   ],
+   [
+    "peek"
+   ],
+   [
+    "reveal",
+    "9S"
+   ],
+   [
+    "settle",
+    0,
+    0,
+    2500,
+    "blackjack"
+   ]
+  ]
+ }
+]

@@ -1,0 +1,13 @@
+node_modules/
+build/
+.dart_tool/
+.gradle/
+*.log
+.firebase/
+firebase/functions/lib/
+firebase/emulator-data/
+firebase-export-*/
+*.keystore
+*.jks
+.env*
+local.properties

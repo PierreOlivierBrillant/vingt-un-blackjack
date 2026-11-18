@@ -1,0 +1,6 @@
+functions/node_modules/
+functions/lib/
+.emulator-data/
+*-debug.log
+firebase-debug.log
+ui-debug.log

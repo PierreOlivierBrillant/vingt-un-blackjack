@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DEBUG build only. Allows cleartext HTTP so the app can reach the local
+     Firebase emulators (Auth 9099, Firestore 8080, Functions 5001) on any
+     classroom host. Never shipped in release. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

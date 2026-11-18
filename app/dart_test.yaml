@@ -1,0 +1,3 @@
+tags:
+  golden:
+    description: Pixel comparisons; regenerate with --update-goldens after intended UI changes.

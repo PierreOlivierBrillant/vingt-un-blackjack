@@ -1,0 +1,108 @@
+rules_version = '2';
+
+// Server-authoritative model: clients only READ (and write their own settings document).
+// Every mutation of money, cards, bets, ranks, markets or friendships goes through callables
+// (Admin SDK, which bypasses these rules). Anything not matched below is denied.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // users/{uid}: whitelisted settings fields with strict enum values.
+    function validSettings(d) {
+      return d.keys().hasOnly(['theme', 'language', 'cardBack', 'cardFace', 'felt', 'updatedAtMs'])
+        && (!('theme' in d) || d.theme in ['dark', 'light', 'system'])
+        && (!('language' in d) || d.language in ['fr', 'en'])
+        && (!('cardBack' in d) || d.cardBack in ['classicBlue', 'classicRed', 'midnight', 'emerald', 'neonGrid', 'goldFiligree'])
+        && (!('cardFace' in d) || d.cardFace in ['classic', 'fourColor', 'neon'])
+        && (!('felt' in d) || d.felt in ['green', 'blue', 'red', 'purple', 'black'])
+        && (!('updatedAtMs' in d) || d.updatedAtMs is int);
+    }
+
+    // Public profiles (username, avatar, rank, stats).
+    match /profiles/{uid} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    // Own settings.
+    match /users/{uid} {
+      allow read: if isUser(uid);
+      allow create, update: if isUser(uid) && validSettings(request.resource.data);
+      allow delete: if false;
+
+      // private/wallet, private/kyc, private/suggestions, private/ads, ledger/*, inventory/*, positions/*
+      match /{sub}/{doc=**} {
+        allow read: if isUser(uid);
+        allow write: if false;
+      }
+    }
+
+    // Public table state (seats, visible cards, phase, deadline).
+    match /tables/{tableId} {
+      allow read: if signedIn();
+      allow write: if false;
+
+      // Shoe, hole card, seed: nobody.
+      match /private/{doc=**} {
+        allow read, write: if false;
+      }
+
+      // Peek power result: only that user.
+      match /peeks/{uid} {
+        allow read: if isUser(uid);
+        allow write: if false;
+      }
+
+      // Finished hands with provably-fair proof.
+      match /hands/{handId} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+
+    // Spectator markets, trades, price history.
+    match /markets/{marketId} {
+      allow read: if signedIn();
+      allow write: if false;
+
+      match /trades/{tradeId} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+
+      match /priceHistory/{pointId} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+
+    // Friendships: the two participants.
+    match /friendships/{pairId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.uids;
+      allow write: if false;
+    }
+
+    // Friend requests: sender or recipient.
+    match /friendRequests/{requestId} {
+      allow read: if signedIn()
+        && (request.auth.uid == resource.data.fromUid || request.auth.uid == resource.data.toUid);
+      allow write: if false;
+    }
+
+    // Recent wins ticker.
+    match /feed/{entryId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    // usernames/*, tableCodes/*, idempotency/*, rateLimits/* and anything else: denied
+    // (no match block grants access).
+  }
+}

@@ -1,0 +1,7 @@
+include: ../analysis_options.yaml
+
+linter:
+  rules:
+    # Tests enqueue dealer commands without awaiting on purpose (the queue is
+    # driven by advance()); the futures are asserted on explicitly.
+    unawaited_futures: false
