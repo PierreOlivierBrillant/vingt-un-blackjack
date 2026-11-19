@@ -29,7 +29,11 @@ class BrandWordmark extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return Semantics(
       label: 'Vingt-Un',
-      child: Row(
+      // Scales down rather than overflow in a crowded app bar.
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -67,6 +71,7 @@ class BrandWordmark extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -336,7 +341,7 @@ class ErrorState extends StatelessWidget {
           children: [
             Icon(Icons.cloud_off_outlined, color: context.palette.textMuted, size: 32),
             const SizedBox(height: 8),
-            Text(localizeError(l, error), textAlign: TextAlign.center),
+            Text(describeError(l, error), textAlign: TextAlign.center),
             if (onRetry != null) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(l.commonRetry)),

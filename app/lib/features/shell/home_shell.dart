@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/widgets.dart';
 
 class HomeShell extends StatelessWidget {
@@ -11,10 +13,13 @@ class HomeShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return Scaffold(
-      body: shell,
+      body: AmbienceScope(zone: AmbienceZone.lobby, child: shell),
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
-        onDestinationSelected: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
+        onDestinationSelected: (i) {
+          if (i != shell.currentIndex) context.sfx(Sfx.navSwoosh);
+          shell.goBranch(i, initialLocation: i == shell.currentIndex);
+        },
         destinations: [
           NavigationDestination(icon: const Icon(Icons.casino_outlined), selectedIcon: const Icon(Icons.casino), label: l.navLobby),
           NavigationDestination(icon: const Icon(Icons.insights_outlined), selectedIcon: const Icon(Icons.insights), label: l.navMarkets),

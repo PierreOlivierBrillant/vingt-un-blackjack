@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -78,10 +80,19 @@ class AdBanner extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-            child: Text(cta, style: TextStyle(color: ad.color, fontWeight: FontWeight.w900, fontSize: 11.5)),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 110),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                cta,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: ad.color, fontWeight: FontWeight.w900, fontSize: 11.5),
+              ),
+            ),
           ),
         ],
       ),
@@ -112,6 +123,7 @@ class _InterstitialState extends ConsumerState<_Interstitial> {
   @override
   void initState() {
     super.initState();
+    ref.read(soundProvider).play(Sfx.adInterstitialSting);
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (_left <= 1) t.cancel();
       setState(() => _left = (_left - 1).clamp(0, 99));

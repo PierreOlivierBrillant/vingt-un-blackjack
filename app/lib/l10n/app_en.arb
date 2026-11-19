@@ -454,5 +454,16 @@
   "positionWon": "Won",
   "positionLost": "Lost",
   "positionVoid": "Refunded",
-  "tableBetsHere": "Bets on this table"
+  "tableBetsHere": "Bets on this table",
+  "settingsEffectsVolume": "Effects volume",
+  "settingsAmbienceVolume": "Ambience volume",
+  "settingsSoundHint": "Master switch: no effects, no ambience.",
+  "settingsSoundTry": "Try",
+  "celebrationWin": "WINNER!",
+  "celebrationBigWin": "BIG WIN!",
+  "celebrationStreak": "{count} WINS IN A ROW!",
+  "celebrationDealerBust": "DEALER BUSTS!",
+  "profileRankPoints": "{points} ranking points",
+  "profileRankNext": "{missing} pts to {tier}",
+  "profileRankMax": "Top tier reached"
 }

@@ -507,5 +507,19 @@
   "positionWon": "Gagné",
   "positionLost": "Perdu",
   "positionVoid": "Remboursé",
-  "tableBetsHere": "Paris sur cette table"
+  "tableBetsHere": "Paris sur cette table",
+  "settingsEffectsVolume": "Volume des effets",
+  "settingsAmbienceVolume": "Volume de l'ambiance",
+  "settingsSoundHint": "Coupure générale : ni effets ni ambiance.",
+  "settingsSoundTry": "Essayer",
+  "celebrationWin": "GAGNÉ !",
+  "celebrationBigWin": "GROS GAIN !",
+  "celebrationStreak": "{count} VICTOIRES D'AFFILÉE !",
+  "@celebrationStreak": {"placeholders": {"count": {"type": "int"}}},
+  "celebrationDealerBust": "LE CROUPIER SAUTE !",
+  "profileRankPoints": "{points} points de classement",
+  "@profileRankPoints": {"placeholders": {"points": {"type": "int"}}},
+  "profileRankNext": "Encore {missing} pts pour {tier}",
+  "@profileRankNext": {"placeholders": {"missing": {"type": "int"}, "tier": {"type": "String"}}},
+  "profileRankMax": "Palier maximal atteint"
 }

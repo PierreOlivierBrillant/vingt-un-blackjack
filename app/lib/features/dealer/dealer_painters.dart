@@ -47,6 +47,18 @@ class DealerBodyPainter extends CustomPainter {
           colors: [Color(0xFF1C3A50), Color(0xFF0A1620)],
         ).createShader(room),
     );
+    // Fade the top edge into the screen background (0xFF0A1620) so the room
+    // continues seamlessly above the stage on tall screens (no visible band).
+    final fade = Rect.fromLTWH(0, 0, G.size.width, 140);
+    canvas.drawRect(
+      fade,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF0A1620), Color(0x000A1620)],
+        ).createShader(fade),
+    );
     // Soft spotlight cone.
     canvas.drawCircle(
       const Offset(500, 150),
@@ -462,7 +474,9 @@ class ChipsLayerPainter extends CustomPainter {
       canvas.drawCircle(s.pos + shadowOffset + const Offset(0, 6), 30, Paint()
         ..color = Colors.black.withValues(alpha: 0.25)
         ..maskFilter = MaskFilter.blur(BlurStyle.normal, 4 + 8 * s.lift));
-      paintChipStack(canvas, s.pos - Offset(0, 22 * s.lift), 30 * (1 + 0.1 * s.lift), s.cents);
+      // Insurance bets are smaller stacks on the insurance arc.
+      final radius = s.kind == ChipStackKind.insurance ? 22.0 : 30.0;
+      paintChipStack(canvas, s.pos - Offset(0, 22 * s.lift), radius * (1 + 0.1 * s.lift), s.cents);
       canvas.restore();
     }
   }
@@ -488,7 +502,14 @@ class ArmsPainter extends CustomPainter {
   }
 
   void _arm(Canvas canvas, Offset shoulder, ArmState arm, {required bool bendPositive}) {
-    final ik = solveTwoBone(shoulder, arm.hand, G.upperArm, G.foreArm, bendPositive: bendPositive);
+    // Of the two IK solutions, keep the natural one: elbow low and out to
+    // the side (the fixed bend direction used to flip the elbow above the
+    // shoulder when reaching for the far seats).
+    final side = bendPositive ? -1.0 : 1.0; // left arm: outward = towards x < 500
+    double score(IkSolution s) => s.elbow.dy + 0.6 * side * (s.elbow.dx - shoulder.dx);
+    final a = solveTwoBone(shoulder, arm.hand, G.upperArm, G.foreArm, bendPositive: true);
+    final b = solveTwoBone(shoulder, arm.hand, G.upperArm, G.foreArm, bendPositive: false);
+    final ik = score(a) >= score(b) ? a : b;
     final upper = Paint()
       ..color = _shirt
       ..strokeWidth = 50
@@ -507,20 +528,32 @@ class ArmsPainter extends CustomPainter {
       ..strokeWidth = 38
       ..strokeCap = StrokeCap.round
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10));
+    // Both shades first, then the sleeve in one piece (no seam at the elbow).
     canvas.drawLine(shoulder + const Offset(3, 4), ik.elbow + const Offset(3, 4), upperShade);
-    canvas.drawLine(shoulder, ik.elbow, upper);
-    // Sleeve garter.
-    final mid = Offset.lerp(shoulder, ik.elbow, 0.45)!;
-    final dirU = (ik.elbow - shoulder);
-    final nU = Offset(-dirU.dy, dirU.dx) / dirU.distance;
-    canvas.drawLine(mid + nU * 24, mid - nU * 24, Paint()
-      ..color = _vest
-      ..strokeWidth = 9);
     canvas.drawLine(ik.elbow + const Offset(2, 3), ik.hand + const Offset(2, 3), Paint()
       ..color = _shirtShade
       ..strokeWidth = 40
       ..strokeCap = StrokeCap.round);
+    canvas.drawLine(shoulder, ik.elbow, upper);
     canvas.drawLine(ik.elbow, ik.hand, fore);
+    // Rounded elbow joint blending the 50 → 40 sleeve widths, with a crease.
+    canvas.drawCircle(ik.elbow, 23, Paint()..color = _shirt);
+    final dirF = ik.hand - ik.elbow;
+    final dirU = (ik.elbow - shoulder);
+    final bisector = (dirF / dirF.distance - dirU / dirU.distance);
+    if (bisector.distance > 0.2) {
+      final n = bisector / bisector.distance;
+      canvas.drawLine(ik.elbow + n * 4, ik.elbow + n * 14, Paint()
+        ..color = _shirtShade
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round);
+    }
+    // Sleeve garter.
+    final mid = Offset.lerp(shoulder, ik.elbow, 0.45)!;
+    final nU = Offset(-dirU.dy, dirU.dx) / dirU.distance;
+    canvas.drawLine(mid + nU * 24, mid - nU * 24, Paint()
+      ..color = _vest
+      ..strokeWidth = 9);
 
     // Cuff + hand oriented along the forearm.
     final dir = ik.hand - ik.elbow;

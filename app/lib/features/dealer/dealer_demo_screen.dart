@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/settings/settings_controller.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/providers.dart';
 import '../../domain/card_style.dart';
+import '../table/table_sounds.dart';
 import 'dealer_controller.dart';
-import 'dealer_feedback.dart';
 import 'dealer_stage.dart';
 import 'demo_round.dart';
 
@@ -23,6 +23,7 @@ class DealerDemoScreen extends ConsumerStatefulWidget {
 
 class _DealerDemoScreenState extends ConsumerState<DealerDemoScreen> {
   late final DealerController _c;
+  late final TableSoundscape _sounds;
   bool _loop = true;
   bool _firstRound = true;
   int _rounds = 0;
@@ -31,8 +32,15 @@ class _DealerDemoScreenState extends ConsumerState<DealerDemoScreen> {
   @override
   void initState() {
     super.initState();
-    final s = ref.read(settingsProvider);
-    _c = DealerController(feedback: SystemDealerFeedback(sound: s.soundOn, haptics: s.hapticsOn));
+    // Same sound design as a real table; the viewer is seat 2 in the script.
+    _sounds = TableSoundscape(
+      sound: ref.read(soundProvider),
+      haptics: ref.read(hapticsProvider),
+      mySeat: () => 2,
+      minBetCents: () => 500,
+      maxBetCents: () => 50000,
+    );
+    _c = DealerController(feedback: _sounds);
     if (widget.autoStart) _play();
   }
 
@@ -40,6 +48,7 @@ class _DealerDemoScreenState extends ConsumerState<DealerDemoScreen> {
   void dispose() {
     _loop = false;
     _c.dispose();
+    _sounds.dispose();
     super.dispose();
   }
 

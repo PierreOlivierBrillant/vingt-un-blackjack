@@ -13,6 +13,7 @@
   7. Checks the Windows firewall and, if the ports look blocked, PRINTS the New-NetFirewallRule
      command to run as administrator. It never changes the firewall itself.
   Ctrl+C stops everything (emulator data is exported on exit). Logs: .classroom/logs.
+  From another window (or a script), tools\stop_classroom.ps1 requests the same clean stop.
 .PARAMETER HostIp
   IPv4 to advertise / bake into the APK instead of the detected one.
 .PARAMETER SkipBuild
@@ -45,6 +46,7 @@ $ClassDir = Join-Path $RepoRoot '.classroom'
 $WwwDir = Join-Path $ClassDir 'www'
 $LogDir = Join-Path $ClassDir 'logs'
 $HostFile = Join-Path $ClassDir 'apk-host.txt'
+$StopFile = Join-Path $ClassDir 'stop-request'
 $ApkName = 'vingt-un.apk'
 $PublishedApk = Join-Path $WwwDir $ApkName
 $BuiltApk = Join-Path $AppDir 'build\app\outputs\flutter-apk\app-debug.apk'
@@ -200,7 +202,11 @@ function Invoke-Export {
   $p = Start-Process -FilePath $script:FbExe -ArgumentList (ConvertTo-ArgString ($script:FbPrefix + @('emulators:export', $DataDir, '--force', '--project', $ProjectId))) `
     -WorkingDirectory $FirebaseDir -NoNewWindow -PassThru -Wait `
     -RedirectStandardOutput (Join-Path $LogDir 'export.log') -RedirectStandardError (Join-Path $LogDir 'export.err.log')
-  return ($p.ExitCode -eq 0)
+  if ($p.ExitCode -eq 0) { return $true }
+  # firebase-tools on Windows may crash while exiting AFTER a successful export
+  # ("Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)"): trust its own success line.
+  $log = Join-Path $LogDir 'export.log'
+  return ((Test-Path $log) -and (Select-String -Path $log -Pattern 'Export complete' -Quiet))
 }
 
 # ------------------------------------------------------------------------------------------
@@ -247,6 +253,7 @@ if (Test-Path $fbJs) {
 }
 
 New-Item -ItemType Directory -Force -Path $WwwDir, $LogDir | Out-Null
+if (Test-Path $StopFile) { Remove-Item -Force $StopFile }
 $script:Children = @()
 $interrupted = $false
 $savedJavaToolOptions = $env:JAVA_TOOL_OPTIONS
@@ -374,7 +381,7 @@ try {
   Write-Host "  or run: tools\install_student.ps1 -TeacherIp $ip" -ForegroundColor Green
   Write-Host "  Emulator UI (this machine only): http://127.0.0.1:4000" -ForegroundColor Green
   Write-Host "  Logs: $LogDir" -ForegroundColor Green
-  Write-Host '  Ctrl+C to stop (data is exported on exit).' -ForegroundColor Green
+  Write-Host '  Ctrl+C (or tools\stop_classroom.ps1) to stop; data is exported on exit.' -ForegroundColor Green
   Write-Host '==================================================================' -ForegroundColor Green
 
   $interrupted = $true # from here on, leaving the loop without a break means Ctrl+C
@@ -382,6 +389,12 @@ try {
   $simWarned = $false
   while ($true) {
     Start-Sleep -Seconds 2
+    if (Test-Path $StopFile) {
+      Remove-Item -Force $StopFile -ErrorAction SilentlyContinue
+      $interrupted = $false
+      Write-Host 'Stop requested (tools\stop_classroom.ps1).' -ForegroundColor Cyan
+      break
+    }
     if ($emu.HasExited) { $interrupted = $false; Write-Host "Firebase emulators exited (code $($emu.ExitCode)); see $LogDir\emulators*.log" -ForegroundColor Red; break }
     if ($web.HasExited) { $interrupted = $false; Write-Host "Download page server exited; see $LogDir\static_server*.log" -ForegroundColor Red; break }
     if ($sim.HasExited -and -not $simWarned) {

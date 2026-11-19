@@ -11,10 +11,23 @@ import '../domain/models.dart';
 import '../l10n/gen/app_localizations.dart';
 import 'repositories.dart';
 
+/// Called every time an error message is produced for the user (the audio
+/// layer plugs its "bonk" here; null in tests).
+abstract final class ErrorFeedback {
+  static void Function()? hook;
+}
+
+/// Message for any [error] shown to the user after a failed action (also
+/// fires [ErrorFeedback.hook]). Use [describeError] inside `build`.
+String localizeError(AppLocalizations l, Object error) {
+  ErrorFeedback.hook?.call();
+  return describeError(l, error);
+}
+
 /// Message for any [error]: [RepositoryException] (exact server reason
 /// first, then its failure family), [AuthException], timeouts / socket
-/// errors (= unavailable); anything else → generic.
-String localizeError(AppLocalizations l, Object error) => switch (error) {
+/// errors (= unavailable); anything else → generic. No side effect.
+String describeError(AppLocalizations l, Object error) => switch (error) {
       RepositoryException(reason: final r?) => localizeServerReason(l, r),
       RepositoryException(:final failure) => localizeFailure(l, failure),
       AuthException(:final failure) => localizeAuthFailure(l, failure),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -75,7 +77,10 @@ class _FriendsScreenState extends ConsumerState<FriendsScreen> {
       final messenger = ScaffoldMessenger.of(context);
       try {
         await action();
-        if (success != null) messenger.showSnackBar(SnackBar(content: Text(success)));
+        if (success != null) {
+          ref.sfx(Sfx.uiSuccess);
+          messenger.showSnackBar(SnackBar(content: Text(success)));
+        }
       } on Object catch (e) {
         messenger.showSnackBar(SnackBar(content: Text(localizeError(l, e))));
       }

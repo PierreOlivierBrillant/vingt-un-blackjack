@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
-import '../../core/settings/settings_controller.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/error_messages.dart';
@@ -19,13 +20,16 @@ import '../../l10n/gen/app_localizations.dart';
 import '../ads/ad_widgets.dart';
 import '../cards/chips.dart';
 import '../dealer/dealer_controller.dart';
-import '../dealer/dealer_feedback.dart';
 import '../dealer/dealer_stage.dart';
 import '../markets/markets_screen.dart';
 import '../shop/shop_screen.dart';
+import '../dealer/table_geometry.dart';
+import 'casino_backdrop.dart';
+import 'celebration_overlay.dart';
 import 'fairness_sheet.dart';
 import 'table_director.dart';
 import 'table_rules.dart';
+import 'table_sounds.dart';
 
 String actionLabel(AppLocalizations l, PlayerAction a) => switch (a) {
       PlayerAction.hit => l.actionHit,
@@ -58,6 +62,10 @@ class TableScreen extends ConsumerStatefulWidget {
 class _TableScreenState extends ConsumerState<TableScreen> {
   late final DealerController _dealer;
   late final TableDirector _director;
+  late final TableSoundscape _sounds;
+  int? _mySeat;
+  int _minBet = 0;
+  int _maxBet = 0;
   Timer? _tick;
   DateTime? _pokedFor;
   DateTime? _lastPokeAt;
@@ -76,8 +84,15 @@ class _TableScreenState extends ConsumerState<TableScreen> {
   @override
   void initState() {
     super.initState();
-    final s = ref.read(settingsProvider);
-    _dealer = DealerController(feedback: SystemDealerFeedback(sound: s.soundOn, haptics: s.hapticsOn));
+    _sounds = TableSoundscape(
+      sound: ref.read(soundProvider),
+      haptics: ref.read(hapticsProvider),
+      random: ref.read(sfxRandomProvider),
+      mySeat: () => _mySeat,
+      minBetCents: () => _minBet,
+      maxBetCents: () => _maxBet,
+    );
+    _dealer = DealerController(feedback: _sounds);
     _director = TableDirector(_dealer, now: _now);
     ref.listenManual<AsyncValue<TableState>>(tableViewProvider(widget.tableId), (_, next) {
       final t = next.value;
@@ -90,13 +105,20 @@ class _TableScreenState extends ConsumerState<TableScreen> {
   void dispose() {
     _tick?.cancel();
     _dealer.dispose();
+    _sounds.dispose();
     super.dispose();
   }
 
   void _onSnapshot(TableState t) {
-    final notices = _director.apply(t);
     final me = ref.read(tableRepositoryProvider).myUid;
     final mine = me == null ? null : t.seatOf(me);
+    final wasSeated = _mySeat != null;
+    _mySeat = mine?.seatIndex;
+    // Sat down (after matchmaking or from the queue): chip + chime.
+    if (!wasSeated && _mySeat != null) ref.sfx(Sfx.seatJoin);
+    _minBet = t.minBetCents;
+    _maxBet = t.maxBetCents;
+    final notices = _director.apply(t);
     if (mine != null && mine.betCents > 0) _lastBet = mine.betCents;
     if (t.phase != ServerTablePhase.betting) _pendingBet = 0;
     for (final n in notices) {
@@ -323,7 +345,9 @@ class _TableScreenState extends ConsumerState<TableScreen> {
           ),
         ],
       ),
-      body: AsyncBody(
+      body: AmbienceScope(
+        zone: AmbienceZone.table,
+        child: AsyncBody(
         value: table,
         builder: (t) {
           final seats = [
@@ -346,13 +370,37 @@ class _TableScreenState extends ConsumerState<TableScreen> {
                 shoe: l.tableShoeInfo(t.shoe.shoeNumber, t.shoe.cardsRemaining),
               ),
               Expanded(
-                child: Center(child: DealerStage(controller: _dealer, style: style, seats: seats)),
+                child: Stack(
+                  children: [
+                    // Table sits on the controls; on tall screens the (seamless)
+                    // room extends above instead of leaving a gap in the middle.
+                    Positioned.fill(
+                      child: LayoutBuilder(builder: (context, box) {
+                        final stageH = box.maxWidth * TableGeometry.size.height / TableGeometry.size.width;
+                        final free = box.maxHeight - stageH;
+                        return Column(
+                          children: [
+                            if (free > 0) SizedBox(height: free, width: double.infinity, child: const CasinoBackdrop()),
+                            Expanded(child: DealerStage(controller: _dealer, style: style, seats: seats)),
+                          ],
+                        );
+                      }),
+                    ),
+                    Positioned.fill(child: CelebrationOverlay(celebrations: _sounds.celebrations)),
+                  ],
+                ),
               ),
               _PeekBanner(tableId: widget.tableId, handNumber: t.handNumber, mySeated: mine != null),
-              _bottomPanel(context, t, mine, queued),
+              // Never let the controls push the table off screen (small
+              // phones, large system font): they scroll instead.
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.45),
+                child: SingleChildScrollView(child: _bottomPanel(context, t, mine, queued)),
+              ),
             ],
           );
         },
+      ),
       ),
     );
   }
@@ -391,7 +439,7 @@ class _TableScreenState extends ConsumerState<TableScreen> {
                 key: const Key('spectator-markets'),
                 onPressed: _showMarkets,
                 icon: const Icon(Icons.show_chart),
-                label: Text(l.tableBetsHere),
+                label: Text(l.tableBetsHere, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
       );
     }
@@ -555,7 +603,7 @@ class _InfoPanel extends StatelessWidget {
                 ],
               ),
             ),
-            if (action != null) ...[const SizedBox(width: 8), action!],
+            if (action != null) ...[const SizedBox(width: 8), Flexible(child: action!)],
           ],
         ),
       ),
@@ -612,7 +660,10 @@ class _BetPanel extends StatelessWidget {
                               denomination: d,
                               size: 40,
                               selected: false,
-                              onTap: () => onChange((pending + d.cents).clamp(0, maxBet)),
+                              onTap: () {
+                                context.sfx(SfxVariants.chipClink[d.cents % SfxVariants.chipClink.length]);
+                                onChange((pending + d.cents).clamp(0, maxBet));
+                              },
                             ),
                           ),
                       ],
@@ -621,7 +672,12 @@ class _BetPanel extends StatelessWidget {
                 ),
                 TextButton(
                   key: const Key('bet-clear'),
-                  onPressed: pending == 0 ? null : () => onChange(0),
+                  onPressed: pending == 0
+                      ? null
+                      : () {
+                          context.sfx(Sfx.chipStack, volume: 0.6);
+                          onChange(0);
+                        },
                   child: Text(l.tableClearBet),
                 ),
               ],
@@ -734,7 +790,12 @@ class _ActionBar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 3),
             child: FilledButton(
               key: Key('action-${a.name}'),
-              onPressed: legal.contains(a) ? () => onAction(a) : null,
+              onPressed: legal.contains(a)
+                  ? () {
+                      context.sfx(Sfx.uiTap);
+                      onAction(a);
+                    }
+                  : null,
               style: FilledButton.styleFrom(
                 backgroundColor: color,
                 padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -773,7 +834,7 @@ class _ActionBar extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(color: p.surfaceRaised, borderRadius: BorderRadius.circular(8)),
                     child: Text(
-                      total.soft && total.total < 21 ? '${total.total - 10}/${total.total}' : '${total.total}',
+                      handTotalLabel(total, cardCount: h!.cards.length),
                       style: const TextStyle(fontWeight: FontWeight.w900),
                     ),
                   ),
@@ -789,7 +850,10 @@ class _ActionBar extends StatelessWidget {
                 ),
                 OutlinedButton.icon(
                   key: const Key('table-powers'),
-                  onPressed: onPowers,
+                  onPressed: () {
+                    context.sfx(Sfx.uiTap);
+                    onPowers();
+                  },
                   style: OutlinedButton.styleFrom(minimumSize: const Size(0, 40), padding: const EdgeInsets.symmetric(horizontal: 10)),
                   icon: Icon(Icons.bolt, color: p.gold),
                   label: Text(l.powers),

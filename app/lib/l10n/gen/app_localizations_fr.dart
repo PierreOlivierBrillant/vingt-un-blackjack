@@ -1509,4 +1509,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tableBetsHere => 'Paris sur cette table';
+
+  @override
+  String get settingsEffectsVolume => 'Volume des effets';
+
+  @override
+  String get settingsAmbienceVolume => 'Volume de l\'ambiance';
+
+  @override
+  String get settingsSoundHint => 'Coupure générale : ni effets ni ambiance.';
+
+  @override
+  String get settingsSoundTry => 'Essayer';
+
+  @override
+  String get celebrationWin => 'GAGNÉ !';
+
+  @override
+  String get celebrationBigWin => 'GROS GAIN !';
+
+  @override
+  String celebrationStreak(int count) {
+    return '$count VICTOIRES D\'AFFILÉE !';
+  }
+
+  @override
+  String get celebrationDealerBust => 'LE CROUPIER SAUTE !';
+
+  @override
+  String profileRankPoints(int points) {
+    return '$points points de classement';
+  }
+
+  @override
+  String profileRankNext(int missing, String tier) {
+    return 'Encore $missing pts pour $tier';
+  }
+
+  @override
+  String get profileRankMax => 'Palier maximal atteint';
 }

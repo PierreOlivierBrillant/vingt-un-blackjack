@@ -193,13 +193,26 @@ export const STAKE_TIER_LIMITS: Record<StakeTier, { minBetCents: Cents; maxBetCe
 
 /** Phase durations in ms. */
 export const TIMING = {
-  bettingMs: 15_000,
+  // 20 s: a classroom callable can take ~3 s on the emulator; the window still ends
+  // early as soon as every seated human has bet.
+  bettingMs: 20_000,
   decisionMs: 20_000,
   insuranceMs: 20_000,
   settledMs: 6_000,
   botMinMs: 700,
   botMaxMs: 1_800,
 } as const;
+
+/**
+ * Extra time a HUMAN decision gets after its displayed deadline before the server applies the
+ * timeout (auto stand / decline / deal without them): a callable can take ~3 s on the classroom
+ * emulator and phone clocks drift, so a tap made in the last second must still count.
+ * Bot deadlines are not affected.
+ */
+export const DECISION_GRACE_MS = 2_500;
+
+/** A human who skips this many betting rounds in a row is removed from the table (frees the seat). */
+export const MISSED_ROUNDS_LIMIT = 5;
 
 /** Minimum `rankPoints` for each tier. */
 export const RANK_TIER_THRESHOLDS: Record<RankTier, number> = {

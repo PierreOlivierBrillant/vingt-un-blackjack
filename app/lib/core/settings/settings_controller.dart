@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../audio/sound_service.dart';
+
 /// Must be overridden in `main()` (and in tests) with a ready instance.
 final sharedPreferencesProvider = Provider<SharedPreferences>(
   (ref) => throw UnimplementedError('sharedPreferencesProvider not overridden'),
@@ -14,6 +16,8 @@ class AppSettings {
     this.locale = const Locale('fr'),
     this.soundOn = true,
     this.hapticsOn = true,
+    this.effectsVolume = 0.9,
+    this.ambienceVolume = 0.45,
   });
 
   final ThemeMode themeMode;
@@ -21,17 +25,30 @@ class AppSettings {
   final bool soundOn;
   final bool hapticsOn;
 
+  /// 0..1, sound effects (cards, chips, fanfares, interface).
+  final double effectsVolume;
+
+  /// 0..1, casino room tone in the lobby and at the table.
+  final double ambienceVolume;
+
+  /// Master switch [soundOn] + both levels, as the audio layer wants them.
+  SoundLevels get soundLevels => SoundLevels(effects: effectsVolume, ambience: ambienceVolume, muted: !soundOn);
+
   AppSettings copyWith({
     ThemeMode? themeMode,
     Locale? locale,
     bool? soundOn,
     bool? hapticsOn,
+    double? effectsVolume,
+    double? ambienceVolume,
   }) =>
       AppSettings(
         themeMode: themeMode ?? this.themeMode,
         locale: locale ?? this.locale,
         soundOn: soundOn ?? this.soundOn,
         hapticsOn: hapticsOn ?? this.hapticsOn,
+        effectsVolume: effectsVolume ?? this.effectsVolume,
+        ambienceVolume: ambienceVolume ?? this.ambienceVolume,
       );
 }
 
@@ -43,6 +60,8 @@ class SettingsController extends Notifier<AppSettings> {
   static const _kLocale = 'settings.locale';
   static const _kSound = 'settings.sound';
   static const _kHaptics = 'settings.haptics';
+  static const _kEffects = 'settings.effectsVolume';
+  static const _kAmbience = 'settings.ambienceVolume';
 
   SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
 
@@ -59,6 +78,8 @@ class SettingsController extends Notifier<AppSettings> {
       locale: Locale(code == 'en' ? 'en' : 'fr'),
       soundOn: prefs.getBool(_kSound) ?? true,
       hapticsOn: prefs.getBool(_kHaptics) ?? true,
+      effectsVolume: (prefs.getDouble(_kEffects) ?? 0.9).clamp(0.0, 1.0),
+      ambienceVolume: (prefs.getDouble(_kAmbience) ?? 0.45).clamp(0.0, 1.0),
     );
   }
 
@@ -75,6 +96,16 @@ class SettingsController extends Notifier<AppSettings> {
   Future<void> setSound(bool on) async {
     state = state.copyWith(soundOn: on);
     await _prefs.setBool(_kSound, on);
+  }
+
+  Future<void> setEffectsVolume(double v) async {
+    state = state.copyWith(effectsVolume: v.clamp(0.0, 1.0));
+    await _prefs.setDouble(_kEffects, state.effectsVolume);
+  }
+
+  Future<void> setAmbienceVolume(double v) async {
+    state = state.copyWith(ambienceVolume: v.clamp(0.0, 1.0));
+    await _prefs.setDouble(_kAmbience, state.ambienceVolume);
   }
 
   Future<void> setHaptics(bool on) async {

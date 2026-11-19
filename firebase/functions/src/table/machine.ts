@@ -21,7 +21,7 @@ import type {
   SeatHandDoc, StakeTier, TableDoc, TableEvent, TablePhase,
 } from '../shared/types';
 import {
-  CUT_CARD_REMAINING, DECKS_PER_SHOE, MARKET_LIQUIDITY, SEATS_PER_TABLE, SHOE_BUST_RATE_THRESHOLD, SHOE_SIZE,
+  CUT_CARD_REMAINING, DECKS_PER_SHOE, MARKET_LIQUIDITY, MISSED_ROUNDS_LIMIT, DECISION_GRACE_MS, SEATS_PER_TABLE, SHOE_BUST_RATE_THRESHOLD, SHOE_SIZE,
   STAKE_TIER_LIMITS, TIMING,
 } from '../shared/types';
 import { marketIds, type Effect, type PlayerInfo, type TablePrivateDoc } from './model';
@@ -71,7 +71,6 @@ export function newTableState(p: NewTableParams, now: number, deps: MachineDeps)
   return { pub, priv };
 }
 
-const BOT_MISSED_LIMIT = 3;
 
 export interface ActRequestInternal {
   handNumber: number;
@@ -322,7 +321,7 @@ export class TableMachine {
   private cleanupSeats(): void {
     for (const s of this.pub.seats) {
       if (!s) continue;
-      if (s.status === 'leaving' || (!s.isBot && s.missedRounds >= BOT_MISSED_LIMIT)) this.removeSeat(s.seatIndex);
+      if (s.status === 'leaving' || (!s.isBot && s.missedRounds >= MISSED_ROUNDS_LIMIT)) this.removeSeat(s.seatIndex);
     }
   }
 
@@ -468,8 +467,13 @@ export class TableMachine {
 
   private deal(): void {
     const seats = this.pub.seats.filter((s): s is SeatDoc => !!s);
-    for (const s of seats) if (!s.isBot && s.betCents === 0) s.missedRounds += 1;
     const betting = seats.filter((s) => s.betCents > 0 && s.status === 'active');
+    // A private table whose players all sit out is waiting for friends (code being shared):
+    // such idle rounds do not count, otherwise the host was removed and the table closed
+    // after ~MISSED_ROUNDS_LIMIT x bettingMs. Public tables still free idle seats.
+    if (betting.length > 0 || !this.pub.isPrivate) {
+      for (const s of seats) if (!s.isBot && s.betCents === 0) s.missedRounds += 1;
+    }
     if (betting.length === 0) {
       this.cleanupSeats();
       if (!this.pub.simManaged) this.maybeClose();
@@ -680,6 +684,24 @@ export class TableMachine {
   // ------------------------------------------------------------------------------------------
   // timers
 
+  /** Grace after the deadline when the pending decision belongs to a human (see DECISION_GRACE_MS). */
+  graceMs(): number {
+    const p = this.pub;
+    const human = (s: SeatDoc | null): boolean => !!s && !s.isBot && s.status === 'active';
+    switch (p.phase) {
+      case 'betting':
+        return p.seats.some((s) => human(s) && s!.betCents === 0) ? DECISION_GRACE_MS : 0;
+      case 'insurance':
+        return p.seats.some((s) => human(s) && s!.insurance !== null && !s!.insurance.decided) ? DECISION_GRACE_MS : 0;
+      case 'playerTurns': {
+        const t = this.priv.round?.turn;
+        return t && human(p.seats[t.seatIndex]) ? DECISION_GRACE_MS : 0;
+      }
+      default:
+        return 0;
+    }
+  }
+
   /** Applies every transition that is due at `now`. Returns true if something changed. */
   advance(): boolean {
     const start = this.changed;
@@ -687,7 +709,7 @@ export class TableMachine {
     let any = false;
     for (let guard = 0; guard < 60; guard++) {
       const p = this.pub;
-      if (p.status !== 'open' || p.deadlineMs === null || p.deadlineMs > this.now) break;
+      if (p.status !== 'open' || p.deadlineMs === null || p.deadlineMs + this.graceMs() > this.now) break;
       switch (p.phase) {
         case 'betting':
           this.deal();

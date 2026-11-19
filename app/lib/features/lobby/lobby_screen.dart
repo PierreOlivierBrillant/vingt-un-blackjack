@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -40,9 +41,12 @@ class LobbyScreen extends ConsumerWidget {
     final l = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
     try {
-      final r = await ref
-          .read(lobbyRepositoryProvider)
-          .joinMatchmaking(mode: MatchMode.quick, stakeTier: tierId, idempotencyKey: newIdempotencyKey());
+      final r = await withMatchmakingSounds(
+        ref.read(soundProvider),
+        () => ref
+            .read(lobbyRepositoryProvider)
+            .joinMatchmaking(mode: MatchMode.quick, stakeTier: tierId, idempotencyKey: newIdempotencyKey()),
+      );
       if (context.mounted) await context.push('/table/${r.tableId}');
     } on Object catch (e) {
       messenger.showSnackBar(SnackBar(content: Text(localizeError(l, e))));
@@ -485,12 +489,15 @@ class _PrivateTableSheetState extends ConsumerState<_PrivateTableSheet> {
       _error = null;
     });
     try {
-      final r = await ref.read(lobbyRepositoryProvider).joinMatchmaking(
-            mode: mode,
-            stakeTier: _tier,
-            code: mode == MatchMode.joinCode ? code : null,
-            idempotencyKey: _keys[op] ??= newIdempotencyKey(),
-          );
+      final r = await withMatchmakingSounds(
+        ref.read(soundProvider),
+        () => ref.read(lobbyRepositoryProvider).joinMatchmaking(
+              mode: mode,
+              stakeTier: _tier,
+              code: mode == MatchMode.joinCode ? code : null,
+              idempotencyKey: _keys[op] ??= newIdempotencyKey(),
+            ),
+      );
       _keys.remove(op);
       if (!mounted) return;
       final router = GoRouter.of(context);

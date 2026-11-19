@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/ids.dart';
 import '../../core/widgets.dart';
@@ -76,7 +78,10 @@ class _KycScreenState extends ConsumerState<KycScreen> with SingleTickerProvider
             KycSubmission(documentType: _doc, birthDate: _birth!),
             idempotencyKey: _idempotencyKey,
           );
-      if (mounted) setState(() => _result = state.status);
+      if (mounted) {
+        ref.sfx(Sfx.uiSuccess);
+        setState(() => _result = state.status);
+      }
     } on Object catch (e) {
       if (mounted) {
         setState(() {

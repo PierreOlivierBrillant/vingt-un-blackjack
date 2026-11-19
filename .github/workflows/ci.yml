@@ -84,8 +84,25 @@ jobs:
       - run: flutter pub get
       - run: flutter gen-l10n
       - run: flutter analyze
-      # Goldens are generated on Windows; font rasterisation differs on Linux.
+      # Fonts are embedded in test/fonts (identical metrics on every OS).
       - run: flutter test --exclude-tags golden
+      # Layout stress test: square test glyphs, much wider than Roboto.
+      - name: Widget tests without the embedded fonts (no overflow allowed)
+        run: flutter test test/widget
+        env:
+          VINGTUN_TEST_SYSTEM_FONTS: '1'
+      # Goldens are generated on Windows; compared with a 0.3 % pixel tolerance.
+      # Non-blocking until confirmed stable on Linux (failures uploaded below).
+      - name: Golden tests
+        id: goldens
+        continue-on-error: true
+        run: flutter test --tags golden
+      - uses: actions/upload-artifact@v7
+        if: steps.goldens.outcome == 'failure'
+        with:
+          name: golden-failures
+          path: app/test/golden/failures/
+          retention-days: 7
       # BACKEND_HOST left at its default (10.0.2.2); it can be changed on the "Serveur" screen.
       - run: flutter build apk --debug
 

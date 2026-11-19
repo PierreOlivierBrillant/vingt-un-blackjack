@@ -2719,6 +2719,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Paris sur cette table'**
   String get tableBetsHere;
+
+  /// No description provided for @settingsEffectsVolume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volume des effets'**
+  String get settingsEffectsVolume;
+
+  /// No description provided for @settingsAmbienceVolume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volume de l\'ambiance'**
+  String get settingsAmbienceVolume;
+
+  /// No description provided for @settingsSoundHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coupure générale : ni effets ni ambiance.'**
+  String get settingsSoundHint;
+
+  /// No description provided for @settingsSoundTry.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essayer'**
+  String get settingsSoundTry;
+
+  /// No description provided for @celebrationWin.
+  ///
+  /// In fr, this message translates to:
+  /// **'GAGNÉ !'**
+  String get celebrationWin;
+
+  /// No description provided for @celebrationBigWin.
+  ///
+  /// In fr, this message translates to:
+  /// **'GROS GAIN !'**
+  String get celebrationBigWin;
+
+  /// No description provided for @celebrationStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} VICTOIRES D\'AFFILÉE !'**
+  String celebrationStreak(int count);
+
+  /// No description provided for @celebrationDealerBust.
+  ///
+  /// In fr, this message translates to:
+  /// **'LE CROUPIER SAUTE !'**
+  String get celebrationDealerBust;
+
+  /// No description provided for @profileRankPoints.
+  ///
+  /// In fr, this message translates to:
+  /// **'{points} points de classement'**
+  String profileRankPoints(int points);
+
+  /// No description provided for @profileRankNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore {missing} pts pour {tier}'**
+  String profileRankNext(int missing, String tier);
+
+  /// No description provided for @profileRankMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'Palier maximal atteint'**
+  String get profileRankMax;
 }
 
 class _AppLocalizationsDelegate

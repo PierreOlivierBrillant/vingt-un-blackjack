@@ -102,4 +102,14 @@ class TableGeometry {
 
   /// Point below a seat where a player's own chips come from / go to.
   Offset playerPocket(int seat) => seatSpots[seat] + const Offset(0, 230);
+
+  /// Centre of the "insurance" arc printed on the felt (see FeltPainter).
+  static const insuranceArcCenter = Offset(500, 300);
+  static const insuranceArcRadius = 470.0;
+
+  /// Where a seat's insurance bet sits: on the insurance arc, in front of it.
+  Offset insuranceSpot(int seat) {
+    final d = seatSpots[seat] - insuranceArcCenter;
+    return insuranceArcCenter + d / d.distance * (insuranceArcRadius + 38);
+  }
 }

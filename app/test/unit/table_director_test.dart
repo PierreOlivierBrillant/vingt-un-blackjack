@@ -22,11 +22,12 @@ void main() {
   });
   tearDown(() => dealer.dispose());
 
-  /// Commands queued by [f] only.
+  /// Animation commands queued by [f] only (feedback cues are checked by
+  /// the sound tests).
   List<String> queuedBy(void Function() f) {
     final before = dealer.pendingCommands.length;
     f();
-    return [for (final c in dealer.pendingCommands.skip(before)) c.toString()];
+    return [for (final c in dealer.pendingCommands.skip(before)) if (c is! CueCommand) c.toString()];
   }
 
   group('first snapshot → instant rebuild from the state', () {
@@ -234,6 +235,7 @@ void main() {
           ],
         ))));
     expect(q, [
+      'peek',
       'react(DealerReaction.dealerBlackjack)',
       'reveal(KH)',
       'react(DealerReaction.lose seat0)',

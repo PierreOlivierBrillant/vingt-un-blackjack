@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/money.dart';
 import '../../core/theme/app_theme.dart';
@@ -22,6 +24,13 @@ class MarketDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final market = ref.watch(marketProvider(marketId));
+    // Odds moving while you watch: micro-blips (rate-limited by the governor).
+    ref.listen<AsyncValue<Market>>(marketProvider(marketId), (prev, next) {
+      final a = prev?.value?.yesPrice;
+      final b = next.value?.yesPrice;
+      if (a == null || b == null || (a - b).abs() < 1e-6) return;
+      ref.sfx(b > a ? Sfx.priceTickUp : Sfx.priceTickDown);
+    });
     return Scaffold(
       appBar: AppBar(title: Text(l.marketTitle), actions: const [BalancePill()]),
       body: AsyncBody(
@@ -68,9 +77,15 @@ class _Body extends ConsumerWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    l.marketChanceLabel(formatPercent(m.yesPrice, locale: context.lang)),
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: p.yes),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        l.marketChanceLabel(formatPercent(m.yesPrice, locale: context.lang)),
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: p.yes),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Padding(
@@ -102,12 +117,20 @@ class _Body extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: Row(
             children: [
-              Text(l.marketVolume(compactVolume(context, m.volumeCents)), style: TextStyle(color: p.textMuted, fontSize: 12)),
-              const Spacer(),
-              TextButton.icon(
-                onPressed: () => context.push('/table/${m.tableId}'),
-                icon: const Icon(Icons.live_tv, size: 18),
-                label: Text(l.marketWatchTable),
+              Expanded(
+                child: Text(
+                  l.marketVolume(compactVolume(context, m.volumeCents)),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: p.textMuted, fontSize: 12),
+                ),
+              ),
+              Flexible(
+                child: TextButton.icon(
+                  onPressed: () => context.push('/table/${m.tableId}'),
+                  icon: const Icon(Icons.live_tv, size: 18),
+                  label: Text(l.marketWatchTable, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
             ],
           ),
@@ -405,8 +428,10 @@ class _OrderTicketState extends ConsumerState<OrderTicket> {
         padding: const EdgeInsets.symmetric(vertical: 3),
         child: Row(
           children: [
-            Text(label, style: TextStyle(color: context.palette.textMuted)),
-            const Spacer(),
+            Expanded(
+              child: Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: context.palette.textMuted)),
+            ),
+            const SizedBox(width: 8),
             Text(value, style: TextStyle(fontWeight: FontWeight.w800, color: color)),
           ],
         ),

@@ -18,6 +18,7 @@ import '../../domain/cards.dart';
 import '../../domain/models.dart' show PowerType;
 import '../../domain/table_state.dart';
 import '../dealer/dealer_controller.dart';
+import '../dealer/dealer_feedback.dart';
 
 /// Something the table screen may want to tell the player (toast).
 sealed class TableNotice {
@@ -65,6 +66,7 @@ class TableDirector {
   /// chips in front of each hand (to compute payouts).
   final Map<HandTarget, List<PlayingCard>> _cards = {};
   final Map<(int, int), int> _bets = {};
+  final Set<int> _insured = {};
   bool _settledThisHand = false;
 
   /// Last event rendered (null before the first snapshot).
@@ -163,6 +165,7 @@ class TableDirector {
   void _clearMirror() {
     _cards.clear();
     _bets.clear();
+    _insured.clear();
     _settledThisHand = false;
   }
 
@@ -186,11 +189,17 @@ class TableDirector {
         null => null,
       };
 
+  void _action(int? seat, int hand, CueAction a) {
+    if (seat != null) dealer.cue(DealerCue.action, CueInfo(seat: seat, hand: hand, action: a));
+  }
+
   void _play(List<TableEvent> events, List<TableNotice> notices) {
     if (events.isEmpty) return;
     dealer.speed = dealer.remainingDuration > backlogSpeedUp || events.length > 30 ? 2.2 : 1.0;
     var dealerReacted = false;
-    for (final e in events) {
+    var suspense = false;
+    final lastDealerHit = events.lastIndexWhere((e) => e.type == TableEventType.dealerHit);
+    for (final (i, e) in events.indexed) {
       final seat = e.seatIndex;
       final hand = e.handIndex ?? 0;
       final target = seat == null ? null : HandTarget.seat(seat, hand: hand);
@@ -202,6 +211,7 @@ class TableDirector {
           if (seat != null && e.amountCents != null) _bet(seat, 0, e.amountCents!);
         case TableEventType.deal || TableEventType.hit:
           if (target != null && e.card != null) {
+            if (e.type == TableEventType.hit) _action(seat, hand, CueAction.hit);
             _deal(target, e.card!);
             if (e.type == TableEventType.hit && handTotal(_cards[target]!).isBust) {
               dealer.react(DealerReaction.bust, seat: seat, hand: hand);
@@ -209,6 +219,7 @@ class TableDirector {
           }
         case TableEventType.double:
           if (target != null && seat != null) {
+            _action(seat, hand, CueAction.double);
             final total = e.amountCents ?? 0;
             final extra = total - (_bets[(seat, hand)] ?? 0);
             if (extra > 0) _bet(seat, hand, extra);
@@ -218,25 +229,59 @@ class TableDirector {
             }
           }
         case TableEventType.split:
-          if (seat != null) _split(seat, hand, e.amountCents);
-        case TableEventType.dealerUp || TableEventType.dealerHit:
+          if (seat != null) {
+            _action(seat, hand, CueAction.split);
+            _split(seat, hand, e.amountCents);
+          }
+        case TableEventType.stand:
+          _action(seat, hand, CueAction.stand);
+        case TableEventType.surrender:
+          if (seat != null) {
+            _action(seat, hand, CueAction.surrender);
+            _cards.remove(HandTarget.seat(seat, hand: hand));
+            dealer.surrenderHand(seat, hand: hand);
+          }
+        case TableEventType.insurance:
+          if (seat != null && (e.amountCents ?? 0) > 0) {
+            _action(seat, 0, CueAction.insurance);
+            _insured.add(seat);
+            dealer.placeInsurance(seat, e.amountCents!);
+          }
+        case TableEventType.dealerUp:
           if (e.card != null) _deal(const HandTarget.dealer(), e.card!);
+        case TableEventType.dealerHit:
+          if (e.card != null) _deal(const HandTarget.dealer(), e.card!);
+          if (suspense && i == lastDealerHit) {
+            suspense = false;
+            dealer.cue(DealerCue.suspenseStop);
+          }
         case TableEventType.dealerHole:
           dealer.dealCard(const HandTarget.dealer(), faceUp: false);
         case TableEventType.reveal:
           if (e.card != null) {
             (_cards[const HandTarget.dealer()] ??= []).add(e.card!);
             dealer.revealHoleCard(e.card!);
+            if (lastDealerHit > i) {
+              suspense = true;
+              dealer.cue(DealerCue.suspenseStart);
+            }
           }
         case TableEventType.peek:
+          dealer.peekHoleCard();
+          if (_insured.isNotEmpty) {
+            dealer.resolveInsurance(won: e.dealerBlackjack == true);
+            _insured.clear();
+          }
           if (e.dealerBlackjack == true) {
             dealer.react(DealerReaction.dealerBlackjack);
             dealerReacted = true;
-          } else {
-            dealer.pause(const Duration(milliseconds: 350));
           }
         case TableEventType.settle:
           if (seat == null) break;
+          if (suspense) {
+            suspense = false;
+            dealer.cue(DealerCue.suspenseStop);
+          }
           if (!dealerReacted) {
             dealerReacted = true;
             final d = _cards[const HandTarget.dealer()];
@@ -244,18 +289,31 @@ class TableDirector {
           }
           _settle(seat, hand, e.result, e.amountCents ?? 0);
         case TableEventType.secondChance:
-          if (seat != null && e.card != null) notices.add(SecondChanceNotice(seat, e.card!));
+          if (seat != null && e.card != null) {
+            notices.add(SecondChanceNotice(seat, e.card!));
+            // Show the card that would have busted, then rewind it away.
+            final t = HandTarget.seat(seat, hand: hand);
+            dealer.dealCard(t, card: e.card);
+            dealer.cue(DealerCue.power, CueInfo(seat: seat, hand: hand, power: PowerType.secondChance.name));
+            dealer.discardLastCard(t);
+          }
         case TableEventType.power:
-          if (seat != null && e.power != null) notices.add(PowerUsedNotice(seat, e.power!));
-        case TableEventType.insurance ||
-              TableEventType.stand ||
-              TableEventType.surrender ||
-              TableEventType.timeout ||
-              TableEventType.join ||
-              TableEventType.leave:
+          if (seat != null && e.power != null) {
+            notices.add(PowerUsedNotice(seat, e.power!));
+            // Second chance sounds when it actually rewinds a card.
+            if (e.power != PowerType.secondChance) {
+              dealer.cue(DealerCue.power, CueInfo(seat: seat, hand: hand, power: e.power!.name));
+            }
+          }
+        case TableEventType.timeout:
+          if (seat != null) dealer.cue(DealerCue.timeout, CueInfo(seat: seat, hand: hand));
+        case TableEventType.join:
+          if (seat != null) dealer.cue(DealerCue.seatJoin, CueInfo(seat: seat));
+        case TableEventType.leave:
           break;
       }
     }
+    if (suspense) dealer.cue(DealerCue.suspenseStop);
   }
 
   /// Mirrors the engine: the second card of hand [hand] becomes hand
@@ -290,14 +348,18 @@ class TableDirector {
     final r = _reactionFor(result);
     switch (result) {
       case HandResult.blackjack || HandResult.win:
-        dealer.react(r!, seat: seat, hand: hand);
         final profit = returnedCents - bet;
+        dealer.react(r!, seat: seat, hand: hand, cents: profit);
         if (profit > 0) dealer.payout(seat, profit, hand: hand);
       case HandResult.push:
         dealer.react(r!, seat: seat, hand: hand);
-      case HandResult.lose || HandResult.surrender:
+      case HandResult.lose:
         dealer.react(r!, seat: seat, hand: hand);
         dealer.collectBet(seat, hand: hand);
+      case HandResult.surrender:
+        // Half already raked when the hand was folded; the rest goes back
+        // to the player with the sweep.
+        dealer.react(r!, seat: seat, hand: hand);
       case HandResult.bust:
         dealer.collectBet(seat, hand: hand);
       case null:

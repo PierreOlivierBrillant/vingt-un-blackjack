@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'bootstrap/firebase_backend.dart';
+import 'core/audio/audioplayers_sound_service.dart';
+import 'core/audio/sound_providers.dart';
 import 'core/settings/settings_controller.dart';
 import 'data/providers.dart';
 import 'data/settings_sync.dart';
@@ -16,6 +18,8 @@ Future<void> main() async {
       sharedPreferencesProvider.overrideWithValue(prefs),
       // The app runs on the Firebase repositories; tests keep the fakes.
       useFirebaseProvider.overrideWithValue(true),
+      // Real audio output (tests keep the muted / recording backends).
+      soundBackendProvider.overrideWithValue(AudioplayersSoundService()),
     ],
   );
 

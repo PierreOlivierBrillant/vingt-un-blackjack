@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/audio/sfx.dart';
+import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -155,6 +157,7 @@ class _CustomizeScreenState extends ConsumerState<CustomizeScreen> {
                 ? () async {
                     final messenger = ScaffoldMessenger.of(context);
                     await ref.read(cosmeticsRepositoryProvider).equip(style, idempotencyKey: newIdempotencyKey());
+                    ref.sfx(Sfx.uiSuccess);
                     setState(() => _draft = null);
                     messenger.showSnackBar(SnackBar(content: Text(l.customizeSaved)));
                   }

@@ -24,7 +24,11 @@ enum SeatBadge { blackjack, bust, win, lose, push }
 class DealerTimings {
   const DealerTimings({
     this.deal = const Duration(milliseconds: 640),
-    this.reveal = const Duration(milliseconds: 560),
+    this.reveal = const Duration(milliseconds: 1000),
+    this.peek = const Duration(milliseconds: 820),
+    this.insurance = const Duration(milliseconds: 420),
+    this.surrender = const Duration(milliseconds: 900),
+    this.discard = const Duration(milliseconds: 1100),
     this.split = const Duration(milliseconds: 460),
     this.bet = const Duration(milliseconds: 320),
     this.payout = const Duration(milliseconds: 620),
@@ -35,7 +39,14 @@ class DealerTimings {
   });
 
   final Duration deal;
+
+  /// Hole card: the hand hovers (suspense) then turns the card; the flip's
+  /// midpoint is at ~72 % so it matches the clack of `card_reveal_hole`.
   final Duration reveal;
+  final Duration peek;
+  final Duration insurance;
+  final Duration surrender;
+  final Duration discard;
   final Duration split;
   final Duration bet;
   final Duration payout;
@@ -130,11 +141,77 @@ class ShuffleCommand extends DealerCommand {
   String toString() => 'shuffle';
 }
 
+/// The dealer lifts the corner of the hole card to check for blackjack.
+class PeekCommand extends DealerCommand {
+  const PeekCommand();
+  @override
+  Duration baseDuration(DealerTimings t) => t.peek;
+  @override
+  String toString() => 'peek';
+}
+
+/// Insurance chips slide from the player onto the insurance arc.
+class InsuranceCommand extends DealerCommand {
+  const InsuranceCommand(this.seat, this.cents);
+  final int seat;
+  final int cents;
+  @override
+  Duration baseDuration(DealerTimings t) => t.insurance;
+  @override
+  String toString() => 'insurance(seat$seat, $cents)';
+}
+
+/// Insurance stacks are paid back to their owners ([won]) or raked.
+class ResolveInsuranceCommand extends DealerCommand {
+  const ResolveInsuranceCommand(this.won);
+  final bool won;
+  @override
+  Duration baseDuration(DealerTimings t) => t.collectBet;
+  @override
+  String toString() => 'resolveInsurance(${won ? 'won' : 'lost'})';
+}
+
+/// Surrender: the hand's cards are folded into the discard tray and half
+/// of the bet is raked.
+class SurrenderCommand extends DealerCommand {
+  const SurrenderCommand(this.seat, this.hand);
+  final int seat;
+  final int hand;
+  @override
+  Duration baseDuration(DealerTimings t) => t.surrender;
+  @override
+  String toString() => 'surrender(seat$seat/h$hand)';
+}
+
+/// "Second chance": the last card of [target] rewinds into the discard tray.
+class DiscardCardCommand extends DealerCommand {
+  const DiscardCardCommand(this.target);
+  final HandTarget target;
+  @override
+  Duration baseDuration(DealerTimings t) => t.discard;
+  @override
+  String toString() => 'discard($target)';
+}
+
+/// Zero-duration feedback cue at its exact place in the queue.
+class CueCommand extends DealerCommand {
+  const CueCommand(this.cue, this.info);
+  final DealerCue cue;
+  final CueInfo info;
+  @override
+  Duration baseDuration(DealerTimings t) => Duration.zero;
+  @override
+  String toString() => 'cue(${cue.name} $info)';
+}
+
 class ReactCommand extends DealerCommand {
-  const ReactCommand(this.reaction, this.seat, this.hand);
+  const ReactCommand(this.reaction, this.seat, this.hand, {this.cents});
   final DealerReaction reaction;
   final int? seat;
   final int hand;
+
+  /// Profit of the hand for wins (sound / celebration grading).
+  final int? cents;
   @override
   Duration baseDuration(DealerTimings t) => t.react;
   @override
@@ -192,7 +269,7 @@ class TableCard {
   bool visible = false;
 }
 
-enum ChipStackKind { bet, payout }
+enum ChipStackKind { bet, payout, insurance }
 
 class ChipStackState {
   ChipStackState({required this.id, required this.seat, required this.hand, required this.cents, required this.kind, required this.pos});
@@ -228,6 +305,9 @@ class _Running {
   ChipStackState? stack;
   Map<int, Offset> fromPositions = {};
   Map<int, Offset> chipFrom = {};
+  Map<int, double> rotFrom = {};
+  List<TableCard> moving = [];
+  List<ChipStackState> stacks = [];
   Offset? control;
 }
 
@@ -379,9 +459,17 @@ class DealerController extends ChangeNotifier {
   Future<void> collectBet(int seat, {int hand = 0}) => _enqueue(CollectBetCommand(seat, hand));
   Future<void> collectAll() => _enqueue(const CollectAllCommand());
   Future<void> shuffle() => _enqueue(const ShuffleCommand());
-  Future<void> react(DealerReaction reaction, {int? seat, int hand = 0}) =>
-      _enqueue(ReactCommand(reaction, seat, hand));
+  Future<void> react(DealerReaction reaction, {int? seat, int hand = 0, int? cents}) =>
+      _enqueue(ReactCommand(reaction, seat, hand, cents: cents));
   Future<void> pause(Duration d) => _enqueue(PauseCommand(d));
+  Future<void> peekHoleCard() => _enqueue(const PeekCommand());
+  Future<void> placeInsurance(int seat, int cents) => _enqueue(InsuranceCommand(seat, cents));
+  Future<void> resolveInsurance({required bool won}) => _enqueue(ResolveInsuranceCommand(won));
+  Future<void> surrenderHand(int seat, {int hand = 0}) => _enqueue(SurrenderCommand(seat, hand));
+  Future<void> discardLastCard(HandTarget target) => _enqueue(DiscardCardCommand(target));
+
+  /// Queues a feedback cue (sound / haptics) at this point of the timeline.
+  Future<void> cue(DealerCue cue, [CueInfo info = CueInfo.none]) => _enqueue(CueCommand(cue, info));
 
   /// Queued variant of [startTurnTimer] / [stopTurnTimer].
   Future<void> queueTurnTimer(int? seat, {Duration total = const Duration(seconds: 20), Duration Function()? remaining}) =>
@@ -496,13 +584,22 @@ class DealerController extends ChangeNotifier {
   }
 
   void _tickTurn(Duration dt) {
-    if (turnSeat == null) return;
+    final seat = turnSeat;
+    if (seat == null) return;
+    final before = _wholeSecondsLeft;
     _turnElapsed += dt;
+    final after = _wholeSecondsLeft;
+    if (after < before && _turnElapsed < _turnTotal) {
+      feedback.cue(DealerCue.timerTick, CueInfo(seat: seat, seconds: after));
+    }
     if (!_turnWarned && turnFraction >= 0.75) {
       _turnWarned = true;
-      feedback.cue(DealerCue.timerWarning);
+      feedback.cue(DealerCue.timerWarning, CueInfo(seat: seat));
     }
   }
+
+  /// Number shown in the turn ring (ceil of the seconds left).
+  int get _wholeSecondsLeft => (turnRemaining.inMilliseconds / 1000).ceil();
 
   void _idle(Duration dt) {
     final secs = dt.inMicroseconds / 1e6;
@@ -525,9 +622,22 @@ class DealerController extends ChangeNotifier {
     }
   }
 
-  void _emit(_Running r, String key, DealerCue cue) {
-    if (r.emitted.add(key)) feedback.cue(cue);
+  void _emit(_Running r, String key, DealerCue cue, [CueInfo info = CueInfo.none]) {
+    if (r.emitted.add(key)) feedback.cue(cue, info);
   }
+
+  /// True once the command is within [leadMs] of progress [at] (so a sample
+  /// whose impact is [leadMs] into the file hits exactly at [at]).
+  static bool _ahead(_Running r, double u, double at, int leadMs) {
+    final ms = r.duration.inMicroseconds / 1000;
+    return u >= at || (at - u) * ms <= leadMs;
+  }
+
+  static CueInfo _seatInfo(HandTarget t, {int? cents}) =>
+      t.isDealer ? CueInfo(cents: cents) : CueInfo(seat: t.seat, hand: t.hand, cents: cents);
+
+  /// Milliseconds into `card_deal_*.wav` where the card thumps the felt.
+  static const dealThumpMs = 148;
 
   // -------------------------------------------------------- command logic --
 
@@ -550,7 +660,61 @@ class DealerController extends ChangeNotifier {
           hole.faceUp = true;
           r.card = hole;
           r.fromPositions[hole.id] = hole.pos;
+          _emit(r, 'reveal', DealerCue.holeReveal);
         }
+      case PeekCommand():
+        final hole = _cards.where((c) => c.target.isDealer && !c.faceUp).firstOrNull;
+        r.card = hole;
+        if (hole != null) r.fromPositions[hole.id] = hole.pos;
+        _emit(r, 'peek', DealerCue.peek);
+      case InsuranceCommand(:final seat, :final cents):
+        final s = ChipStackState(
+          id: _nextId++,
+          seat: seat,
+          hand: 0,
+          cents: cents,
+          kind: ChipStackKind.insurance,
+          pos: geometry.playerPocket(seat),
+        )..opacity = 0;
+        _chips.add(s);
+        r.stack = s;
+      case ResolveInsuranceCommand():
+        r.stacks = _chips.where((c) => c.kind == ChipStackKind.insurance).toList();
+        for (final s in r.stacks) {
+          r.chipFrom[s.id] = s.pos;
+        }
+      case SurrenderCommand(:final seat, :final hand):
+        r.moving = cardsFor(HandTarget.seat(seat, hand: hand));
+        for (final c in r.moving) {
+          r.fromPositions[c.id] = c.pos;
+          r.rotFrom[c.id] = c.rotation;
+        }
+        final bet = _chips.where((s) => s.seat == seat && s.hand == hand && s.kind == ChipStackKind.bet).firstOrNull;
+        if (bet != null && bet.cents > 1) {
+          // Half the bet goes to the rack, half stays (returned at settle).
+          final half = bet.cents ~/ 2;
+          bet.cents -= half;
+          final raked = ChipStackState(
+            id: _nextId++,
+            seat: seat,
+            hand: hand,
+            cents: half,
+            kind: ChipStackKind.payout,
+            pos: bet.pos + const Offset(10, -10),
+          );
+          _chips.add(raked);
+          r.stack = raked;
+          r.chipFrom[raked.id] = raked.pos;
+        }
+      case DiscardCardCommand(:final target):
+        final last = cardsFor(target).lastOrNull;
+        if (last != null) {
+          r.card = last;
+          r.fromPositions[last.id] = last.pos;
+          r.rotFrom[last.id] = last.rotation;
+        }
+      case CueCommand(:final cue, :final info):
+        feedback.cue(cue, info);
       case SplitHandCommand(:final seat, :final hand):
         _beginSplit(r, seat, hand);
       case PlaceBetCommand(:final seat, :final hand, :final cents):
@@ -587,7 +751,7 @@ class DealerController extends ChangeNotifier {
         for (final s in _chips) {
           r.chipFrom[s.id] = s.pos;
         }
-        _emit(r, 'sweep', DealerCue.cardLand);
+        if (_cards.isNotEmpty) _emit(r, 'sweep', DealerCue.sweep);
       case ShuffleCommand():
         _cards.clear();
         _chips.clear();
@@ -595,7 +759,7 @@ class DealerController extends ChangeNotifier {
         _badges.clear();
         shuffleProgress = 0;
         _emit(r, 'shuffle', DealerCue.shuffle);
-      case ReactCommand(:final reaction, :final seat, :final hand):
+      case ReactCommand(:final reaction, :final seat, :final hand, :final cents):
         mood = switch (reaction) {
           DealerReaction.blackjack || DealerReaction.win || DealerReaction.dealerBust => DealerMood.smile,
           DealerReaction.bust => DealerMood.wince,
@@ -614,6 +778,7 @@ class DealerController extends ChangeNotifier {
           };
           _badges[(seat, hand)] = badge;
         }
+        _emit(r, 'react', DealerCue.react, CueInfo(seat: seat, hand: hand, cents: cents, reaction: reaction.name));
         if (reaction == DealerReaction.blackjack) _emit(r, 'bj', DealerCue.blackjack);
         if (reaction == DealerReaction.bust) _emit(r, 'bust', DealerCue.bust);
       case TurnTimerCommand(:final seat, :final total, :final remaining):
@@ -674,13 +839,14 @@ class DealerController extends ChangeNotifier {
       _chips.add(dup);
       r.chipFrom[dup.id] = dup.pos;
     }
-    _emit(r, 'split', DealerCue.chipPlace);
+    _emit(r, 'split', DealerCue.chipPlace, CueInfo(seat: seat, hand: hand + 1, cents: bet?.cents));
   }
 
   Offset _cardRest(TableCard c) =>
       geometry.cardRest(c.target, c.index, handCount: c.target.isDealer ? 1 : handCount(c.target.seat));
 
   Offset _chipRest(ChipStackState s) {
+    if (s.kind == ChipStackKind.insurance) return geometry.insuranceSpot(s.seat);
     final spot = geometry.betSpot(s.seat, hand: s.hand, handCount: handCount(s.seat));
     if (s.kind == ChipStackKind.bet) return spot;
     // Payouts sit beside the bet, towards the table centre.
@@ -714,7 +880,32 @@ class DealerController extends ChangeNotifier {
         s.pos = Offset.lerp(geometry.playerPocket(s.seat), _chipRest(s), e)!;
         s.opacity = _seg(u, 0, 0.3);
         s.lift = math.sin(math.pi * u) * 0.6;
-        if (u >= 1) _emit(r, 'place', DealerCue.chipPlace);
+        if (_ahead(r, u, 1, 25)) _emit(r, 'place', DealerCue.chipPlace, CueInfo(seat: s.seat, hand: s.hand, cents: s.cents));
+      case InsuranceCommand():
+        final s = r.stack!;
+        final e = Curves.easeOutCubic.transform(u);
+        s.pos = Offset.lerp(geometry.playerPocket(s.seat), geometry.insuranceSpot(s.seat), e)!;
+        s.opacity = _seg(u, 0, 0.3);
+        s.lift = math.sin(math.pi * u) * 0.6;
+        if (_ahead(r, u, 1, 25)) _emit(r, 'place', DealerCue.chipPlace, CueInfo(seat: s.seat, cents: s.cents));
+      case ResolveInsuranceCommand(:final won):
+        final e = Curves.easeInCubic.transform(_seg(u, 0.1, 0.9));
+        for (final s in r.stacks) {
+          final to = won ? geometry.playerPocket(s.seat) : TableGeometry.rackCenter;
+          s.pos = Offset.lerp(r.chipFrom[s.id], to, e)!;
+          s.opacity = 1 - _seg(u, 0.75, 1);
+        }
+        if (r.stacks.isNotEmpty && u >= 0.1) {
+          _emit(r, 'ins', won ? DealerCue.payoutStart : DealerCue.chipCollect, CueInfo(seat: r.stacks.first.seat));
+        }
+      case PeekCommand():
+        _stepPeek(r, u);
+      case SurrenderCommand():
+        _stepSurrender(r, u);
+      case DiscardCardCommand():
+        _stepDiscard(r, u);
+      case CueCommand():
+        break;
       case PayoutCommand():
         _stepPayout(r, u);
       case CollectBetCommand():
@@ -778,6 +969,7 @@ class DealerController extends ChangeNotifier {
       final back = Curves.easeInOut.transform(_seg(k, 0.35, 1));
       rightArm.hand = Offset.lerp(release, TableGeometry.rightHandRest, back)!;
       rightArm.grip = 1 - _seg(k, 0.2, 0.45);
+      if (_ahead(r, u, 0.86, dealThumpMs)) _emit(r, 'land', DealerCue.cardLand, _seatInfo(target));
       return;
     }
     c
@@ -787,7 +979,7 @@ class DealerController extends ChangeNotifier {
       ..flip = c.faceUp ? 1 : 0;
     rightArm.hand = TableGeometry.rightHandRest;
     rightArm.grip = 0;
-    _emit(r, 'land', DealerCue.cardLand);
+    _emit(r, 'land', DealerCue.cardLand, _seatInfo(target));
   }
 
   void _stepReveal(_Running r, double u) {
@@ -798,16 +990,24 @@ class DealerController extends ChangeNotifier {
       final k = Curves.easeInOut.transform(_seg(u, 0, 0.35));
       leftArm.hand = Offset.lerp(r.startLeft, from + const Offset(-8, 16), k)!;
       leftArm.grip = k;
-    } else if (u < 0.8) {
-      final f = _seg(u, 0.35, 0.8);
+    } else if (u < 0.55) {
+      // Suspense: the fingers rest on the card, a small tremble.
+      final k = _seg(u, 0.35, 0.55);
+      c.lift = 0.06 * math.sin(k * math.pi);
+      c.pos = from + Offset(math.sin(k * 9 * math.pi) * 1.5, 0);
+      leftArm.hand = from + const Offset(-8, 16);
+      leftArm.grip = 1;
+    } else if (u < 0.9) {
+      final f = _seg(u, 0.55, 0.9);
       c.flip = Curves.easeInOut.transform(f);
       c.lift = math.sin(math.pi * f) * 0.7;
       c.pos = from + Offset(0, -26 * math.sin(math.pi * f));
       leftArm.hand = c.pos + const Offset(-8, 16);
       leftArm.grip = 1;
-      if (c.flip >= 0.5) _emit(r, 'flip', DealerCue.cardFlip);
+      if (c.flip >= 0.5) _emit(r, 'flip', DealerCue.holeFlip);
     } else {
-      final k = Curves.easeInOut.transform(_seg(u, 0.8, 1));
+      _emit(r, 'flip', DealerCue.holeFlip);
+      final k = Curves.easeInOut.transform(_seg(u, 0.9, 1));
       c
         ..flip = 1
         ..lift = 0
@@ -838,6 +1038,7 @@ class DealerController extends ChangeNotifier {
       return;
     }
     if (u < 0.85) {
+      _emit(r, 'push', DealerCue.payoutStart, CueInfo(seat: s.seat, hand: s.hand, cents: s.cents));
       final k = _seg(u, 0.3, 0.85);
       final e = Curves.easeOutCubic.transform(k);
       s.opacity = 1;
@@ -854,7 +1055,88 @@ class DealerController extends ChangeNotifier {
       ..opacity = 1;
     arm.hand = _restFor(s.seat);
     arm.grip = 0;
-    _emit(r, 'pay', DealerCue.payout);
+    _emit(r, 'push', DealerCue.payoutStart, CueInfo(seat: s.seat, hand: s.hand, cents: s.cents));
+    _emit(r, 'pay', DealerCue.payout, CueInfo(seat: s.seat, hand: s.hand, cents: s.cents));
+  }
+
+  void _stepPeek(_Running r, double u) {
+    final c = r.card;
+    if (c == null) return;
+    final from = r.fromPositions[c.id]!;
+    final corner = from + const Offset(-20, 40);
+    if (u < 0.3) {
+      final k = Curves.easeInOut.transform(_seg(u, 0, 0.3));
+      leftArm.hand = Offset.lerp(r.startLeft, corner, k)!;
+      leftArm.grip = k;
+    } else if (u < 0.75) {
+      // Lift the near corner, glance, put it down.
+      final k = math.sin(math.pi * _seg(u, 0.3, 0.75));
+      c.lift = 0.35 * k;
+      c.rotation = 0.12 * k;
+      c.pos = from + Offset(0, -8 * k);
+      leftArm.hand = corner + Offset(0, -8 * k);
+      leftArm.grip = 1;
+      headNod = -0.25 * k; // looks down at the card
+    } else {
+      final k = Curves.easeInOut.transform(_seg(u, 0.75, 1));
+      c
+        ..lift = 0
+        ..rotation = 0
+        ..pos = from;
+      leftArm.hand = Offset.lerp(corner, TableGeometry.leftHandRest, k)!;
+      leftArm.grip = 1 - k;
+      headNod = 0;
+    }
+  }
+
+  void _stepSurrender(_Running r, double u) {
+    // Cards fold together then glide to the discard tray.
+    final n = r.moving.length;
+    for (var i = 0; i < n; i++) {
+      final c = r.moving[i];
+      final from = r.fromPositions[c.id]!;
+      final gather = Curves.easeInOut.transform(_seg(u, 0, 0.3));
+      final stackPos = Offset.lerp(from, r.fromPositions[r.moving.first.id]!, gather)!;
+      final k = Curves.easeInOutCubic.transform(_seg(u, 0.3, 0.9));
+      c.pos = Offset.lerp(stackPos, TableGeometry.discardCenter + Offset(0, -i * 1.5), k)!;
+      c.rotation = (r.rotFrom[c.id] ?? 0) * (1 - k) + 0.5 * k;
+      c.lift = math.sin(math.pi * k) * 0.35;
+      c.opacity = 1 - _seg(u, 0.85, 1);
+    }
+    final s = r.stack;
+    if (s != null) {
+      final k = Curves.easeInCubic.transform(_seg(u, 0.35, 0.9));
+      s.pos = Offset.lerp(r.chipFrom[s.id], TableGeometry.rackCenter, k)!;
+      s.opacity = 1 - _seg(u, 0.8, 1);
+      if (u >= 0.35) _emit(r, 'rake', DealerCue.chipCollect, CueInfo(seat: s.seat, hand: s.hand));
+    }
+    if (n > 0 && u >= 0.3) _emit(r, 'fold', DealerCue.sweep);
+    final arm = n == 0 ? null : _armFor(r.moving.first.target.seat);
+    if (arm != null) {
+      final reachPoint = clampToReach(_shoulderFor(r.moving.first.target.seat), r.fromPositions[r.moving.first.id]!, TableGeometry.reach);
+      final k = math.sin(math.pi * _seg(u, 0, 1));
+      arm.hand = Offset.lerp(_restFor(r.moving.first.target.seat), reachPoint, k)!;
+      arm.grip = 0.4 * k;
+    }
+  }
+
+  void _stepDiscard(_Running r, double u) {
+    final c = r.card;
+    if (c == null) return;
+    final from = r.fromPositions[c.id]!;
+    if (u < 0.3) {
+      // A beat with the doomed card shown (and a shake), then...
+      final k = _seg(u, 0, 0.3);
+      c.pos = from + Offset(math.sin(k * 8 * math.pi) * 4 * (1 - k), 0);
+      return;
+    }
+    // ...it rewinds: up, spinning back, into the discard tray.
+    final k = Curves.easeInOutCubic.transform(_seg(u, 0.3, 0.95));
+    final mid = Offset.lerp(from, TableGeometry.discardCenter, 0.5)! + const Offset(0, -180);
+    c.pos = quadBezier(from, mid, TableGeometry.discardCenter, k);
+    c.rotation = (r.rotFrom[c.id] ?? 0) * (1 - k) - 2 * math.pi * k + 0.5 * k;
+    c.lift = math.sin(math.pi * k);
+    c.opacity = 1 - _seg(u, 0.9, 1);
   }
 
   void _stepCollectBet(_Running r, double u) {
@@ -870,7 +1152,7 @@ class DealerController extends ChangeNotifier {
       arm.grip = 0;
       return;
     }
-    _emit(r, 'collect', DealerCue.chipCollect);
+    _emit(r, 'collect', DealerCue.chipCollect, CueInfo(seat: s.seat, hand: s.hand, cents: s.cents));
     final k = Curves.easeInCubic.transform(_seg(u, 0.4, 0.92));
     s.pos = Offset.lerp(from, TableGeometry.rackCenter, k)!;
     s.opacity = 1 - _seg(u, 0.8, 1);
@@ -897,7 +1179,7 @@ class DealerController extends ChangeNotifier {
       s.pos = Offset.lerp(from, geometry.playerPocket(s.seat), k)!;
       s.opacity = 1 - k;
     }
-    if (u >= 0.45) _emit(r, 'chips', DealerCue.chipCollect);
+    if (u >= 0.45 && _chips.isNotEmpty) _emit(r, 'chips', DealerCue.chipsReturn);
     // Both hands sweep in towards the discard tray.
     final l1 = Curves.easeInOut.transform(_seg(u, 0, 0.35));
     final l2 = Curves.easeInOut.transform(_seg(u, 0.35, 0.75));
@@ -932,9 +1214,9 @@ class DealerController extends ChangeNotifier {
       leftArm.hand = c + Offset(-120 + 55 * squeeze, -8 * squeeze);
       rightArm.hand = c + Offset(120 - 55 * squeeze, -8 * squeeze);
       leftArm.grip = rightArm.grip = 1;
-      if (k > 0.33) _emit(r, 'riffle2', DealerCue.cardLand);
-      if (k > 0.66) _emit(r, 'riffle3', DealerCue.cardLand);
+      if (k > 0.55) _emit(r, 'bridge', DealerCue.shuffleBridge);
     } else {
+      _emit(r, 'bridge', DealerCue.shuffleBridge);
       final k = Curves.easeInOut.transform(_seg(u, 0.86, 1));
       // Right hand carries the deck to the shoe, left returns to rest.
       rightArm.hand = Offset.lerp(c, TableGeometry.shoeExit, k)!;
@@ -963,6 +1245,34 @@ class DealerController extends ChangeNotifier {
           ..opacity = 1;
       case CollectBetCommand():
         if (r.stack != null) _chips.remove(r.stack);
+      case InsuranceCommand():
+        r.stack!
+          ..pos = geometry.insuranceSpot(r.stack!.seat)
+          ..lift = 0
+          ..opacity = 1;
+      case ResolveInsuranceCommand():
+        _chips.removeWhere(r.stacks.contains);
+      case SurrenderCommand():
+        _cards.removeWhere(r.moving.contains);
+        if (r.stack != null) _chips.remove(r.stack);
+      case DiscardCardCommand():
+        if (r.card != null) {
+          _cards.remove(r.card);
+          // Later cards of the hand (none in practice) close the gap.
+          var i = 0;
+          for (final c in cardsFor(r.card!.target)) {
+            c.index = i++;
+          }
+        }
+      case PeekCommand():
+        final c = r.card;
+        if (c != null) {
+          c
+            ..lift = 0
+            ..rotation = 0
+            ..pos = r.fromPositions[c.id]!;
+        }
+        headNod = 0;
       case CollectAllCommand():
         _cards.clear();
         _chips.clear();

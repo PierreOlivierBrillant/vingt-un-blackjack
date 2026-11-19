@@ -1498,4 +1498,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tableBetsHere => 'Bets on this table';
+
+  @override
+  String get settingsEffectsVolume => 'Effects volume';
+
+  @override
+  String get settingsAmbienceVolume => 'Ambience volume';
+
+  @override
+  String get settingsSoundHint => 'Master switch: no effects, no ambience.';
+
+  @override
+  String get settingsSoundTry => 'Try';
+
+  @override
+  String get celebrationWin => 'WINNER!';
+
+  @override
+  String get celebrationBigWin => 'BIG WIN!';
+
+  @override
+  String celebrationStreak(int count) {
+    return '$count WINS IN A ROW!';
+  }
+
+  @override
+  String get celebrationDealerBust => 'DEALER BUSTS!';
+
+  @override
+  String profileRankPoints(int points) {
+    return '$points ranking points';
+  }
+
+  @override
+  String profileRankNext(int missing, String tier) {
+    return '$missing pts to $tier';
+  }
+
+  @override
+  String get profileRankMax => 'Top tier reached';
 }

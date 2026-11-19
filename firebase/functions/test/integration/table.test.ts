@@ -7,7 +7,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { describe, expect, it } from 'vitest';
 import { verifyFairness } from '../../src/engine';
 import type { HandHistoryDoc, MarketDoc, PositionDoc, TableDoc } from '../../src/shared/types';
-import { WELCOME_BONUS_CENTS } from '../../src/shared/types';
+import { DECISION_GRACE_MS, WELCOME_BONUS_CENTS } from '../../src/shared/types';
 import { admin, balance, ledgerSum, newClient, playerClient, reason, verifyKyc, type Client } from './client';
 
 type Player = Client & { username: string };
@@ -16,9 +16,9 @@ async function table(id: string): Promise<TableDoc> {
   return (await admin().doc(`tables/${id}`).get()).data() as TableDoc;
 }
 
-/** Expire the current deadline and let the server apply it (what a client's pokeTable does). */
+/** Expire the current deadline (+ the human grace) and let the server apply it (what a client's pokeTable does). */
 async function expire(c: Client, tableId: string): Promise<void> {
-  await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - 1 });
+  await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - DECISION_GRACE_MS - 1 });
   await c.call('pokeTable', { tableId });
 }
 
@@ -175,7 +175,7 @@ describe('turn and seat enforcement', () => {
     }
     expect(t.turn!.seatIndex).toBe(0);
     expect(await reason(b.call('act', { tableId, handNumber: t.handNumber, action: 'stand' }))).toBe('NOT_YOUR_TURN');
-    await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - 1 }); // a's 20 s are over
+    await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - DECISION_GRACE_MS - 1 }); // a's 20 s (+ grace) are over
     const t2 = await table(tableId);
     expect(t2.turn!.seatIndex).toBe(0); // nothing happens by itself (no scheduler)...
     expect(await reason(b.call('act', { tableId, handNumber: t.handNumber, action: 'stand' }))).toBe('NO_ERROR'); // ...but b's call applies it
@@ -190,7 +190,10 @@ describe('turn and seat enforcement', () => {
     const r1 = await a.call('pokeTable', { tableId });
     expect(r1.advanced).toBe(false);
     expect(r1.phase).toBe('betting');
-    await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - 1 });
+    // Humans get DECISION_GRACE_MS after the displayed deadline: just before its end, nothing yet...
+    await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - DECISION_GRACE_MS + 1500 });
+    expect((await a.call('pokeTable', { tableId })).advanced).toBe(false);
+    await admin().doc(`tables/${tableId}`).update({ deadlineMs: Date.now() - DECISION_GRACE_MS - 1 });
     const r2 = await b.call('pokeTable', { tableId });
     expect(r2.advanced).toBe(true); // nobody bet: betting restarts with a fresh deadline
     expect(r2.deadlineMs!).toBeGreaterThan(Date.now());

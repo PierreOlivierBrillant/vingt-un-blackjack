@@ -101,6 +101,7 @@ void main() {
     usePhoneSurface(tester);
     final c = await pumpScreen(tester, const MarketsScreen());
     final positions = await c.read(marketsRepositoryProvider).watchPositions().first;
+    await tester.ensureVisible(find.text(l.filterMine));
     await tester.tap(find.text(l.filterMine));
     await settle(tester);
     if (positions.isEmpty) {

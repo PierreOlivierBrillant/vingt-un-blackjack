@@ -19,5 +19,6 @@ describe('house edge (Monte-Carlo, fixed seed)', () => {
     console.log(`[house-edge] hands=${r.hands} net=${r.netCents}c edge=${(r.houseEdge * 100).toFixed(3)}% ±${(se * 100).toFixed(3)}% (1σ) in ${ms} ms`);
     expect(r.houseEdge).toBeGreaterThan(0.003);
     expect(r.houseEdge).toBeLessThan(0.007);
-  });
+    // CPU-bound (~4 s on a quiet machine): generous timeout for loaded CI / busy dev boxes.
+  }, 120_000);
 });

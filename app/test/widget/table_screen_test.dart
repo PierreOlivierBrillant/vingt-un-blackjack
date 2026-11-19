@@ -5,6 +5,7 @@ import 'package:vingtun/data/error_messages.dart';
 import 'package:vingtun/data/fake/fake_repositories.dart';
 import 'package:vingtun/data/providers.dart';
 import 'package:vingtun/data/server_errors.dart';
+import 'package:vingtun/domain/backend_constants.dart';
 import 'package:vingtun/domain/fairness.dart';
 import 'package:vingtun/domain/models.dart';
 import 'package:vingtun/domain/table_state.dart';
@@ -171,7 +172,7 @@ void main() {
   });
 
   testWidgets('overdue deadline: the client pokes the table', (tester) async {
-    final repo = await pumpTable(tester, myTurn(['8S', '8H'])..['deadlineMs'] = _nowMs - 3000);
+    final repo = await pumpTable(tester, myTurn(['8S', '8H'])..['deadlineMs'] = _nowMs - Backend.pokeGraceMs - 500);
     await settle(tester);
     expect(repo.calls, contains('poke'));
   });

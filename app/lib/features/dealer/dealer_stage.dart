@@ -6,11 +6,30 @@ import 'package:flutter/scheduler.dart';
 import '../../core/money.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/card_style.dart';
+import '../../domain/cards.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../cards/card_painters.dart';
 import 'dealer_controller.dart';
 import 'dealer_painters.dart';
 import 'table_geometry.dart';
+
+/// Text of a total pill: "7/17" for a soft hand of two cards or more, the
+/// best total otherwise — a lone ace (e.g. the dealer's up card) reads "11",
+/// and the dealer's totals never use the soft notation (it draws to 17).
+String handTotalLabel(HandTotal total, {required int cardCount, bool dealer = false}) {
+  final soft = total.soft && total.total < 21 && cardCount >= 2 && !dealer;
+  return soft ? '${total.total - 10}/${total.total}' : '${total.total}';
+}
+
+/// Badge colours on the felt (the casino room is always dark, whatever the
+/// app theme). Every pair has a WCAG contrast ratio ≥ 4.5 (tested).
+(Color, Color) stageBadgeColors(SeatBadge badge) => switch (badge) {
+      SeatBadge.blackjack => (AppPalette.dark.gold, Colors.black),
+      SeatBadge.bust => (const Color(0xFFC62245), Colors.white),
+      SeatBadge.win => (AppPalette.dark.win, BrandColors.onGreen),
+      SeatBadge.lose => (const Color(0xFF15191D), Colors.white),
+      SeatBadge.push => (const Color(0xFF0F5FBF), Colors.white),
+    };
 
 /// Who sits where (display only).
 @immutable
@@ -183,7 +202,7 @@ class _DealerStageState extends State<DealerStage> with SingleTickerProviderStat
   List<Widget> _seatPlates(BuildContext context, double s) {
     final l = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).languageCode;
-    final palette = context.palette;
+    final palette = AppPalette.dark;
     final out = <Widget>[];
     for (var i = 0; i < TableGeometry.seatCount; i++) {
       final seat = i < widget.seats.length ? widget.seats[i] : null;
@@ -240,7 +259,7 @@ class _DealerStageState extends State<DealerStage> with SingleTickerProviderStat
     final spot = TableGeometry.seatSpots[seat] * s;
     final d = 160 * s;
     final f = c.turnFraction;
-    final color = f > 0.75 ? context.palette.loss : (f > 0.5 ? context.palette.warning : context.palette.win);
+    final color = f > 0.75 ? AppPalette.dark.loss : (f > 0.5 ? AppPalette.dark.warning : AppPalette.dark.win);
     return [
       Positioned(
         left: spot.dx - d / 2,
@@ -263,26 +282,25 @@ class _DealerStageState extends State<DealerStage> with SingleTickerProviderStat
   List<Widget> _totalsAndBadges(BuildContext context, double s) {
     final c = widget.controller;
     final l = AppLocalizations.of(context);
-    final palette = context.palette;
+    final palette = AppPalette.dark;
     final out = <Widget>[];
     final targets = <HandTarget>{for (final card in c.cards) card.target};
     for (final t in targets) {
       final total = c.visibleTotal(t);
       final cards = c.cardsFor(t).where((x) => x.visible).toList();
       if (total == null || cards.isEmpty || c.currentCommand is CollectAllCommand) continue;
-      // Anchor on the resting slot of the last card (not its live position)
-      // so the pill never chases a card in flight or one being flipped.
-      final top = DealerController.geometry.cardRest(
-        t,
-        cards.last.index,
-        handCount: t.isDealer ? 1 : c.handCount(t.seat),
-      );
+      // Anchor on resting slots (not live positions) so the pill never
+      // chases a card in flight or one being flipped. Seats: above the
+      // highest card, horizontally on the hand's FIRST card — the fans of
+      // split hands converge, their first cards don't (no overlapping pills).
+      final handCount = t.isDealer ? 1 : c.handCount(t.seat);
+      final top = DealerController.geometry.cardRest(t, cards.last.index, handCount: handCount);
+      final first = DealerController.geometry.cardRest(t, 0, handCount: handCount);
       final anchor = (t.isDealer
               ? top + const Offset(TableGeometry.cardWidth * 0.5 + 34, 0)
-              : top - const Offset(0, TableGeometry.cardHeight / 2 + 26)) *
+              : Offset(first.dx, top.dy - TableGeometry.cardHeight / 2 - 26)) *
           s;
-      final soft = total.soft && total.total < 21;
-      final label = soft ? '${total.total - 10}/${total.total}' : '${total.total}';
+      final label = handTotalLabel(total, cardCount: cards.length, dealer: t.isDealer);
       final color = total.isBust ? palette.loss : (total.total == 21 ? palette.win : Colors.black.withValues(alpha: 0.75));
       out.add(Positioned(
         left: anchor.dx - 24,
@@ -310,12 +328,13 @@ class _DealerStageState extends State<DealerStage> with SingleTickerProviderStat
       final hands = c.handCount(seat);
       final rest = DealerController.geometry.cardRest(HandTarget.seat(seat, hand: hand), 0, handCount: hands);
       final anchor = Offset(hands > 1 ? rest.dx : spot.dx, spot.dy - 90) * s;
-      final (text, bg, fg) = switch (badge) {
-        SeatBadge.blackjack => (l.badgeBlackjack, palette.gold, Colors.black),
-        SeatBadge.bust => (l.badgeBust, palette.loss, Colors.white),
-        SeatBadge.win => (l.badgeWin, palette.win, BrandColors.onGreen),
-        SeatBadge.lose => (l.badgeLose, Colors.black87, Colors.white),
-        SeatBadge.push => (l.badgePush, BrandColors.blue, Colors.white),
+      final (bg, fg) = stageBadgeColors(badge);
+      final text = switch (badge) {
+        SeatBadge.blackjack => l.badgeBlackjack,
+        SeatBadge.bust => l.badgeBust,
+        SeatBadge.win => l.badgeWin,
+        SeatBadge.lose => l.badgeLose,
+        SeatBadge.push => l.badgePush,
       };
       out.add(Positioned(
         left: anchor.dx - 50,

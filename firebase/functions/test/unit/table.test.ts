@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fastRng, sha256Hex, verifyFairness } from '../../src/engine';
 import { AppError } from '../../src/shared/errors';
-import { CUT_CARD_REMAINING, TIMING, type TableDoc } from '../../src/shared/types';
+import { CUT_CARD_REMAINING, DECISION_GRACE_MS, MISSED_ROUNDS_LIMIT, TIMING, type TableDoc } from '../../src/shared/types';
 import { BOTS, simRoster, simTableId } from '../../src/sim/profiles';
 import { newTableState, TableMachine, type MachineDeps } from '../../src/table/machine';
 import type { Effect, PlayerInfo, TablePrivateDoc } from '../../src/table/model';
@@ -46,7 +46,9 @@ class Harness {
   until(pred: (t: TableDoc) => boolean, maxSteps = 200): void {
     for (let i = 0; i < maxSteps && !pred(this.pub); i++) {
       const dl = this.pub.deadlineMs;
-      this.tick(dl === null ? 1000 : Math.max(1, dl - this.now));
+      // Human decisions get DECISION_GRACE_MS after the displayed deadline.
+      const due = dl === null ? null : dl + this.run((m) => m.graceMs());
+      this.tick(due === null ? 1000 : Math.max(1, due - this.now));
     }
     expect(pred(this.pub)).toBe(true);
   }
@@ -105,15 +107,28 @@ describe('table lifecycle', () => {
     expect(h.pub.seats[0]!.hands).toEqual([]);
   });
 
+  it('a decision arriving just after the displayed deadline (slow callable, clock drift) still counts', () => {
+    const h = new Harness({ seed: 3 });
+    h.run((m) => m.join(human(1)));
+    h.run((m) => m.placeBet('h1', 1, 500));
+    if (h.pub.phase === 'insurance') h.tick(TIMING.insuranceMs + DECISION_GRACE_MS);
+    expect(h.pub.phase).toBe('playerTurns');
+    h.now += TIMING.decisionMs + DECISION_GRACE_MS - 500; // the poke has not run yet
+    h.run((m) => { m.advance(); m.act('h1', { handNumber: 1, action: 'stand' }); });
+    expect(h.pub.events.some((e) => e.type === 'timeout')).toBe(false);
+    expect(h.pub.events.some((e) => e.type === 'stand')).toBe(true);
+  });
+
   it('a human who never acts times out to stand within the decision window', () => {
     const h = new Harness({ seed: 3 });
     h.run((m) => m.join(human(1)));
     h.run((m) => m.placeBet('h1', 1, 500));
-    if (h.pub.phase === 'insurance') h.tick(TIMING.insuranceMs);
+    if (h.pub.phase === 'insurance') h.tick(TIMING.insuranceMs + DECISION_GRACE_MS);
     expect(h.pub.phase).toBe('playerTurns');
     {
       expect(h.pub.deadlineMs).toBe(h.now + TIMING.decisionMs);
-      expect(h.tick(TIMING.decisionMs - 1)).toBe(false);
+      // The displayed deadline passes; the human still has the grace period.
+      expect(h.tick(TIMING.decisionMs + DECISION_GRACE_MS - 1)).toBe(false);
       h.tick(1);
       expect(h.pub.events.some((e) => e.type === 'timeout')).toBe(true);
     }
@@ -191,6 +206,36 @@ describe('seating priority and leaving', () => {
     expect(h.pub.humanCount).toBe(2);
   });
 
+  it(`a human who skips ${MISSED_ROUNDS_LIMIT} betting rounds in a row loses the seat (not before)`, () => {
+    expect(MISSED_ROUNDS_LIMIT).toBe(5);
+    expect(TIMING.bettingMs).toBe(20_000);
+    const h = new Harness({ isPrivate: true });
+    h.run((m) => { m.join(human(1)); m.join(human(2)); });
+    const seated = (uid: string) => h.pub.seats.some((s) => s?.uid === uid);
+    for (let round = 1; round <= MISSED_ROUNDS_LIMIT; round++) {
+      expect(seated('h2')).toBe(true);
+      const hand = h.pub.handNumber;
+      h.run((m) => m.placeBet('h1', hand, 100));
+      // h2 never bets: the hand is dealt at the deadline, then settles.
+      h.until((t) => t.phase === 'betting' && t.handNumber === hand + 1, 400);
+      expect(h.pub.seats.find((s) => s?.uid === 'h2')?.missedRounds ?? MISSED_ROUNDS_LIMIT).toBe(round === MISSED_ROUNDS_LIMIT ? MISSED_ROUNDS_LIMIT : round);
+    }
+    expect(seated('h1')).toBe(true);
+    expect(seated('h2')).toBe(false);
+  });
+  it('private table: a host waiting alone for friends is never removed (idle rounds do not count)', () => {
+    const h = new Harness({ isPrivate: true });
+    h.run((m) => m.join(human(1)));
+    for (let i = 0; i < MISSED_ROUNDS_LIMIT * 2; i++) {
+      h.until((t) => t.phase === 'betting' && t.deadlineMs !== null);
+      h.tick(TIMING.bettingMs);
+    }
+    expect(h.pub.status).toBe('open');
+    expect(h.pub.seatedUids).toContain('h1');
+    // A friend arrives and plays: the host can still bet.
+    h.run((m) => m.join(human(2)));
+    expect(h.pub.seats.filter((s) => s !== null).length).toBe(2);
+  });
   it('private table: no bots, full → TABLE_FULL', () => {
     const h = new Harness({ isPrivate: true });
     h.run((m) => { for (let i = 0; i < 5; i++) m.join(human(i)); });
@@ -230,12 +275,12 @@ describe('seating priority and leaving', () => {
     expect(h.ofKind('marketStatus').filter((e) => e.status === 'void').length).toBe(3);
   });
 
-  it('humans missing 3 betting rounds are removed', () => {
+  it(`humans missing ${MISSED_ROUNDS_LIMIT} betting rounds are removed`, () => {
     const h = new Harness();
     h.run((m) => { m.join(botInfo(50)); m.join(human(1)); });
-    for (let i = 0; i < 4 && h.pub.seatedUids.includes('h1'); i++) {
+    for (let i = 0; i < MISSED_ROUNDS_LIMIT + 1 && h.pub.seatedUids.includes('h1'); i++) {
       h.until((t) => t.phase === 'betting' && t.deadlineMs !== null);
-      h.tick(TIMING.bettingMs);
+      h.tick(TIMING.bettingMs + DECISION_GRACE_MS);
       h.until((t) => t.phase === 'betting' || t.status === 'closed', 400);
     }
     expect(h.pub.seatedUids).not.toContain('h1');

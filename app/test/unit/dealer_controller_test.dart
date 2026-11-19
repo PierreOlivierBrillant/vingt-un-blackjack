@@ -117,7 +117,7 @@ void main() {
     expect(hole.card, c('6S'));
     expect(hole.flip, 1);
     expect(d.visibleTotal(const HandTarget.dealer())!.total, 16);
-    expect(fb.cues.last, DealerCue.cardFlip);
+    expect(fb.cues.last, DealerCue.holeFlip);
   });
 
   test('split moves the second card to a new hand and duplicates the bet', () async {

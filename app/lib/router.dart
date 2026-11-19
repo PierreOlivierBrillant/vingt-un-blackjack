@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/audio/sfx.dart';
+import 'core/audio/sound_providers.dart';
 import 'data/providers.dart';
 import 'domain/models.dart';
 import 'features/ads/ads_demo_screen.dart';
@@ -31,8 +33,14 @@ const _publicPaths = {'/login', '/signup', '/server'};
 /// profile never sees the auth screens.
 String? authRedirect(AppUser? user, String path) {
   if (user == null) return _publicPaths.contains(path) ? null : '/login';
-  if (!user.profileComplete) return path == '/complete-profile' || path == '/server' ? null : '/complete-profile';
-  if (path == '/login' || path == '/signup' || path == '/complete-profile') return '/lobby';
+  // During sign-up the account exists before its profile (completeProfile
+  // callable in flight): stay on the sign-up screen meanwhile, then continue
+  // to the KYC step (the screen's own navigation may be pre-empted by this).
+  if (!user.profileComplete) {
+    return path == '/complete-profile' || path == '/server' || path == '/signup' ? null : '/complete-profile';
+  }
+  if (path == '/signup') return '/kyc';
+  if (path == '/login' || path == '/complete-profile') return '/lobby';
   return null;
 }
 
@@ -50,6 +58,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: rootKey,
     initialLocation: '/lobby',
     refreshListenable: refresh,
+    observers: [SoundNavigatorObserver(() => ref.read(soundProvider).play(Sfx.navSwoosh))],
     redirect: (context, state) => authRedirect(auth.currentUser, state.uri.path),
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
@@ -103,3 +112,20 @@ final routerProvider = Provider<GoRouter>((ref) {
   ref.onDispose(router.dispose);
   return router;
 });
+
+
+/// "Swoosh" on every full-screen page change (not dialogs / sheets).
+class SoundNavigatorObserver extends NavigatorObserver {
+  SoundNavigatorObserver(this._swoosh);
+  final VoidCallback _swoosh;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (route is PageRoute && previousRoute != null) _swoosh();
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (route is PageRoute) _swoosh();
+  }
+}

@@ -84,25 +84,28 @@ class _MarketsScreenState extends ConsumerState<MarketsScreen> {
           ),
           SizedBox(
             height: 44,
-            child: ListView(
+            // Four chips: built eagerly so every filter is always reachable.
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              children: [
-                for (final f in _Filter.values)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(switch (f) {
-                        _Filter.all => l.filterAll,
-                        _Filter.hand => l.filterHand,
-                        _Filter.shoe => l.filterShoe,
-                        _Filter.mine => l.filterMine,
-                      }),
-                      selected: _filter == f,
-                      onSelected: (_) => setState(() => _filter = f),
+              child: Row(
+                children: [
+                  for (final f in _Filter.values)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        label: Text(switch (f) {
+                          _Filter.all => l.filterAll,
+                          _Filter.hand => l.filterHand,
+                          _Filter.shoe => l.filterShoe,
+                          _Filter.mine => l.filterMine,
+                        }),
+                        selected: _filter == f,
+                        onSelected: (_) => setState(() => _filter = f),
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
           if (_filter == _Filter.mine)
@@ -218,12 +221,24 @@ class MarketCard extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              Text(l.marketVolume(compactVolume(context, m.volumeCents)), style: TextStyle(color: p.textMuted, fontSize: 11.5)),
-              const SizedBox(width: 10),
-              Icon(Icons.group_outlined, size: 14, color: p.textMuted),
-              const SizedBox(width: 2),
-              Text('${m.tradeCount}', style: TextStyle(color: p.textMuted, fontSize: 11.5)),
-              const Spacer(),
+              Expanded(
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        l.marketVolume(compactVolume(context, m.volumeCents)),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: p.textMuted, fontSize: 11.5),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(Icons.group_outlined, size: 14, color: p.textMuted),
+                    const SizedBox(width: 2),
+                    Text('${m.tradeCount}', style: TextStyle(color: p.textMuted, fontSize: 11.5)),
+                  ],
+                ),
+              ),
               if (!settled)
                 Row(children: [
                   Container(width: 6, height: 6, decoration: BoxDecoration(color: p.loss, shape: BoxShape.circle)),

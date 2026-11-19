@@ -23,13 +23,16 @@ abstract final class Backend {
   };
 
   // TIMING (ms).
-  static const bettingMs = 15000;
+  static const bettingMs = 20000;
   static const decisionMs = 20000;
   static const insuranceMs = 20000;
   static const settledMs = 6000;
 
   /// Call `pokeTable` when `now > deadline + pokeGraceMs` and nothing changed.
-  static const pokeGraceMs = 500;
+  /// Must exceed the server's DECISION_GRACE_MS (2 500 ms, human decisions):
+  /// poking earlier is a no-op.
+  static const decisionGraceMs = 2500;
+  static const pokeGraceMs = decisionGraceMs + 500;
 
   /// `RANK_TIER_THRESHOLDS` (minimum rankPoints per tier).
   static const rankTierThresholds = <RankTier, int>{
