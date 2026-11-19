@@ -105,8 +105,22 @@ class _MarketsScreenState extends ConsumerState<MarketsScreen> {
               ],
             ),
           ),
+          if (_filter == _Filter.mine)
+            Column(
+              children: [
+                if (positions.isEmpty) EmptyState(icon: Icons.account_balance_wallet_outlined, text: l.marketsEmpty),
+                for (final pos in positions)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
+                    child: PositionCard(position: pos, priceYes: prices[pos.marketId]),
+                  ),
+              ],
+            )
+          else
           AsyncBody(
             value: markets,
+            isEmpty: (list) => list.isEmpty,
+            empty: EmptyState(icon: Icons.show_chart, text: l.marketsEmpty),
             builder: (list) {
               final ids = positions.map((p) => p.marketId).toSet();
               final shown = list.where((m) => switch (_filter) {
@@ -285,6 +299,72 @@ class _ProbabilityGauge extends StatelessWidget {
               Text(formatPercent(probability, locale: context.lang),
                   style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 12)),
               Text(context.l10n.chance, style: TextStyle(color: p.textMuted, fontSize: 8.5)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One spectator position (open or final), tap → market detail.
+class PositionCard extends StatelessWidget {
+  const PositionCard({super.key, required this.position, this.priceYes});
+  final MarketPosition position;
+
+  /// Live YES price when the market is still open (null otherwise).
+  final double? priceYes;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    final pos = position;
+    final price = priceYes ?? 0.5;
+    final pnl = pos.pnlCents(price);
+    final (label, color) = switch (pos.status) {
+      PositionStatus.open => (l.positionOpen, p.textMuted),
+      PositionStatus.won => (l.positionWon, p.win),
+      PositionStatus.lost => (l.positionLost, p.loss),
+      PositionStatus.voided => (l.positionVoid, BrandColors.blue),
+    };
+    final question = pos.question.of(context.lang);
+    return Panel(
+      key: Key('position-${pos.marketId}'),
+      onTap: () => context.push('/markets/${pos.marketId}'),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(question.isEmpty ? pos.marketId : question,
+                    style: const TextStyle(fontWeight: FontWeight.w700), maxLines: 2, overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 4),
+                Text(
+                  [
+                    if (pos.yesShares > 0) '${l.yes} ×${pos.yesShares}',
+                    if (pos.noShares > 0) '${l.no} ×${pos.noShares}',
+                  ].join(' · '),
+                  style: TextStyle(color: p.textMuted, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(color: color.withValues(alpha: 0.18), borderRadius: BorderRadius.circular(6)),
+                child: Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w800, fontSize: 11)),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                context.money(pnl, signed: true),
+                style: TextStyle(color: pnl >= 0 ? p.win : p.loss, fontWeight: FontWeight.w800),
+              ),
             ],
           ),
         ],

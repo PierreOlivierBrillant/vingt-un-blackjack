@@ -8,6 +8,7 @@ import '../../core/widgets.dart';
 import '../../data/error_messages.dart';
 import '../../data/providers.dart';
 import '../../data/repositories.dart';
+import '../../domain/backend_constants.dart';
 import '../../domain/card_style.dart';
 import '../../domain/cards.dart';
 import '../../domain/models.dart';
@@ -70,6 +71,7 @@ class LobbyScreen extends ConsumerWidget {
             child: _Hero(
               onPlay: () => _join(context, ref, selected ?? 'low'),
               onDemo: () => context.push('/dealer-demo'),
+              onPrivate: () => showPrivateTableSheet(context, stakeTier: selected ?? 'low'),
             ),
           ),
           const Padding(padding: EdgeInsets.fromLTRB(16, 12, 16, 0), child: AdBanner()),
@@ -195,9 +197,10 @@ class _RecentWinsTickerState extends State<RecentWinsTicker> with SingleTickerPr
 }
 
 class _Hero extends ConsumerWidget {
-  const _Hero({required this.onPlay, required this.onDemo});
+  const _Hero({required this.onPlay, required this.onDemo, required this.onPrivate});
   final VoidCallback onPlay;
   final VoidCallback onDemo;
+  final VoidCallback onPrivate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -267,6 +270,16 @@ class _Hero extends ConsumerWidget {
                       ),
                       icon: const Icon(Icons.smart_toy_outlined),
                       label: Text(l.lobbyDealerDemo),
+                    ),
+                    OutlinedButton.icon(
+                      key: const Key('lobby-private'),
+                      onPressed: onPrivate,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.white54),
+                      ),
+                      icon: const Icon(Icons.lock_outline),
+                      label: Text(l.lobbyPrivate),
                     ),
                   ],
                 ),
@@ -351,7 +364,6 @@ class _TableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = context.palette;
-    final full = table.seatsTaken - table.bots >= table.seatsTotal;
     return Panel(
       onTap: onPlay,
       child: Row(
@@ -421,11 +433,129 @@ class _TableCard extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           FilledButton(
-            onPressed: full ? null : onPlay,
+            onPressed: onPlay,
             style: FilledButton.styleFrom(minimumSize: const Size(64, 36), padding: const EdgeInsets.symmetric(horizontal: 14)),
-            child: Text(full ? l.tableFull : l.play),
+            child: Text(l.watch),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Create a private table (no bots, shareable 6-char code) or join one.
+Future<void> showPrivateTableSheet(BuildContext context, {required String stakeTier}) =>
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _PrivateTableSheet(stakeTier: stakeTier),
+    );
+
+class _PrivateTableSheet extends ConsumerStatefulWidget {
+  const _PrivateTableSheet({required this.stakeTier});
+  final String stakeTier;
+
+  @override
+  ConsumerState<_PrivateTableSheet> createState() => _PrivateTableSheetState();
+}
+
+class _PrivateTableSheetState extends ConsumerState<_PrivateTableSheet> {
+  final _code = TextEditingController();
+  late String _tier = widget.stakeTier;
+  bool _busy = false;
+  String? _error;
+  final _keys = <String, String>{};
+
+  @override
+  void dispose() {
+    _code.dispose();
+    super.dispose();
+  }
+
+  Future<void> _go(MatchMode mode) async {
+    final l = context.l10n;
+    final code = _code.text.trim().toUpperCase();
+    if (mode == MatchMode.joinCode && !Backend.tableCodePattern.hasMatch(code)) {
+      setState(() => _error = l.privateCodeInvalid);
+      return;
+    }
+    final op = '${mode.name}|$_tier|$code';
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final r = await ref.read(lobbyRepositoryProvider).joinMatchmaking(
+            mode: mode,
+            stakeTier: _tier,
+            code: mode == MatchMode.joinCode ? code : null,
+            idempotencyKey: _keys[op] ??= newIdempotencyKey(),
+          );
+      _keys.remove(op);
+      if (!mounted) return;
+      final router = GoRouter.of(context);
+      Navigator.of(context).pop();
+      final c = r.code ?? (mode == MatchMode.joinCode ? code : null);
+      await router.push(c == null ? '/table/${r.tableId}' : '/table/${r.tableId}?code=$c');
+    } on Object catch (e) {
+      if (mounted) setState(() => _error = localizeError(l, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + MediaQuery.viewInsetsOf(context).bottom),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l.lobbyPrivate, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 4),
+            Text(l.privateIntro, style: TextStyle(color: context.palette.textMuted, fontSize: 12.5)),
+            const SizedBox(height: 12),
+            SegmentedButton<String>(
+              segments: [for (final t in Backend.stakeTiers) ButtonSegment(value: t, label: Text(tierName(l, t)))],
+              selected: {_tier},
+              showSelectedIcon: false,
+              onSelectionChanged: (s) => setState(() => _tier = s.first),
+            ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              key: const Key('private-create'),
+              onPressed: _busy ? null : () => _go(MatchMode.createPrivate),
+              icon: const Icon(Icons.add),
+              label: Text(l.privateCreate),
+            ),
+            const Divider(height: 28),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    key: const Key('private-code'),
+                    controller: _code,
+                    maxLength: 6,
+                    textCapitalization: TextCapitalization.characters,
+                    autocorrect: false,
+                    decoration: InputDecoration(labelText: l.privateCodeLabel, counterText: ''),
+                    onSubmitted: (_) => _go(MatchMode.joinCode),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                OutlinedButton(
+                  key: const Key('private-join'),
+                  onPressed: _busy ? null : () => _go(MatchMode.joinCode),
+                  child: Text(l.privateJoin),
+                ),
+              ],
+            ),
+            if (_error != null) InlineError(_error!),
+          ],
+        ),
       ),
     );
   }

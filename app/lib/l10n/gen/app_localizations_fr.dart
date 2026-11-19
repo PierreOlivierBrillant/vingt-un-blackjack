@@ -552,7 +552,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fairBody =>
-      'Empreinte SHA-256 de la graine du sabot, publiée avant la main. La graine est révélée à la fin du sabot pour vérification.';
+      'Avant chaque main, le serveur publie l\'empreinte SHA-256 d\'une graine secrète. Après la main, il révèle la graine : on peut recalculer l\'ordre exact des cartes.';
 
   @override
   String get leaveTable => 'Quitter la table';
@@ -744,7 +744,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lbPointsRule =>
-      'Victoire +10 · Blackjack +25 · Défaite −5. Paliers : Bronze → Diamant.';
+      'Victoire +10 · Blackjack +15 · Égalité +2 · Défaite −4. Paliers : Bronze → Diamant.';
 
   @override
   String lbHandsWinRate(int hands, String rate) {
@@ -838,7 +838,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mqNatural => 'Un blackjack naturel ?';
 
   @override
-  String get mqShoe => 'Le croupier saute 3 fois ou plus sur ce sabot ?';
+  String get mqShoe =>
+      'Le croupier saute dans au moins 28 % des mains de ce sabot ?';
 
   @override
   String get marketPerShoe => 'sabot en cours';
@@ -1041,4 +1042,471 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get rulesSummary =>
       'Règles : 6 jeux, le croupier reste sur tout 17, blackjack payé 3:2, assurance 2:1, double sur deux cartes (aussi après split), split jusqu\'à 4 mains, As séparés : une carte chacun, abandon tardif.';
+
+  @override
+  String get errReasonInvalidArgument =>
+      'Requête invalide. Vérifiez les valeurs saisies.';
+
+  @override
+  String get errReasonUnauthenticated => 'Session expirée. Reconnectez-vous.';
+
+  @override
+  String get errReasonRateLimited =>
+      'Trop de requêtes. Patientez un instant puis réessayez.';
+
+  @override
+  String get errReasonRequestIdReused =>
+      'Requête en double refusée. Réessayez.';
+
+  @override
+  String get errReasonProfileRequired =>
+      'Terminez d\'abord la création de votre profil.';
+
+  @override
+  String get errReasonProfileExists => 'Votre profil existe déjà.';
+
+  @override
+  String get errReasonUsernameTaken => 'Ce pseudo est déjà pris.';
+
+  @override
+  String get errReasonKycRequired =>
+      'Vérification d\'identité requise avant tout dépôt ou retrait.';
+
+  @override
+  String get errReasonKycAlreadyVerified => 'Votre identité est déjà vérifiée.';
+
+  @override
+  String get errReasonKycRejected =>
+      'Vérification d\'identité refusée (moins de 18 ans). Cette décision est définitive.';
+
+  @override
+  String get errReasonInsufficientFunds => 'Solde insuffisant.';
+
+  @override
+  String get errReasonDepositLimit =>
+      'Montant hors limites : 5 \$ à 1 000 \$ par dépôt, 5 000 \$ par jour.';
+
+  @override
+  String get errReasonTableNotFound => 'Cette table n\'existe pas.';
+
+  @override
+  String get errReasonTableClosed => 'Cette table est fermée.';
+
+  @override
+  String get errReasonTableFull => 'Cette table privée est complète.';
+
+  @override
+  String get errReasonBadCode => 'Code de table inconnu.';
+
+  @override
+  String get errReasonAlreadySeated =>
+      'Vous êtes déjà assis à une autre table. Quittez-la d\'abord.';
+
+  @override
+  String get errReasonNotSeated => 'Vous n\'êtes pas assis à cette table.';
+
+  @override
+  String get errReasonBadPhase => 'Action impossible à ce moment de la main.';
+
+  @override
+  String get errReasonStaleHand => 'La main a changé entre-temps. Réessayez.';
+
+  @override
+  String get errReasonAlreadyBet => 'Vous avez déjà misé sur cette main.';
+
+  @override
+  String get errReasonBetOutOfRange =>
+      'Mise hors limites (dollars entiers, entre le minimum et le maximum de la table).';
+
+  @override
+  String get errReasonNotYourTurn => 'Ce n\'est pas votre tour.';
+
+  @override
+  String get errReasonIllegalAction => 'Action non autorisée avec cette main.';
+
+  @override
+  String get errReasonPowerNotOwned => 'Vous ne possédez pas ce pouvoir.';
+
+  @override
+  String get errReasonPowerAlreadyUsed => 'Un seul pouvoir par main.';
+
+  @override
+  String get errReasonPowerNotApplicable =>
+      'Ce pouvoir ne s\'applique pas à cette action.';
+
+  @override
+  String get errReasonInventoryFull => 'Inventaire plein (99 maximum).';
+
+  @override
+  String get errReasonMarketNotFound => 'Ce pari n\'existe pas.';
+
+  @override
+  String get errReasonMarketClosed => 'Ce pari est fermé.';
+
+  @override
+  String get errReasonOwnTableMarket =>
+      'Impossible de parier sur la table où vous jouez.';
+
+  @override
+  String get errReasonInsufficientShares =>
+      'Vous n\'avez pas assez de parts à vendre.';
+
+  @override
+  String get errReasonSlippage =>
+      'Le prix a bougé. Vérifiez le nouveau prix et réessayez.';
+
+  @override
+  String get errReasonMarketLimit =>
+      'Ordre trop gros : le prix atteindrait sa limite.';
+
+  @override
+  String get errReasonUserNotFound => 'Joueur introuvable.';
+
+  @override
+  String get errReasonSelfFriend =>
+      'Vous ne pouvez pas vous ajouter vous-même.';
+
+  @override
+  String get errReasonAlreadyFriends => 'Vous êtes déjà amis.';
+
+  @override
+  String get errReasonRequestExists => 'Demande d\'ami déjà envoyée.';
+
+  @override
+  String get errReasonRequestNotFound => 'Cette demande d\'ami n\'existe plus.';
+
+  @override
+  String get errReasonNotFriends => 'Vous n\'êtes pas amis.';
+
+  @override
+  String get errReasonAdCooldown =>
+      'Patientez 30 secondes entre deux récompenses.';
+
+  @override
+  String get errReasonAdDailyLimit =>
+      'Limite quotidienne de récompenses atteinte (10 par jour).';
+
+  @override
+  String get errReasonInternal => 'Erreur du serveur. Réessayez plus tard.';
+
+  @override
+  String get errFailureUnavailable =>
+      'Serveur injoignable. Vérifiez votre connexion et l\'adresse du serveur.';
+
+  @override
+  String get errFailurePermissionDenied => 'Action non autorisée.';
+
+  @override
+  String get errFailureInvalidArgument => 'Requête invalide.';
+
+  @override
+  String get errFailureInsufficientFunds => 'Fonds insuffisants.';
+
+  @override
+  String get errFailureKycRequired => 'Vérification d\'identité requise.';
+
+  @override
+  String get errFailureLimitExceeded => 'Limite atteinte.';
+
+  @override
+  String get errFailureRateLimited => 'Trop de requêtes, patientez un instant.';
+
+  @override
+  String get errFailureNotFound => 'Élément introuvable.';
+
+  @override
+  String get errFailureUnknown => 'Une erreur est survenue. Réessayez.';
+
+  @override
+  String get errAuthInvalidCredentials => 'E-mail ou mot de passe incorrect.';
+
+  @override
+  String get errAuthInvalidEmail => 'Adresse e-mail invalide.';
+
+  @override
+  String get errAuthEmailInUse => 'Cette adresse e-mail est déjà utilisée.';
+
+  @override
+  String get errAuthWeakPassword =>
+      'Mot de passe trop faible (8 caractères minimum).';
+
+  @override
+  String get errAuthUsernameTaken => 'Ce pseudo est déjà pris.';
+
+  @override
+  String get errAuthInvalidUsername =>
+      'Pseudo invalide : 3 à 16 caractères, lettres, chiffres ou _.';
+
+  @override
+  String get errAuthProfileExists => 'Votre profil existe déjà.';
+
+  @override
+  String get errAuthTooManyRequests =>
+      'Trop de tentatives. Réessayez dans quelques minutes.';
+
+  @override
+  String get errAuthNetwork =>
+      'Impossible de joindre le serveur. Vérifiez votre connexion.';
+
+  @override
+  String get errAuthUnknown => 'Erreur d\'authentification. Réessayez.';
+
+  @override
+  String get commonRetry => 'Réessayer';
+
+  @override
+  String get completeProfileTitle => 'Terminer votre profil';
+
+  @override
+  String get completeProfileIntro =>
+      'Choisissez un pseudo et un avatar pour terminer l\'inscription. Le bonus de bienvenue est crédité ensuite.';
+
+  @override
+  String get completeProfileSubmit => 'Terminer';
+
+  @override
+  String get authUsernameRule => '3 à 16 caractères : lettres, chiffres ou _';
+
+  @override
+  String get authAvatarTitle => 'Avatar';
+
+  @override
+  String get authLanguageTitle => 'Langue';
+
+  @override
+  String get actionPeek => 'Coup d\'œil';
+
+  @override
+  String tableBetting(int seconds) {
+    return 'Faites vos jeux · $seconds s';
+  }
+
+  @override
+  String tablePlaceBet(String amount) {
+    return 'Miser $amount';
+  }
+
+  @override
+  String tableBetPlaced(String amount) {
+    return 'Mise placée : $amount';
+  }
+
+  @override
+  String get tableClearBet => 'Effacer';
+
+  @override
+  String get tableWaitingNextHand =>
+      'Main en cours : vous jouerez la suivante.';
+
+  @override
+  String get tableQueued =>
+      'En file d\'attente : place attribuée à la prochaine main.';
+
+  @override
+  String get tableSpectating => 'Mode spectateur';
+
+  @override
+  String get tableSpectatorHint =>
+      'Vous regardez cette table. Pariez sur ses marchés !';
+
+  @override
+  String get tableMarkets => 'Paris';
+
+  @override
+  String tableYourTurn(int seconds) {
+    return 'À vous · $seconds s';
+  }
+
+  @override
+  String tableTurnOf(String name, int seconds) {
+    return 'Tour de $name · $seconds s';
+  }
+
+  @override
+  String get tableInsuranceTitle => 'Assurance ?';
+
+  @override
+  String tableInsuranceBody(String amount) {
+    return 'Le croupier montre un As. Assurez jusqu\'à $amount (payé 2 pour 1 s\'il a un blackjack).';
+  }
+
+  @override
+  String tableInsuranceTake(String amount) {
+    return 'Assurer $amount';
+  }
+
+  @override
+  String get tableInsuranceDecline => 'Non merci';
+
+  @override
+  String tableInsuranceWait(int seconds) {
+    return 'Assurance · $seconds s';
+  }
+
+  @override
+  String tableResult(String amount) {
+    return 'Résultat de la main : $amount';
+  }
+
+  @override
+  String get tableSettled => 'Main terminée';
+
+  @override
+  String get tableDealerPlays => 'Le croupier joue…';
+
+  @override
+  String get tableIdle => 'En attente de joueurs…';
+
+  @override
+  String get tableClosedNotice => 'Cette table est fermée.';
+
+  @override
+  String tablePowerArmed(String name) {
+    return 'Pouvoir prêt : $name';
+  }
+
+  @override
+  String tablePowerUsed(String name) {
+    return 'Pouvoir utilisé : $name';
+  }
+
+  @override
+  String get tablePowerNone => 'Aucun';
+
+  @override
+  String get tablePowerHint =>
+      'S\'applique à votre prochaine action compatible.';
+
+  @override
+  String get tablePowerShop => 'Acheter des pouvoirs';
+
+  @override
+  String tablePeekCard(String card) {
+    return 'Coup d\'œil : carte cachée $card';
+  }
+
+  @override
+  String tablePrivateCode(String code) {
+    return 'Code : $code';
+  }
+
+  @override
+  String tableSecondChance(String card) {
+    return 'Seconde chance : la carte $card a été remplacée.';
+  }
+
+  @override
+  String get tableOffline => 'Hors ligne : affichage possiblement périmé.';
+
+  @override
+  String get tableLeaveConfirm =>
+      'Quitter la table ? Une main en cours sera jouée « rester » automatiquement.';
+
+  @override
+  String tableShoeInfo(int n, int cards) {
+    return 'Sabot n° $n · $cards cartes';
+  }
+
+  @override
+  String get fairCurrentCommit =>
+      'Engagement de la main en cours (SHA-256 de la graine)';
+
+  @override
+  String fairLastHand(int n) {
+    return 'Main n° $n : graine révélée';
+  }
+
+  @override
+  String get fairVerify => 'Vérifier la dernière main';
+
+  @override
+  String fairVerified(int n) {
+    return 'Vérifié : SHA-256(graine) = engagement, et les $n cartes distribuées correspondent à l\'ordre recalculé.';
+  }
+
+  @override
+  String get fairFailed =>
+      'Échec de la vérification : la preuve ne correspond pas.';
+
+  @override
+  String get fairNoHistory =>
+      'Aucune main terminée sur cette table pour l\'instant.';
+
+  @override
+  String get lobbyPrivate => 'Table privée';
+
+  @override
+  String get privateIntro =>
+      'Jouez entre amis, sans bots : créez une table et partagez son code, ou rejoignez celle d\'un ami.';
+
+  @override
+  String get privateCreate => 'Créer une table';
+
+  @override
+  String get privateJoin => 'Rejoindre';
+
+  @override
+  String get privateCodeLabel => 'Code de table (6 caractères)';
+
+  @override
+  String get privateCodeInvalid => '6 lettres ou chiffres.';
+
+  @override
+  String privateCreated(String code) {
+    return 'Table privée créée. Code : $code';
+  }
+
+  @override
+  String get friendsSuggestions => 'Suggestions';
+
+  @override
+  String get friendsSent => 'Demandes envoyées';
+
+  @override
+  String get friendsPending => 'En attente de réponse';
+
+  @override
+  String get friendsRemove => 'Retirer';
+
+  @override
+  String friendsRemoved(String name) {
+    return '$name retiré de vos amis.';
+  }
+
+  @override
+  String friendsAccepted(String name) {
+    return 'Vous êtes maintenant ami avec $name.';
+  }
+
+  @override
+  String get friendsEmpty =>
+      'Pas encore d\'amis : recherchez un pseudo ci-dessus.';
+
+  @override
+  String walletWatchAd(String amount) {
+    return 'Regarder une pub (+$amount)';
+  }
+
+  @override
+  String adRewardsLeft(int n) {
+    return '$n récompenses restantes aujourd\'hui';
+  }
+
+  @override
+  String get marketsEmpty => 'Aucun marché ouvert pour l\'instant.';
+
+  @override
+  String get positionOpen => 'En cours';
+
+  @override
+  String get positionWon => 'Gagné';
+
+  @override
+  String get positionLost => 'Perdu';
+
+  @override
+  String get positionVoid => 'Remboursé';
+
+  @override
+  String get tableBetsHere => 'Paris sur cette table';
 }

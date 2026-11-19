@@ -94,7 +94,7 @@ class CallableClient {
           continue;
         }
         onTransport?.call(!transient);
-        debugPrint('[callable] $name failed: ${e.code} ${e.details}');
+        debugPrint('[callable] $name failed: ${e.code} ${e.details} ${e.message ?? ''}');
         if (e.code == 'internal-transport') throw RepositoryException(RepositoryFailure.unavailable, e.message);
         throw mapServerError(e.code, e.details, e.message);
       } on TimeoutException {

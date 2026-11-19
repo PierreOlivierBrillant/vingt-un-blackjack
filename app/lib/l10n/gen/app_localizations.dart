@@ -1097,7 +1097,7 @@ abstract class AppLocalizations {
   /// No description provided for @fairBody.
   ///
   /// In fr, this message translates to:
-  /// **'Empreinte SHA-256 de la graine du sabot, publiée avant la main. La graine est révélée à la fin du sabot pour vérification.'**
+  /// **'Avant chaque main, le serveur publie l\'empreinte SHA-256 d\'une graine secrète. Après la main, il révèle la graine : on peut recalculer l\'ordre exact des cartes.'**
   String get fairBody;
 
   /// No description provided for @leaveTable.
@@ -1427,7 +1427,7 @@ abstract class AppLocalizations {
   /// No description provided for @lbPointsRule.
   ///
   /// In fr, this message translates to:
-  /// **'Victoire +10 · Blackjack +25 · Défaite −5. Paliers : Bronze → Diamant.'**
+  /// **'Victoire +10 · Blackjack +15 · Égalité +2 · Défaite −4. Paliers : Bronze → Diamant.'**
   String get lbPointsRule;
 
   /// No description provided for @lbHandsWinRate.
@@ -1583,7 +1583,7 @@ abstract class AppLocalizations {
   /// No description provided for @mqShoe.
   ///
   /// In fr, this message translates to:
-  /// **'Le croupier saute 3 fois ou plus sur ce sabot ?'**
+  /// **'Le croupier saute dans au moins 28 % des mains de ce sabot ?'**
   String get mqShoe;
 
   /// No description provided for @marketPerShoe.
@@ -1939,6 +1939,786 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Règles : 6 jeux, le croupier reste sur tout 17, blackjack payé 3:2, assurance 2:1, double sur deux cartes (aussi après split), split jusqu\'à 4 mains, As séparés : une carte chacun, abandon tardif.'**
   String get rulesSummary;
+
+  /// No description provided for @errReasonInvalidArgument.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requête invalide. Vérifiez les valeurs saisies.'**
+  String get errReasonInvalidArgument;
+
+  /// No description provided for @errReasonUnauthenticated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session expirée. Reconnectez-vous.'**
+  String get errReasonUnauthenticated;
+
+  /// No description provided for @errReasonRateLimited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop de requêtes. Patientez un instant puis réessayez.'**
+  String get errReasonRateLimited;
+
+  /// No description provided for @errReasonRequestIdReused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requête en double refusée. Réessayez.'**
+  String get errReasonRequestIdReused;
+
+  /// No description provided for @errReasonProfileRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminez d\'abord la création de votre profil.'**
+  String get errReasonProfileRequired;
+
+  /// No description provided for @errReasonProfileExists.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre profil existe déjà.'**
+  String get errReasonProfileExists;
+
+  /// No description provided for @errReasonUsernameTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce pseudo est déjà pris.'**
+  String get errReasonUsernameTaken;
+
+  /// No description provided for @errReasonKycRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification d\'identité requise avant tout dépôt ou retrait.'**
+  String get errReasonKycRequired;
+
+  /// No description provided for @errReasonKycAlreadyVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre identité est déjà vérifiée.'**
+  String get errReasonKycAlreadyVerified;
+
+  /// No description provided for @errReasonKycRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification d\'identité refusée (moins de 18 ans). Cette décision est définitive.'**
+  String get errReasonKycRejected;
+
+  /// No description provided for @errReasonInsufficientFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde insuffisant.'**
+  String get errReasonInsufficientFunds;
+
+  /// No description provided for @errReasonDepositLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant hors limites : 5 \$ à 1 000 \$ par dépôt, 5 000 \$ par jour.'**
+  String get errReasonDepositLimit;
+
+  /// No description provided for @errReasonTableNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette table n\'existe pas.'**
+  String get errReasonTableNotFound;
+
+  /// No description provided for @errReasonTableClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette table est fermée.'**
+  String get errReasonTableClosed;
+
+  /// No description provided for @errReasonTableFull.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette table privée est complète.'**
+  String get errReasonTableFull;
+
+  /// No description provided for @errReasonBadCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code de table inconnu.'**
+  String get errReasonBadCode;
+
+  /// No description provided for @errReasonAlreadySeated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes déjà assis à une autre table. Quittez-la d\'abord.'**
+  String get errReasonAlreadySeated;
+
+  /// No description provided for @errReasonNotSeated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'êtes pas assis à cette table.'**
+  String get errReasonNotSeated;
+
+  /// No description provided for @errReasonBadPhase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action impossible à ce moment de la main.'**
+  String get errReasonBadPhase;
+
+  /// No description provided for @errReasonStaleHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'La main a changé entre-temps. Réessayez.'**
+  String get errReasonStaleHand;
+
+  /// No description provided for @errReasonAlreadyBet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez déjà misé sur cette main.'**
+  String get errReasonAlreadyBet;
+
+  /// No description provided for @errReasonBetOutOfRange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise hors limites (dollars entiers, entre le minimum et le maximum de la table).'**
+  String get errReasonBetOutOfRange;
+
+  /// No description provided for @errReasonNotYourTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce n\'est pas votre tour.'**
+  String get errReasonNotYourTurn;
+
+  /// No description provided for @errReasonIllegalAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action non autorisée avec cette main.'**
+  String get errReasonIllegalAction;
+
+  /// No description provided for @errReasonPowerNotOwned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne possédez pas ce pouvoir.'**
+  String get errReasonPowerNotOwned;
+
+  /// No description provided for @errReasonPowerAlreadyUsed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un seul pouvoir par main.'**
+  String get errReasonPowerAlreadyUsed;
+
+  /// No description provided for @errReasonPowerNotApplicable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce pouvoir ne s\'applique pas à cette action.'**
+  String get errReasonPowerNotApplicable;
+
+  /// No description provided for @errReasonInventoryFull.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inventaire plein (99 maximum).'**
+  String get errReasonInventoryFull;
+
+  /// No description provided for @errReasonMarketNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce pari n\'existe pas.'**
+  String get errReasonMarketNotFound;
+
+  /// No description provided for @errReasonMarketClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce pari est fermé.'**
+  String get errReasonMarketClosed;
+
+  /// No description provided for @errReasonOwnTableMarket.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de parier sur la table où vous jouez.'**
+  String get errReasonOwnTableMarket;
+
+  /// No description provided for @errReasonInsufficientShares.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'avez pas assez de parts à vendre.'**
+  String get errReasonInsufficientShares;
+
+  /// No description provided for @errReasonSlippage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prix a bougé. Vérifiez le nouveau prix et réessayez.'**
+  String get errReasonSlippage;
+
+  /// No description provided for @errReasonMarketLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ordre trop gros : le prix atteindrait sa limite.'**
+  String get errReasonMarketLimit;
+
+  /// No description provided for @errReasonUserNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur introuvable.'**
+  String get errReasonUserNotFound;
+
+  /// No description provided for @errReasonSelfFriend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne pouvez pas vous ajouter vous-même.'**
+  String get errReasonSelfFriend;
+
+  /// No description provided for @errReasonAlreadyFriends.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes déjà amis.'**
+  String get errReasonAlreadyFriends;
+
+  /// No description provided for @errReasonRequestExists.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande d\'ami déjà envoyée.'**
+  String get errReasonRequestExists;
+
+  /// No description provided for @errReasonRequestNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette demande d\'ami n\'existe plus.'**
+  String get errReasonRequestNotFound;
+
+  /// No description provided for @errReasonNotFriends.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'êtes pas amis.'**
+  String get errReasonNotFriends;
+
+  /// No description provided for @errReasonAdCooldown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Patientez 30 secondes entre deux récompenses.'**
+  String get errReasonAdCooldown;
+
+  /// No description provided for @errReasonAdDailyLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Limite quotidienne de récompenses atteinte (10 par jour).'**
+  String get errReasonAdDailyLimit;
+
+  /// No description provided for @errReasonInternal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur du serveur. Réessayez plus tard.'**
+  String get errReasonInternal;
+
+  /// No description provided for @errFailureUnavailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Serveur injoignable. Vérifiez votre connexion et l\'adresse du serveur.'**
+  String get errFailureUnavailable;
+
+  /// No description provided for @errFailurePermissionDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action non autorisée.'**
+  String get errFailurePermissionDenied;
+
+  /// No description provided for @errFailureInvalidArgument.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requête invalide.'**
+  String get errFailureInvalidArgument;
+
+  /// No description provided for @errFailureInsufficientFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fonds insuffisants.'**
+  String get errFailureInsufficientFunds;
+
+  /// No description provided for @errFailureKycRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification d\'identité requise.'**
+  String get errFailureKycRequired;
+
+  /// No description provided for @errFailureLimitExceeded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Limite atteinte.'**
+  String get errFailureLimitExceeded;
+
+  /// No description provided for @errFailureRateLimited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop de requêtes, patientez un instant.'**
+  String get errFailureRateLimited;
+
+  /// No description provided for @errFailureNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élément introuvable.'**
+  String get errFailureNotFound;
+
+  /// No description provided for @errFailureUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur est survenue. Réessayez.'**
+  String get errFailureUnknown;
+
+  /// No description provided for @errAuthInvalidCredentials.
+  ///
+  /// In fr, this message translates to:
+  /// **'E-mail ou mot de passe incorrect.'**
+  String get errAuthInvalidCredentials;
+
+  /// No description provided for @errAuthInvalidEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse e-mail invalide.'**
+  String get errAuthInvalidEmail;
+
+  /// No description provided for @errAuthEmailInUse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette adresse e-mail est déjà utilisée.'**
+  String get errAuthEmailInUse;
+
+  /// No description provided for @errAuthWeakPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe trop faible (8 caractères minimum).'**
+  String get errAuthWeakPassword;
+
+  /// No description provided for @errAuthUsernameTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce pseudo est déjà pris.'**
+  String get errAuthUsernameTaken;
+
+  /// No description provided for @errAuthInvalidUsername.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pseudo invalide : 3 à 16 caractères, lettres, chiffres ou _.'**
+  String get errAuthInvalidUsername;
+
+  /// No description provided for @errAuthProfileExists.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre profil existe déjà.'**
+  String get errAuthProfileExists;
+
+  /// No description provided for @errAuthTooManyRequests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop de tentatives. Réessayez dans quelques minutes.'**
+  String get errAuthTooManyRequests;
+
+  /// No description provided for @errAuthNetwork.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de joindre le serveur. Vérifiez votre connexion.'**
+  String get errAuthNetwork;
+
+  /// No description provided for @errAuthUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur d\'authentification. Réessayez.'**
+  String get errAuthUnknown;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get commonRetry;
+
+  /// No description provided for @completeProfileTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminer votre profil'**
+  String get completeProfileTitle;
+
+  /// No description provided for @completeProfileIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez un pseudo et un avatar pour terminer l\'inscription. Le bonus de bienvenue est crédité ensuite.'**
+  String get completeProfileIntro;
+
+  /// No description provided for @completeProfileSubmit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminer'**
+  String get completeProfileSubmit;
+
+  /// No description provided for @authUsernameRule.
+  ///
+  /// In fr, this message translates to:
+  /// **'3 à 16 caractères : lettres, chiffres ou _'**
+  String get authUsernameRule;
+
+  /// No description provided for @authAvatarTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avatar'**
+  String get authAvatarTitle;
+
+  /// No description provided for @authLanguageTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue'**
+  String get authLanguageTitle;
+
+  /// No description provided for @actionPeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coup d\'œil'**
+  String get actionPeek;
+
+  /// No description provided for @tableBetting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faites vos jeux · {seconds} s'**
+  String tableBetting(int seconds);
+
+  /// No description provided for @tablePlaceBet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Miser {amount}'**
+  String tablePlaceBet(String amount);
+
+  /// No description provided for @tableBetPlaced.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise placée : {amount}'**
+  String tableBetPlaced(String amount);
+
+  /// No description provided for @tableClearBet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer'**
+  String get tableClearBet;
+
+  /// No description provided for @tableWaitingNextHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Main en cours : vous jouerez la suivante.'**
+  String get tableWaitingNextHand;
+
+  /// No description provided for @tableQueued.
+  ///
+  /// In fr, this message translates to:
+  /// **'En file d\'attente : place attribuée à la prochaine main.'**
+  String get tableQueued;
+
+  /// No description provided for @tableSpectating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode spectateur'**
+  String get tableSpectating;
+
+  /// No description provided for @tableSpectatorHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous regardez cette table. Pariez sur ses marchés !'**
+  String get tableSpectatorHint;
+
+  /// No description provided for @tableMarkets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paris'**
+  String get tableMarkets;
+
+  /// No description provided for @tableYourTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'À vous · {seconds} s'**
+  String tableYourTurn(int seconds);
+
+  /// No description provided for @tableTurnOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour de {name} · {seconds} s'**
+  String tableTurnOf(String name, int seconds);
+
+  /// No description provided for @tableInsuranceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assurance ?'**
+  String get tableInsuranceTitle;
+
+  /// No description provided for @tableInsuranceBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le croupier montre un As. Assurez jusqu\'à {amount} (payé 2 pour 1 s\'il a un blackjack).'**
+  String tableInsuranceBody(String amount);
+
+  /// No description provided for @tableInsuranceTake.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assurer {amount}'**
+  String tableInsuranceTake(String amount);
+
+  /// No description provided for @tableInsuranceDecline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non merci'**
+  String get tableInsuranceDecline;
+
+  /// No description provided for @tableInsuranceWait.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assurance · {seconds} s'**
+  String tableInsuranceWait(int seconds);
+
+  /// No description provided for @tableResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résultat de la main : {amount}'**
+  String tableResult(String amount);
+
+  /// No description provided for @tableSettled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Main terminée'**
+  String get tableSettled;
+
+  /// No description provided for @tableDealerPlays.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le croupier joue…'**
+  String get tableDealerPlays;
+
+  /// No description provided for @tableIdle.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente de joueurs…'**
+  String get tableIdle;
+
+  /// No description provided for @tableClosedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette table est fermée.'**
+  String get tableClosedNotice;
+
+  /// No description provided for @tablePowerArmed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pouvoir prêt : {name}'**
+  String tablePowerArmed(String name);
+
+  /// No description provided for @tablePowerUsed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pouvoir utilisé : {name}'**
+  String tablePowerUsed(String name);
+
+  /// No description provided for @tablePowerNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun'**
+  String get tablePowerNone;
+
+  /// No description provided for @tablePowerHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'S\'applique à votre prochaine action compatible.'**
+  String get tablePowerHint;
+
+  /// No description provided for @tablePowerShop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acheter des pouvoirs'**
+  String get tablePowerShop;
+
+  /// No description provided for @tablePeekCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coup d\'œil : carte cachée {card}'**
+  String tablePeekCard(String card);
+
+  /// No description provided for @tablePrivateCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code : {code}'**
+  String tablePrivateCode(String code);
+
+  /// No description provided for @tableSecondChance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seconde chance : la carte {card} a été remplacée.'**
+  String tableSecondChance(String card);
+
+  /// No description provided for @tableOffline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors ligne : affichage possiblement périmé.'**
+  String get tableOffline;
+
+  /// No description provided for @tableLeaveConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter la table ? Une main en cours sera jouée « rester » automatiquement.'**
+  String get tableLeaveConfirm;
+
+  /// No description provided for @tableShoeInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sabot n° {n} · {cards} cartes'**
+  String tableShoeInfo(int n, int cards);
+
+  /// No description provided for @fairCurrentCommit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagement de la main en cours (SHA-256 de la graine)'**
+  String get fairCurrentCommit;
+
+  /// No description provided for @fairLastHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Main n° {n} : graine révélée'**
+  String fairLastHand(int n);
+
+  /// No description provided for @fairVerify.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier la dernière main'**
+  String get fairVerify;
+
+  /// No description provided for @fairVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifié : SHA-256(graine) = engagement, et les {n} cartes distribuées correspondent à l\'ordre recalculé.'**
+  String fairVerified(int n);
+
+  /// No description provided for @fairFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la vérification : la preuve ne correspond pas.'**
+  String get fairFailed;
+
+  /// No description provided for @fairNoHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune main terminée sur cette table pour l\'instant.'**
+  String get fairNoHistory;
+
+  /// No description provided for @lobbyPrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Table privée'**
+  String get lobbyPrivate;
+
+  /// No description provided for @privateIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jouez entre amis, sans bots : créez une table et partagez son code, ou rejoignez celle d\'un ami.'**
+  String get privateIntro;
+
+  /// No description provided for @privateCreate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une table'**
+  String get privateCreate;
+
+  /// No description provided for @privateJoin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejoindre'**
+  String get privateJoin;
+
+  /// No description provided for @privateCodeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code de table (6 caractères)'**
+  String get privateCodeLabel;
+
+  /// No description provided for @privateCodeInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 lettres ou chiffres.'**
+  String get privateCodeInvalid;
+
+  /// No description provided for @privateCreated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Table privée créée. Code : {code}'**
+  String privateCreated(String code);
+
+  /// No description provided for @friendsSuggestions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suggestions'**
+  String get friendsSuggestions;
+
+  /// No description provided for @friendsSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demandes envoyées'**
+  String get friendsSent;
+
+  /// No description provided for @friendsPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente de réponse'**
+  String get friendsPending;
+
+  /// No description provided for @friendsRemove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer'**
+  String get friendsRemove;
+
+  /// No description provided for @friendsRemoved.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} retiré de vos amis.'**
+  String friendsRemoved(String name);
+
+  /// No description provided for @friendsAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes maintenant ami avec {name}.'**
+  String friendsAccepted(String name);
+
+  /// No description provided for @friendsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d\'amis : recherchez un pseudo ci-dessus.'**
+  String get friendsEmpty;
+
+  /// No description provided for @walletWatchAd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Regarder une pub (+{amount})'**
+  String walletWatchAd(String amount);
+
+  /// No description provided for @adRewardsLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} récompenses restantes aujourd\'hui'**
+  String adRewardsLeft(int n);
+
+  /// No description provided for @marketsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun marché ouvert pour l\'instant.'**
+  String get marketsEmpty;
+
+  /// No description provided for @positionOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get positionOpen;
+
+  /// No description provided for @positionWon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gagné'**
+  String get positionWon;
+
+  /// No description provided for @positionLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Perdu'**
+  String get positionLost;
+
+  /// No description provided for @positionVoid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remboursé'**
+  String get positionVoid;
+
+  /// No description provided for @tableBetsHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paris sur cette table'**
+  String get tableBetsHere;
 }
 
 class _AppLocalizationsDelegate

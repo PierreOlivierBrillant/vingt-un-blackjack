@@ -278,6 +278,16 @@ class _OrderTicketState extends ConsumerState<OrderTicket> {
     _refreshQuote();
   }
 
+  /// The market doc is live: re-quote whenever its LMSR state changes, so the
+  /// estimate (and the slippage guard sent with the order) stays current.
+  @override
+  void didUpdateWidget(OrderTicket old) {
+    super.didUpdateWidget(old);
+    final a = old.market;
+    final b = widget.market;
+    if (a.id != b.id || a.qYes != b.qYes || a.qNo != b.qNo || a.b != b.b || a.status != b.status) _refreshQuote();
+  }
+
   Future<void> _refreshQuote() async {
     try {
       final q = await ref.read(marketsRepositoryProvider).quote(widget.market.id, _outcome, _shares, buy: _buy);

@@ -200,7 +200,10 @@ class _KycScreenState extends ConsumerState<KycScreen> with SingleTickerProvider
   Widget _review(BuildContext context) {
     final l = context.l10n;
     final p = context.palette;
-    final r = _result;
+    // The callable answers "pending"; the final decision arrives later on
+    // `users/{uid}/private/kyc` (refresh scheduled by the repository).
+    final live = ref.watch(kycStatusProvider).value;
+    final r = live == KycStatus.verified || live == KycStatus.rejected ? live : _result;
     final (icon, color, title, body) = switch (r) {
       null || KycStatus.pending || KycStatus.none => (Icons.hourglass_top, p.warning, l.kycPending, l.kycPendingBody),
       KycStatus.verified => (Icons.verified, p.win, l.kycVerified, l.kycVerifiedBody),

@@ -3,21 +3,20 @@
 /// Firestore map lives in [TableState.fromDoc] so the Firebase repository,
 /// the fakes and the tests all go through ONE code path.
 ///
-/// Card codes: the backend uses `T` for ten (`"TH"`); [PlayingCard.parse]
-/// accepts both `"TH"` and `"10H"` — [parseCardCode] is the only place where
-/// wire codes become cards.
+/// Card codes: the backend uses `T` for ten (`"TH"`), the client displays
+/// `"10H"`. Every wire code goes through [cardFromWire] (`wire.dart`).
 library;
 
 import 'package:flutter/foundation.dart';
 
 import 'cards.dart';
 import 'models.dart' show PowerType, RankTier;
+import 'wire.dart';
 
-/// Single conversion point from a backend card code (`"AS"`, `"TH"`, `"9C"`).
-PlayingCard parseCardCode(String code) => PlayingCard.parse(code);
+export 'wire.dart' show cardFromWire, cardToWire;
 
-/// Inverse of [parseCardCode], in the backend format (`T` for ten).
-String cardToWire(PlayingCard c) => '${c.rank == Rank.ten ? 'T' : c.rank.label}${c.suit.name[0].toUpperCase()}';
+/// Backend card code (`"AS"`, `"TH"`, `"9C"`) → card; see [cardFromWire].
+PlayingCard parseCardCode(String code) => cardFromWire(code);
 
 enum ServerTablePhase { idle, betting, insurance, playerTurns, settled, closed }
 
@@ -68,7 +67,7 @@ RankTier rankTierFromWire(Object? v) => _enumByName(RankTier.values, v) ?? RankT
 
 List<PlayingCard> _cards(Object? v) => [
       for (final c in _list(v))
-        if (c is String) parseCardCode(c),
+        ?cardFromWireOrNull(c),
     ];
 
 @immutable
@@ -243,7 +242,7 @@ class TableEvent {
       type: type,
       seatIndex: _intOrNull(d['seatIndex']),
       handIndex: _intOrNull(d['handIndex']),
-      card: c == null ? null : parseCardCode(c),
+      card: cardFromWireOrNull(c),
       amountCents: _intOrNull(d['amountCents']),
       result: _enumByName(HandResult.values, d['result']),
       power: powerFromWire(d['power']),

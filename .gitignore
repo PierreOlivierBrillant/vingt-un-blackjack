@@ -11,3 +11,7 @@ firebase-export-*/
 *.jks
 .env*
 local.properties
+
+# Classroom mode (tools/start_classroom.ps1): published APK + page, logs; emulator data export
+/.classroom/
+firebase/.emulator-data/

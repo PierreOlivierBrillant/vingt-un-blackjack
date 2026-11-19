@@ -3,6 +3,47 @@
 /// value instead of throwing.
 library;
 
+import 'cards.dart';
+
+// ------------------------------------------------------------ card codes --
+//
+// Backend (`types.ts`): 2-char codes, rank ∈ "A23456789TJQK" (T = ten), suit
+// ∈ "SHDC" — "TH" is the ten of hearts. The client's display label for ten is
+// "10" ([Rank.ten], `PlayingCard.code` = "10H"). These two functions are THE
+// boundary between the two spellings: everything read from Firestore or a
+// callable goes through [cardFromWire], everything compared with / sent to
+// the backend goes through [cardToWire].
+
+/// Backend code → card. Accepts the canonical `"TH"` and, leniently, `"10H"`
+/// and lower case. Throws [FormatException] for anything else.
+PlayingCard cardFromWire(String code) {
+  final c = code.trim().toUpperCase();
+  final m = RegExp(r'^(10|[A2-9TJQK])([SHDC])$').firstMatch(c);
+  if (m == null) throw FormatException('bad card code', code);
+  final r = m.group(1)!;
+  final rank = r == 'T' || r == '10' ? Rank.ten : Rank.values.firstWhere((x) => x.label == r);
+  final suit = switch (m.group(2)!) {
+    'S' => Suit.spades,
+    'H' => Suit.hearts,
+    'D' => Suit.diamonds,
+    _ => Suit.clubs,
+  };
+  return PlayingCard(rank, suit);
+}
+
+/// Null for a missing / malformed code (tolerant document parsing).
+PlayingCard? cardFromWireOrNull(Object? code) {
+  if (code is! String) return null;
+  try {
+    return cardFromWire(code);
+  } on FormatException {
+    return null;
+  }
+}
+
+/// Card → backend code (`T` for ten): `"TH"`, `"AS"`, `"9C"`.
+String cardToWire(PlayingCard c) => '${c.rank == Rank.ten ? 'T' : c.rank.label}${c.suit.name[0].toUpperCase()}';
+
 T? enumByName<T extends Enum>(List<T> values, Object? name) {
   if (name is! String) return null;
   for (final v in values) {

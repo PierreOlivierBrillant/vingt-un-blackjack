@@ -52,7 +52,7 @@ class _Board extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: Text(l.lbPointsRule, style: TextStyle(color: p.textMuted, fontSize: 11.5)),
           ),
-          for (final e in entries.skip(3))
+          for (final e in entries.length >= 3 ? entries.skip(3) : entries)
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
               decoration: BoxDecoration(

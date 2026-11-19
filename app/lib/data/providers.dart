@@ -126,6 +126,15 @@ final recentWinsProvider =
 final tableViewProvider = StreamProvider.family<TableState, String>(
   (ref, id) => ref.watch(tableRepositoryProvider).watchTable(id),
 );
+/// `tables/{id}/peeks/{me}` (peek power result), null when none.
+final peekProvider = StreamProvider.family<PeekResult?, String>(
+  (ref, id) => ref.watch(tableRepositoryProvider).watchPeek(id),
+);
+
+/// Finished hands of a table (provably-fair proofs), newest first.
+final tableHistoryProvider = StreamProvider.family<List<HandHistory>, String>(
+  (ref, id) => ref.watch(tableRepositoryProvider).watchHistory(id, limit: 10),
+);
 final powerOffersProvider =
     StreamProvider<List<PowerOffer>>((ref) => ref.watch(shopRepositoryProvider).watchOffers());
 final equippedStyleProvider =

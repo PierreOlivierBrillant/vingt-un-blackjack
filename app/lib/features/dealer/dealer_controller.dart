@@ -12,7 +12,8 @@ import 'table_geometry.dart';
 
 export 'table_geometry.dart' show HandTarget;
 
-enum DealerReaction { blackjack, bust, dealerBlackjack, dealerBust, win, push }
+/// [lose]: a hand lost against the dealer (badge only, neutral face).
+enum DealerReaction { blackjack, bust, dealerBlackjack, dealerBust, win, push, lose }
 
 enum DealerMood { neutral, smile, wince, surprised }
 
@@ -143,9 +144,13 @@ class ReactCommand extends DealerCommand {
 /// Zero-duration command that starts (or, with `seat == null`, stops) the
 /// turn timer at its exact place in the queue.
 class TurnTimerCommand extends DealerCommand {
-  const TurnTimerCommand(this.seat, this.total);
+  const TurnTimerCommand(this.seat, this.total, {this.remaining});
   final int? seat;
   final Duration total;
+
+  /// When given, evaluated as the command starts: the ring then shows the
+  /// real time left (e.g. until a server deadline) instead of a full [total].
+  final Duration Function()? remaining;
   @override
   Duration baseDuration(DealerTimings t) => Duration.zero;
   @override
@@ -379,8 +384,31 @@ class DealerController extends ChangeNotifier {
   Future<void> pause(Duration d) => _enqueue(PauseCommand(d));
 
   /// Queued variant of [startTurnTimer] / [stopTurnTimer].
-  Future<void> queueTurnTimer(int? seat, {Duration total = const Duration(seconds: 20)}) =>
-      _enqueue(TurnTimerCommand(seat, total));
+  Future<void> queueTurnTimer(int? seat, {Duration total = const Duration(seconds: 20), Duration Function()? remaining}) =>
+      _enqueue(TurnTimerCommand(seat, total, remaining: remaining));
+
+  /// Sets the number of split hands of [seat] immediately (scene rebuild
+  /// from a snapshot, before the cards are dealt to those hands).
+  void setHandCount(int seat, int count) {
+    if (count <= 1) {
+      _handCounts.remove(seat);
+    } else {
+      _handCounts[seat] = count;
+    }
+    notifyListeners();
+  }
+
+  /// Plays every queued command to its end right now (no animation). Used to
+  /// rebuild the scene from a snapshot. Feedback cues are muted meanwhile.
+  void fastForward() {
+    final saved = feedback;
+    feedback = const SilentDealerFeedback();
+    try {
+      advance(remainingDuration + const Duration(microseconds: 1));
+    } finally {
+      feedback = saved;
+    }
+  }
 
   void startTurnTimer(int seat, Duration total) {
     turnSeat = seat;
@@ -572,7 +600,7 @@ class DealerController extends ChangeNotifier {
           DealerReaction.blackjack || DealerReaction.win || DealerReaction.dealerBust => DealerMood.smile,
           DealerReaction.bust => DealerMood.wince,
           DealerReaction.dealerBlackjack => DealerMood.surprised,
-          DealerReaction.push => DealerMood.neutral,
+          DealerReaction.push || DealerReaction.lose => DealerMood.neutral,
         };
         moodLevel = 1;
         _moodElapsed = Duration.zero;
@@ -582,13 +610,13 @@ class DealerController extends ChangeNotifier {
             DealerReaction.bust => SeatBadge.bust,
             DealerReaction.win || DealerReaction.dealerBust => SeatBadge.win,
             DealerReaction.push => SeatBadge.push,
-            DealerReaction.dealerBlackjack => SeatBadge.lose,
+            DealerReaction.dealerBlackjack || DealerReaction.lose => SeatBadge.lose,
           };
           _badges[(seat, hand)] = badge;
         }
         if (reaction == DealerReaction.blackjack) _emit(r, 'bj', DealerCue.blackjack);
         if (reaction == DealerReaction.bust) _emit(r, 'bust', DealerCue.bust);
-      case TurnTimerCommand(:final seat, :final total):
+      case TurnTimerCommand(:final seat, :final total, :final remaining):
         if (seat == null) {
           turnSeat = null;
           _turnTotal = Duration.zero;
@@ -596,7 +624,8 @@ class DealerController extends ChangeNotifier {
         } else {
           turnSeat = seat;
           _turnTotal = total;
-          _turnElapsed = Duration.zero;
+          final left = remaining?.call();
+          _turnElapsed = left == null ? Duration.zero : _clampDuration(total - left, Duration.zero, total);
           _turnWarned = false;
         }
       case PauseCommand():
@@ -659,6 +688,8 @@ class DealerController extends ChangeNotifier {
     return spot + Offset(dir * 52, -18);
   }
 
+  static Duration _clampDuration(Duration d, Duration lo, Duration hi) => d < lo ? lo : (d > hi ? hi : d);
+
   static double _seg(double u, double a, double b) => ((u - a) / (b - a)).clamp(0.0, 1.0);
 
   void _step(_Running r, double u) {
@@ -696,7 +727,7 @@ class DealerController extends ChangeNotifier {
         moodLevel = 1;
         if (reaction == DealerReaction.bust || reaction == DealerReaction.dealerBlackjack) {
           headTilt = math.sin(u * 6 * math.pi) * 0.07 * (1 - u);
-        } else if (reaction != DealerReaction.push) {
+        } else if (reaction != DealerReaction.push && reaction != DealerReaction.lose) {
           headNod = math.sin(u * 4 * math.pi) * 0.5 * (1 - u);
         }
       case PauseCommand() || TurnTimerCommand():

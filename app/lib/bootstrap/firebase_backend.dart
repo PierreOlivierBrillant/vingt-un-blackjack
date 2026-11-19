@@ -9,8 +9,12 @@ import 'backend_config.dart';
 
 /// Explicit options: there is no google-services.json. Every value is a
 /// placeholder accepted by the emulators; nothing points at a real project.
+///
+/// The API key is a fake with the SHAPE of a real one (`AIza` + 35 chars):
+/// the Android Functions SDK rejects a malformed key ("Please set a valid API
+/// key") before even calling the emulator. It authorizes nothing.
 const kDemoFirebaseOptions = FirebaseOptions(
-  apiKey: 'demo-api-key-emulator-only',
+  apiKey: 'AIzaSyD3m0-EmulatorOnly-NotARealKey0000',
   appId: '1:000000000000:android:0000000000000000000000',
   messagingSenderId: '000000000000',
   projectId: kFirebaseProjectId,

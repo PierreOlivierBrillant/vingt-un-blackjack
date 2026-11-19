@@ -6,8 +6,10 @@ import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/error_messages.dart';
 import '../../data/providers.dart';
+import '../../domain/backend_constants.dart';
 import '../../domain/models.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../ads/ad_widgets.dart';
 
 (String name, String desc) powerCopy(AppLocalizations l, PowerType t) => switch (t) {
       PowerType.freeSplit => (l.powerFreeSplit, l.powerFreeSplitDesc),
@@ -48,6 +50,8 @@ class ShopScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           children: [
             Text(l.shopIntro, style: TextStyle(color: context.palette.textMuted)),
+            const SizedBox(height: 12),
+            const RewardedAdTile(),
             const SizedBox(height: 12),
             for (final o in list) ...[
               _PowerTile(offer: o),
@@ -116,14 +120,23 @@ class _PowerTile extends ConsumerWidget {
   }
 }
 
-/// Bottom sheet at the table: pick one owned power for this hand.
+/// Result of [PowersSheet] meaning "no power" (null = dismissed).
+const kDisarmPower = 'disarm';
+
+/// Bottom sheet at the table: pick one owned power for this hand. Pops with
+/// the chosen [PowerType] (or null). [usable] says which powers can apply
+/// now; [usedThisHand] disables everything (one power per hand).
 class PowersSheet extends ConsumerWidget {
-  const PowersSheet({super.key});
+  const PowersSheet({super.key, this.armed, this.usedThisHand, this.usable});
+  final PowerType? armed;
+  final PowerType? usedThisHand;
+  final bool Function(PowerType)? usable;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final offers = ref.watch(powerOffersProvider).value ?? const [];
+    final used = usedThisHand;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -132,18 +145,83 @@ class PowersSheet extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(l.powersSheetTitle, style: Theme.of(context).textTheme.titleMedium),
-            Text(l.powersSheetHint, style: TextStyle(color: context.palette.textMuted, fontSize: 12)),
+            Text(
+              used != null ? l.tablePowerUsed(powerCopy(l, used).$1) : '${l.powersSheetHint} ${l.tablePowerHint}',
+              style: TextStyle(color: context.palette.textMuted, fontSize: 12),
+            ),
             const SizedBox(height: 8),
             for (final o in offers)
               ListTile(
-                enabled: o.owned > 0,
+                key: Key('power-${o.type.name}'),
+                enabled: used == null && o.owned > 0 && (usable?.call(o.type) ?? true),
+                selected: armed == o.type,
                 leading: Icon(powerIcon(o.type), color: powerColor(o.type)),
                 title: Text(powerCopy(l, o.type).$1),
+                subtitle: Text(powerCopy(l, o.type).$2, style: const TextStyle(fontSize: 11.5)),
                 trailing: Text('×${o.owned}', style: const TextStyle(fontWeight: FontWeight.w800)),
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Navigator.of(context).pop(o.type),
               ),
+            if (armed != null)
+              TextButton(
+                key: const Key('power-disarm'),
+                onPressed: () => Navigator.of(context).pop(kDisarmPower),
+                child: Text(l.tablePowerNone),
+              ),
+            TextButton.icon(
+              key: const Key('power-shop'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ShopScreen()));
+              },
+              icon: const Icon(Icons.storefront_outlined),
+              label: Text(l.tablePowerShop),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+/// "Watch an ad, get 5 $" (server-capped by `claimAdReward`).
+class RewardedAdTile extends ConsumerWidget {
+  const RewardedAdTile({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final now = ref.watch(clockProvider)();
+    final state = ref.watch(adStateProvider).value ?? const AdState();
+    final left = state.remainingAt(now);
+    return Panel(
+      child: Row(
+        children: [
+          Icon(Icons.ondemand_video, color: context.palette.gold, size: 30),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l.walletWatchAd(context.money(Backend.adRewardCents)), style: const TextStyle(fontWeight: FontWeight.w800)),
+                Text(l.adRewardsLeft(left), style: TextStyle(color: context.palette.textMuted, fontSize: 12)),
+              ],
+            ),
+          ),
+          FilledButton.tonal(
+            key: const Key('shop-rewarded-ad'),
+            onPressed: left == 0
+                ? null
+                : () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final cents = await showRewardedAd(context);
+                    if (cents != null) {
+                      messenger.showSnackBar(SnackBar(content: Text(l.adRewardCredited(context.mounted ? context.money(cents) : '$cents'))));
+                    }
+                  },
+            child: const Icon(Icons.play_arrow),
+          ),
+        ],
       ),
     );
   }

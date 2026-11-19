@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,16 +8,24 @@ import '../../core/ids.dart';
 import '../../core/settings/settings_controller.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
+import '../../data/error_messages.dart';
 import '../../data/providers.dart';
+import '../../data/repositories.dart';
+import '../../domain/backend_constants.dart';
 import '../../domain/card_style.dart';
+import '../../domain/cards.dart';
 import '../../domain/models.dart';
-import '../../domain/table_state.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../ads/ad_widgets.dart';
 import '../cards/chips.dart';
 import '../dealer/dealer_controller.dart';
 import '../dealer/dealer_feedback.dart';
 import '../dealer/dealer_stage.dart';
+import '../markets/markets_screen.dart';
 import '../shop/shop_screen.dart';
+import 'fairness_sheet.dart';
+import 'table_director.dart';
+import 'table_rules.dart';
 
 String actionLabel(AppLocalizations l, PlayerAction a) => switch (a) {
       PlayerAction.hit => l.actionHit,
@@ -24,15 +34,22 @@ String actionLabel(AppLocalizations l, PlayerAction a) => switch (a) {
       PlayerAction.split => l.actionSplit,
       PlayerAction.surrender => l.actionSurrender,
       PlayerAction.insurance => l.actionInsurance,
-      PlayerAction.peek => l.actionInsurance,
+      PlayerAction.peek => l.actionPeek,
     };
 
-/// Live table. Phase 1: the scene is rebuilt from the static [TableView]
-/// placeholder. The Firebase phase converts snapshot diffs into
-/// [DealerController] commands (dealCard / revealHoleCard / payout ...).
+/// Live table, driven by the `tables/{id}` snapshots: every snapshot goes
+/// through a [TableDirector] that animates the new events on the
+/// [DealerController]. The bottom panel depends on the viewer's role
+/// (seated player: bet / insurance / actions; queued; spectator).
 class TableScreen extends ConsumerStatefulWidget {
-  const TableScreen({super.key, required this.tableId});
+  const TableScreen({super.key, required this.tableId, this.privateCode, this.interstitialEvery = 4});
   final String tableId;
+
+  /// Code of a private table (shown so it can be shared), from matchmaking.
+  final String? privateCode;
+
+  /// Show a parody interstitial after every N hands played here (0 = never).
+  final int interstitialEvery;
 
   @override
   ConsumerState<TableScreen> createState() => _TableScreenState();
@@ -40,54 +57,218 @@ class TableScreen extends ConsumerStatefulWidget {
 
 class _TableScreenState extends ConsumerState<TableScreen> {
   late final DealerController _dealer;
-  bool _staged = false;
-  int _chip = 2500;
+  late final TableDirector _director;
+  Timer? _tick;
+  DateTime? _pokedFor;
+  DateTime? _lastPokeAt;
+  int _pendingBet = 0;
+  int? _lastBet;
+  PowerType? _armed;
+  bool _busy = false;
+  int _handsPlayed = 0;
+  bool _adShowing = false;
+
+  /// Same key while the user retries the same decision (server de-dup).
+  final _keys = <String, String>{};
+
+  DateTime _now() => ref.read(clockProvider)();
 
   @override
   void initState() {
     super.initState();
     final s = ref.read(settingsProvider);
     _dealer = DealerController(feedback: SystemDealerFeedback(sound: s.soundOn, haptics: s.hapticsOn));
+    _director = TableDirector(_dealer, now: _now);
+    ref.listenManual<AsyncValue<TableState>>(tableViewProvider(widget.tableId), (_, next) {
+      final t = next.value;
+      if (t != null) _onSnapshot(t);
+    }, fireImmediately: true);
+    _tick = Timer.periodic(const Duration(milliseconds: 500), (_) => _onTick());
   }
 
   @override
   void dispose() {
+    _tick?.cancel();
     _dealer.dispose();
     super.dispose();
   }
 
-  void _stage(TableState t) {
-    if (_staged) return;
-    _staged = true;
+  void _onSnapshot(TableState t) {
+    final notices = _director.apply(t);
+    final me = ref.read(tableRepositoryProvider).myUid;
+    final mine = me == null ? null : t.seatOf(me);
+    if (mine != null && mine.betCents > 0) _lastBet = mine.betCents;
+    if (t.phase != ServerTablePhase.betting) _pendingBet = 0;
+    for (final n in notices) {
+      _notice(n, t, mine);
+    }
+    if (mounted) setState(() {});
   }
 
-  Future<void> _act(PlayerAction a) async {
+  void _notice(TableNotice n, TableState t, SeatState? mine) {
+    if (!mounted) return;
     final l = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
-    final t = ref.read(tableViewProvider(widget.tableId)).value;
-    if (t == null) return;
-    await ref.read(tableRepositoryProvider).act(widget.tableId, t.handNumber, a, idempotencyKey: newIdempotencyKey());
-    messenger.showSnackBar(SnackBar(content: Text(l.actionSent(actionLabel(l, a))), duration: const Duration(seconds: 1)));
+    switch (n) {
+      case SecondChanceNotice(:final seatIndex, :final discarded) when seatIndex == mine?.seatIndex:
+        messenger.showSnackBar(SnackBar(content: Text(l.tableSecondChance(discarded.toString()))));
+      case PowerUsedNotice(:final seatIndex, :final power) when seatIndex == mine?.seatIndex:
+        if (_armed == power) _armed = null;
+      case HandSettledNotice():
+        if (mine != null && mine.roundNetCents != null) {
+          _handsPlayed++;
+          if (widget.interstitialEvery > 0 && _handsPlayed % widget.interstitialEvery == 0) {
+            unawaited(_showInterstitial());
+          }
+        }
+      default:
+        break;
+    }
   }
 
-  void _showFairness(TableState t) {
+  Future<void> _showInterstitial() async {
+    if (_adShowing) return;
+    _adShowing = true;
+    // Let the payouts play first, then a short forced ad between two hands.
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
+    if (mounted) await showInterstitialAd(context, lock: const Duration(seconds: 3));
+    _adShowing = false;
+  }
+
+  /// No server scheduler: when the deadline passed and nothing changed, ask
+  /// the server to apply it (it re-checks its own clock).
+  void _onTick() {
+    if (!mounted) return;
+    final t = ref.read(tableViewProvider(widget.tableId)).value;
+    setState(() {}); // countdown text
+    if (t == null || t.closed) return;
+    final deadline = t.deadline;
+    if (deadline == null) return;
+    final now = _now();
+    if (!now.isAfter(deadline.add(const Duration(milliseconds: Backend.pokeGraceMs)))) return;
+    // At most one poke per overdue deadline every 1.5 s (rate limit 30/10 s).
+    if (_pokedFor == deadline && _lastPokeAt != null && now.difference(_lastPokeAt!) < const Duration(milliseconds: 1500)) {
+      return;
+    }
+    _pokedFor = deadline;
+    _lastPokeAt = now;
+    unawaited(ref.read(tableRepositoryProvider).poke(widget.tableId).then<void>((_) {}, onError: (Object e) {
+      debugPrint('[table] poke failed: $e');
+    }));
+  }
+
+  String _key(String op) => _keys[op] ??= newIdempotencyKey();
+
+  Future<void> _run(String op, Future<void> Function(String key) call) async {
+    if (_busy) return;
     final l = context.l10n;
-    showDialog<void>(
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => _busy = true);
+    try {
+      await call(_key(op));
+      _keys.remove(op);
+    } on Object catch (e) {
+      // A definitive server answer: next attempt is a new operation.
+      if (e is! RepositoryException || e.failure != RepositoryFailure.unavailable) _keys.remove(op);
+      messenger.showSnackBar(SnackBar(content: Text(localizeError(l, e))));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _placeBet(TableState t) => _run('bet-${t.handNumber}-$_pendingBet', (key) async {
+        await ref.read(tableRepositoryProvider).placeBet(widget.tableId, t.handNumber, _pendingBet, idempotencyKey: key);
+        _lastBet = _pendingBet;
+      });
+
+  Future<void> _act(TableState t, PlayerAction a, {int? amountCents}) {
+    final turn = t.turn;
+    final power = _armed != null && powerAppliesTo(_armed!, a, amountCents: amountCents) ? _armed : null;
+    final handIndex = a == PlayerAction.insurance ? null : turn?.handIndex;
+    return _run('act-${t.handNumber}-${a.name}-$handIndex-${t.eventSeq}', (key) async {
+      await ref.read(tableRepositoryProvider).act(
+            widget.tableId,
+            t.handNumber,
+            a,
+            handIndex: handIndex,
+            amountCents: amountCents,
+            power: power,
+            idempotencyKey: key,
+          );
+      if (power != null && mounted) setState(() => _armed = null);
+    });
+  }
+
+  Future<void> _openPowers(TableState t0, SeatState mine0) async {
+    final me = mine0.uid;
+    // Usability follows the live table while the sheet is open (the turn may
+    // arrive after it was opened).
+    final picked = await showModalBottomSheet<Object>(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text(l.fairTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l.fairBody),
-            const SizedBox(height: 12),
-            SelectableText(t.fairness.currentCommit ?? '-', style: const TextStyle(fontFamily: 'monospace', fontSize: 12)),
-          ],
-        ),
-        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(l.close))],
+      isScrollControlled: true,
+      builder: (_) => Consumer(builder: (context, ref, _) {
+        final t = ref.watch(tableViewProvider(widget.tableId)).value ?? t0;
+        final mine = t.seatOf(me) ?? mine0;
+        return PowersSheet(
+          armed: _armed,
+          usedThisHand: mine.powerUsed,
+          usable: (p) => powerUsableNow(p, t, mine, currentHandOf(t, mine)),
+        );
+      }),
+    );
+    if (!mounted || picked == null) return;
+    final t = ref.read(tableViewProvider(widget.tableId)).value ?? t0;
+    if (picked == kDisarmPower) {
+      setState(() => _armed = null);
+    } else if (picked == PowerType.peek) {
+      // Peek is its own action: it reveals the hole card to me only.
+      setState(() => _armed = PowerType.peek);
+      await _act(t, PlayerAction.peek);
+    } else if (picked is PowerType) {
+      setState(() => _armed = picked);
+    }
+  }
+
+  Future<void> _leave(TableState? t, bool involved) async {
+    final l = context.l10n;
+    if (!involved) {
+      if (context.mounted) context.pop();
+      return;
+    }
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.leaveTable),
+        content: Text(l.tableLeaveConfirm),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.back)),
+          FilledButton(key: const Key('leave-confirm'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.leaveTable)),
+        ],
       ),
     );
+    if (ok != true || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await ref.read(tableRepositoryProvider).leave(widget.tableId);
+      if (mounted) context.pop();
+    } on Object catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(localizeError(l, e))));
+    }
+  }
+
+  void _showMarkets() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _TableMarketsSheet(tableId: widget.tableId),
+    );
+  }
+
+  int _secondsLeft(TableState t) {
+    final d = t.deadline;
+    if (d == null) return 0;
+    final ms = d.difference(_now()).inMilliseconds;
+    return ms <= 0 ? 0 : (ms / 1000).ceil();
   }
 
   @override
@@ -95,6 +276,11 @@ class _TableScreenState extends ConsumerState<TableScreen> {
     final l = context.l10n;
     final table = ref.watch(tableViewProvider(widget.tableId));
     final style = ref.watch(equippedStyleProvider).value ?? const CardStyle();
+    final me = ref.watch(tableRepositoryProvider).myUid;
+    final t = table.value;
+    final mine = t == null || me == null ? null : t.seatOf(me);
+    final queued = t != null && me != null && t.isQueued(me);
+    final involved = mine != null || queued;
     return Scaffold(
       backgroundColor: const Color(0xFF0A1620),
       appBar: AppBar(
@@ -102,76 +288,442 @@ class _TableScreenState extends ConsumerState<TableScreen> {
         foregroundColor: Colors.white,
         // The casino room is always dark, whatever the app theme.
         titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(color: Colors.white),
-        title: table.value == null
+        title: t == null
             ? null
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(table.value!.name),
+                  Text(t.name, overflow: TextOverflow.ellipsis),
                   Text(
-                    '${l.handNumber(table.value!.handNumber)} · ${context.money(table.value!.minBetCents, compact: true)}–${context.money(table.value!.maxBetCents, compact: true)}',
+                    '${l.handNumber(t.handNumber)} · ${context.money(t.minBetCents, compact: true)}–${context.money(t.maxBetCents, compact: true)}',
                     style: const TextStyle(fontSize: 11.5, color: Colors.white70, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
         actions: [
-          if (table.value != null)
+          if (t != null && !t.isPrivate)
             IconButton(
+              key: const Key('table-markets'),
+              tooltip: l.tableBetsHere,
+              icon: const Icon(Icons.show_chart),
+              onPressed: _showMarkets,
+            ),
+          if (t != null)
+            IconButton(
+              key: const Key('table-fairness'),
               tooltip: l.fairTitle,
               icon: const Icon(Icons.verified_user_outlined),
-              onPressed: () => _showFairness(table.value!),
+              onPressed: () => showFairnessSheet(context, t),
             ),
           IconButton(
+            key: const Key('table-leave'),
             tooltip: l.leaveTable,
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await ref.read(tableRepositoryProvider).leave(widget.tableId);
-              if (context.mounted) context.pop();
-            },
+            icon: Icon(involved ? Icons.logout : Icons.close),
+            onPressed: () => _leave(t, involved),
           ),
         ],
       ),
       body: AsyncBody(
         value: table,
         builder: (t) {
-          _stage(t);
           final seats = [
             for (final s in t.seats)
               s == null
                   ? null
-                  : DealerSeat(name: s.username, stackCents: s.betCents, isMe: s.uid == ref.read(tableRepositoryProvider).myUid, isBot: s.isBot),
+                  : DealerSeat(
+                      name: s.username,
+                      stackCents: s.hands.isEmpty ? s.betCents : s.hands.fold<int>(0, (a, h) => a + h.betCents),
+                      isMe: s.uid == me,
+                      isBot: s.isBot,
+                    ),
           ];
-          final me = ref.read(tableRepositoryProvider).myUid;
-          final myTurn = t.phase == ServerTablePhase.playerTurns && t.turn != null && t.seats[t.turn!.seatIndex]?.uid == me;
           return Column(
             children: [
+              if (t.fromCache) _Banner(text: l.tableOffline, color: context.palette.warning),
+              _StatusStrip(
+                text: _statusText(l, t, mine),
+                code: widget.privateCode,
+                shoe: l.tableShoeInfo(t.shoe.shoeNumber, t.shoe.cardsRemaining),
+              ),
               Expanded(
-                child: Center(
-                  child: DealerStage(controller: _dealer, style: style, seats: seats),
-                ),
+                child: Center(child: DealerStage(controller: _dealer, style: style, seats: seats)),
               ),
-              _ActionBar(
-                enabled: myTurn,
-                onAction: _act,
-                onPowers: () => showModalBottomSheet<void>(context: context, builder: (_) => const PowersSheet()),
-                chip: _chip,
-                onChip: (c) => setState(() => _chip = c),
-              ),
+              _PeekBanner(tableId: widget.tableId, handNumber: t.handNumber, mySeated: mine != null),
+              _bottomPanel(context, t, mine, queued),
             ],
           );
         },
       ),
     );
   }
+
+  String _statusText(AppLocalizations l, TableState t, SeatState? mine) {
+    final secs = _secondsLeft(t);
+    if (t.closed) return l.tableClosedNotice;
+    switch (t.phase) {
+      case ServerTablePhase.idle || ServerTablePhase.closed:
+        return t.closed ? l.tableClosedNotice : l.tableIdle;
+      case ServerTablePhase.betting:
+        return l.tableBetting(secs);
+      case ServerTablePhase.insurance:
+        return l.tableInsuranceWait(secs);
+      case ServerTablePhase.playerTurns:
+        final turn = t.turn;
+        final s = turn == null ? null : t.seats[turn.seatIndex];
+        if (s == null) return l.tableDealerPlays;
+        return s.uid == mine?.uid ? l.tableYourTurn(secs) : l.tableTurnOf(s.username, secs);
+      case ServerTablePhase.settled:
+        final net = mine?.roundNetCents;
+        return net == null ? l.tableSettled : l.tableResult(context.money(net, signed: true));
+    }
+  }
+
+  Widget _bottomPanel(BuildContext context, TableState t, SeatState? mine, bool queued) {
+    final l = context.l10n;
+    if (mine == null) {
+      return _InfoPanel(
+        icon: queued ? Icons.hourglass_top : Icons.visibility_outlined,
+        title: queued ? l.tableQueued : l.tableSpectating,
+        subtitle: queued ? null : l.tableSpectatorHint,
+        action: t.isPrivate
+            ? null
+            : FilledButton.icon(
+                key: const Key('spectator-markets'),
+                onPressed: _showMarkets,
+                icon: const Icon(Icons.show_chart),
+                label: Text(l.tableBetsHere),
+              ),
+      );
+    }
+    final inHand = mine.hands.isNotEmpty;
+    switch (t.phase) {
+      case ServerTablePhase.betting when mine.betCents == 0:
+        return _BetPanel(
+          minBet: t.minBetCents,
+          maxBet: t.maxBetCents,
+          pending: _pendingBet,
+          suggested: _lastBet ?? t.minBetCents,
+          busy: _busy,
+          onChange: (v) => setState(() => _pendingBet = v),
+          onBet: () => _placeBet(t),
+        );
+      case ServerTablePhase.betting:
+        return _InfoPanel(icon: Icons.check_circle_outline, title: l.tableBetPlaced(context.money(mine.betCents)));
+      case ServerTablePhase.insurance when mine.insurance != null && !mine.insurance!.decided && inHand:
+        final max = maxInsuranceCents(mine);
+        return _InsurancePanel(
+          maxCents: max,
+          busy: _busy,
+          freeArmed: _armed == PowerType.freeInsurance,
+          onTake: () => _act(t, PlayerAction.insurance, amountCents: max),
+          onDecline: () => _act(t, PlayerAction.insurance, amountCents: 0),
+          onPowers: () => _openPowers(t, mine),
+        );
+      case ServerTablePhase.playerTurns || ServerTablePhase.insurance || ServerTablePhase.settled:
+        if (!inHand) return _InfoPanel(icon: Icons.hourglass_top, title: l.tableWaitingNextHand);
+        final hand = currentHandOf(t, mine);
+        final legal = legalActions(t, mine);
+        return _ActionBar(
+          legal: _busy ? const {} : legal,
+          onAction: (a) => _act(t, a),
+          onPowers: () => _openPowers(t, mine),
+          armed: _armed,
+          powerUsed: mine.powerUsed,
+          hand: hand,
+        );
+      case ServerTablePhase.idle || ServerTablePhase.closed:
+        return _InfoPanel(icon: Icons.hourglass_empty, title: t.closed ? l.tableClosedNotice : l.tableIdle);
+    }
+  }
+}
+
+// --------------------------------------------------------------- widgets --
+
+class _Banner extends StatelessWidget {
+  const _Banner({required this.text, required this.color});
+  final String text;
+  final Color color;
+  @override
+  Widget build(BuildContext context) => Container(
+        width: double.infinity,
+        color: color,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        child: Text(text, style: const TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w700)),
+      );
+}
+
+class _StatusStrip extends StatelessWidget {
+  const _StatusStrip({required this.text, required this.shoe, this.code});
+  final String text;
+  final String shoe;
+  final String? code;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+      color: Colors.black.withValues(alpha: 0.35),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              text,
+              key: const Key('table-status'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            ),
+          ),
+          if (code != null)
+            Container(
+              key: const Key('table-code'),
+              margin: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(color: BrandColors.blue, borderRadius: BorderRadius.circular(6)),
+              child: SelectableText(
+                l.tablePrivateCode(code!),
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 12),
+              ),
+            )
+          else
+            Text(shoe, style: const TextStyle(color: Colors.white60, fontSize: 11)),
+        ],
+      ),
+    );
+  }
+}
+
+/// Peek power result, visible to me only, for the current hand.
+class _PeekBanner extends ConsumerWidget {
+  const _PeekBanner({required this.tableId, required this.handNumber, required this.mySeated});
+  final String tableId;
+  final int handNumber;
+  final bool mySeated;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!mySeated) return const SizedBox.shrink();
+    final peek = ref.watch(peekProvider(tableId)).value;
+    if (peek == null || peek.handNumber != handNumber) return const SizedBox.shrink();
+    return Container(
+      key: const Key('peek-banner'),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      color: powerColor(PowerType.peek),
+      child: Row(
+        children: [
+          const Icon(Icons.visibility, color: Colors.white, size: 18),
+          const SizedBox(width: 6),
+          Text(
+            context.l10n.tablePeekCard('${peek.holeCard.rank.label}${peek.holeCard.suit.symbol}'),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoPanel extends StatelessWidget {
+  const _InfoPanel({required this.icon, required this.title, this.subtitle, this.action});
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Container(
+      color: p.surface,
+      padding: const EdgeInsets.all(12),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            Icon(icon, color: p.textMuted),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(title, key: const Key('table-info'), style: const TextStyle(fontWeight: FontWeight.w800)),
+                  if (subtitle != null) Text(subtitle!, style: TextStyle(color: p.textMuted, fontSize: 12)),
+                ],
+              ),
+            ),
+            if (action != null) ...[const SizedBox(width: 8), action!],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BetPanel extends StatelessWidget {
+  const _BetPanel({
+    required this.minBet,
+    required this.maxBet,
+    required this.pending,
+    required this.suggested,
+    required this.busy,
+    required this.onChange,
+    required this.onBet,
+  });
+  final int minBet;
+  final int maxBet;
+  final int pending;
+  final int suggested;
+  final bool busy;
+  final ValueChanged<int> onChange;
+  final VoidCallback onBet;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    final chips = [for (final d in kChipDenominations.reversed) if (d.cents <= maxBet) d].take(5).toList();
+    final amount = pending == 0 ? suggested.clamp(minBet, maxBet) : pending;
+    final valid = isValidBet(amount, minBet, maxBet);
+    return Container(
+      color: p.surface,
+      padding: const EdgeInsets.all(8),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        for (final d in chips)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: ChipButton(
+                              key: Key('chip-${d.cents}'),
+                              denomination: d,
+                              size: 40,
+                              selected: false,
+                              onTap: () => onChange((pending + d.cents).clamp(0, maxBet)),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                TextButton(
+                  key: const Key('bet-clear'),
+                  onPressed: pending == 0 ? null : () => onChange(0),
+                  child: Text(l.tableClearBet),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                key: const Key('bet-place'),
+                onPressed: valid && !busy
+                    ? () {
+                        if (pending == 0) onChange(amount);
+                        onBet();
+                      }
+                    : null,
+                style: FilledButton.styleFrom(minimumSize: const Size(0, 50)),
+                icon: const Icon(Icons.casino_outlined),
+                label: Text(l.tablePlaceBet(context.money(amount))),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InsurancePanel extends StatelessWidget {
+  const _InsurancePanel({
+    required this.maxCents,
+    required this.busy,
+    required this.freeArmed,
+    required this.onTake,
+    required this.onDecline,
+    required this.onPowers,
+  });
+  final int maxCents;
+  final bool busy;
+  final bool freeArmed;
+  final VoidCallback onTake;
+  final VoidCallback onDecline;
+  final VoidCallback onPowers;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    return Container(
+      color: p.surface,
+      padding: const EdgeInsets.all(10),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l.tableInsuranceTitle, style: const TextStyle(fontWeight: FontWeight.w900)),
+            Text(l.tableInsuranceBody(context.money(maxCents)), style: TextStyle(color: p.textMuted, fontSize: 12)),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    key: const Key('insurance-decline'),
+                    onPressed: busy ? null : onDecline,
+                    child: Text(l.tableInsuranceDecline),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: FilledButton(
+                    key: const Key('insurance-take'),
+                    onPressed: busy || maxCents <= 0 ? null : onTake,
+                    child: Text(freeArmed ? l.powerFreeInsurance : l.tableInsuranceTake(context.money(maxCents))),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton.outlined(onPressed: onPowers, icon: Icon(Icons.bolt, color: p.gold), tooltip: l.powers),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _ActionBar extends StatelessWidget {
-  const _ActionBar({required this.enabled, required this.onAction, required this.onPowers, required this.chip, required this.onChip});
-  final bool enabled;
+  const _ActionBar({
+    required this.legal,
+    required this.onAction,
+    required this.onPowers,
+    required this.armed,
+    required this.powerUsed,
+    required this.hand,
+  });
+  final Set<PlayerAction> legal;
   final ValueChanged<PlayerAction> onAction;
   final VoidCallback onPowers;
-  final int chip;
-  final ValueChanged<int> onChip;
+  final PowerType? armed;
+  final PowerType? powerUsed;
+  final SeatHand? hand;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +734,7 @@ class _ActionBar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 3),
             child: FilledButton(
               key: Key('action-${a.name}'),
-              onPressed: enabled ? () => onAction(a) : null,
+              onPressed: legal.contains(a) ? () => onAction(a) : null,
               style: FilledButton.styleFrom(
                 backgroundColor: color,
                 padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -198,6 +750,13 @@ class _ActionBar extends StatelessWidget {
             ),
           ),
         );
+    final h = hand;
+    final total = h == null || h.cards.isEmpty ? null : handTotal(h.cards);
+    final powerLabel = powerUsed != null
+        ? l.tablePowerUsed(powerCopy(l, powerUsed!).$1)
+        : armed != null
+            ? l.tablePowerArmed(powerCopy(l, armed!).$1)
+            : null;
     return Container(
       color: p.surface,
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -208,22 +767,26 @@ class _ActionBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        for (final d in kChipDenominations.reversed.take(5))
-                          Padding(
-                            padding: const EdgeInsets.only(right: 6),
-                            child: ChipButton(denomination: d, size: 38, selected: d.cents == chip, onTap: () => onChip(d.cents)),
-                          ),
-                      ],
+                if (total != null)
+                  Container(
+                    key: const Key('my-total'),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(color: p.surfaceRaised, borderRadius: BorderRadius.circular(8)),
+                    child: Text(
+                      total.soft && total.total < 21 ? '${total.total - 10}/${total.total}' : '${total.total}',
+                      style: const TextStyle(fontWeight: FontWeight.w900),
                     ),
                   ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    powerLabel ?? '',
+                    key: const Key('power-status'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: p.gold, fontWeight: FontWeight.w700, fontSize: 12),
+                  ),
                 ),
-                const SizedBox(width: 6),
                 OutlinedButton.icon(
                   key: const Key('table-powers'),
                   onPressed: onPowers,
@@ -243,6 +806,47 @@ class _ActionBar extends StatelessWidget {
                 btn(PlayerAction.surrender, Icons.flag_outlined, color: p.loss),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Spectator markets of one table (open first), tap → market detail.
+class _TableMarketsSheet extends ConsumerWidget {
+  const _TableMarketsSheet({required this.tableId});
+  final String tableId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final markets = ref.watch(tableMarketsProvider(tableId));
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.6,
+      maxChildSize: 0.92,
+      builder: (context, scroll) => AsyncBody(
+        value: markets,
+        isEmpty: (list) => list.where((m) => m.isOpen).isEmpty,
+        empty: EmptyState(icon: Icons.show_chart, text: l.marketsEmpty),
+        builder: (list) => ListView(
+          controller: scroll,
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+          children: [
+            Text(l.tableBetsHere, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            for (final m in list.where((m) => m.isOpen))
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: MarketCard(
+                  market: m,
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    context.push('/markets/${m.id}');
+                  },
+                ),
+              ),
           ],
         ),
       ),

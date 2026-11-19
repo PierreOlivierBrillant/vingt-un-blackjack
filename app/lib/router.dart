@@ -89,7 +89,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/table/:id',
         parentNavigatorKey: rootKey,
-        builder: (_, s) => TableScreen(tableId: s.pathParameters['id']!),
+        builder: (_, s) => TableScreen(tableId: s.pathParameters['id']!, privateCode: s.uri.queryParameters['code']),
       ),
       GoRoute(path: '/dealer-demo', parentNavigatorKey: rootKey, builder: (_, _) => const DealerDemoScreen()),
       GoRoute(path: '/kyc', parentNavigatorKey: rootKey, builder: (_, _) => const KycScreen()),

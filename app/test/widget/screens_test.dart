@@ -33,7 +33,7 @@ class ScreenCase {
 
 final cases = <ScreenCase>[
   ScreenCase('login', () => const LoginScreen(), (l) => l.loginTitle, signedIn: false),
-  ScreenCase('signup', () => const SignupScreen(), (l) => l.usernameHelp, signedIn: false),
+  ScreenCase('signup', () => const SignupScreen(), (l) => l.authUsernameRule, signedIn: false),
   ScreenCase('server', () => const ServerScreen(), (l) => l.serverHostLabel, signedIn: false),
   ScreenCase('kyc', () => const KycScreen(), (l) => l.kycStartScan),
   ScreenCase('lobby', () => const LobbyScreen(), (l) => l.lobbyLiveTables),
