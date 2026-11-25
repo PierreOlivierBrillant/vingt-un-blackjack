@@ -2785,6 +2785,270 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Palier maximal atteint'**
   String get profileRankMax;
+
+  /// No description provided for @ledgerBuyIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cave au hold\'em'**
+  String get ledgerBuyIn;
+
+  /// No description provided for @ledgerCashOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis récupéré'**
+  String get ledgerCashOut;
+
+  /// No description provided for @ledgerGift.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cadeau'**
+  String get ledgerGift;
+
+  /// No description provided for @ledgerReservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservation de rendez-vous'**
+  String get ledgerReservation;
+
+  /// No description provided for @winKindJackpot.
+  ///
+  /// In fr, this message translates to:
+  /// **'gros coup'**
+  String get winKindJackpot;
+
+  /// No description provided for @powerZeroShield.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bouclier zéro'**
+  String get powerZeroShield;
+
+  /// No description provided for @powerZeroShieldDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roulette : si le zéro sort, la moitié de vos chances simples vous est rendue (un tour).'**
+  String get powerZeroShieldDesc;
+
+  /// No description provided for @powerFreeCommission.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission offerte'**
+  String get powerFreeCommission;
+
+  /// No description provided for @powerFreeCommissionDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Baccarat : votre gain sur le Banquier est payé sans la commission de 5 % (un coup).'**
+  String get powerFreeCommissionDesc;
+
+  /// No description provided for @powerSafetyNet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filet de sécurité'**
+  String get powerSafetyNet;
+
+  /// No description provided for @powerSafetyNetDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Craps : votre mise sur la ligne de passe est remboursée en cas de seven-out (une fois).'**
+  String get powerSafetyNetDesc;
+
+  /// No description provided for @mqRouletteRed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rouge ?'**
+  String get mqRouletteRed;
+
+  /// No description provided for @mqRouletteZero.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zéro ?'**
+  String get mqRouletteZero;
+
+  /// No description provided for @mqRouletteDozen3.
+  ///
+  /// In fr, this message translates to:
+  /// **'3e douzaine (25–36) ?'**
+  String get mqRouletteDozen3;
+
+  /// No description provided for @mqRouletteZeroSeries.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un zéro dans les 37 prochains tours ?'**
+  String get mqRouletteZeroSeries;
+
+  /// No description provided for @mqBaccaratBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Banquier gagne ?'**
+  String get mqBaccaratBanker;
+
+  /// No description provided for @mqBaccaratTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalité ?'**
+  String get mqBaccaratTie;
+
+  /// No description provided for @mqBaccaratPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une paire (Joueur ou Banquier) ?'**
+  String get mqBaccaratPair;
+
+  /// No description provided for @mqBaccaratBankerShoe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Banquier gagne au moins 46 % des coups du sabot ?'**
+  String get mqBaccaratBankerShoe;
+
+  /// No description provided for @mqHoldemBoardAce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un As au tableau ?'**
+  String get mqHoldemBoardAce;
+
+  /// No description provided for @mqHoldemBoardFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trois cartes ou plus d\'une même couleur au tableau ?'**
+  String get mqHoldemBoardFlush;
+
+  /// No description provided for @mqCrapsSeven.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sept au prochain lancer ?'**
+  String get mqCrapsSeven;
+
+  /// No description provided for @mqCrapsPoint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lanceur fait son point ?'**
+  String get mqCrapsPoint;
+
+  /// No description provided for @errReasonBadBetSpot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette case de mise n\'existe pas à ce jeu.'**
+  String get errReasonBadBetSpot;
+
+  /// No description provided for @errReasonBetIncrement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant invalide pour cette mise (respectez le multiple indiqué).'**
+  String get errReasonBetIncrement;
+
+  /// No description provided for @errReasonBetNotRemovable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette mise ne peut plus être retirée.'**
+  String get errReasonBetNotRemovable;
+
+  /// No description provided for @errReasonWrongGame.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action ou pouvoir d\'un autre jeu.'**
+  String get errReasonWrongGame;
+
+  /// No description provided for @errReasonBuyInOutOfRange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cave hors des limites de la table.'**
+  String get errReasonBuyInOutOfRange;
+
+  /// No description provided for @errReasonRebuyNotAllowed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recave impossible maintenant (entre deux mains, sous le maximum).'**
+  String get errReasonRebuyNotAllowed;
+
+  /// No description provided for @errReasonSittingOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes en pause : revenez en jeu d\'abord.'**
+  String get errReasonSittingOut;
+
+  /// No description provided for @errReasonNotShooter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce n\'est pas vous qui lancez les dés.'**
+  String get errReasonNotShooter;
+
+  /// No description provided for @errReasonMustBetLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lanceur doit miser sur la ligne de passe ou « ne passe pas ».'**
+  String get errReasonMustBetLine;
+
+  /// No description provided for @errReasonSceneNotAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette scène n\'est pas disponible pour l\'instant.'**
+  String get errReasonSceneNotAvailable;
+
+  /// No description provided for @errReasonSceneInvalidPath.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choix invalides pour cette scène.'**
+  String get errReasonSceneInvalidPath;
+
+  /// No description provided for @errReasonTalkDoneToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez déjà discuté avec ce personnage aujourd\'hui.'**
+  String get errReasonTalkDoneToday;
+
+  /// No description provided for @errReasonGiftDailyLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trois cadeaux par jour au maximum pour ce personnage.'**
+  String get errReasonGiftDailyLimit;
+
+  /// No description provided for @errReasonCosmeticLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objet pas encore débloqué.'**
+  String get errReasonCosmeticLocked;
+
+  /// No description provided for @errReasonDatingDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les rencontres entre joueurs sont désactivées sur ce serveur.'**
+  String get errReasonDatingDisabled;
+
+  /// No description provided for @errReasonDatingOptInRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscrivez-vous aux Rencontres d\'abord.'**
+  String get errReasonDatingOptInRequired;
+
+  /// No description provided for @errReasonLikeDailyLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus de clins d\'œil pour aujourd\'hui (10 par jour).'**
+  String get errReasonLikeDailyLimit;
+
+  /// No description provided for @errReasonMatchNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce match n\'existe plus.'**
+  String get errReasonMatchNotFound;
+
+  /// No description provided for @errReasonBlocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action impossible avec ce joueur.'**
+  String get errReasonBlocked;
+
+  /// No description provided for @errReasonLineNotAllowed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette réplique n\'est pas disponible ici.'**
+  String get errReasonLineNotAllowed;
+
+  /// No description provided for @errReasonNoPrivateTable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrez d\'abord une table privée pour inviter quelqu\'un.'**
+  String get errReasonNoPrivateTable;
 }
 
 class _AppLocalizationsDelegate

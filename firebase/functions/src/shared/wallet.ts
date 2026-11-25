@@ -13,6 +13,7 @@ export interface LedgerRef {
   marketId?: string | null;
   powerId?: PowerId | null;
   method?: PaymentMethod | null;
+  itemId?: string | null;
 }
 
 export class WalletSession {
@@ -70,7 +71,7 @@ export class WalletSession {
     this.entries.push({
       entryId: id, type, amountCents: amount, balanceAfterCents: this.doc.balanceCents, createdAtMs: this.now,
       tableId: ref.tableId ?? null, handNumber: ref.handNumber ?? null, marketId: ref.marketId ?? null,
-      powerId: ref.powerId ?? null, method: ref.method ?? null,
+      powerId: ref.powerId ?? null, method: ref.method ?? null, itemId: ref.itemId ?? null,
     });
     return id;
   }

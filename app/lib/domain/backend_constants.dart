@@ -65,6 +65,9 @@ abstract final class Backend {
     PowerType.freeInsurance: 1000,
     PowerType.peek: 3000,
     PowerType.secondChance: 4000,
+    PowerType.zeroShield: 1500,
+    PowerType.freeCommission: 1500,
+    PowerType.safetyNet: 2500,
   };
   static const powerMaxQuantityPerPurchase = 10;
   static const powerMaxInventory = 99;
@@ -82,6 +85,18 @@ abstract final class Backend {
     MarketKind.playerWins: 60,
     MarketKind.natural: 60,
     MarketKind.shoeDealerBustRate: 200,
+    MarketKind.rouletteRed: 60,
+    MarketKind.rouletteZero: 60,
+    MarketKind.rouletteDozen3: 60,
+    MarketKind.rouletteZeroSeries: 200,
+    MarketKind.baccaratBanker: 60,
+    MarketKind.baccaratTie: 60,
+    MarketKind.baccaratPair: 60,
+    MarketKind.baccaratBankerShoe: 200,
+    MarketKind.holdemBoardAce: 60,
+    MarketKind.holdemBoardFlush: 60,
+    MarketKind.crapsSeven: 60,
+    MarketKind.crapsPoint: 100,
   };
   static const shoeBustRateThreshold = 0.28;
 

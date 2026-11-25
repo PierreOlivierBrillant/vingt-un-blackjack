@@ -173,6 +173,7 @@ class _RecentWinsTickerState extends State<RecentWinsTicker> with SingleTickerPr
                   WinKind.blackjack => l.winKindBlackjack,
                   WinKind.market => l.winKindMarket,
                   WinKind.bigWin => l.winKindWin,
+                  WinKind.jackpot => l.winKindJackpot,
                 },
                 style: TextStyle(color: p.textMuted, fontSize: 12),
               ),

@@ -17,6 +17,9 @@ import '../ads/ad_widgets.dart';
       PowerType.freeInsurance => (l.powerFreeInsurance, l.powerFreeInsuranceDesc),
       PowerType.peek => (l.powerPeek, l.powerPeekDesc),
       PowerType.secondChance => (l.powerSecondChance, l.powerSecondChanceDesc),
+      PowerType.zeroShield => (l.powerZeroShield, l.powerZeroShieldDesc),
+      PowerType.freeCommission => (l.powerFreeCommission, l.powerFreeCommissionDesc),
+      PowerType.safetyNet => (l.powerSafetyNet, l.powerSafetyNetDesc),
     };
 
 IconData powerIcon(PowerType t) => switch (t) {
@@ -25,6 +28,9 @@ IconData powerIcon(PowerType t) => switch (t) {
       PowerType.freeInsurance => Icons.shield_outlined,
       PowerType.peek => Icons.visibility,
       PowerType.secondChance => Icons.replay,
+      PowerType.zeroShield => Icons.exposure_zero,
+      PowerType.freeCommission => Icons.percent,
+      PowerType.safetyNet => Icons.health_and_safety_outlined,
     };
 
 Color powerColor(PowerType t) => switch (t) {
@@ -33,6 +39,9 @@ Color powerColor(PowerType t) => switch (t) {
       PowerType.freeInsurance => const Color(0xFF3BC9DB),
       PowerType.peek => const Color(0xFFED4163),
       PowerType.secondChance => const Color(0xFF00E701),
+      PowerType.zeroShield => const Color(0xFF2FBF71),
+      PowerType.freeCommission => const Color(0xFFE0A44A),
+      PowerType.safetyNet => const Color(0xFF5C9DFF),
     };
 
 class ShopScreen extends ConsumerWidget {

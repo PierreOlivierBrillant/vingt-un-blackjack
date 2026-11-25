@@ -297,7 +297,7 @@ export class TableMachine {
 
   private market(kind: MarketKind, id: string, question: LocalizedText, extra: Partial<MarketDoc> = {}): MarketDoc {
     return {
-      marketId: id, tableId: this.pub.tableId, tableName: this.pub.name, kind,
+      marketId: id, tableId: this.pub.tableId, tableName: this.pub.name, game: 'blackjack', humanTradeCount: 0, kind,
       handNumber: kind === 'shoeDealerBustRate' ? null : this.pub.handNumber, shoeNumber: this.pub.shoe.shoeNumber,
       subjectUid: null, subjectUsername: null, subjectSeatIndex: null, question, status: 'open', outcome: null,
       b: MARKET_LIQUIDITY[kind], qYes: 0, qNo: 0, priceYes: 0.5, volumeCents: 0, tradeCount: 0, payoutsDone: false,

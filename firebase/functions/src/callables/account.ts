@@ -12,6 +12,7 @@ import {
   DEPOSIT_MIN_CENTS, KYC_MIN_AGE_YEARS, KYC_REVIEW_MS, POWER_MAX_INVENTORY, POWER_PRICES_CENTS, WELCOME_BONUS_CENTS,
   WITHDRAW_MAX_CENTS, WITHDRAW_MIN_CENTS,
 } from '../shared/types';
+import { COSMETICS } from '../shared/cosmetics';
 import { WalletSession } from '../shared/wallet';
 import { defineCallable } from './framework';
 import { S } from './schemas';
@@ -197,15 +198,25 @@ export const equipCardStyle = defineCallable({
   name: 'equipCardStyle',
   schema: S.equipCardStyle,
   handler: async (tx, data, { db, uid, now }) => {
-    await requireProfile(db, tx, uid);
-    const snap = await tx.get(refs(db).settings(uid));
+    const profile = await requireProfile(db, tx, uid);
+    const r = refs(db);
+    // Exclusive cosmetics must be unlocked (users/{uid}/unlocks/{id}); free ones always are.
+    const wanted: string[] = [data.cardBack, data.cardFace, data.felt, data.title ?? undefined].filter((x) => x !== undefined);
+    const locked = wanted.filter((id) => !COSMETICS[id]?.free);
+    const [snap, ...unlocks] = await Promise.all([tx.get(r.settings(uid)), ...locked.map((id) => tx.get(r.unlock(uid, id)))]);
+    if (unlocks.some((u) => !u.exists)) throw fail.pre('COSMETIC_LOCKED');
     const cur = { ...DEFAULT_SETTINGS, ...(snap.data() as Partial<UserSettingsDoc> | undefined) };
     const next: UserSettingsDoc = {
       theme: cur.theme, language: cur.language,
       cardBack: data.cardBack ?? cur.cardBack, cardFace: data.cardFace ?? cur.cardFace, felt: data.felt ?? cur.felt,
       updatedAtMs: now,
     };
-    tx.set(refs(db).settings(uid), next);
-    return { response: { cardBack: next.cardBack, cardFace: next.cardFace, felt: next.felt } };
+    tx.set(r.settings(uid), next);
+    let title = profile.title ?? null;
+    if (data.title !== undefined) {
+      title = data.title;
+      tx.set(r.profile(uid), { title }, { merge: true });
+    }
+    return { response: { cardBack: next.cardBack, cardFace: next.cardFace, felt: next.felt, title } };
   },
 });

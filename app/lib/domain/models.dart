@@ -16,6 +16,7 @@ import 'package:flutter/painting.dart';
 
 import 'backend_constants.dart';
 import 'card_style.dart';
+import 'games.dart';
 import 'table_state.dart' show ServerTablePhase;
 import 'wire.dart';
 
@@ -357,6 +358,11 @@ enum LedgerKind {
   marketSell,
   marketPayout,
   adReward,
+  // Sprint 2
+  buyIn,
+  cashOut,
+  gift,
+  reservation,
 }
 
 /// `users/{uid}/ledger/{entryId}` (append-only).
@@ -611,8 +617,8 @@ class LiveTable {
   int get seatsForHumans => seatsTotal - humans;
 }
 
-/// `FeedEntryDoc.kind`.
-enum WinKind { blackjack, bigWin, market }
+/// `FeedEntryDoc.kind` (`jackpot`: game-specific big hit, Sprint 2).
+enum WinKind { blackjack, bigWin, market, jackpot }
 
 /// `feed/{entryId}` — "recent wins" ticker.
 @immutable
@@ -626,6 +632,7 @@ class RecentWin {
     this.isBot = false,
     this.tableId,
     this.at,
+    this.game = GameId.blackjack,
   });
 
   /// Null for an unknown kind.
@@ -633,6 +640,7 @@ class RecentWin {
     final kind = enumByName(WinKind.values, d['kind']);
     if (kind == null) return null;
     return RecentWin(
+      game: GameId.fromWire(d['game']) ?? GameId.blackjack,
       id: id,
       username: asString(d['username']) ?? '?',
       avatar: asString(d['avatar']) ?? 'avatar01',
@@ -652,6 +660,9 @@ class RecentWin {
   final int amountCents;
   final String? tableId;
   final DateTime? at;
+
+  /// Game where it happened (Sprint 2; older entries are blackjack).
+  final GameId game;
 }
 
 // ------------------------------------------------------------------ table --
@@ -669,10 +680,27 @@ enum PowerType {
   freeDouble,
   freeInsurance,
   peek,
-  secondChance;
+  secondChance,
+  // Sprint 2 (POWER_GAME): roulette, baccarat, craps
+  zeroShield,
+  freeCommission,
+  safetyNet;
 
   /// POWER_PRICES_CENTS.
   int get priceCents => Backend.powerPricesCents[this]!;
+
+  /// `POWER_GAME`: the game whose tables accept this power.
+  GameId get game => switch (this) {
+        PowerType.freeSplit ||
+        PowerType.freeDouble ||
+        PowerType.freeInsurance ||
+        PowerType.peek ||
+        PowerType.secondChance =>
+          GameId.blackjack,
+        PowerType.zeroShield => GameId.roulette,
+        PowerType.freeCommission => GameId.baccarat,
+        PowerType.safetyNet => GameId.craps,
+      };
 }
 
 /// `users/{uid}/inventory/{powerId}`.
@@ -934,8 +962,60 @@ class FriendRequestOutcome {
 
 // ---------------------------------------------------------------- markets --
 
-/// Wire values of `MARKET_KINDS`.
-enum MarketKind { dealerBust, playerWins, natural, shoeDealerBustRate }
+/// Wire values of `MARKET_KINDS` (blackjack, then the Sprint 2 games).
+enum MarketKind {
+  dealerBust,
+  playerWins,
+  natural,
+  shoeDealerBustRate,
+  // roulette
+  rouletteRed,
+  rouletteZero,
+  rouletteDozen3,
+  rouletteZeroSeries,
+  // baccarat
+  baccaratBanker,
+  baccaratTie,
+  baccaratPair,
+  baccaratBankerShoe,
+  // hold'em
+  holdemBoardAce,
+  holdemBoardFlush,
+  // craps
+  crapsSeven,
+  crapsPoint;
+
+  /// `SERIES_MARKET_KINDS`: long markets, not tied to one round.
+  bool get isSeries => switch (this) {
+        MarketKind.shoeDealerBustRate ||
+        MarketKind.rouletteZeroSeries ||
+        MarketKind.baccaratBankerShoe ||
+        MarketKind.crapsPoint =>
+          true,
+        _ => false,
+      };
+
+  /// Game of the market.
+  GameId get game => switch (this) {
+        MarketKind.dealerBust ||
+        MarketKind.playerWins ||
+        MarketKind.natural ||
+        MarketKind.shoeDealerBustRate =>
+          GameId.blackjack,
+        MarketKind.rouletteRed ||
+        MarketKind.rouletteZero ||
+        MarketKind.rouletteDozen3 ||
+        MarketKind.rouletteZeroSeries =>
+          GameId.roulette,
+        MarketKind.baccaratBanker ||
+        MarketKind.baccaratTie ||
+        MarketKind.baccaratPair ||
+        MarketKind.baccaratBankerShoe =>
+          GameId.baccarat,
+        MarketKind.holdemBoardAce || MarketKind.holdemBoardFlush => GameId.holdem,
+        MarketKind.crapsSeven || MarketKind.crapsPoint => GameId.craps,
+      };
+}
 
 /// `MarketStatus`; [voided] is the wire value `'void'` (Dart keyword).
 enum MarketStatus {
@@ -1019,7 +1099,7 @@ class Market {
       question: LocalizedText.fromDoc(asMap(d['question'])),
       status: MarketStatus.fromWire(d['status']) ?? MarketStatus.closed,
       outcome: enumByName(Outcome.values, d['outcome']),
-      b: asDouble(d['b'], Backend.marketLiquidity[kind]!),
+      b: asDouble(d['b'], Backend.marketLiquidity[kind] ?? 60),
       qYes: asDouble(d['qYes']),
       qNo: asDouble(d['qNo']),
       priceYes: asDouble(d['priceYes'], 0.5).clamp(0.0, 1.0),

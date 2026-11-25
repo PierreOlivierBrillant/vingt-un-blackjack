@@ -42,6 +42,9 @@ function fairEstimate(m: MarketDoc, t: TableDoc | undefined): number {
     }
     case 'shoeDealerBustRate':
       return 0.5;
+    default:
+      // Other games' markets are estimated by their module (src/games/<game>/), wired in A1.
+      return 0.5;
   }
 }
 

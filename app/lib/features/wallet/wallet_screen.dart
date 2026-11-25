@@ -22,6 +22,10 @@ String ledgerLabel(AppLocalizations l, LedgerKind k) => switch (k) {
       LedgerKind.marketBuy || LedgerKind.marketSell => l.ledgerTrade,
       LedgerKind.marketPayout => l.ledgerMarketPayout,
       LedgerKind.adReward => l.ledgerAd,
+      LedgerKind.buyIn => l.ledgerBuyIn,
+      LedgerKind.cashOut => l.ledgerCashOut,
+      LedgerKind.gift => l.ledgerGift,
+      LedgerKind.reservation => l.ledgerReservation,
     };
 
 IconData ledgerIcon(LedgerKind k) => switch (k) {
@@ -38,6 +42,10 @@ IconData ledgerIcon(LedgerKind k) => switch (k) {
       LedgerKind.marketBuy || LedgerKind.marketSell => Icons.show_chart,
       LedgerKind.marketPayout => Icons.savings_outlined,
       LedgerKind.adReward => Icons.ondemand_video,
+      LedgerKind.buyIn => Icons.login,
+      LedgerKind.cashOut => Icons.logout,
+      LedgerKind.gift => Icons.redeem,
+      LedgerKind.reservation => Icons.restaurant,
     };
 
 class WalletScreen extends ConsumerWidget {

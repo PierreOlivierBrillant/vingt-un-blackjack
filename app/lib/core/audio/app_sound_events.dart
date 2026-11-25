@@ -35,13 +35,17 @@ class AppSoundEvents {
         LedgerKind.marketSell => Sfx.tradeSell,
         LedgerKind.marketPayout => Sfx.marketResolvedWin,
         LedgerKind.adReward => Sfx.adReward,
+        LedgerKind.gift => Sfx.powerBuy,
+        LedgerKind.reservation => Sfx.cashRegisterKaching,
         // Table money moves are voiced by the table itself.
         LedgerKind.bet ||
         LedgerKind.double ||
         LedgerKind.split ||
         LedgerKind.insurance ||
         LedgerKind.payout ||
-        LedgerKind.refund =>
+        LedgerKind.refund ||
+        LedgerKind.buyIn ||
+        LedgerKind.cashOut =>
           null,
       };
 

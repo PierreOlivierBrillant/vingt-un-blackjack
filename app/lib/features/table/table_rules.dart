@@ -5,6 +5,7 @@
 library;
 
 import '../../domain/backend_constants.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../domain/table_state.dart';
 
@@ -51,11 +52,13 @@ bool powerAppliesTo(PowerType p, PlayerAction a, {int? amountCents}) => switch (
       PowerType.freeInsurance => a == PlayerAction.insurance && (amountCents ?? 0) > 0,
       PowerType.peek => a == PlayerAction.peek,
       PowerType.secondChance => a == PlayerAction.hit || a == PlayerAction.double,
+      // Other games' powers never apply at the blackjack table.
+      PowerType.zeroShield || PowerType.freeCommission || PowerType.safetyNet => false,
     };
 
 /// Whether picking [p] in the powers sheet makes sense right now.
 bool powerUsableNow(PowerType p, TableState t, SeatState mine, SeatHand? hand) {
-  if (mine.powerUsed != null) return false;
+  if (mine.powerUsed != null || p.game != GameId.blackjack) return false;
   if (p == PowerType.freeInsurance) {
     return t.phase == ServerTablePhase.insurance && mine.insurance != null && !mine.insurance!.decided;
   }
@@ -69,6 +72,7 @@ bool powerUsableNow(PowerType p, TableState t, SeatState mine, SeatHand? hand) {
     PowerType.peek => true,
     PowerType.secondChance => true,
     PowerType.freeInsurance => false,
+    PowerType.zeroShield || PowerType.freeCommission || PowerType.safetyNet => false,
   };
 }
 

@@ -1537,4 +1537,151 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileRankMax => 'Top tier reached';
+
+  @override
+  String get ledgerBuyIn => 'Hold\'em buy-in';
+
+  @override
+  String get ledgerCashOut => 'Cash-out';
+
+  @override
+  String get ledgerGift => 'Gift';
+
+  @override
+  String get ledgerReservation => 'Date reservation';
+
+  @override
+  String get winKindJackpot => 'big hit';
+
+  @override
+  String get powerZeroShield => 'Zero shield';
+
+  @override
+  String get powerZeroShieldDesc =>
+      'Roulette: if zero comes up, half of your even-money bets is returned (one spin).';
+
+  @override
+  String get powerFreeCommission => 'Free commission';
+
+  @override
+  String get powerFreeCommissionDesc =>
+      'Baccarat: your Banker win is paid without the 5% commission (one coup).';
+
+  @override
+  String get powerSafetyNet => 'Safety net';
+
+  @override
+  String get powerSafetyNetDesc =>
+      'Craps: your Pass Line bet is refunded on a seven-out (once).';
+
+  @override
+  String get mqRouletteRed => 'Red?';
+
+  @override
+  String get mqRouletteZero => 'Zero?';
+
+  @override
+  String get mqRouletteDozen3 => 'Third dozen (25–36)?';
+
+  @override
+  String get mqRouletteZeroSeries => 'A zero within the next 37 spins?';
+
+  @override
+  String get mqBaccaratBanker => 'Banker wins?';
+
+  @override
+  String get mqBaccaratTie => 'Tie?';
+
+  @override
+  String get mqBaccaratPair => 'A pair (Player or Banker)?';
+
+  @override
+  String get mqBaccaratBankerShoe =>
+      'Banker wins at least 46% of this shoe\'s coups?';
+
+  @override
+  String get mqHoldemBoardAce => 'An ace on the board?';
+
+  @override
+  String get mqHoldemBoardFlush =>
+      'Three or more cards of one suit on the board?';
+
+  @override
+  String get mqCrapsSeven => 'Seven on the next roll?';
+
+  @override
+  String get mqCrapsPoint => 'Shooter makes the point?';
+
+  @override
+  String get errReasonBadBetSpot =>
+      'That bet spot does not exist in this game.';
+
+  @override
+  String get errReasonBetIncrement =>
+      'Invalid amount for this bet (use the required multiple).';
+
+  @override
+  String get errReasonBetNotRemovable =>
+      'This bet can no longer be taken down.';
+
+  @override
+  String get errReasonWrongGame => 'Action or power of another game.';
+
+  @override
+  String get errReasonBuyInOutOfRange => 'Buy-in outside the table limits.';
+
+  @override
+  String get errReasonRebuyNotAllowed =>
+      'Rebuy not allowed now (between hands, below the maximum).';
+
+  @override
+  String get errReasonSittingOut => 'You are sitting out: sit back in first.';
+
+  @override
+  String get errReasonNotShooter => 'You are not the shooter.';
+
+  @override
+  String get errReasonMustBetLine =>
+      'The shooter must bet the Pass or Don\'t Pass line.';
+
+  @override
+  String get errReasonSceneNotAvailable =>
+      'This scene is not available right now.';
+
+  @override
+  String get errReasonSceneInvalidPath => 'Invalid choices for this scene.';
+
+  @override
+  String get errReasonTalkDoneToday =>
+      'You already talked with this character today.';
+
+  @override
+  String get errReasonGiftDailyLimit =>
+      'At most three gifts per day for this character.';
+
+  @override
+  String get errReasonCosmeticLocked => 'Item not unlocked yet.';
+
+  @override
+  String get errReasonDatingDisabled =>
+      'Player dating is turned off on this server.';
+
+  @override
+  String get errReasonDatingOptInRequired => 'Join Rencontres first.';
+
+  @override
+  String get errReasonLikeDailyLimit => 'No winks left today (10 per day).';
+
+  @override
+  String get errReasonMatchNotFound => 'This match no longer exists.';
+
+  @override
+  String get errReasonBlocked => 'Not possible with this player.';
+
+  @override
+  String get errReasonLineNotAllowed => 'That line is not available here.';
+
+  @override
+  String get errReasonNoPrivateTable =>
+      'Open a private table first to invite someone.';
 }

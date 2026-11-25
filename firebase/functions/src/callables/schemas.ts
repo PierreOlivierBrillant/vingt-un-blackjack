@@ -1,9 +1,10 @@
 /** Strict zod schemas for every callable request (unknown keys rejected, integers only). */
 import { z } from 'zod';
 import {
-  AVATAR_IDS, CARD_BACKS, CARD_FACES, FELTS, KYC_DOC_TYPES, LANGUAGES, MARKET_MAX_SHARES_PER_TRADE, PAYMENT_METHODS,
+  AVATAR_IDS, BLACKJACK_POWER_IDS, CARD_BACKS, CARD_FACES, FELTS, KYC_DOC_TYPES, LANGUAGES, MARKET_MAX_SHARES_PER_TRADE, PAYMENT_METHODS,
   PLAYER_ACTIONS, POWER_IDS, POWER_MAX_QUANTITY_PER_PURCHASE, STAKE_TIERS,
 } from '../shared/types';
+import { TITLE_IDS } from '../shared/cosmetics';
 import { requestIdSchema } from './framework';
 
 const cents = (min: number, max: number) => z.number().int().min(min).max(max);
@@ -40,7 +41,7 @@ export const S = {
     action: z.enum(PLAYER_ACTIONS),
     handIndex: z.number().int().min(0).max(3).optional(),
     amountCents: cents(0, MAX_CENTS).optional(),
-    power: z.enum(POWER_IDS).optional(),
+    power: z.enum(BLACKJACK_POWER_IDS).optional(),
   }),
   pokeTable: z.strictObject({ ...base, tableId: id }),
   buyPower: z.strictObject({ ...base, powerId: z.enum(POWER_IDS), quantity: z.number().int().min(1).max(POWER_MAX_QUANTITY_PER_PURCHASE) }),
@@ -65,5 +66,6 @@ export const S = {
     cardBack: z.enum(CARD_BACKS).optional(),
     cardFace: z.enum(CARD_FACES).optional(),
     felt: z.enum(FELTS).optional(),
-  }).refine((d) => d.cardBack !== undefined || d.cardFace !== undefined || d.felt !== undefined, { message: 'nothing to equip' }),
+    title: z.enum(TITLE_IDS).nullable().optional(),
+  }).refine((d) => d.cardBack !== undefined || d.cardFace !== undefined || d.felt !== undefined || d.title !== undefined, { message: 'nothing to equip' }),
 };

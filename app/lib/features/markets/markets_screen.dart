@@ -14,9 +14,21 @@ String marketQuestion(AppLocalizations l, Market m) => switch (m.kind) {
       MarketKind.playerWins => l.mqPlayerWins(m.playerName ?? '?'),
       MarketKind.natural => l.mqNatural,
       MarketKind.shoeDealerBustRate => l.mqShoe,
+      MarketKind.rouletteRed => l.mqRouletteRed,
+      MarketKind.rouletteZero => l.mqRouletteZero,
+      MarketKind.rouletteDozen3 => l.mqRouletteDozen3,
+      MarketKind.rouletteZeroSeries => l.mqRouletteZeroSeries,
+      MarketKind.baccaratBanker => l.mqBaccaratBanker,
+      MarketKind.baccaratTie => l.mqBaccaratTie,
+      MarketKind.baccaratPair => l.mqBaccaratPair,
+      MarketKind.baccaratBankerShoe => l.mqBaccaratBankerShoe,
+      MarketKind.holdemBoardAce => l.mqHoldemBoardAce,
+      MarketKind.holdemBoardFlush => l.mqHoldemBoardFlush,
+      MarketKind.crapsSeven => l.mqCrapsSeven,
+      MarketKind.crapsPoint => l.mqCrapsPoint,
     };
 
-String marketSubtitle(AppLocalizations l, Market m) => m.kind == MarketKind.shoeDealerBustRate || m.handNumber == null
+String marketSubtitle(AppLocalizations l, Market m) => m.kind.isSeries || m.handNumber == null
     ? '${m.tableName} · ${l.marketPerShoe}'
     : '${m.tableName} · ${l.handNumber(m.handNumber!)}';
 
@@ -178,6 +190,12 @@ class MarketCard extends StatelessWidget {
                   MarketKind.playerWins => Icons.person_outline,
                   MarketKind.natural => Icons.auto_awesome,
                   MarketKind.shoeDealerBustRate => Icons.inventory_2_outlined,
+                  MarketKind.rouletteRed || MarketKind.rouletteDozen3 => Icons.album_outlined,
+                  MarketKind.rouletteZero || MarketKind.rouletteZeroSeries => Icons.exposure_zero,
+                  MarketKind.baccaratBanker || MarketKind.baccaratTie || MarketKind.baccaratBankerShoe => Icons.account_balance_outlined,
+                  MarketKind.baccaratPair => Icons.copy_all_outlined,
+                  MarketKind.holdemBoardAce || MarketKind.holdemBoardFlush => Icons.style_outlined,
+                  MarketKind.crapsSeven || MarketKind.crapsPoint => Icons.casino_outlined,
                 }, color: p.textMuted),
               ),
               const SizedBox(width: 10),

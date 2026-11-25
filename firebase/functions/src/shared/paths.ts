@@ -25,7 +25,27 @@ export const refs = (db: Firestore) => ({
   feed: () => db.collection('feed'),
   idempotency: (uid: string, requestId: string) => db.doc(`idempotency/${uid}_${requestId}`),
   rateLimit: (uid: string) => db.doc(`rateLimits/${uid}`),
+  // Sprint 2 — kernel-driven games (see shared/games/common.ts)
+  gameTable: (tableId: string) => db.doc(`gameTables/${tableId}`),
+  gameTablePrivate: (tableId: string) => db.doc(`gameTables/${tableId}/private/state`),
+  gameBets: (tableId: string) => db.collection(`gameTables/${tableId}/bets`),
+  gameBet: (tableId: string, uid: string) => db.doc(`gameTables/${tableId}/bets/${uid}`),
+  gameHole: (tableId: string, uid: string) => db.doc(`gameTables/${tableId}/holes/${uid}`),
+  gameRound: (tableId: string, round: number) => db.doc(`gameTables/${tableId}/rounds/${String(round).padStart(8, '0')}`),
+  // Sprint 2 — Rendez-vous (see shared/romance.ts, shared/cosmetics.ts)
+  romance: (uid: string, characterId: string) => db.doc(`users/${uid}/romance/${characterId}`),
+  unlock: (uid: string, cosmeticId: string) => db.doc(`users/${uid}/unlocks/${cosmeticId}`),
+  datingPrivate: (uid: string) => db.doc(`users/${uid}/private/dating`),
+  datingProfile: (uid: string) => db.doc(`datingProfiles/${uid}`),
+  datingLike: (from: string, to: string) => db.doc(`datingLikes/${from}_${to}`),
+  datingBlock: (a: string, b: string) => db.doc(`datingBlocks/${[a, b].sort().join('_')}`),
+  datingMatch: (pairId: string) => db.doc(`datingMatches/${pairId}`),
+  datingMessages: (pairId: string) => db.collection(`datingMatches/${pairId}/messages`),
+  features: () => db.doc('config/features'),
 });
+
+/** Pair id of two uids (sorted, joined by '_'): friendships, dating matches and blocks. */
+export const pairIdOf = (a: string, b: string): string => [a, b].sort().join('_');
 
 export type Refs = ReturnType<typeof refs>;
 export type Ref = DocumentReference;

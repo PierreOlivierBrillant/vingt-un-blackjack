@@ -1548,4 +1548,155 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profileRankMax => 'Palier maximal atteint';
+
+  @override
+  String get ledgerBuyIn => 'Cave au hold\'em';
+
+  @override
+  String get ledgerCashOut => 'Tapis récupéré';
+
+  @override
+  String get ledgerGift => 'Cadeau';
+
+  @override
+  String get ledgerReservation => 'Réservation de rendez-vous';
+
+  @override
+  String get winKindJackpot => 'gros coup';
+
+  @override
+  String get powerZeroShield => 'Bouclier zéro';
+
+  @override
+  String get powerZeroShieldDesc =>
+      'Roulette : si le zéro sort, la moitié de vos chances simples vous est rendue (un tour).';
+
+  @override
+  String get powerFreeCommission => 'Commission offerte';
+
+  @override
+  String get powerFreeCommissionDesc =>
+      'Baccarat : votre gain sur le Banquier est payé sans la commission de 5 % (un coup).';
+
+  @override
+  String get powerSafetyNet => 'Filet de sécurité';
+
+  @override
+  String get powerSafetyNetDesc =>
+      'Craps : votre mise sur la ligne de passe est remboursée en cas de seven-out (une fois).';
+
+  @override
+  String get mqRouletteRed => 'Rouge ?';
+
+  @override
+  String get mqRouletteZero => 'Zéro ?';
+
+  @override
+  String get mqRouletteDozen3 => '3e douzaine (25–36) ?';
+
+  @override
+  String get mqRouletteZeroSeries => 'Un zéro dans les 37 prochains tours ?';
+
+  @override
+  String get mqBaccaratBanker => 'Le Banquier gagne ?';
+
+  @override
+  String get mqBaccaratTie => 'Égalité ?';
+
+  @override
+  String get mqBaccaratPair => 'Une paire (Joueur ou Banquier) ?';
+
+  @override
+  String get mqBaccaratBankerShoe =>
+      'Le Banquier gagne au moins 46 % des coups du sabot ?';
+
+  @override
+  String get mqHoldemBoardAce => 'Un As au tableau ?';
+
+  @override
+  String get mqHoldemBoardFlush =>
+      'Trois cartes ou plus d\'une même couleur au tableau ?';
+
+  @override
+  String get mqCrapsSeven => 'Sept au prochain lancer ?';
+
+  @override
+  String get mqCrapsPoint => 'Le lanceur fait son point ?';
+
+  @override
+  String get errReasonBadBetSpot =>
+      'Cette case de mise n\'existe pas à ce jeu.';
+
+  @override
+  String get errReasonBetIncrement =>
+      'Montant invalide pour cette mise (respectez le multiple indiqué).';
+
+  @override
+  String get errReasonBetNotRemovable =>
+      'Cette mise ne peut plus être retirée.';
+
+  @override
+  String get errReasonWrongGame => 'Action ou pouvoir d\'un autre jeu.';
+
+  @override
+  String get errReasonBuyInOutOfRange => 'Cave hors des limites de la table.';
+
+  @override
+  String get errReasonRebuyNotAllowed =>
+      'Recave impossible maintenant (entre deux mains, sous le maximum).';
+
+  @override
+  String get errReasonSittingOut =>
+      'Vous êtes en pause : revenez en jeu d\'abord.';
+
+  @override
+  String get errReasonNotShooter => 'Ce n\'est pas vous qui lancez les dés.';
+
+  @override
+  String get errReasonMustBetLine =>
+      'Le lanceur doit miser sur la ligne de passe ou « ne passe pas ».';
+
+  @override
+  String get errReasonSceneNotAvailable =>
+      'Cette scène n\'est pas disponible pour l\'instant.';
+
+  @override
+  String get errReasonSceneInvalidPath => 'Choix invalides pour cette scène.';
+
+  @override
+  String get errReasonTalkDoneToday =>
+      'Vous avez déjà discuté avec ce personnage aujourd\'hui.';
+
+  @override
+  String get errReasonGiftDailyLimit =>
+      'Trois cadeaux par jour au maximum pour ce personnage.';
+
+  @override
+  String get errReasonCosmeticLocked => 'Objet pas encore débloqué.';
+
+  @override
+  String get errReasonDatingDisabled =>
+      'Les rencontres entre joueurs sont désactivées sur ce serveur.';
+
+  @override
+  String get errReasonDatingOptInRequired =>
+      'Inscrivez-vous aux Rencontres d\'abord.';
+
+  @override
+  String get errReasonLikeDailyLimit =>
+      'Plus de clins d\'œil pour aujourd\'hui (10 par jour).';
+
+  @override
+  String get errReasonMatchNotFound => 'Ce match n\'existe plus.';
+
+  @override
+  String get errReasonBlocked => 'Action impossible avec ce joueur.';
+
+  @override
+  String get errReasonLineNotAllowed =>
+      'Cette réplique n\'est pas disponible ici.';
+
+  @override
+  String get errReasonNoPrivateTable =>
+      'Ouvrez d\'abord une table privée pour inviter quelqu\'un.';
 }

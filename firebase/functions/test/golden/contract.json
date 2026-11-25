@@ -1,0 +1,407 @@
+{
+ "errorReasons": [
+  "INVALID_ARGUMENT",
+  "UNAUTHENTICATED",
+  "RATE_LIMITED",
+  "REQUEST_ID_REUSED",
+  "PROFILE_REQUIRED",
+  "PROFILE_EXISTS",
+  "USERNAME_TAKEN",
+  "KYC_REQUIRED",
+  "KYC_ALREADY_VERIFIED",
+  "KYC_REJECTED",
+  "INSUFFICIENT_FUNDS",
+  "DEPOSIT_LIMIT",
+  "TABLE_NOT_FOUND",
+  "TABLE_CLOSED",
+  "TABLE_FULL",
+  "BAD_CODE",
+  "ALREADY_SEATED",
+  "NOT_SEATED",
+  "BAD_PHASE",
+  "STALE_HAND",
+  "ALREADY_BET",
+  "BET_OUT_OF_RANGE",
+  "NOT_YOUR_TURN",
+  "ILLEGAL_ACTION",
+  "POWER_NOT_OWNED",
+  "POWER_ALREADY_USED",
+  "POWER_NOT_APPLICABLE",
+  "INVENTORY_FULL",
+  "MARKET_NOT_FOUND",
+  "MARKET_CLOSED",
+  "OWN_TABLE_MARKET",
+  "INSUFFICIENT_SHARES",
+  "SLIPPAGE",
+  "MARKET_LIMIT",
+  "USER_NOT_FOUND",
+  "SELF_FRIEND",
+  "ALREADY_FRIENDS",
+  "REQUEST_EXISTS",
+  "REQUEST_NOT_FOUND",
+  "NOT_FRIENDS",
+  "AD_COOLDOWN",
+  "AD_DAILY_LIMIT",
+  "INTERNAL",
+  "BAD_BET_SPOT",
+  "BET_INCREMENT",
+  "BET_NOT_REMOVABLE",
+  "WRONG_GAME",
+  "BUY_IN_OUT_OF_RANGE",
+  "REBUY_NOT_ALLOWED",
+  "SITTING_OUT",
+  "NOT_SHOOTER",
+  "MUST_BET_LINE",
+  "SCENE_NOT_AVAILABLE",
+  "SCENE_INVALID_PATH",
+  "TALK_DONE_TODAY",
+  "GIFT_DAILY_LIMIT",
+  "COSMETIC_LOCKED",
+  "DATING_DISABLED",
+  "DATING_OPT_IN_REQUIRED",
+  "LIKE_DAILY_LIMIT",
+  "MATCH_NOT_FOUND",
+  "BLOCKED",
+  "LINE_NOT_ALLOWED",
+  "NO_PRIVATE_TABLE"
+ ],
+ "powerIds": [
+  "freeSplit",
+  "freeDouble",
+  "freeInsurance",
+  "peek",
+  "secondChance",
+  "zeroShield",
+  "freeCommission",
+  "safetyNet"
+ ],
+ "powerGame": {
+  "freeSplit": "blackjack",
+  "freeDouble": "blackjack",
+  "freeInsurance": "blackjack",
+  "peek": "blackjack",
+  "secondChance": "blackjack",
+  "zeroShield": "roulette",
+  "freeCommission": "baccarat",
+  "safetyNet": "craps"
+ },
+ "powerPricesCents": {
+  "freeSplit": 2000,
+  "freeDouble": 2500,
+  "freeInsurance": 1000,
+  "peek": 3000,
+  "secondChance": 4000,
+  "zeroShield": 1500,
+  "freeCommission": 1500,
+  "safetyNet": 2500
+ },
+ "marketKinds": [
+  "dealerBust",
+  "playerWins",
+  "natural",
+  "shoeDealerBustRate",
+  "rouletteRed",
+  "rouletteZero",
+  "rouletteDozen3",
+  "rouletteZeroSeries",
+  "baccaratBanker",
+  "baccaratTie",
+  "baccaratPair",
+  "baccaratBankerShoe",
+  "holdemBoardAce",
+  "holdemBoardFlush",
+  "crapsSeven",
+  "crapsPoint"
+ ],
+ "seriesMarketKinds": [
+  "shoeDealerBustRate",
+  "rouletteZeroSeries",
+  "baccaratBankerShoe",
+  "crapsPoint"
+ ],
+ "marketLiquidity": {
+  "dealerBust": 60,
+  "playerWins": 60,
+  "natural": 60,
+  "shoeDealerBustRate": 200,
+  "rouletteRed": 60,
+  "rouletteZero": 60,
+  "rouletteDozen3": 60,
+  "rouletteZeroSeries": 200,
+  "baccaratBanker": 60,
+  "baccaratTie": 60,
+  "baccaratPair": 60,
+  "baccaratBankerShoe": 200,
+  "holdemBoardAce": 60,
+  "holdemBoardFlush": 60,
+  "crapsSeven": 60,
+  "crapsPoint": 100
+ },
+ "ledgerTypes": [
+  "welcomeBonus",
+  "deposit",
+  "withdrawal",
+  "bet",
+  "double",
+  "split",
+  "insurance",
+  "payout",
+  "refund",
+  "powerPurchase",
+  "marketBuy",
+  "marketSell",
+  "marketPayout",
+  "adReward",
+  "buyIn",
+  "cashOut",
+  "gift",
+  "reservation"
+ ],
+ "games": [
+  "blackjack",
+  "roulette",
+  "baccarat",
+  "holdem",
+  "craps"
+ ],
+ "gamePrefix": {
+  "roulette": "rl",
+  "baccarat": "bc",
+  "holdem": "ho",
+  "craps": "cr"
+ },
+ "gameSeats": {
+  "roulette": 7,
+  "baccarat": 7,
+  "holdem": 6,
+  "craps": 8
+ },
+ "characters": [
+  "lucas",
+  "camille",
+  "ines",
+  "alex",
+  "marco",
+  "jade",
+  "theo",
+  "nora",
+  "hugo"
+ ],
+ "dealerOf": {
+  "blackjack": "lucas",
+  "roulette": "camille",
+  "baccarat": "ines",
+  "holdem": "alex",
+  "craps": "marco"
+ },
+ "affinityTierThresholds": [
+  0,
+  25,
+  70,
+  130,
+  200,
+  270
+ ],
+ "cosmetics": {
+  "classicBlue": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "classicRed": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "midnight": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "emerald": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "neonGrid": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "goldFiligree": {
+   "slot": "cardBack",
+   "free": true
+  },
+  "classic": {
+   "slot": "cardFace",
+   "free": true
+  },
+  "fourColor": {
+   "slot": "cardFace",
+   "free": true
+  },
+  "neon": {
+   "slot": "cardFace",
+   "free": true
+  },
+  "green": {
+   "slot": "felt",
+   "free": true
+  },
+  "blue": {
+   "slot": "felt",
+   "free": true
+  },
+  "red": {
+   "slot": "felt",
+   "free": true
+  },
+  "purple": {
+   "slot": "felt",
+   "free": true
+  },
+  "black": {
+   "slot": "felt",
+   "free": true
+  },
+  "rv_lucas_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_camille_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_ines_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_alex_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_marco_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_jade_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_theo_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_nora_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_hugo_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "duo_back": {
+   "slot": "cardBack",
+   "free": false
+  },
+  "rv_lucas_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_camille_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_ines_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_alex_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_marco_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_jade_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_theo_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_nora_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_hugo_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "duo_felt": {
+   "slot": "felt",
+   "free": false
+  },
+  "rv_lucas_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_camille_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_ines_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_alex_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_marco_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_jade_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_theo_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_nora_title": {
+   "slot": "title",
+   "free": false
+  },
+  "rv_hugo_title": {
+   "slot": "title",
+   "free": false
+  },
+  "duo_title": {
+   "slot": "title",
+   "free": false
+  }
+ },
+ "callables": [
+  "completeProfile",
+  "submitKyc",
+  "deposit",
+  "withdraw",
+  "joinMatchmaking",
+  "leaveTable",
+  "placeBet",
+  "act",
+  "pokeTable",
+  "buyPower",
+  "tradeShares",
+  "friendRequest",
+  "respondFriend",
+  "removeFriend",
+  "claimAdReward",
+  "equipCardStyle",
+  "gameJoin",
+  "gameLeave",
+  "gameAction",
+  "gamePoke",
+  "romance",
+  "dating"
+ ]
+}

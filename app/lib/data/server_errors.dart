@@ -51,6 +51,33 @@ enum ServerReason {
   AD_COOLDOWN,
   AD_DAILY_LIMIT,
   INTERNAL,
+  // Sprint 2 — kernel-driven games
+  BAD_BET_SPOT,
+  BET_INCREMENT,
+  BET_NOT_REMOVABLE,
+  WRONG_GAME,
+  // roulette (none yet)
+  // baccarat (none yet)
+  // hold'em
+  BUY_IN_OUT_OF_RANGE,
+  REBUY_NOT_ALLOWED,
+  SITTING_OUT,
+  // craps
+  NOT_SHOOTER,
+  MUST_BET_LINE,
+  // Rendez-vous
+  SCENE_NOT_AVAILABLE,
+  SCENE_INVALID_PATH,
+  TALK_DONE_TODAY,
+  GIFT_DAILY_LIMIT,
+  COSMETIC_LOCKED,
+  DATING_DISABLED,
+  DATING_OPT_IN_REQUIRED,
+  LIKE_DAILY_LIMIT,
+  MATCH_NOT_FOUND,
+  BLOCKED,
+  LINE_NOT_ALLOWED,
+  NO_PRIVATE_TABLE,
 }
 
 ServerReason? serverReasonFromWire(Object? v) {
@@ -70,7 +97,10 @@ RepositoryFailure failureForReason(ServerReason r) => switch (r) {
       ServerReason.AD_COOLDOWN ||
       ServerReason.INVENTORY_FULL ||
       ServerReason.MARKET_LIMIT ||
-      ServerReason.TABLE_FULL =>
+      ServerReason.TABLE_FULL ||
+      ServerReason.GIFT_DAILY_LIMIT ||
+      ServerReason.LIKE_DAILY_LIMIT ||
+      ServerReason.TALK_DONE_TODAY =>
         RepositoryFailure.limitExceeded,
       ServerReason.RATE_LIMITED => RepositoryFailure.rateLimited,
       ServerReason.TABLE_NOT_FOUND ||
@@ -78,9 +108,14 @@ RepositoryFailure failureForReason(ServerReason r) => switch (r) {
       ServerReason.MARKET_NOT_FOUND ||
       ServerReason.USER_NOT_FOUND ||
       ServerReason.REQUEST_NOT_FOUND ||
-      ServerReason.NOT_FRIENDS =>
+      ServerReason.NOT_FRIENDS ||
+      ServerReason.MATCH_NOT_FOUND =>
         RepositoryFailure.notFound,
-      ServerReason.UNAUTHENTICATED || ServerReason.OWN_TABLE_MARKET => RepositoryFailure.permissionDenied,
+      ServerReason.UNAUTHENTICATED ||
+      ServerReason.OWN_TABLE_MARKET ||
+      ServerReason.BLOCKED ||
+      ServerReason.DATING_DISABLED =>
+        RepositoryFailure.permissionDenied,
       ServerReason.INTERNAL => RepositoryFailure.unknown,
       _ => RepositoryFailure.invalidArgument,
     };

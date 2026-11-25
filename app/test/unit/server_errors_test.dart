@@ -9,21 +9,13 @@ import 'package:vingtun/data/server_errors.dart';
 import 'package:vingtun/domain/models.dart';
 import 'package:vingtun/l10n/gen/app_localizations.dart';
 
-/// Copy of `ERROR_REASONS` in firebase/functions/src/shared/types.ts.
-const kErrorReasons = [
-  'INVALID_ARGUMENT', 'UNAUTHENTICATED', 'RATE_LIMITED', 'REQUEST_ID_REUSED', 'PROFILE_REQUIRED', 'PROFILE_EXISTS',
-  'USERNAME_TAKEN', 'KYC_REQUIRED', 'KYC_ALREADY_VERIFIED', 'KYC_REJECTED', 'INSUFFICIENT_FUNDS', 'DEPOSIT_LIMIT',
-  'TABLE_NOT_FOUND', 'TABLE_CLOSED', 'TABLE_FULL', 'BAD_CODE', 'ALREADY_SEATED', 'NOT_SEATED', 'BAD_PHASE', 'STALE_HAND',
-  'ALREADY_BET', 'BET_OUT_OF_RANGE', 'NOT_YOUR_TURN', 'ILLEGAL_ACTION', 'POWER_NOT_OWNED', 'POWER_ALREADY_USED',
-  'POWER_NOT_APPLICABLE', 'INVENTORY_FULL', 'MARKET_NOT_FOUND', 'MARKET_CLOSED', 'OWN_TABLE_MARKET', 'INSUFFICIENT_SHARES',
-  'SLIPPAGE', 'MARKET_LIMIT', 'USER_NOT_FOUND', 'SELF_FRIEND', 'ALREADY_FRIENDS', 'REQUEST_EXISTS', 'REQUEST_NOT_FOUND',
-  'NOT_FRIENDS', 'AD_COOLDOWN', 'AD_DAILY_LIMIT', 'INTERNAL',
-];
+import 'contract_parity_test.dart' show loadContract;
+
 
 void main() {
   group('mapServerError', () {
     test('ServerReason mirrors ERROR_REASONS exactly', () {
-      expect(ServerReason.values.map((r) => r.name), kErrorReasons);
+      expect(ServerReason.values.map((r) => r.name).toList(), [for (final x in loadContract()['errorReasons']! as List) x as String]);
     });
 
     test('details.reason wins and keeps the exact reason', () {

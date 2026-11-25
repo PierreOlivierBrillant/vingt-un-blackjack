@@ -355,7 +355,8 @@ export function canSurrender(seat: EngineSeat, h: EngineHand): boolean {
   return seat.hands.length === 1 && h.cards.length === 2 && !h.fromSplit && !h.doubled && !h.done;
 }
 
-const POWER_FOR_ACTION: Record<PowerId, PlayerAction[]> = {
+/** Blackjack powers only: any other game's power is not applicable here. */
+const POWER_FOR_ACTION: Partial<Record<PowerId, PlayerAction[]>> = {
   freeSplit: ['split'],
   freeDouble: ['double'],
   freeInsurance: ['insurance'],
@@ -387,7 +388,7 @@ export function actInPlace(s: RoundState, seatIndex: number, action: PlayerActio
   const power = opts.power ?? null;
   if (power !== null) {
     if (seat.powerUsed !== null) throw new EngineError('POWER_ALREADY_USED');
-    if (!POWER_FOR_ACTION[power].includes(action)) throw new EngineError('POWER_NOT_APPLICABLE');
+    if (!(POWER_FOR_ACTION[power] ?? []).includes(action)) throw new EngineError('POWER_NOT_APPLICABLE');
   }
 
   if (action === 'insurance') {

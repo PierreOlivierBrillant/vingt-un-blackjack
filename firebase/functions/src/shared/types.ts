@@ -56,6 +56,17 @@
  *  - Leaderboards and friends: see ProfileDoc / FriendRequestDoc / FriendshipDoc.
  */
 
+import { BACCARAT_MARKET_KINDS, BACCARAT_POWER_IDS, BACCARAT_REASONS } from './games/baccarat';
+import type {
+  GameActionRequest, GameActionResponse, GameId, GameJoinRequest, GameJoinResponse, GameLeaveRequest,
+  GameLeaveResponse, GamePokeRequest, GamePokeResponse, GameStatsDoc, AnyGame,
+} from './games/common';
+import { CRAPS_MARKET_KINDS, CRAPS_POWER_IDS, CRAPS_REASONS } from './games/craps';
+import { HOLDEM_MARKET_KINDS, HOLDEM_REASONS } from './games/holdem';
+import { ROULETTE_MARKET_KINDS, ROULETTE_POWER_IDS, ROULETTE_REASONS } from './games/roulette';
+import { ALL_CARD_BACKS, ALL_CARD_FACES, ALL_FELTS, type TITLE_IDS } from './cosmetics';
+import { ROMANCE_REASONS, type DatingRequest, type DatingResponse, type RomanceRequest, type RomanceResponse } from './romance';
+
 // ============================================================================================
 // Primitive aliases
 // ============================================================================================
@@ -81,9 +92,22 @@ export const RANK_TIERS = ['bronze', 'silver', 'gold', 'platinum', 'diamond'] as
 /** Leaderboard tier derived from `rankPoints` (see RANK_TIER_THRESHOLDS). */
 export type RankTier = (typeof RANK_TIERS)[number];
 
-export const POWER_IDS = ['freeSplit', 'freeDouble', 'freeInsurance', 'peek', 'secondChance'] as const;
+export const BLACKJACK_POWER_IDS = ['freeSplit', 'freeDouble', 'freeInsurance', 'peek', 'secondChance'] as const;
+/** Every power of the shop / inventory: blackjack's plus the other games' (see ./games/<game>.ts). */
+export const POWER_IDS = [...BLACKJACK_POWER_IDS, ...ROULETTE_POWER_IDS, ...BACCARAT_POWER_IDS, ...CRAPS_POWER_IDS] as const;
+/** Game whose tables accept each power. */
+export const POWER_GAME: Record<PowerId, AnyGame> = {
+  freeSplit: 'blackjack', freeDouble: 'blackjack', freeInsurance: 'blackjack', peek: 'blackjack', secondChance: 'blackjack',
+  zeroShield: 'roulette', freeCommission: 'baccarat', safetyNet: 'craps',
+};
 /**
- * Shop powers (bought with fake money, max ONE power used per seat per hand, validated server-side):
+ * Other games' powers (gameAction setBets `power`, max one per seat per round):
+ *  - zeroShield (roulette):     "la partage" for your even-money bets this spin (half back on 0).
+ *  - freeCommission (baccarat): no 5 % commission on your Banker win this coup.
+ *  - safetyNet (craps):         your Pass Line bet is refunded once on seven-out (from the come-out
+ *                               where it is set until that Pass Line bet resolves).
+ *
+ * Blackjack shop powers (bought with fake money, max ONE power used per seat per hand, validated server-side):
  *  - freeSplit:      `act{action:'split', power:'freeSplit'}` — the new hand's bet is paid by the house
  *                    (you win it if it wins, you lose nothing extra if it loses).
  *  - freeDouble:     `act{action:'double', power:'freeDouble'}` — the doubled half is house-paid.
@@ -136,12 +160,14 @@ export const THEMES = ['dark', 'light', 'system'] as const;
 export type Theme = (typeof THEMES)[number];
 export const LANGUAGES = ['fr', 'en'] as const;
 export type Language = (typeof LANGUAGES)[number];
-export const CARD_BACKS = ['classicBlue', 'classicRed', 'midnight', 'emerald', 'neonGrid', 'goldFiligree'] as const;
+/** Every card back / face / felt id (free and exclusive, see ./cosmetics.ts). */
+export const CARD_BACKS = ALL_CARD_BACKS;
 export type CardBack = (typeof CARD_BACKS)[number];
-export const CARD_FACES = ['classic', 'fourColor', 'neon'] as const;
+export const CARD_FACES = ALL_CARD_FACES;
 export type CardFace = (typeof CARD_FACES)[number];
-export const FELTS = ['green', 'blue', 'red', 'purple', 'black'] as const;
+export const FELTS = ALL_FELTS;
 export type Felt = (typeof FELTS)[number];
+export type TitleId = (typeof TITLE_IDS)[number];
 
 /** Avatar ids "avatar01".."avatar24" (drawn procedurally by the client). */
 export const AVATAR_IDS = Array.from({ length: 24 }, (_, i) => `avatar${String(i + 1).padStart(2, '0')}`);
@@ -150,6 +176,8 @@ export type AvatarId = string;
 export const LEDGER_TYPES = [
   'welcomeBonus', 'deposit', 'withdrawal', 'bet', 'double', 'split', 'insurance', 'payout', 'refund',
   'powerPurchase', 'marketBuy', 'marketSell', 'marketPayout', 'adReward',
+  // Sprint 2: hold'em stacks, Rendez-vous gifts and date reservations
+  'buyIn', 'cashOut', 'gift', 'reservation',
 ] as const;
 /** Wallet movement type. Debits have negative `amountCents`, credits positive. */
 export type LedgerType = (typeof LEDGER_TYPES)[number];
@@ -166,8 +194,19 @@ export type LedgerType = (typeof LEDGER_TYPES)[number];
  *  - shoeDealerBustRate:  long market per shoe: "Le croupier saute dans ≥ 28 % des mains de ce sabot ?".
  *                         Closes once 50 % of the shoe is dealt, resolves at the shoe change.
  */
-export const MARKET_KINDS = ['dealerBust', 'playerWins', 'natural', 'shoeDealerBustRate'] as const;
+export const BLACKJACK_MARKET_KINDS = ['dealerBust', 'playerWins', 'natural', 'shoeDealerBustRate'] as const;
+/**
+ * Every market kind. Other games' kinds are documented in ./games/<game>.ts. Market ids of
+ * kernel-driven tables: `${tableId}__r${round}__${kind}` (per round) and `${tableId}__w${series}__${kind}`
+ * (long "series" markets, sim tables only); `handNumber` holds the round (null for series markets)
+ * and `shoeNumber` the series number.
+ */
+export const MARKET_KINDS = [
+  ...BLACKJACK_MARKET_KINDS, ...ROULETTE_MARKET_KINDS, ...BACCARAT_MARKET_KINDS, ...HOLDEM_MARKET_KINDS, ...CRAPS_MARKET_KINDS,
+] as const;
 export type MarketKind = (typeof MARKET_KINDS)[number];
+/** Long markets (not tied to one round). */
+export const SERIES_MARKET_KINDS: readonly MarketKind[] = ['shoeDealerBustRate', 'rouletteZeroSeries', 'baccaratBankerShoe', 'crapsPoint'];
 /** open (tradable) → closed (no trading, outcome pending) → resolved (paid) | void (refunded). */
 export type MarketStatus = 'open' | 'closed' | 'resolved' | 'void';
 export type MarketSide = 'yes' | 'no';
@@ -234,6 +273,7 @@ export const KYC_MIN_AGE_YEARS = 18;
 /** Power prices (cents per unit). */
 export const POWER_PRICES_CENTS: Record<PowerId, Cents> = {
   freeSplit: 2_000, freeDouble: 2_500, freeInsurance: 1_000, peek: 3_000, secondChance: 4_000,
+  zeroShield: 1_500, freeCommission: 1_500, safetyNet: 2_500,
 };
 export const POWER_MAX_QUANTITY_PER_PURCHASE = 10;
 export const POWER_MAX_INVENTORY = 99;
@@ -248,6 +288,10 @@ export const MARKET_MAX_SHARES_PER_TRADE = 1_000;
 /** LMSR liquidity parameter b (in shares). Max house loss per market = b·ln2 dollars. */
 export const MARKET_LIQUIDITY: Record<MarketKind, number> = {
   dealerBust: 60, playerWins: 60, natural: 60, shoeDealerBustRate: 200,
+  rouletteRed: 60, rouletteZero: 60, rouletteDozen3: 60, rouletteZeroSeries: 200,
+  baccaratBanker: 60, baccaratTie: 60, baccaratPair: 60, baccaratBankerShoe: 200,
+  holdemBoardAce: 60, holdemBoardFlush: 60,
+  crapsSeven: 60, crapsPoint: 100,
 };
 export const SHOE_BUST_RATE_THRESHOLD = 0.28;
 
@@ -269,6 +313,13 @@ export const RATE_LIMITS: Record<CallableName, { count: number; windowMs: number
   removeFriend: { count: 20, windowMs: 60_000 },
   claimAdReward: { count: 5, windowMs: 60_000 },
   equipCardStyle: { count: 20, windowMs: 60_000 },
+  gameJoin: { count: 10, windowMs: 60_000 },
+  gameLeave: { count: 10, windowMs: 60_000 },
+  gameAction: { count: 40, windowMs: 10_000 },
+  gamePoke: { count: 30, windowMs: 10_000 },
+  // romance / dating: per-op limits apply too (ROMANCE_OP_RATE_LIMITS, DATING_OP_RATE_LIMITS)
+  romance: { count: 40, windowMs: 60_000 },
+  dating: { count: 60, windowMs: 60_000 },
 };
 
 // ============================================================================================
@@ -305,6 +356,12 @@ export interface ProfileDoc {
   lastSeenAtMs: EpochMs;
   kycVerified: boolean;
   createdAtMs: EpochMs;
+  /** Sprint 2: per-game statistics of kernel-driven games (blackjack keeps `stats`). */
+  gameStats?: Partial<Record<GameId, GameStatsDoc>>;
+  /** Equipped public title (cosmetic unlocked through Rendez-vous), null/absent = none. */
+  title?: TitleId | null;
+  /** Rank points earned per game on UTC `day` (daily cap RANK_POINTS_DAILY_CAP_PER_GAME). */
+  rankDaily?: { day: string; byGame: Partial<Record<GameId, number>> } | null;
 }
 
 export interface ProfileStats {
@@ -319,9 +376,9 @@ export interface ProfileStats {
 }
 
 /**
- * `users/{uid}` — the user's own settings. READ: owner. WRITE: owner may create/update ONLY these
- * fields, with exactly these enum values: theme, language, cardBack, cardFace, felt, updatedAtMs
- * (updatedAtMs must be an int). Also writable through `equipCardStyle`.
+ * `users/{uid}` — the user's own settings. READ: owner. WRITE: the owner may change ONLY theme,
+ * language and updatedAtMs (int) directly; cardBack/cardFace/felt go through `equipCardStyle`
+ * (exclusive cosmetics must be unlocked, see ./cosmetics.ts).
  */
 export interface UserSettingsDoc {
   theme: Theme;
@@ -379,6 +436,8 @@ export interface LedgerEntryDoc {
   marketId: string | null;
   powerId: PowerId | null;
   method: PaymentMethod | null;
+  /** Sprint 2: gift id / scene id / character id for 'gift' and 'reservation' entries, else null. */
+  itemId?: string | null;
 }
 
 /** `users/{uid}/inventory/{powerId}` — owned powers. READ: owner. */
@@ -618,6 +677,10 @@ export interface MarketDoc {
   marketId: string;
   tableId: string;
   tableName: string;
+  /** Game of the table (Sprint 2; absent on older blackjack markets = 'blackjack'). */
+  game: AnyGame;
+  /** Trades by humans (payout pass skipped when 0). */
+  humanTradeCount: number;
   kind: MarketKind;
   /** Hand number for per-hand markets, null for shoe markets. */
   handNumber: number | null;
@@ -695,10 +758,13 @@ export interface FeedEntryDoc {
   username: string;
   avatar: AvatarId;
   isBot: boolean;
-  kind: 'blackjack' | 'bigWin' | 'market';
+  /** jackpot = game-specific big hit (roulette straight up, royal flush, hard way…). */
+  kind: 'blackjack' | 'bigWin' | 'market' | 'jackpot';
   amountCents: Cents;
   tableId: string | null;
   createdAtMs: EpochMs;
+  /** Sprint 2 (absent on older entries = 'blackjack'). */
+  game?: AnyGame;
 }
 
 /*
@@ -754,6 +820,14 @@ export const ERROR_REASONS = [
   'AD_COOLDOWN', //            failed-precondition
   'AD_DAILY_LIMIT', //         failed-precondition
   'INTERNAL', //               internal
+  // Sprint 2 — kernel-driven games
+  'BAD_BET_SPOT', //           invalid-argument (unknown bet spot id for this game)
+  'BET_INCREMENT', //          invalid-argument (amount not a valid multiple, e.g. craps place 6/8 by $3)
+  'BET_NOT_REMOVABLE', //      failed-precondition (contract bet, e.g. pass line after the point)
+  'WRONG_GAME', //             invalid-argument (action/power of another game)
+  ...ROULETTE_REASONS, ...BACCARAT_REASONS, ...HOLDEM_REASONS, ...CRAPS_REASONS,
+  // Sprint 2 — Rendez-vous (see ./romance.ts)
+  ...ROMANCE_REASONS,
 ] as const;
 export type ErrorReason = (typeof ERROR_REASONS)[number];
 
@@ -931,9 +1005,12 @@ export interface RemoveFriendResponse { removed: true }
 export interface ClaimAdRewardRequest extends BaseRequest { adId: string }
 export interface ClaimAdRewardResponse { rewardCents: Cents; balanceCents: Cents; remainingToday: number }
 
-/** equipCardStyle — at least one field. Same effect as writing users/{uid} directly. */
-export interface EquipCardStyleRequest extends BaseRequest { cardBack?: CardBack; cardFace?: CardFace; felt?: Felt }
-export interface EquipCardStyleResponse { cardBack: CardBack; cardFace: CardFace; felt: Felt }
+/**
+ * equipCardStyle — at least one field. Exclusive cosmetics must be unlocked (COSMETIC_LOCKED).
+ * `title` (null = remove) is written to the public profile.
+ */
+export interface EquipCardStyleRequest extends BaseRequest { cardBack?: CardBack; cardFace?: CardFace; felt?: Felt; title?: TitleId | null }
+export interface EquipCardStyleResponse { cardBack: CardBack; cardFace: CardFace; felt: Felt; title: TitleId | null }
 
 /** Name → [request, response] map of every callable. */
 export interface Callables {
@@ -953,10 +1030,17 @@ export interface Callables {
   removeFriend: [RemoveFriendRequest, RemoveFriendResponse];
   claimAdReward: [ClaimAdRewardRequest, ClaimAdRewardResponse];
   equipCardStyle: [EquipCardStyleRequest, EquipCardStyleResponse];
+  // Sprint 2 (see ./games/common.ts and ./romance.ts)
+  gameJoin: [GameJoinRequest, GameJoinResponse];
+  gameLeave: [GameLeaveRequest, GameLeaveResponse];
+  gameAction: [GameActionRequest, GameActionResponse];
+  gamePoke: [GamePokeRequest, GamePokeResponse];
+  romance: [RomanceRequest, RomanceResponse];
+  dating: [DatingRequest, DatingResponse];
 }
 export type CallableName = keyof Callables;
 export const CALLABLE_NAMES: CallableName[] = [
   'completeProfile', 'submitKyc', 'deposit', 'withdraw', 'joinMatchmaking', 'leaveTable', 'placeBet', 'act',
   'pokeTable', 'buyPower', 'tradeShares', 'friendRequest', 'respondFriend', 'removeFriend', 'claimAdReward',
-  'equipCardStyle',
+  'equipCardStyle', 'gameJoin', 'gameLeave', 'gameAction', 'gamePoke', 'romance', 'dating',
 ];
