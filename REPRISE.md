@@ -23,15 +23,18 @@ Puis `npm ci` dans `firebase/functions` et `flutter pub get` dans `app`.
   - NON corrigé (faible) : `profiles/{uid}` expose `kycVerified` et `currentTableId` à tous les connectés. Pour corriger : retirer `kycVerified` du profil public (l'app lit déjà `users/{uid}/private/kyc`, voir `app/lib/domain/models.dart` vers la ligne 173) et ne publier `currentTableId` que pour les tables publiques.
 
 ## Reste à faire
-1. Rendre le dépôt GitHub PUBLIC (demandé à l'origine ; à reconfirmer avec l'utilisateur avant de le faire).
-2. Pousser l'APK sur les 23 postes du VLAN `10.10.96.0/24` avec les droits de l'utilisateur seulement (à reconfirmer) ; sinon repli sur la page de téléchargement (port 8088).
+1. FAIT le 25/11 : dépôt GitHub rendu PUBLIC (https://github.com/PierreOlivierBrillant/vingt-un-blackjack), après vérification de l'historique (aucun secret ; restent l'IP privée du poste, le VLAN et la série du téléphone dans ce fichier).
+2. Pousser l'APK sur les postes : `tools\push_classroom.ps1` est prêt mais N'A PAS été exécuté (attend l'accord de l'utilisateur et la liste des postes dans `tools\classroom\hosts.txt`, voir `hosts.example.txt`). Il passe par WinRM (port 5985 : ouvert sur 10.10.96.145, fermé sur 10.10.96.140) avec les droits de l'utilisateur, et n'installe QUE sur les émulateurs déjà lancés. Commencer par `-WhatIf` (rapport seul). Sinon : installation en une commande par chaque étudiant (voir plus bas), vérifiée sur la tablette.
 3. Faire écouter les sons à l'utilisateur (aucun agent ne peut les entendre) : points à risque = foule/ambiance « chœur synthétique », ambiance sourde sur téléphone, et les 6 nouveaux sons Las Vegas (surtout `crowd_ooh`, synthèse de voyelles, et le clic `ui_chip_tap` entendu à chaque toucher).
 4. ~~Fiabiliser `app/integration_test/app_flow_test.dart`~~ : FAIT le 25/11 (table privée, 3 passages verts de suite, voir État C). Reste ouvert : un passage (le premier, juste après un redémarrage du backend) n'a pas affiché le formulaire KYC dans les 60 s après l'inscription, alors que `completeProfile` avait réussi côté serveur. Non reproduit sur les 6 passages suivants ; si ça revient, le message d'échec montre maintenant l'écran courant.
 5. Preuve à deux clients humains simultanés via l'IP LAN (AVD téléphone + AVD tablette) : non refaite cette session (les tests d'intégration backend couvrent le multi-clients via le SDK).
 6. Faible priorité : le point KYC public ci-dessus.
 
 ## À savoir pour la salle de classe
-- Ce poste est en profil réseau **Domaine** (pas Privé) : la règle pare-feu « profil privé » ne s'applique pas. Le port 8080 (Firestore, java.exe) est signalé bloqué en entrée ; 9099/5001/8088 sont couverts par une règle Node existante. Passer par l'informatique du collège. Les scripts ne modifient jamais le pare-feu.
+- Ce poste est en profil réseau **Domaine**. Pare-feu vérifié le 25/11 : des règles « Autoriser » existent pour `C:\Program Files\nodejs\node.exe` (Auth 9099, Functions 5001, page 8088) et pour le `java.exe` de Corretto JDK 21 (Firestore 8080). La règle Java est une règle « Query User », créée en cliquant « Autoriser » à l'invite de Windows : DeepFreeze l'efface au redémarrage, et Windows redemandera au premier démarrage des émulateurs → cliquer « Autoriser ». `start_classroom.ps1` revérifie le pare-feu toutes les 30 s tant que ce n'est pas ouvert. Les scripts ne modifient jamais le pare-feu.
+- Connectivité vérifiée : la page de téléchargement teste les 3 ports dans le navigateur (tout « OK » dans Edge), et le test « Serveur » de l'app sur l'AVD tablette via l'IP LAN répond pour les 3 services. NON vérifié depuis un AUTRE poste physique de la salle : ouvrir `http://<IP>:8088` sur un poste étudiant, la page indique directement si les 3 ports répondent.
+- L'APK de classe est un build **profile** x86_64 (AOT, fluide) : le manifeste profile autorise le HTTP en clair vers les émulateurs (comme le debug ; le release l'interdit toujours). Sans cela, l'app profile ne joignait pas le serveur.
+- Installation étudiant en une commande (affichée sur la page, ou `install.cmd` à double-cliquer) : `powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((Invoke-RestMethod http://<IP>:8088/install.ps1)))"`. Elle démarre l'AVD du poste s'il ne tourne pas, télécharge, vérifie le SHA-256, installe sur l'émulateur seulement et ouvre l'app. À refaire après chaque redémarrage (DeepFreeze).
 - IP LAN du poste enseignant : 10.10.96.130 (sessions du 19 et du 25 novembre).
 - Un humain est retiré de la table après 3 mains sans mise ; un callable prend ~3 s sur l'émulateur pour une fenêtre de mise de 15 s (à évaluer).
 - Fluidité : un build debug est lent sur l'émulateur (JIT, assertions). Pour juger la fluidité : `flutter run --profile -d emulator-5554 --dart-define=BACKEND_HOST=<IP>` depuis `app`.
@@ -41,9 +44,9 @@ Puis `npm ci` dans `firebase/functions` et `flutter pub get` dans `app`.
 - Émulateurs : `powershell -ExecutionPolicy Bypass -File tools\run_emulators.ps1` ; données : `tools\seed.ps1` ; simulation : `tools\sim_runner.ps1`
 - Tests backend : `tools\test_all.ps1 -BackendOnly` (arrêter les émulateurs avant) ; tests Flutter : `app\tool\test.ps1`
 - Intégration sur l'AVD (émulateurs lancés) : `flutter test integration_test -d emulator-5554 --dart-define=BACKEND_HOST=<IP>` depuis `app\` (avec le `JAVA_TOOL_OPTIONS` ci-dessous)
-- Classe : `tools\start_classroom.ps1` (enseignant), `tools\install_student.ps1 -TeacherIp <IP>` (étudiant), `tools\stop_classroom.ps1` (arrêt propre avec export des données)
+- Classe : `tools\start_classroom.ps1` (enseignant), `tools\start_classroom.ps1 -PublishOnly` (nouvel APK + page à chaud, serveur intact), `tools\push_classroom.ps1 [-WhatIf]` (push WinRM), `tools\install_student.ps1 -TeacherIp <IP>` (étudiant, ou la commande de la page), `tools\stop_classroom.ps1` (arrêt propre avec export des données)
 - Java 21 : voir `tools\_backend_env.ps1` ; pour Gradle : `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=C:\nonexistent-afunix-dir`.
 - Un téléphone physique peut être branché (série `f250e7c31e28b675`) : ne jamais y installer ; toujours cibler `emulator-55xx`.
 
 ## Décisions prises
-Tables partagées (≤ 5 joueurs + bots), boutique de 5 pouvoirs, FR + EN, argent 100 % fictif, tout procédural (aucun asset externe, sons synthétisés), aucune question à l'utilisateur pendant l'implémentation. Sauvegardes : commits poussés sur `main` du dépôt GitHub privé.
+Tables partagées (≤ 5 joueurs + bots), boutique de 5 pouvoirs, FR + EN, argent 100 % fictif, tout procédural (aucun asset externe, sons synthétisés), aucune question à l'utilisateur pendant l'implémentation. Sauvegardes : commits poussés sur `main` du dépôt GitHub (public depuis le 25/11).

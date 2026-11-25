@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PROFILE build only (the classroom APK built by tools/start_classroom.ps1: AOT-compiled, much
+     smoother than debug). Allows cleartext HTTP so the app can reach the local Firebase emulators
+     (Auth 9099, Firestore 8080, Functions 5001) on the teacher's machine. Never shipped in release. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

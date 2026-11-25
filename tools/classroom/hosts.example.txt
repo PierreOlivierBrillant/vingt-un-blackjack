@@ -1,0 +1,2 @@
+# Student machines for tools\push_classroom.ps1: one DNS name per line (IP addresses also work
+# when DNS can resolve them). Lines starting with # are ignored.

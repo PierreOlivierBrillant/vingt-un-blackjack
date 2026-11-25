@@ -20,6 +20,9 @@
   a.btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:10px 18px; border-radius:8px; font-weight:600; }
   small { color:var(--muted); }
   li { margin:4px 0; }
+  .ok { color:#1f8a4c; } .ko { color:#c0392b; }
+  .ports { list-style:none; padding:0; margin:8px 0 0; }
+  button { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid var(--muted); background:var(--card); color:var(--fg); cursor:pointer; }
 </style>
 </head>
 <body>
@@ -31,17 +34,20 @@
     <h2>Serveur de la classe</h2>
     <p>Adresse du poste enseignant&nbsp;: <span class="big">{{HOST}}</span></p>
     <p><small>Ports utilis&eacute;s&nbsp;: 9099 (connexion), 8080 (donn&eacute;es), 5001 (fonctions), 8088 (cette page).</small></p>
+    <ul id="ports" class="ports">
+      <li data-port="9099">Connexion (9099)&nbsp;: <b>&hellip;</b></li>
+      <li data-port="8080">Donn&eacute;es (8080)&nbsp;: <b>&hellip;</b></li>
+      <li data-port="5001">Fonctions (5001)&nbsp;: <b>&hellip;</b></li>
+    </ul>
+    <p id="ports-summary"><small>Test de connexion depuis ce poste en cours&hellip;</small></p>
   </section>
 
   <section>
-    <h2>M&eacute;thode 1 &mdash; script (recommand&eacute;e)</h2>
-    <ol>
-      <li>D&eacute;marrez votre &eacute;mulateur Android (Android Studio &rarr; Device Manager) et attendez l'&eacute;cran d'accueil.</li>
-      <li>Dans PowerShell, &agrave; la racine du projet&nbsp;:
-        <pre>powershell -ExecutionPolicy Bypass -File tools\install_student.ps1 -TeacherIp {{HOST}}</pre>
-      </li>
-      <li>Ouvrez l'application &laquo;&nbsp;Vingt-Un&nbsp;&raquo; dans l'&eacute;mulateur.</li>
-    </ol>
+    <h2>M&eacute;thode 1 &mdash; une seule commande (recommand&eacute;e)</h2>
+    <p>Ouvrez <b>PowerShell</b> (menu D&eacute;marrer &rarr; &laquo;&nbsp;PowerShell&nbsp;&raquo;), collez cette ligne et appuyez sur Entr&eacute;e&nbsp;:</p>
+    <pre id="oneliner">{{ONELINER}}</pre>
+    <p><button type="button" id="copy">Copier la commande</button> &nbsp; ou &nbsp; <a href="install.cmd">t&eacute;l&eacute;charger <code>install.cmd</code></a> et double-cliquez dessus.</p>
+    <p><small>Elle d&eacute;marre votre &eacute;mulateur Android s'il ne tourne pas, t&eacute;l&eacute;charge l'application, v&eacute;rifie son empreinte, l'installe (sur l'&eacute;mulateur seulement) et l'ouvre. &Agrave; relancer apr&egrave;s chaque red&eacute;marrage du poste (DeepFreeze efface tout).</small></p>
   </section>
 
   <section>
@@ -68,5 +74,37 @@ adb -s emulator-5554 install -r {{APK}}</pre>
     </ul>
   </section>
 </main>
+<script>
+  // Can this machine reach each service of the teacher's server? An answer of any kind (even an
+  // HTTP error) means the port is reachable; a timeout or a refused connection means it is not.
+  (function () {
+    var host = location.hostname;
+    var items = document.querySelectorAll('#ports li');
+    var pending = items.length, failed = 0;
+    function done(li, ok) {
+      var b = li.querySelector('b');
+      b.textContent = ok ? 'OK' : 'injoignable';
+      b.className = ok ? 'ok' : 'ko';
+      if (!ok) failed++;
+      if (--pending === 0) {
+        document.getElementById('ports-summary').innerHTML = failed === 0
+          ? '<b class="ok">Tout r&eacute;pond&nbsp;: l’application pourra jouer avec le reste de la classe.</b>'
+          : '<b class="ko">Un service ne r&eacute;pond pas&nbsp;: pr&eacute;venez l’enseignant (pare-feu de son poste).</b>';
+      }
+    }
+    items.forEach(function (li) {
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, 5000);
+      fetch('http://' + host + ':' + li.dataset.port + '/', { mode: 'no-cors', cache: 'no-store', signal: ctrl.signal })
+        .then(function () { clearTimeout(timer); done(li, true); }, function () { clearTimeout(timer); done(li, false); });
+    });
+    document.getElementById('copy').addEventListener('click', function () {
+      var text = document.getElementById('oneliner').textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
+        function () { document.getElementById('copy').textContent = 'Copiée !'; },
+        function () { var r = document.createRange(); r.selectNodeContents(document.getElementById('oneliner')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+    });
+  })();
+</script>
 </body>
 </html>

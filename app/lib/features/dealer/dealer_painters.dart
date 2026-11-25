@@ -302,11 +302,24 @@ class FeltPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..color = ink;
-    final arcRect = Rect.fromCenter(center: const Offset(500, 300), width: 1240, height: 1060);
-    canvas.drawArc(arcRect.deflate(160), 0.52, math.pi - 1.04, false, arc);
-    canvas.drawArc(arcRect.deflate(120), 0.55, math.pi - 1.1, false, arc..strokeWidth = 1.5);
-    _textOnArc(canvas, payoutLine, const Offset(500, 300), 410, gold, 30);
-    _textOnArc(canvas, insuranceLine, const Offset(500, 300), 470, ink, 22);
+    // The printed lines are ellipses (not circles): the lettering follows the SAME ellipses,
+    // offset by a constant distance below the outer line, so it never crosses it.
+    canvas.drawArc(
+      Rect.fromCenter(center: arcCenter, width: 2 * innerArc.dx, height: 2 * innerArc.dy),
+      0.52,
+      math.pi - 1.04,
+      false,
+      arc,
+    );
+    canvas.drawArc(
+      Rect.fromCenter(center: arcCenter, width: 2 * outerArc.dx, height: 2 * outerArc.dy),
+      0.55,
+      math.pi - 1.1,
+      false,
+      arc..strokeWidth = 1.5,
+    );
+    textOnEllipse(canvas, payoutLine, arcCenter, outerArc + const Offset(30, 30), gold, 30);
+    textOnEllipse(canvas, insuranceLine, arcCenter, outerArc + const Offset(70, 70), ink, 22);
 
     final rule = TextPainter(
       text: TextSpan(
@@ -340,23 +353,48 @@ class FeltPainter extends CustomPainter {
     }
   }
 
-  void _textOnArc(Canvas canvas, String text, Offset center, double radius, Color color, double fontSize) {
+  /// Centre and radii (x, y) of the two printed lines.
+  static const arcCenter = Offset(500, 300);
+  static const innerArc = Offset(460, 370);
+  static const outerArc = Offset(500, 410);
+
+  /// Point of the ellipse ([center], radii [r]) at parameter [t] (π/2 = bottom).
+  static Offset ellipsePoint(Offset center, Offset r, double t) =>
+      Offset(center.dx + r.dx * math.cos(t), center.dy + r.dy * math.sin(t));
+
+  /// Moves [t] along the ellipse by the arc length [s] (towards the right when s > 0, i.e.
+  /// decreasing t along the bottom), integrating the local speed in small midpoint steps.
+  static double advance(Offset r, double t, double s) {
+    const steps = 12;
+    final dir = s.sign;
+    final h = s.abs() / steps;
+    double speed(double t) => math.sqrt(math.pow(r.dx * math.sin(t), 2) + math.pow(r.dy * math.cos(t), 2));
+    for (var i = 0; i < steps; i++) {
+      final mid = t - dir * h / 2 / speed(t);
+      t -= dir * h / speed(mid);
+    }
+    return t;
+  }
+
+  /// Draws [text] upright along the bottom of the ellipse, centred, each glyph tangent to it.
+  static void textOnEllipse(Canvas canvas, String text, Offset center, Offset r, Color color, double fontSize) {
     final style = TextStyle(fontFamily: kAppFont, color: color, fontSize: fontSize, fontWeight: FontWeight.w800, letterSpacing: 1);
     final glyphs = [
       for (final ch in text.characters)
         TextPainter(text: TextSpan(text: ch, style: style), textDirection: TextDirection.ltr)..layout(),
     ];
     final total = glyphs.fold<double>(0, (a, g) => a + g.width);
-    var angle = math.pi / 2 + total / 2 / radius; // centred at the bottom
+    var t = advance(r, math.pi / 2, -total / 2); // start on the left, centred at the bottom
     for (final g in glyphs) {
-      final half = g.width / 2 / radius;
-      angle -= half;
+      t = advance(r, t, g.width / 2);
+      final p = ellipsePoint(center, r, t);
       canvas.save();
-      canvas.translate(center.dx + math.cos(angle) * radius, center.dy + math.sin(angle) * radius);
-      canvas.rotate(angle - math.pi / 2);
+      canvas.translate(p.dx, p.dy);
+      // Direction of reading = -dP/dt = (rx·sin t, −ry·cos t).
+      canvas.rotate(math.atan2(-r.dy * math.cos(t), r.dx * math.sin(t)));
       g.paint(canvas, Offset(-g.width / 2, -g.height / 2));
       canvas.restore();
-      angle -= half;
+      t = advance(r, t, g.width / 2);
     }
   }
 

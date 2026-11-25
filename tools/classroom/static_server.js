@@ -33,6 +33,8 @@ const TYPES = {
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.apk': 'application/vnd.android.package-archive',
+  '.ps1': 'text/plain; charset=utf-8',
+  '.cmd': 'application/octet-stream',
 };
 
 function send(res, status, text) {
@@ -103,7 +105,7 @@ const server = http.createServer((req, res) => {
     'X-Content-Type-Options': 'nosniff',
     'Cache-Control': 'no-store',
   };
-  if (ext === '.apk') headers['Content-Disposition'] = `attachment; filename="${path.basename(file)}"`;
+  if (ext === '.apk' || ext === '.cmd') headers['Content-Disposition'] = `attachment; filename="${path.basename(file)}"`;
   res.writeHead(200, headers);
   console.log(`${stamp} ${req.socket.remoteAddress} ${req.method} ${req.url} 200`);
   if (req.method === 'HEAD') {

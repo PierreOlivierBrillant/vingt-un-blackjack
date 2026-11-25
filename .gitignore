@@ -18,3 +18,6 @@ firebase/.emulator-data/
 
 # Flutter golden test failure output
 app/test/golden/failures/
+
+# Classroom machine list (local to the teacher machine)
+tools/classroom/hosts.txt

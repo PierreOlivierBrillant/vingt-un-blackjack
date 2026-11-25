@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vingtun/domain/cards.dart';
 import 'package:vingtun/features/dealer/dealer_controller.dart';
+import 'package:vingtun/features/dealer/dealer_painters.dart';
 import 'package:vingtun/features/dealer/dealer_stage.dart';
 
 String label(List<String> cards, {bool dealer = false}) {
@@ -51,5 +52,26 @@ void main() {
       final (bg, fg) = stageBadgeColors(b);
       expect(contrast(bg, fg), greaterThanOrEqualTo(4.5), reason: '$b');
     }
+  });
+  group('felt lettering follows the printed (elliptical) lines', () {
+    test('on a circle, moving by an arc length s turns by s / r', () {
+      const r = Offset(400, 400);
+      expect(FeltPainter.advance(r, math.pi / 2, 100), closeTo(math.pi / 2 - 100 / 400, 1e-6));
+    });
+    test('advancing then coming back returns to the start, on the ellipse too', () {
+      final t = FeltPainter.advance(FeltPainter.outerArc, math.pi / 2, 230);
+      expect(FeltPainter.advance(FeltPainter.outerArc, t, -230), closeTo(math.pi / 2, 1e-3));
+    });
+    test('both text lines sit outside the outer printed line, never on it', () {
+      for (final off in const [Offset(30, 30), Offset(70, 70)]) {
+        final r = FeltPainter.outerArc + off;
+        for (var t = 0.6; t < math.pi - 0.6; t += 0.05) {
+          final p = FeltPainter.ellipsePoint(FeltPainter.arcCenter, r, t);
+          final d = p - FeltPainter.arcCenter;
+          final onOuter = math.pow(d.dx / FeltPainter.outerArc.dx, 2) + math.pow(d.dy / FeltPainter.outerArc.dy, 2);
+          expect(onOuter, greaterThan(1.1), reason: 't=$t');
+        }
+      }
+    });
   });
 }

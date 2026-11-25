@@ -2,7 +2,8 @@
 .SYNOPSIS
   Teacher machine: runs the whole classroom server on the local network.
   1. Detects the LAN IPv4 (interface holding the default gateway; -HostIp to force).
-  2. Builds the debug APK with --dart-define=BACKEND_HOST=<IP> (-SkipBuild reuses an existing APK).
+  2. Builds the PROFILE APK (AOT: smooth on student emulators) with --dart-define=BACKEND_HOST=<IP>
+     (-SkipBuild reuses an existing APK).
   3. Starts the Firebase emulators (Auth 9099, Firestore 8080, Functions 5001 on 0.0.0.0) with
      persistence (--import / --export-on-exit, default firebase/.emulator-data, shared with
      tools/run_emulators.ps1) plus a periodic autosave.
@@ -17,7 +18,7 @@
 .PARAMETER HostIp
   IPv4 to advertise / bake into the APK instead of the detected one.
 .PARAMETER SkipBuild
-  Do not build: reuse .classroom/www/vingt-un.apk, else app/build/app/outputs/flutter-apk/app-debug.apk.
+  Do not build: reuse .classroom/www/vingt-un.apk, else app/build/app/outputs/flutter-apk/app-profile.apk.
 .PARAMETER Fresh
   Start from an empty database (no import; the previous data is overwritten on exit).
 .PARAMETER DataDir
@@ -26,9 +27,13 @@
   Export the emulator data every N minutes while running (0 disables; default 5).
 .PARAMETER WebPort
   Port of the download page (default 8088).
+.PARAMETER PublishOnly
+  Only (re)build and (re)publish the APK, the page and the installers in .classroom/www, then exit.
+  Safe while the classroom server runs: its page server picks the new files up immediately.
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File tools\start_classroom.ps1
   powershell -ExecutionPolicy Bypass -File tools\start_classroom.ps1 -HostIp 10.10.96.42 -SkipBuild
+  powershell -ExecutionPolicy Bypass -File tools\start_classroom.ps1 -PublishOnly   # new APK, server untouched
 #>
 param(
   [string]$HostIp,
@@ -37,7 +42,8 @@ param(
   [string]$DataDir,
   [int]$AutosaveMinutes = 5,
   [int]$WebPort = 8088,
-  [int]$TickMs = 500
+  [int]$TickMs = 500,
+  [switch]$PublishOnly
 )
 . "$PSScriptRoot\_backend_env.ps1"
 
@@ -49,7 +55,8 @@ $HostFile = Join-Path $ClassDir 'apk-host.txt'
 $StopFile = Join-Path $ClassDir 'stop-request'
 $ApkName = 'vingt-un.apk'
 $PublishedApk = Join-Path $WwwDir $ApkName
-$BuiltApk = Join-Path $AppDir 'build\app\outputs\flutter-apk\app-debug.apk'
+$BuiltApk = Join-Path $AppDir 'build\app\outputs\flutter-apk\app-profile.apk'
+$StudentScript = Join-Path $PSScriptRoot 'install_student.ps1'
 $ServerJs = Join-Path $PSScriptRoot 'classroom\static_server.js'
 $TemplateHtml = Join-Path $PSScriptRoot 'classroom\index.template.html'
 $GradleJavaToolOptions = '-Djdk.net.unixdomain.tmpdir=C:\nonexistent-afunix-dir'
@@ -233,6 +240,7 @@ if ($HostIp) {
 }
 
 foreach ($p in 9099, 8080, 5001, 4000, 4400, 4500, $WebPort) {
+  if ($PublishOnly) { break } # republishing next to a running server is the point of -PublishOnly
   if (Test-PortBusy $p) { throw "Port $p is already in use (emulators or a previous classroom server still running?)." }
 }
 foreach ($t in 'node', 'flutter') {
@@ -263,11 +271,13 @@ try {
   # 2. APK
   # ----------------------------------------------------------------------------------------
   if (-not $SkipBuild) {
-    Write-Step "flutter build apk --debug (BACKEND_HOST=$ip)"
+    Write-Step "flutter build apk --profile (BACKEND_HOST=$ip)"
     $env:JAVA_TOOL_OPTIONS = $GradleJavaToolOptions
     Push-Location $AppDir
     try {
-      & flutter build apk --debug "--dart-define=BACKEND_HOST=$ip"
+      # x86_64 only: classroom AVDs on Windows PCs are x86_64 images (they can also run arm64 apps,
+      # not the other way round); one ABI instead of three makes the download several times smaller.
+      & flutter build apk --profile --target-platform android-x64 "--dart-define=BACKEND_HOST=$ip"
       if ($LASTEXITCODE -ne 0) { throw "flutter build apk failed (exit $LASTEXITCODE)" }
     } finally {
       Pop-Location
@@ -298,11 +308,27 @@ try {
   $apkItem = Get-Item $PublishedApk
   $sha = (Get-FileHash -Algorithm SHA256 $PublishedApk).Hash.ToLowerInvariant()
   [IO.File]::WriteAllText((Join-Path $WwwDir "$ApkName.sha256"), "$sha  $ApkName`n", $Utf8NoBom)
+  $oneLiner = "powershell -NoProfile -ExecutionPolicy Bypass -Command `"& ([scriptblock]::Create((Invoke-RestMethod http://${ip}:$WebPort/install.ps1)))`""
   $html = [IO.File]::ReadAllText($TemplateHtml, [Text.Encoding]::UTF8)
   $sizeText = '{0:N1} Mo' -f ($apkItem.Length / 1MB)
   $html = $html.Replace('{{HOST}}', $ip).Replace('{{APK}}', $ApkName).Replace('{{SHA256}}', $sha).
-    Replace('{{SIZE}}', $sizeText).Replace('{{DATE}}', $apkItem.LastWriteTime.ToString('dd/MM/yyyy HH:mm'))
+    Replace('{{SIZE}}', $sizeText).Replace('{{DATE}}', $apkItem.LastWriteTime.ToString('dd/MM/yyyy HH:mm')).
+    Replace('{{ONELINER}}', [Net.WebUtility]::HtmlEncode($oneLiner))
   [IO.File]::WriteAllText((Join-Path $WwwDir 'index.html'), $html, $Utf8NoBom)
+
+  # One-command install for the students: the student script with this server's IP as default,
+  # served as install.ps1 (and install.cmd, a double-clickable wrapper). See the page.
+  $studentPs1 = [IO.File]::ReadAllText($StudentScript, [Text.Encoding]::UTF8)
+  $mandatory = '[Parameter(Mandatory = $true)][string]$TeacherIp,'
+  if (-not $studentPs1.Contains($mandatory)) { throw "install_student.ps1: TeacherIp parameter line not found (expected '$mandatory')." }
+  $studentPs1 = $studentPs1.Replace($mandatory, "[string]`$TeacherIp = '$ip',")
+  [IO.File]::WriteAllText((Join-Path $WwwDir 'install.ps1'), $studentPs1, $Utf8NoBom)
+  [IO.File]::WriteAllText((Join-Path $WwwDir 'install.cmd'), "@echo off`r`necho Vingt-Un : installation depuis $ip ...`r`n$oneLiner`r`npause`r`n", $Utf8NoBom)
+  if ($PublishOnly) {
+    Write-Host "Published in ${WwwDir}: $ApkName (sha256 $($sha.Substring(0, 12))...), index.html, install.ps1, install.cmd." -ForegroundColor Green
+    Write-Host "Students: http://${ip}:$WebPort   or   $oneLiner" -ForegroundColor Green
+    return
+  }
 
   # ----------------------------------------------------------------------------------------
   # 3. Emulators
@@ -365,6 +391,8 @@ try {
     if ($profileName -and $profileName -ne 'Private') {
       Write-Host "Note: this network uses the '$profileName' profile; a rule limited to the Private profile will NOT apply to it. On a school domain network, ask the IT team to open these ports." -ForegroundColor Yellow
     }
+    Write-Host 'Easiest fix: when Windows shows "Allow access" for Java (Firestore) or Node.js, tick the network and click Allow.' -ForegroundColor Yellow
+    Write-Host '(DeepFreeze machines forget it at every reboot: Windows will ask again.) The check is repeated every 30 s.' -ForegroundColor Yellow
   } else {
     Write-Host 'Firewall: ports appear to be allowed.' -ForegroundColor Green
   }
@@ -378,7 +406,7 @@ try {
   Write-Host '==================================================================' -ForegroundColor Green
   Write-Host "  Classroom server ready.   Teacher IP: $ip" -ForegroundColor Green
   Write-Host "  Students open:            $url" -ForegroundColor Green
-  Write-Host "  or run: tools\install_student.ps1 -TeacherIp $ip" -ForegroundColor Green
+  Write-Host "  or paste in PowerShell:   $oneLiner" -ForegroundColor Green
   Write-Host "  Emulator UI (this machine only): http://127.0.0.1:4000" -ForegroundColor Green
   Write-Host "  Logs: $LogDir" -ForegroundColor Green
   Write-Host '  Ctrl+C (or tools\stop_classroom.ps1) to stop; data is exported on exit.' -ForegroundColor Green
@@ -387,8 +415,19 @@ try {
   $interrupted = $true # from here on, leaving the loop without a break means Ctrl+C
   $nextSave = if ($AutosaveMinutes -gt 0) { (Get-Date).AddMinutes($AutosaveMinutes) } else { [datetime]::MaxValue }
   $simWarned = $false
+  $nextFwCheck = if ($fw.State -ne 'open') { (Get-Date).AddSeconds(30) } else { [datetime]::MaxValue }
   while ($true) {
     Start-Sleep -Seconds 2
+    if ((Get-Date) -ge $nextFwCheck) {
+      # Rules created from Windows' "Allow access" prompt appear while we run.
+      $fw = Test-ClassroomFirewall $profileName $ClassroomPorts
+      if ($fw.State -eq 'open') {
+        Write-Host "$(Get-Date -Format HH:mm:ss) Firewall: ports now allowed; students can connect." -ForegroundColor Green
+        $nextFwCheck = [datetime]::MaxValue
+      } else {
+        $nextFwCheck = (Get-Date).AddSeconds(30)
+      }
+    }
     if (Test-Path $StopFile) {
       Remove-Item -Force $StopFile -ErrorAction SilentlyContinue
       $interrupted = $false
@@ -412,7 +451,8 @@ try {
   $failed = $true
 } finally {
   $env:JAVA_TOOL_OPTIONS = $savedJavaToolOptions
-  Write-Host 'Stopping the classroom server...' -ForegroundColor Cyan
+  if ($PublishOnly -and -not $failed) { $script:Children = @() }
+  if ($script:Children.Count -gt 0 -or -not $PublishOnly) { Write-Host 'Stopping the classroom server...' -ForegroundColor Cyan }
   # On Ctrl+C every child received the signal too; give the Firebase CLI time to export.
   $emuChild = $script:Children | Where-Object { $_.Name -eq 'emulators' } | Select-Object -First 1
   if ($emuChild) {
@@ -424,6 +464,6 @@ try {
     }
   }
   foreach ($c in $script:Children) { Stop-Tree $c.Process }
-  Write-Host 'Stopped.'
+  if (-not $PublishOnly) { Write-Host 'Stopped.' }
 }
 if ($failed) { exit 1 }

@@ -4,4 +4,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- PROFILE (classroom APK) and DEBUG only: the Firebase emulators speak plain HTTP on the LAN
+         (10.0.2.2 or the teacher's IP). Release builds keep Android's default (cleartext forbidden). -->
+    <application android:networkSecurityConfig="@xml/network_security_config" />
 </manifest>

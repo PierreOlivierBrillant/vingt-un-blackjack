@@ -2,7 +2,8 @@
 .SYNOPSIS
   Student machine: downloads the Vingt-Un APK from the teacher's classroom server
   (tools/start_classroom.ps1, http://<TeacherIp>:8088) and installs it with "adb install -r"
-  on the LOCAL ANDROID EMULATOR only. Physical devices are never targeted: the serial must be
+  on the LOCAL ANDROID EMULATOR only (it starts this machine's AVD first if none is running, then
+  opens the app). Physical devices are never targeted: the serial must be
   emulator-NNNN and the device must report itself as an emulator (ro.kernel.qemu / ro.boot.qemu).
 .PARAMETER TeacherIp
   IPv4 address (or host name) of the teacher machine, as shown by tools/start_classroom.ps1.
@@ -34,7 +35,7 @@ $adb = $null
 $cmd = Get-Command adb -ErrorAction SilentlyContinue
 if ($cmd) { $adb = $cmd.Source }
 if (-not $adb) {
-  foreach ($sdk in @($env:ANDROID_HOME, $env:ANDROID_SDK_ROOT)) {
+  foreach ($sdk in @($env:ANDROID_HOME, $env:ANDROID_SDK_ROOT, 'C:\Android\Sdk', (Join-Path ([string]$env:LOCALAPPDATA) 'Android\Sdk'))) {
     if ($sdk) {
       $candidate = Join-Path $sdk 'platform-tools\adb.exe'
       if (Test-Path $candidate) { $adb = $candidate; break }
@@ -54,18 +55,59 @@ function Invoke-Adb([string[]]$adbArgs) {
 # ------------------------------------------------------------------------------------------
 # Pick the emulator
 # ------------------------------------------------------------------------------------------
-$list = Invoke-Adb @('devices')
-if ($list.Code -ne 0) { throw "adb devices failed: $($list.Text)" }
-$emulators = @()
-foreach ($line in ($list.Text -split "`n")) {
-  if ($line -match '^(emulator-\d+)\s+device\s*$') { $emulators += $Matches[1] }
+function Get-RunningEmulators {
+  $list = Invoke-Adb @('devices')
+  if ($list.Code -ne 0) { throw "adb devices failed: $($list.Text)" }
+  $found = @()
+  foreach ($line in ($list.Text -split "`n")) {
+    if ($line -match '^(emulator-\d+)\s+device\s*$') { $found += $Matches[1] }
+  }
+  return ,$found
 }
+
+function Wait-Boot([string]$serial, [int]$seconds) {
+  $deadline = (Get-Date).AddSeconds($seconds)
+  while ((Get-Date) -lt $deadline) {
+    if ((Invoke-Adb @('-s', $serial, 'shell', 'getprop', 'sys.boot_completed')).Text.Trim() -eq '1') { return $true }
+    Start-Sleep -Seconds 3
+  }
+  return $false
+}
+
+# No emulator yet: start this machine's Android Virtual Device (a phone one if there is one).
+function Start-LocalAvd {
+  $sdkRoot = Split-Path -Parent (Split-Path -Parent $adb)
+  $emuExe = Join-Path $sdkRoot 'emulator\emulator.exe'
+  if (-not (Test-Path $emuExe)) { return $null }
+  if (-not $env:ANDROID_AVD_HOME -and (Test-Path 'C:\Android\avd')) { $env:ANDROID_AVD_HOME = 'C:\Android\avd' }
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try { $avds = @(& $emuExe -list-avds 2>$null | ForEach-Object { "$_".Trim() } | Where-Object { $_ -match '^[A-Za-z0-9._-]+$' }) } finally { $ErrorActionPreference = $prev }
+  if ($avds.Count -eq 0) { return $null }
+  $avd = @($avds | Where-Object { $_ -match 'phone' })[0]
+  if (-not $avd) { $avd = $avds[0] }
+  Write-Host "No emulator running: starting the AVD '$avd' (the first boot can take 1-2 minutes)..."
+  Start-Process -FilePath $emuExe -ArgumentList @('-avd', $avd) | Out-Null
+  $deadline = (Get-Date).AddSeconds(240)
+  while ((Get-Date) -lt $deadline) {
+    Start-Sleep -Seconds 4
+    $running = Get-RunningEmulators
+    if ($running.Count -gt 0 -and (Wait-Boot $running[0] 4)) { return $running[0] }
+  }
+  return $null
+}
+
+$emulators = Get-RunningEmulators
 if ($Serial) {
   if ($emulators -notcontains $Serial) { throw "Emulator $Serial is not running/ready (adb devices). Running emulators: $($emulators -join ', ')" }
   $target = $Serial
 } else {
   if ($emulators.Count -eq 0) {
-    throw 'No running Android emulator found (adb devices shows no emulator-NNNN in state "device"). Start one from Android Studio > Device Manager and retry. Physical devices are never used.'
+    $started = Start-LocalAvd
+    if (-not $started) {
+      throw 'No running Android emulator found, and none could be started automatically. Start one from Android Studio > Device Manager and retry. Physical devices are never used.'
+    }
+    $emulators = @($started)
   }
   $target = $emulators[0]
   if ($emulators.Count -gt 1) { Write-Host "Several emulators running ($($emulators -join ', ')); using $target (choose with -Serial)." }
@@ -76,6 +118,7 @@ if ($qemu -ne '1' -and $bootQemu -ne '1') {
   throw "$target does not report itself as an emulator (ro.kernel.qemu/ro.boot.qemu != 1); refusing to install."
 }
 Write-Host "Target emulator: $target"
+if (-not (Wait-Boot $target 180)) { throw "$target did not finish booting (sys.boot_completed)." }
 
 # ------------------------------------------------------------------------------------------
 # Download
@@ -116,8 +159,10 @@ try {
   $res = Invoke-Adb @('-s', $target, 'install', '-r', $apk)
   Write-Host $res.Text
   if ($res.Code -ne 0 -or $res.Text -notmatch 'Success') { throw "adb install failed (exit $($res.Code))." }
+  # Open the app right away.
+  $null = Invoke-Adb @('-s', $target, 'shell', 'monkey', '-p', 'dev.ninetynine.vingtun', '-c', 'android.intent.category.LAUNCHER', '1')
   Write-Host ''
-  Write-Host "Installed. Open 'Vingt-Un' in the emulator. Server address: $TeacherIp (screen 'Serveur' if needed)." -ForegroundColor Green
+  Write-Host "Installed and opened: 'Vingt-Un' in the emulator. Server address: $TeacherIp (screen 'Serveur' if needed)." -ForegroundColor Green
 } finally {
   Remove-Item -Recurse -Force $tmpDir -ErrorAction SilentlyContinue
 }
