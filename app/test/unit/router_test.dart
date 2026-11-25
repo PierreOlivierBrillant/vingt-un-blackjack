@@ -24,4 +24,14 @@ void main() {
     expect(authRedirect(complete, '/complete-profile'), '/lobby');
     expect(authRedirect(complete, '/wallet'), isNull);
   });
+
+  test('router refresh key: only sign-in state and profile completion count', () {
+    // A profile snapshot that changes anything else (avatar, rank, KYC, balance, current table)
+    // must not refresh the router: a refresh during a pop pushed the popped page back.
+    expect(authRedirectKey(complete), authRedirectKey(complete.copyWith(avatar: 'avatar07', kycStatus: KycStatus.verified)));
+    expect(authRedirectKey(complete), authRedirectKey(complete.copyWith(rankTier: RankTier.gold, username: 'Bob')));
+    expect(authRedirectKey(null), isNot(authRedirectKey(complete)));
+    expect(authRedirectKey(noProfile), isNot(authRedirectKey(complete)));
+    expect(authRedirectKey(complete), isNot(authRedirectKey(const AppUser(uid: 'v', email: 'v@b.c', username: 'Vic'))));
+  });
 }

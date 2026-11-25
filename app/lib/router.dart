@@ -44,11 +44,23 @@ String? authRedirect(AppUser? user, String path) {
   return null;
 }
 
+/// What [authRedirect] depends on. The router is refreshed only when this changes: the user
+/// stream also emits on every profile snapshot (balance, current table...), and a refresh that
+/// lands while a page is being popped makes go_router re-parse its last reported location and
+/// push that page back (leaving a table showed the closed table again).
+(String?, bool) authRedirectKey(AppUser? user) => (user?.uid, user?.profileComplete ?? false);
+
 final routerProvider = Provider<GoRouter>((ref) {
   final rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
   final auth = ref.watch(authRepositoryProvider);
   final refresh = ValueNotifier<int>(0);
-  final sub = auth.authStateChanges().listen((_) => refresh.value++);
+  var redirectKey = authRedirectKey(auth.currentUser);
+  final sub = auth.authStateChanges().listen((u) {
+    final key = authRedirectKey(u);
+    if (key == redirectKey) return;
+    redirectKey = key;
+    refresh.value++;
+  });
   ref.onDispose(() {
     sub.cancel();
     refresh.dispose();
