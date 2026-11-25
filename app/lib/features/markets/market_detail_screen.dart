@@ -210,6 +210,9 @@ class PriceChart extends StatelessWidget {
     final spots = [
       for (final pt in points) FlSpot(pt.t.difference(t0).inSeconds / 60, (pt.yes * 100).roundToDouble()),
     ];
+    // A brand-new market has one price point (or several within the same second): give the chart a
+    // non-zero time span, otherwise the axis interval is 0 and fl_chart asserts.
+    if (spots.last.x <= 0) spots.add(FlSpot(1 / 60, spots.last.y));
     final fmt = DateFormat.Hm(context.lang);
     return LineChart(
       LineChartData(

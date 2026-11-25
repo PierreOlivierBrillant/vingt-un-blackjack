@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,13 +60,16 @@ class Haptics {
 
 final hapticsProvider = Provider<Haptics>((ref) => Haptics(() => ref.read(settingsProvider).hapticsOn));
 
-/// Where the casino room tone should be heard, and how loud (relative).
+/// Where the casino room tone should be heard, and how loud (relative):
+/// [volume] for the room (crowd, chips), [slotsVolume] for the distant slot
+/// machines layered under it (loudest in the lobby: the casino floor).
 enum AmbienceZone {
-  lobby(0.55),
-  table(1.0);
+  lobby(0.55, 0.9),
+  table(1.0, 0.35);
 
-  const AmbienceZone(this.volume);
+  const AmbienceZone(this.volume, this.slotsVolume);
   final double volume;
+  final double slotsVolume;
 }
 
 /// Ref-counted ambience: screens enter/leave zones, the most recent zone
@@ -75,14 +79,20 @@ class AmbienceController {
   final SoundService _sound;
   final _stack = <(int, AmbienceZone)>[];
   var _next = 0;
+  var _introPlayed = false;
 
   AmbienceZone? get current => _stack.isEmpty ? null : _stack.last.$2;
 
-  /// Returns a token for [leave].
+  /// Returns a token for [leave]. The first time the casino floor (lobby)
+  /// opens in this app session, the "welcome to Las Vegas" jingle plays.
   int enter(AmbienceZone zone) {
     final token = _next++;
     _stack.add((token, zone));
     _apply();
+    if (zone == AmbienceZone.lobby && !_introPlayed) {
+      _introPlayed = true;
+      _sound.play(Sfx.vegasIntro);
+    }
     return token;
   }
 
@@ -95,8 +105,35 @@ class AmbienceController {
     final z = current;
     if (z == null) {
       _sound.stopLoop(SoundChannel.ambience);
+      _sound.stopLoop(SoundChannel.slots);
     } else {
       _sound.startLoop(SoundChannel.ambience, Sfx.ambienceCasinoLoop, volume: z.volume);
+      _sound.startLoop(SoundChannel.slots, Sfx.ambienceSlotsLoop, volume: z.slotsVolume);
+    }
+  }
+}
+
+/// Recognises taps among raw pointer events (short, still presses), so that
+/// EVERY tap in the app clicks like a casino chip, whatever widget got it.
+class TapDetector {
+  TapDetector(this.onTap);
+  final void Function() onTap;
+  final _downs = <int, (Offset, Duration)>{};
+
+  static const maxMove = 18.0;
+  static const maxPress = Duration(milliseconds: 450);
+
+  void handle(PointerEvent e) {
+    switch (e) {
+      case PointerDownEvent():
+        _downs[e.pointer] = (e.position, e.timeStamp);
+      case PointerUpEvent():
+        final d = _downs.remove(e.pointer);
+        if (d != null && (e.position - d.$1).distance <= maxMove && e.timeStamp - d.$2 <= maxPress) onTap();
+      case PointerCancelEvent():
+        _downs.remove(e.pointer);
+      default:
+        break;
     }
   }
 }
@@ -179,6 +216,7 @@ class AudioLifecycle extends ConsumerStatefulWidget {
 
 class _AudioLifecycleState extends ConsumerState<AudioLifecycle> {
   late final AppLifecycleListener _listener;
+  late final TapDetector _taps;
   bool _suspended = false;
 
   @override
@@ -186,6 +224,9 @@ class _AudioLifecycleState extends ConsumerState<AudioLifecycle> {
     super.initState();
     _listener = AppLifecycleListener(onStateChange: _onState);
     final sound = ref.read(soundProvider);
+    // Las Vegas: every tap anywhere clicks like a chip (screens add their own sound on top).
+    _taps = TapDetector(() => sound.play(Sfx.uiChipTap, volume: 0.7));
+    GestureBinding.instance.pointerRouter.addGlobalRoute(_taps.handle);
     // Every error message shown to the user gets the "bonk".
     ErrorFeedback.hook = () => sound.play(Sfx.uiError);
     // Data-driven sounds (deposits, KYC, friends, markets, rank...).
@@ -211,6 +252,7 @@ class _AudioLifecycleState extends ConsumerState<AudioLifecycle> {
 
   @override
   void dispose() {
+    GestureBinding.instance.pointerRouter.removeGlobalRoute(_taps.handle);
     ErrorFeedback.hook = null;
     _listener.dispose();
     super.dispose();

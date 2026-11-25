@@ -135,12 +135,14 @@ class _KycScreenState extends ConsumerState<KycScreen> with SingleTickerProvider
         ),
         const SizedBox(height: 16),
         TextField(
+          key: const Key('kyc-name'),
           controller: _name,
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(labelText: l.kycFullName, prefixIcon: const Icon(Icons.person_outline)),
         ),
         const SizedBox(height: 12),
         InkWell(
+          key: const Key('kyc-birth'),
           onTap: _pickBirth,
           borderRadius: BorderRadius.circular(8),
           child: InputDecorator(

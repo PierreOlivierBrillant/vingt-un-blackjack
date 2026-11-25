@@ -87,7 +87,8 @@ export const joinMatchmaking = defineCallable({
       for (let i = 0; i < 5 && (await tx.get(r.tableCode(code))).exists; i++) code = newCode();
       const tableId = db.collection('tables').doc().id;
       const tt = await TableTx.create(db, tx, {
-        tableId, name: `Privée ${code}`, stakeTier: data.stakeTier, isPrivate: true, simManaged: false, rankTier: profile.rankTier,
+        // The join code stays secret: table names are public (lobby, market questions).
+        tableId, name: `Privée ${tableId.slice(0, 4).toUpperCase()}`, stakeTier: data.stakeTier, isPrivate: true, simManaged: false, rankTier: profile.rankTier,
       }, now, { uids: [uid] });
       const res = tt.machine.join(me);
       tt.commit(tx, () => tx.set(r.tableCode(code), { tableId, createdAtMs: now }));

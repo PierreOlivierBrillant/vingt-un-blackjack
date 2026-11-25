@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vingtun/core/audio/app_sound_events.dart';
+import 'package:vingtun/core/audio/audioplayers_sound_service.dart';
 import 'package:vingtun/core/audio/sfx.dart';
 import 'package:vingtun/core/audio/sound_providers.dart';
 import 'package:vingtun/core/audio/sound_service.dart';
@@ -43,6 +46,10 @@ TableState snap(Map<String, Object?> d) => TableState.fromDoc('tbl', d);
 }
 
 void main() {
+  test('audio context builds (regression: an invalid iOS option made it throw, Android settings included)', () {
+    expect(AudioplayersSoundService.context.android.audioFocus, AndroidAudioFocus.none);
+  });
+
   group('sound bank (assets/sfx)', () {
     final dir = Directory('assets/sfx');
     final files = {for (final f in dir.listSync().whereType<File>()) f.uri.pathSegments.last};
@@ -53,10 +60,10 @@ void main() {
       }
       final wavs = files.where((f) => f.endsWith('.wav')).toSet();
       expect(wavs, {for (final s in Sfx.values) '${s.file}.wav'});
-      expect(Sfx.values.length, 77);
+      expect(Sfx.values.length, 83);
     });
 
-    test('durations match the files, loops match the manifest, total ≤ 6 MiB', () {
+    test('durations match the files, loops match the manifest, total ≤ 8 MiB', () {
       final manifest = File('assets/sfx/MANIFEST.md').readAsStringSync();
       var total = 0;
       for (final s in Sfx.values) {
@@ -69,7 +76,7 @@ void main() {
         final row = manifest.split('\n').firstWhere((l) => l.startsWith('| `${s.file}.wav`'));
         expect(row.contains('| oui |'), s.loop, reason: '${s.file} loop flag');
       }
-      expect(total, lessThanOrEqualTo(6 * 1024 * 1024));
+      expect(total, lessThanOrEqualTo(8 * 1024 * 1024));
     });
 
     test('pubspec bundles the folder', () {
@@ -206,7 +213,39 @@ void main() {
       a.leave(lobby);
       expect(rec.loops, isEmpty);
       expect(rec.loopLog.first, 'ambience:ambienceCasinoLoop');
-      expect(rec.loopLog.last, 'ambience:stop');
+      expect(rec.loopLog, containsAll(['slots:ambienceSlotsLoop', 'ambience:stop', 'slots:stop']));
+    });
+
+    test('Las Vegas: slot machines under the room tone, the welcome jingle once per session', () {
+      final rec = RecordingSoundService();
+      final a = AmbienceController(rec);
+      final lobby = a.enter(AmbienceZone.lobby);
+      expect(rec.loops[SoundChannel.slots], Sfx.ambienceSlotsLoop);
+      expect(rec.sounds, [Sfx.vegasIntro]);
+      a.enter(AmbienceZone.table);
+      a.leave(lobby);
+      a.enter(AmbienceZone.lobby); // back in the lobby: no second jingle
+      expect(rec.count(Sfx.vegasIntro), 1);
+      // The slot machines follow the ambience slider, not the effects one.
+      const levels = SoundLevels(effects: 0.2, ambience: 0.9);
+      expect(levels.forChannel(SoundChannel.slots), 0.9);
+    });
+
+    test('every tap clicks: short still presses only (not drags, long presses or cancels)', () {
+      var taps = 0;
+      final d = TapDetector(() => taps++);
+      void press(int id, Offset to, Duration held, {bool cancel = false}) {
+        d.handle(PointerDownEvent(pointer: id, position: Offset.zero, timeStamp: Duration.zero));
+        d.handle(cancel
+            ? PointerCancelEvent(pointer: id, position: to, timeStamp: held)
+            : PointerUpEvent(pointer: id, position: to, timeStamp: held));
+      }
+      press(1, const Offset(3, 4), const Duration(milliseconds: 90)); // tap
+      press(2, const Offset(0, 120), const Duration(milliseconds: 200)); // scroll
+      press(3, Offset.zero, const Duration(seconds: 1)); // long press
+      press(4, Offset.zero, const Duration(milliseconds: 50), cancel: true);
+      press(5, const Offset(10, 10), const Duration(milliseconds: 300)); // tap
+      expect(taps, 2);
     });
 
     test('matchmaking: sonar loop while searching, then "found"', () async {
@@ -404,6 +443,20 @@ void main() {
       expect(scape.celebrations.value, isNull);
     });
 
+    test('the crowd reacts: cheers for blackjacks and dealer busts, ooohs for busts', () {
+      scape.cue(DealerCue.react, const CueInfo(seat: 3, reaction: 'blackjack', cents: 500));
+      expect(rec.sounds, contains(Sfx.crowdCheer));
+      rec.clear();
+      scape.cue(DealerCue.react, const CueInfo(seat: 0, reaction: 'bust'));
+      expect(rec.sounds, [Sfx.crowdOoh, Sfx.bust]);
+      rec.clear();
+      scape.cue(DealerCue.react, const CueInfo(reaction: 'dealerBust'));
+      expect(rec.sounds, [Sfx.crowdCheer, Sfx.dealerBust]);
+      rec.clear();
+      scape.cue(DealerCue.react, const CueInfo(seat: 0, reaction: 'win', cents: 900));
+      expect(rec.sounds, [Sfx.slotJackpotBells, Sfx.winBig]); // a big win: the slot machine pays out too
+    });
+
     test('turn timer: ticks, urgent in the last 5 s, only on my turn', () {
       dealer.startTurnTimer(0, const Duration(seconds: 10));
       for (var i = 0; i < 10; i++) {
@@ -521,7 +574,9 @@ void main() {
         Sfx.powerBuy,
         Sfx.tradeBuy,
         Sfx.marketResolvedWin,
+        Sfx.slotJackpotBells,
         Sfx.adReward,
+        Sfx.slotJackpotBells,
       ]);
       e.onLedger([entry('10', LedgerKind.welcomeBonus)]);
       expect(rec.sounds.sublist(rec.sounds.length - 2), [Sfx.welcomeBonus, Sfx.coinShower]);
@@ -573,6 +628,20 @@ void main() {
         Sfx.rankUp,
         Sfx.leaderboardClimb,
       ]);
+    });
+
+    test('lobby recent wins: a casino floor, one quiet sound per update, baseline silent', () {
+      final w = RecentWinsSounds(rec);
+      RecentWin win(String id, WinKind k) => RecentWin(id: id, username: 'u', amountCents: 1000, kind: k);
+      w.onWins([win('1', WinKind.bigWin)]);
+      expect(rec.played, isEmpty);
+      w.onWins([win('2', WinKind.market), win('1', WinKind.bigWin)]);
+      expect(rec.sounds, [Sfx.coinSingle]);
+      w.onWins([win('3', WinKind.blackjack), win('4', WinKind.market), win('2', WinKind.market)]);
+      expect(rec.sounds, [Sfx.coinSingle, Sfx.slotJackpotBells]);
+      w.onWins([win('3', WinKind.blackjack)]);
+      expect(rec.played, hasLength(2));
+      expect(rec.played.every((p) => p.volume < 0.5), isTrue);
     });
 
     test('milestones: hands played and blackjacks ring the achievement once', () {

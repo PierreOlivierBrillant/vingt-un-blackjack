@@ -16,6 +16,11 @@ import 'sound_service.dart';
 /// * Audio focus is never requested: the app mixes with whatever else plays
 ///   and never pauses its own sounds.
 /// Every platform error is swallowed (logged in debug): no sound, no crash.
+/// A player that never tracks its playback position: by default audioplayers polls it on
+/// EVERY frame while playing (FramePositionUpdater), which keeps the app rendering
+/// continuously (dozens of pooled players + endless ambience loops) for a value we never use.
+AudioPlayer _quietPlayer() => AudioPlayer()..positionUpdater = null;
+
 class AudioplayersSoundService implements SoundService {
   AudioplayersSoundService();
 
@@ -25,8 +30,14 @@ class AudioplayersSoundService implements SoundService {
       usageType: AndroidUsageType.game,
       audioFocus: AndroidAudioFocus.none,
     ),
-    iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient, options: const {AVAudioSessionOptions.mixWithOthers}),
+    // `ambient` always mixes with other audio; audioplayers asserts if mixWithOthers is set on it
+    // (that assertion made the whole context, Android part included, fail in debug builds).
+    iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient, options: const {}),
   );
+
+  /// Exposed for a regression test (building it must not throw).
+  @visibleForTesting
+  static AudioContext get context => _context;
 
   final _pools = <Sfx, _Pool>{};
   final _loops = <SoundChannel, _Loop>{};
@@ -164,7 +175,7 @@ class _Pool {
 
   Future<void> load() async {
     for (var i = 0; i < size; i++) {
-      final p = AudioPlayer();
+      final p = _quietPlayer();
       await p.setPlayerMode(PlayerMode.lowLatency);
       await p.setReleaseMode(ReleaseMode.stop);
       await p.setSource(AssetSource(sfx.audioplayersPath));
@@ -222,7 +233,7 @@ class _Loop {
   bool _disposed = false;
 
   Future<void> load() async {
-    final p = AudioPlayer();
+    final p = _quietPlayer();
     _player = p;
     await p.setPlayerMode(PlayerMode.mediaPlayer);
     await p.setReleaseMode(ReleaseMode.loop);

@@ -27,6 +27,8 @@ async function privateTable(stakeTier: 'low' | 'mid' | 'high' = 'low'): Promise<
   const b = await playerClient();
   const created = await a.call('joinMatchmaking', { mode: 'createPrivate', stakeTier });
   expect(created.code).toMatch(/^[A-Z0-9]{6}$/);
+  // The join code is only given to its creator: never in the public table name (lobby, markets).
+  expect((await table(created.tableId)).name).not.toContain(created.code!);
   const joined = await b.call('joinMatchmaking', { mode: 'joinCode', stakeTier, code: created.code!.toLowerCase() });
   expect(joined).toMatchObject({ tableId: created.tableId, status: 'seated', seatIndex: 1 });
   return { a, b, tableId: created.tableId };

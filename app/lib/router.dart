@@ -58,7 +58,12 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: rootKey,
     initialLocation: '/lobby',
     refreshListenable: refresh,
-    observers: [SoundNavigatorObserver(() => ref.read(soundProvider).play(Sfx.navSwoosh))],
+    observers: [
+      SoundNavigatorObserver(
+        () => ref.read(soundProvider).play(Sfx.navSwoosh),
+        onPopup: () => ref.read(soundProvider).play(Sfx.cardFlip1, volume: 0.8),
+      ),
+    ],
     redirect: (context, state) => authRedirect(auth.currentUser, state.uri.path),
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
@@ -116,12 +121,16 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 /// "Swoosh" on every full-screen page change (not dialogs / sheets).
 class SoundNavigatorObserver extends NavigatorObserver {
-  SoundNavigatorObserver(this._swoosh);
+  SoundNavigatorObserver(this._swoosh, {this.onPopup});
   final VoidCallback _swoosh;
+
+  /// Dialogs and bottom sheets opening (a card flicked onto the felt).
+  final VoidCallback? onPopup;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route is PageRoute && previousRoute != null) _swoosh();
+    if (route is PopupRoute) onPopup?.call();
   }
 
   @override

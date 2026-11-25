@@ -192,17 +192,27 @@ class TableSoundscape implements DealerFeedback {
     final reaction = info.reaction;
     if (info.seat == null) {
       if (reaction == 'dealerBust') {
+        sound.play(Sfx.crowdCheer, volume: 0.7); // the whole table cheers
         sound.play(Sfx.dealerBust);
         if (mySeat() != null) _celebrate(CelebrationKind.dealerBust);
       } else if (reaction == 'dealerBlackjack') {
+        sound.play(Sfx.crowdOoh, volume: 0.7);
         sound.play(Sfx.dealerBlackjack);
         haptics(Haptic.heavy);
       }
       return;
     }
     if (!_mine(info)) {
-      // Others: a discreet coin for their wins, nothing that could mask mine.
-      if (reaction == 'blackjack' || reaction == 'win') sound.play(Sfx.coinSingle, volume: 0.5);
+      // Others: the crowd reacts (quietly), nothing that could mask mine.
+      switch (reaction) {
+        case 'blackjack':
+          sound.play(Sfx.crowdCheer, volume: 0.45);
+          sound.play(Sfx.coinSingle, volume: 0.5);
+        case 'win':
+          sound.play(Sfx.coinSingle, volume: 0.5);
+        case 'bust':
+          sound.play(Sfx.crowdOoh, volume: 0.3);
+      }
       return;
     }
     switch (reaction) {
@@ -227,6 +237,7 @@ class TableSoundscape implements DealerFeedback {
               sound.play(Sfx.winMedium);
               _celebrate(CelebrationKind.win, cents: info.cents);
             case WinGrade.big:
+              sound.play(Sfx.slotJackpotBells, volume: 0.6);
               sound.play(Sfx.winBig);
               _celebrate(CelebrationKind.bigWin, cents: info.cents);
           }
@@ -238,6 +249,7 @@ class TableSoundscape implements DealerFeedback {
         sound.play(Sfx.loseHand);
       case 'bust':
         streak = 0;
+        sound.play(Sfx.crowdOoh, volume: 0.8);
         sound.play(Sfx.bust);
         haptics(Haptic.heavy);
       case 'dealerBlackjack':

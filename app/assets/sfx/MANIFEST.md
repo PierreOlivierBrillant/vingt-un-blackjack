@@ -131,6 +131,7 @@ Les sons **bouclables** ont une jointure fondue enchaînée : les jouer en `Rele
 | Fichier | Durée | Fréq. | Crête | Boucle | Usage prévu |
 |---|---:|---:|---:|:---:|---|
 | `ui_tap.wav` | 0.06 s | 32000 Hz | -12 dBFS | — | Appui sur un bouton (très fréquent, discret). |
+| `ui_chip_tap.wav` | 0.12 s | 32000 Hz | -9 dBFS | — | Appui n'importe où dans l'appli (très fréquent) : petit clic net de jeton en céramique + soupçon de scintillement. |
 | `ui_toggle.wav` | 0.10 s | 32000 Hz | -12 dBFS | — | Interrupteur / case à cocher. |
 | `ui_error.wav` | 0.35 s | 22050 Hz | -11 dBFS | — | Erreur / action impossible : double « bonk » grave. |
 | `ui_success.wav` | 0.50 s | 32000 Hz | -8 dBFS | — | Validation réussie : deux notes cristallines montantes. |
@@ -146,5 +147,15 @@ Les sons **bouclables** ont une jointure fondue enchaînée : les jouer en `Rele
 | `ambience_casino_loop.wav` | 10.00 s | 22050 Hz | -6 dBFS | oui | Fond sonore de casino, BOUCLABLE (10 s) : brouhaha de foule, machines à sous lointaines, pièces et jetons, réverbération de grande salle. |
 | `slot_reel_spin.wav` | 1.00 s | 22050 Hz | -6 dBFS | oui | Rouleaux de machine à sous qui tournent, BOUCLABLE : cliquet 20 Hz + ronronnement moteur. |
 | `slot_reel_stop.wav` | 0.50 s | 32000 Hz | -4 dBFS | — | Arrêt d'un rouleau de machine à sous : « clonk » + cliquet + petite clochette. |
+| `ambience_slots_loop.wav` | 8.00 s | 22050 Hz | -14 dBFS | oui | Salle des machines à sous au loin, BOUCLABLE (8 s), couche discrète à jouer sous ambience_casino_loop : petits jingles épars, carillons, rouleaux qui s'arrêtent, pièces, ronronnement grave. |
 
-Total : 77 fichiers, 5.42 Mio.
+## Las Vegas
+
+| Fichier | Durée | Fréq. | Crête | Boucle | Usage prévu |
+|---|---:|---:|---:|:---:|---|
+| `vegas_intro.wav` | 3.20 s | 32000 Hz | -1 dBFS | — | « Bienvenue à Las Vegas » à l'arrivée dans le hall : levier de machine à sous (cliquet), rouleaux qui tournent, trois arrêts « clonk » (1,0 / 1,25 / 1,5 s), puis sonnerie de jackpot, « ta-da » de cuivres, pluie de pièces, foule en liesse, paillettes. |
+| `slot_jackpot_bells.wav` | 2.60 s | 32000 Hz | -2 dBFS | — | Paiement d'une machine à sous : sonnerie mécanique de jackpot à deux timbres (~12 coups/s) + pièces qui dégringolent dans le bac métallique, puis extinction. |
+| `crowd_cheer.wav` | 1.80 s | 22050 Hz | -3 dBFS | — | La table acclame : « ouais ! » collectif, applaudissements et un sifflet. |
+| `crowd_ooh.wav` | 1.40 s | 22050 Hz | -5 dBFS | — | La table compatit : « ooooh » qui retombe (joueur qui saute, blackjack du croupier). |
+
+Total : 83 fichiers, 6.25 Mio.

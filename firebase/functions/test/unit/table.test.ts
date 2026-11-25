@@ -275,6 +275,26 @@ describe('seating priority and leaving', () => {
     expect(h.ofKind('marketStatus').filter((e) => e.status === 'void').length).toBe(3);
   });
 
+  it('closing a table after its shoe market stopped trading resolves it instead of refunding (regression: free option)', () => {
+    const h = new Harness({ seed: 7 });
+    h.run((m) => { m.join(botInfo(50)); m.join(human(1)); });
+    for (let i = 0; i < 80 && !h.priv.shoeMarketClosed; i++) {
+      h.until((t) => t.phase === 'betting' && t.deadlineMs !== null);
+      h.run((m) => m.placeBet('h1', h.pub.handNumber, 500));
+      h.until((t) => t.phase === 'settled');
+    }
+    expect(h.priv.shoeMarketClosed).toBe(true);
+    const shoeId = h.pub.markets.shoe!;
+    h.until((t) => t.phase === 'betting');
+    h.run((m) => m.leave('h1'));
+    if (h.pub.status !== 'closed') h.tick(TIMING.settledMs);
+    expect(h.pub.status).toBe('closed');
+    const final = h.ofKind('marketStatus').filter((e) => e.marketId === shoeId && e.status !== 'closed');
+    expect(final).toHaveLength(1);
+    expect(final[0]!.status).toBe('resolved');
+    expect(['yes', 'no']).toContain(final[0]!.outcome);
+  });
+
   it(`humans missing ${MISSED_ROUNDS_LIMIT} betting rounds are removed`, () => {
     const h = new Harness();
     h.run((m) => { m.join(botInfo(50)); m.join(human(1)); });
@@ -324,6 +344,28 @@ describe('action validation', () => {
       return;
     }
     throw new Error('no seed reached playerTurns');
+  });
+
+  it('"player wins" market closes as soon as a natural makes YES certain (regression: risk-free spectator bet)', () => {
+    for (let seed = 1; seed < 400; seed++) {
+      const h = new Harness({ seed });
+      h.run((m) => { m.join(human(1)); m.join(human(2)); });
+      h.run((m) => m.placeBet('h1', 1, 500));
+      h.run((m) => m.placeBet('h2', 1, 500));
+      if (h.pub.phase === 'insurance') h.tick(TIMING.insuranceMs);
+      if (h.pub.phase !== 'playerTurns') continue;
+      const nat = h.priv.round!.seats.find((s) => s.hands.length === 1 && s.hands[0]!.blackjack);
+      if (!nat) continue;
+      const id = h.pub.markets.players[String(nat.seatIndex)]!;
+      expect(id).toBeTruthy();
+      // Still playing (another seat has to act), yet the natural's market no longer trades.
+      expect(h.pub.phase).toBe('playerTurns');
+      expect(h.ofKind('marketStatus').some((e) => e.marketId === id && e.status === 'closed')).toBe(true);
+      h.until((t) => t.phase === 'settled' || t.phase === 'betting');
+      expect(h.ofKind('marketStatus').find((e) => e.marketId === id && e.status === 'resolved')?.outcome).toBe('yes');
+      return;
+    }
+    throw new Error('no seed dealt a natural with another seat still to play');
   });
 
   it('double reports its extra stake for the wallet debit', () => {

@@ -130,7 +130,7 @@ export async function execute<N extends CallableName>(def: Def<N>, uid: string |
       after = undefined;
       const idem = await tx.get(idemRef);
       if (idem.exists) {
-        if (idem.get('fn') !== def.name) throw fail.invalid('REQUEST_ID_REUSED');
+        if (idem.get('fn') !== def.name || idem.get('uid') !== uid) throw fail.invalid('REQUEST_ID_REUSED');
         return idem.get('response') as Callables[N][1];
       }
       const res = await def.handler(tx, data, { uid, now: Date.now(), db, requestId });

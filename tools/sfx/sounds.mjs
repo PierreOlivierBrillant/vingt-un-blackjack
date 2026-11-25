@@ -550,6 +550,14 @@ def('ad_interstitial_sting', { sr: HI, dur: 1.2, peak: -2, limit: 2, cat: 'Socia
 
 // =================================================================== INTERFACE
 def('ui_tap', { sr: HI, dur: 0.06, peak: -12, fadeOut: 0.008, cat: 'Interface', use: 'Appui sur un bouton (très fréquent, discret).' }, (c) => I.pop(c.sr, c.r, { dur: c.dur }));
+def('ui_chip_tap', { sr: HI, dur: 0.12, peak: -9, cat: 'Interface', use: 'Appui n\'importe où dans l\'appli (très fréquent) : petit clic net de jeton en céramique + soupçon de scintillement.' }, (c) => {
+  const { sr, r } = c;
+  const m = mix(c);
+  m.add(I.chipClink(sr, r, { f0: 3300, tight: 0.45, rattle: 0, dur: c.dur }), 0, 1);
+  m.add(I.chime(sr, 'E7', { dur: 0.1, decay: 0.08, ratio: 2, index: 0.4, partial2: 0.05 }), 0.008, 0.07);
+  m.add(I.chime(sr, 'B7', { dur: 0.08, decay: 0.07, ratio: 2, index: 0.3, partial2: 0.03 }), 0.03, 0.045);
+  return m.out;
+});
 def('ui_toggle', { sr: HI, dur: 0.1, peak: -12, fadeOut: 0.01, cat: 'Interface', use: 'Interrupteur / case à cocher.' }, (c) => {
   const m = mix(c);
   m.add(I.pop(c.sr, c.r, { f0: 1500, f1: 900 }), 0, 1);
@@ -669,4 +677,207 @@ def('slot_reel_stop', { sr: HI, dur: 0.5, peak: -4, cat: 'Ambiance', use: 'Arrê
   m.add(I.chipClink(c.sr, c.r, { f0: 1800, tight: 0.6 }), 0.01, 0.5);
   m.add(I.bell(c.sr, 'C7', c.r, { dur: 0.45, decay: 0.4 }), 0.03, 0.25);
   return m.out;
+});
+def('ambience_slots_loop', { sr: LO, dur: 8.0, loop: true, xfade: 1.5, peak: -14, cat: 'Ambiance', use: 'Salle des machines à sous au loin, BOUCLABLE (8 s), couche discrète à jouer sous ambience_casino_loop : petits jingles épars, carillons, rouleaux qui s\'arrêtent, pièces, ronronnement grave.' }, (c) => {
+  const { sr, r } = c;
+  const render = (T) => {
+    const m = new D.Mix(sr, T);
+    const pent = D.notes('C5 D5 E5 G5 A5 C6 D6 E6 G6 A6 C7');
+    // Jingles de machines lointaines : arpèges / blips 8-bit / trilles, rares, bas et filtrés (distance).
+    for (let t = r.range(0.1, 0.6); t < T - 0.4; t += r.range(1.1, 2.4)) {
+      const n = r.int(3, 6), st = r.int(0, 4), step = r.range(0.055, 0.09);
+      const seq = Array.from({ length: n }, (_, i) => pent[Math.min(pent.length - 1, st + i * r.int(1, 2))]);
+      if (r() < 0.25) seq.reverse();
+      const kind = r();
+      const j = kind < 0.4 ? I.blips(sr, seq, step, { len: step * 0.7 })
+        : kind < 0.85 ? I.arp(sr, seq, step, { decay: 0.45 })
+          : I.arp(sr, [seq[0], seq[n - 1], seq[0], seq[n - 1]], 0.07, { decay: 0.3 });
+      m.add(D.lp(j, sr, r.range(2200, 3200)), t, r.range(0.08, 0.18));
+    }
+    // Carillons isolés.
+    for (let t = r.range(0.5, 1.5); t < T - 0.5; t += r.range(1.8, 3.5)) m.add(D.lp(I.chime(sr, r.pick(pent), { decay: 0.8, dur: 1.0, ratio: 2, index: 1 }), sr, 3000), t, r.range(0.05, 0.1));
+    // Rouleaux qui tournent puis s'arrêtent, quelque part dans la salle.
+    for (let t = r.range(0.3, 1.5); t < T - 1; t += r.range(2.2, 3.8)) {
+      const d = r.range(0.4, 0.9), rate = r.range(17, 22);
+      m.add(D.lp(mechClicks(sr, r, d + 0.1, clickTimes(0, d, () => rate), { f: 2300, ringA: 0.08 }), sr, 2500), t, r.range(0.035, 0.06));
+      m.add(D.lp(I.knock(sr, r, { f0: 120 }), sr, 1500), t + d, r.range(0.06, 0.1));
+    }
+    // Une pièce ou une petite poignée de pièces de temps en temps.
+    for (let t = r.range(1, 2.5); t < T - 0.8; t += r.range(2.5, 4.5)) {
+      const x = r() < 0.5 ? I.coin(sr, r, { dur: 0.5 }) : I.coinShower(sr, r, 0.7, { density: 18, room: false });
+      m.add(D.lp(x, sr, 4000), t, r.range(0.05, 0.09));
+    }
+    // Ronronnement grave des machines + air de la salle.
+    m.add(D.lp(D.pink(sr, T, r), sr, 220), 0, 0.16);
+    m.add(D.bp(D.pink(sr, T, r), sr, 900, 0.6), 0, 0.03);
+    return D.dcBlock(D.reverb(m.out, sr, { room: 0.9, damp: 0.5, wet: 0.45 }), sr);
+  };
+  const y = D.makeLoop(sr, 8.0, 1.5, render, { preroll: 1.0 });
+  // Bourdon électrique strictement périodique (nombre entier de cycles sur 8 s), ajouté après la boucle.
+  const g = D.peak(y) * 0.025;
+  for (let i = 0; i < y.length; i++) {
+    const t = i / sr;
+    y[i] += g * (Math.sin(TAU * 60 * t) + 0.6 * Math.sin(TAU * 120 * t + 0.4) + 0.3 * Math.sin(TAU * 180 * t + 1.1)) * (0.85 + 0.15 * Math.sin((TAU * t) / 4));
+  }
+  return y;
+});
+
+// =================================================================== LAS VEGAS
+/** Cliquetis mécanique (cliquet de levier, rouleaux) : clic de bruit filtré + petite résonance métallique à chaque instant. */
+function mechClicks(sr, r, dur, times, { f = 2500, q = 2, ring = 1800, ringA = 0.15, decay = 0.002, gain = 1 } = {}) {
+  const out = D.buf(sr, dur);
+  for (const t of times) {
+    if (t < 0 || t >= dur) continue;
+    const g = r.range(0.6, 1);
+    const cl = D.bp(D.white(sr, 0.012, r), sr, f * r.range(0.85, 1.15), q);
+    D.mulEnv(cl, sr, (x) => Math.exp(-x / decay));
+    D.addAt(out, cl, sr, t, g);
+    if (ringA) D.addAt(out, D.partials(sr, 0.05, [{ f: ring * r.range(0.97, 1.03), a: ringA, d: 0.035, ph: r() }]), sr, t, g);
+  }
+  return D.scale(out, gain);
+}
+/** Instants d'un train de clics de cadence rate(t) (Hz) entre t0 et t1. */
+function clickTimes(t0, t1, rate) {
+  const ts = [];
+  for (let t = t0; t < t1; t += 1 / rate(t)) ts.push(t);
+  return ts;
+}
+/** Sonnerie mécanique de jackpot : le marteau alterne entre deux timbres à ~12 coups/s. amp(t) relatif à `start`. */
+function jackpotBells(sr, r, dur, { rate = 12, pitches = ['G6', 'E6'], start = 0, end = dur, decay = 0.55, amp = () => 1 } = {}) {
+  const out = D.buf(sr, dur);
+  const fs = pitches.map(D.hz);
+  let k = 0;
+  for (let t = start; t < end; t += 1 / rate, k++) {
+    const tt = Math.max(0, t + r.range(-0.004, 0.004));
+    const g = amp(tt - start) * r.range(0.8, 1) * (k % 2 ? 0.85 : 1);
+    const bd = Math.min(decay * 1.4, dur - tt);
+    if (g <= 0.01 || bd < 0.02) continue;
+    D.addAt(out, I.bell(sr, fs[k % fs.length], r, { dur: bd, decay, bright: 1.35, strike: 0.7, detune: 0.0025 }), sr, tt, g * 0.5);
+  }
+  return out;
+}
+/** Pièces qui dégringolent dans un bac métallique : pièces + résonance du bac + bruissement du tas. */
+function coinTray(sr, r, dur, { density = 30, env = () => 1, gain = 1 } = {}) {
+  const out = D.buf(sr, dur);
+  const tray = [410, 980, 1630, 2310, 3070, 3920];
+  const n = Math.round(density * dur);
+  for (let k = 0; k < n; k++) {
+    const t = r() * (dur - 0.12);
+    const g = env(t);
+    if (g <= 0.01 || r() > g) continue;
+    const cd = Math.min(0.5, dur - t);
+    D.addAt(out, I.coin(sr, r, { f0: r.range(2300, 4200), dur: cd, gain: r.range(0.4, 1) }), sr, t, 0.5);
+    const ring = D.partials(sr, cd, tray.map((f, i) => ({ f: f * r.range(0.99, 1.01), a: r.range(0.4, 1) / (1 + i * 0.6), d: r.range(0.15, 0.35) / (1 + i * 0.3), ph: r() })));
+    D.addAt(out, ring, sr, t, 0.06 * r.range(0.5, 1));
+  }
+  const rustle = D.bp(D.white(sr, dur, r), sr, 4800, 0.8);
+  const grain = D.smoothNoise(sr, dur, r, 35);
+  for (let i = 0; i < rustle.length; i++) rustle[i] *= Math.abs(grain[i]) * env(i / sr) * 0.07;
+  D.addAt(out, rustle, sr);
+  return D.scale(out, gain);
+}
+/** « Ouais ! » collectif : voix voisées dont les formants glissent de [é] vers [a], hauteur d'exclamation (montée puis retombée). */
+function yeah(sr, r, dur, { voices = 12 } = {}) {
+  const out = D.buf(sr, dur);
+  for (let v = 0; v < voices; v++) {
+    const f0 = r.range(115, 300);
+    const on = r.range(0, 0.08);
+    const vd = Math.min(dur - on, r.range(0.35, 0.6));
+    const k = (f0 > 200 ? 1.15 : 1) * r.range(0.95, 1.05);
+    const src = D.osc(sr, vd, { f: D.glide([[0, f0 * 0.88], [0.1, f0 * 1.18], [vd, f0 * 0.92]]), type: 'saw', vib: 0.01, vibRate: r.range(5, 7), phase: r() });
+    const br = D.white(sr, vd, r);
+    for (let i = 0; i < src.length; i++) src[i] += br[i] * 0.3;
+    const F1 = D.glide([[0.03, 400 * k], [0.16, 780 * k]]);
+    const F2 = D.glide([[0.03, 2050 * k], [0.16, 1250 * k]]);
+    const y = D.sum(D.svf(src, sr, F1, 5, 'bp'), D.scale(D.svf(src, sr, F2, 7, 'bp'), 0.55));
+    const rl = r.range(0.15, 0.3);
+    D.mulEnv(y, sr, (t) => Math.min(1, t / 0.025) * Math.min(1, Math.max(0, vd - t) / rl));
+    D.addAt(out, y, sr, on, r.range(0.5, 1) * 0.35);
+  }
+  return D.reverb(out, sr, { room: 0.78, damp: 0.35, wet: 0.2 });
+}
+
+def('vegas_intro', { sr: HI, dur: 3.2, peak: -1, limit: 3, cat: 'Las Vegas', use: '« Bienvenue à Las Vegas » à l\'arrivée dans le hall : levier de machine à sous (cliquet), rouleaux qui tournent, trois arrêts « clonk » (1,0 / 1,25 / 1,5 s), puis sonnerie de jackpot, « ta-da » de cuivres, pluie de pièces, foule en liesse, paillettes.' }, (c) => {
+  const { sr, r } = c;
+  const m = mix(c);
+  // Levier : cliquet qui accélère + grincement du bras, butée en fin de course.
+  const lever = Array.from({ length: 9 }, (_, k) => 0.02 + 0.22 * Math.pow(k / 9, 0.8));
+  m.add(mechClicks(sr, r, 0.4, lever, { f: 3200, q: 2.5, ring: 2100, ringA: 0.25, decay: 0.0015 }), 0, 1.4);
+  const creak = D.svf(D.white(sr, 0.24, r), sr, D.glide([[0, 500], [0.24, 1400]]), 4, 'bp');
+  D.mulEnv(creak, sr, (t) => Math.sin(Math.PI * Math.min(1, t / 0.24)));
+  m.add(creak, 0.02, 0.25);
+  m.add(I.knock(sr, r, { f0: 150 }), 0.26, 1.0);
+  m.add(I.feltThump(sr, r, { f: 85, dur: 0.14 }), 0.26, 0.7);
+  // Trois rouleaux : cliquet ~20 Hz chacun, démarrage progressif, léger ralenti, arrêt à 1,0 / 1,25 / 1,5 s.
+  [1.0, 1.25, 1.5].forEach((S, j) => {
+    const rmax = 18 + j * 1.7;
+    const ts = clickTimes(0.29 + j * 0.012, S - 0.02, (t) => rmax * (0.35 + 0.65 * D.clamp((t - 0.29) / 0.18, 0, 1)) * (1 - 0.35 * D.clamp((t - (S - 0.12)) / 0.12, 0, 1)));
+    m.add(mechClicks(sr, r, c.dur, ts, { f: 2400 + j * 250 }), 0, 0.8);
+    const whir = D.bp(D.white(sr, S - 0.29, r), sr, 650 + j * 120, 2);
+    D.mulEnv(whir, sr, D.envLin([[0, 0], [0.15, 1], [S - 0.31, 0.9], [S - 0.29, 0]]));
+    m.add(whir, 0.29, 0.3);
+    // Arrêt : « clonk » + cliquet + clochette montante (do-mi-sol) pour l'anticipation.
+    m.add(I.knock(sr, r, { f0: 120 }), S, 1.3);
+    m.add(I.chipClink(sr, r, { f0: 1800, tight: 0.6 }), S + 0.01, 0.6);
+    m.add(I.bell(sr, ['C6', 'E6', 'G6'][j], r, { dur: 0.6, decay: 0.5, strike: 0.4 }), S + 0.02, 0.5);
+  });
+  m.add(I.riser(sr, r, { dur: 1.2, f0: 180, f1: 700 }), 0.32, 0.22);
+  // JACKPOT : sonnerie, « ta-da », grosse caisse, cymbale, pièces, foule, paillettes.
+  const J = 1.58, T = 1.72;
+  m.add(jackpotBells(sr, r, 1.62, { rate: 12, end: 1.2, amp: D.envLin([[0, 0.8], [0.15, 1], [0.9, 0.85], [1.2, 0.5]]) }), J, 0.5);
+  m.add(I.fanfare(sr, r, [[0, 'G4 C5 E5', 0.1], [T - J, 'C4 G4 C5 E5 G5 C6', 1.05]], { bright: 1.3 }), J, 0.8);
+  m.add(I.kick(sr, r, { f0: 42, decay: 0.6 }), T, 0.7);
+  m.add(I.crash(sr, r, { dur: 1.48, decay: 1.6 }), T, 0.28);
+  m.add(I.timpani(sr, r, 'C2', { dur: 1.48 }), T, 0.55);
+  m.add(I.siren(sr, { dur: 1.2, rate: 2.6 }), T + 0.05, 0.08);
+  m.add(coinTray(sr, r, 1.46, { density: 45, env: D.envLin([[0, 0.5], [0.15, 1], [0.9, 0.8], [1.35, 0]]) }), T + 0.02, 0.7);
+  m.add(I.crowd(sr, r, 1.45, { voices: 26, whistles: 2, claps: 45, env: D.envLin([[0, 0], [0.18, 1], [0.95, 0.85], [1.4, 0]]) }), T + 0.03, 0.75);
+  m.add(I.sparkle(sr, r, 1.45, { density: 32, env: D.envLin([[0, 1], [1.4, 0.1]]) }), T - 0.05, 0.5);
+  return verb(m.out, c, { room: 0.85, wet: 0.16 });
+});
+def('slot_jackpot_bells', { sr: HI, dur: 2.6, peak: -2, cat: 'Las Vegas', use: 'Paiement d\'une machine à sous : sonnerie mécanique de jackpot à deux timbres (~12 coups/s) + pièces qui dégringolent dans le bac métallique, puis extinction.' }, (c) => {
+  const { sr, r } = c;
+  const m = mix(c);
+  m.add(jackpotBells(sr, r, c.dur, { rate: 12, end: 1.95, amp: D.envLin([[0, 0.85], [0.12, 1], [1.5, 0.9], [1.95, 0.55]]) }), 0, 0.8);
+  m.add(I.bell(sr, 'G6', r, { dur: 0.6, decay: 1.0, bright: 1.35, strike: 0.7, detune: 0.0025 }), 2.0, 0.22); // dernier coup : la cloche résonne librement
+  m.add(coinTray(sr, r, 2.5, { density: 55, env: D.envLin([[0, 0.3], [0.2, 1], [1.6, 0.85], [2.3, 0]]) }), 0.08, 0.6);
+  return verb(m.out, c, { room: 0.78, damp: 0.3, wet: 0.12 });
+});
+def('crowd_cheer', { sr: LO, dur: 1.8, peak: -3, cat: 'Las Vegas', use: 'La table acclame : « ouais ! » collectif, applaudissements et un sifflet.' }, (c) => {
+  const { sr, r } = c;
+  const m = mix(c);
+  m.add(yeah(sr, r, 0.7, { voices: 14 }), 0, 1.0);
+  m.add(I.crowd(sr, r, c.dur, { voices: 24, whistles: 1, claps: 70, rise: 0.25, env: D.envLin([[0, 0], [0.07, 1], [0.55, 0.95], [1.3, 0.3], [1.55, 0]]) }), 0, 1);
+  return m.out;
+});
+def('crowd_ooh', { sr: LO, dur: 1.4, peak: -5, cat: 'Las Vegas', use: 'La table compatit : « ooooh » qui retombe (joueur qui saute, blackjack du croupier).' }, (c) => {
+  const { sr, r } = c;
+  const out = D.buf(sr, c.dur);
+  // Voix voisées désaccordées sur les formants de [o] -> [ou] (≈ 400 / 800 Hz), hauteur qui retombe.
+  // Chaque voix a sa voyelle, sa dérive de hauteur et son entrée : une foule, pas un chœur.
+  for (let v = 0; v < 22; v++) {
+    const f0 = r.range(100, 280);
+    const on = r.range(0, 0.16);
+    const vd = c.dur - on - r.range(0.05, 0.25);
+    const k = (f0 > 190 ? 1.12 : 1) * r.range(0.92, 1.08);
+    const fall = r.range(0.78, 0.9);
+    const drift = D.smoothNoise(sr, vd, r, 3);
+    const contour = D.glide([[0, f0 * 0.95], [r.range(0.1, 0.2), f0 * 1.02], [vd, f0 * fall]]);
+    const src = D.osc(sr, vd, { f: (t) => contour(t) * (1 + 0.012 * drift[Math.min(drift.length - 1, Math.round(t * sr))]), type: 'saw', vib: r.range(0.004, 0.012), vibRate: r.range(4, 6.5), vibDelay: 0.2, phase: r() });
+    const br = D.white(sr, vd, r);
+    for (let i = 0; i < src.length; i++) src[i] += br[i] * r.range(0.12, 0.2);
+    const a1 = r.range(400, 520) * k, a2 = r.range(780, 920) * k; // [o] / [ɔ]
+    const F1 = D.glide([[0, a1], [vd, a1 * r.range(0.75, 0.85)]]); // ... qui se ferme en [ou]
+    const F2 = D.glide([[0, a2], [vd, a2 * r.range(0.82, 0.9)]]);
+    const y = D.sum(D.svf(src, sr, F1, 6, 'bp'), D.scale(D.svf(src, sr, F2, 7, 'bp'), 0.45));
+    const at = r.range(0.1, 0.2), rl = r.range(0.35, 0.55);
+    D.mulEnv(y, sr, (t) => Math.pow(Math.min(1, t / at), 1.5) * (1 - 0.35 * D.clamp((t - at) / (vd - at), 0, 1)) * Math.min(1, Math.max(0, vd - t) / rl));
+    D.addAt(out, y, sr, on, r.range(0.4, 1) * 0.26);
+  }
+  // Souffle : bruit rose dans les mêmes formants + un peu d'air.
+  const pk = D.pink(sr, c.dur, r);
+  const breath = D.sum(D.bp(pk, sr, 420, 3), D.scale(D.bp(pk, sr, 820, 3), 0.6), D.scale(D.bp(pk, sr, 2600, 1.5), 0.12));
+  D.mulEnv(breath, sr, D.envLin([[0, 0], [0.2, 1], [0.8, 0.65], [1.25, 0]]));
+  D.addAt(out, breath, sr, 0, 0.25);
+  return D.lp(verb(out, c, { room: 0.82, damp: 0.4, wet: 0.24 }), sr, 3200);
 });

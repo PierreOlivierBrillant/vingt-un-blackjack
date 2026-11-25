@@ -274,8 +274,16 @@ export class TableMachine {
     for (const q of this.pub.queue) this.effects.push({ kind: 'location', uid: q.uid, tableId: null });
     this.pub.queue = [];
     const m = this.pub.markets;
-    for (const id of [m.dealerBust, m.natural, m.shoe, ...Object.values(m.players)]) {
+    for (const id of [m.dealerBust, m.natural, ...Object.values(m.players)]) {
       if (id) this.effects.push({ kind: 'marketStatus', marketId: id, status: 'void', outcome: null });
+    }
+    // A shoe market that already stopped trading is resolved on the hands played so far: voiding it
+    // would refund the losing side, a free option for whoever can make the table close.
+    const sh = this.pub.shoe;
+    if (m.shoe && this.priv.shoeMarketClosed && sh.handsDealt > 0) {
+      this.setMarket(m.shoe, 'resolved', sh.dealerBusts / sh.handsDealt >= SHOE_BUST_RATE_THRESHOLD ? 'yes' : 'no');
+    } else if (m.shoe) {
+      this.setMarket(m.shoe, 'void');
     }
     this.pub.markets = { dealerBust: null, natural: null, shoe: null, players: {} };
     this.pub.status = 'closed';
@@ -570,12 +578,15 @@ export class TableMachine {
     }
     this.syncFromRound();
 
-    // close "player wins" markets whose outcome is already known (all hands busted/surrendered)
+    // close "player wins" markets whose outcome is already known: all hands busted/surrendered
+    // (certain NO), or a natural once player turns have begun (certain YES: the dealer has already
+    // peeked, or shows 2-9 and cannot have a natural; any insurance is at most half the bet).
     for (const es of r.seats) {
       const id = this.pub.markets.players[String(es.seatIndex)];
-      if (id && r.phase !== 'settled' && es.hands.every((h) => h.done && (h.busted || h.surrendered))) {
-        this.setMarket(id, 'closed');
-      }
+      if (!id || r.phase === 'settled') continue;
+      const allLost = es.hands.every((h) => h.done && (h.busted || h.surrendered));
+      const natural = r.phase === 'playerTurns' && es.hands.length === 1 && es.hands[0]!.blackjack;
+      if (allLost || natural) this.setMarket(id, 'closed');
     }
 
     if (r.phase === 'settled') {

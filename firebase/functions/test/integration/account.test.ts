@@ -193,6 +193,15 @@ describe('idempotency', () => {
     await a.close();
     await b.close();
   });
+
+  it('a stored response is only replayed to the user who made the request', async () => {
+    const c = await playerClient({ kyc: true });
+    const requestId = randomUUID();
+    // A record under this key whose owner differs (possible only through an ambiguous `uid_requestId` key).
+    await admin().doc(`idempotency/${c.uid}_${requestId}`).set({ fn: 'deposit', uid: 'someone-else', response: { leaked: true }, createdAtMs: Date.now() });
+    expect(await reason(c.call('deposit', { requestId, amountCents: 1_000, method: 'card' }))).toBe('REQUEST_ID_REUSED');
+    await c.close();
+  });
 });
 
 describe('rate limiting', () => {

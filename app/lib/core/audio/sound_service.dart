@@ -15,6 +15,9 @@ enum SoundChannel {
 
   /// Slot-machine reels while the rewarded parody video plays.
   reels,
+
+  /// Distant slot machines, layered under [ambience] (follows the ambience level).
+  slots,
 }
 
 /// Output levels (0..1) and the master switch.
@@ -25,7 +28,7 @@ class SoundLevels {
   final double ambience;
   final bool muted;
 
-  double forChannel(SoundChannel c) => muted ? 0 : (c == SoundChannel.ambience ? ambience : effects);
+  double forChannel(SoundChannel c) => muted ? 0 : (c == SoundChannel.ambience || c == SoundChannel.slots ? ambience : effects);
 
   @override
   bool operator ==(Object other) =>

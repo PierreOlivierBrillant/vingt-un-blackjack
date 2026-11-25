@@ -57,6 +57,8 @@ class AppSoundEvents {
       sound.play(s);
       // Big money in: the coin rain on top of the bell.
       if (e.kind == LedgerKind.deposit || e.kind == LedgerKind.welcomeBonus) sound.play(Sfx.coinShower, volume: 0.8);
+      // Winnings from outside the table: the slot machine pays out.
+      if (e.kind == LedgerKind.marketPayout || e.kind == LedgerKind.adReward) sound.play(Sfx.slotJackpotBells, volume: 0.7);
     }
   }
 
@@ -122,6 +124,32 @@ class AppSoundEvents {
     if (before != null && rank != null && rank < before) sound.play(Sfx.leaderboardClimb);
   }
 }
+
+/// The lobby's "recent wins" ticker, heard as a casino floor: other players'
+/// wins elsewhere ring like distant slot machines paying out. At most one
+/// sound per update (the first list is a baseline), quiet so it never covers
+/// the player's own sounds.
+class RecentWinsSounds {
+  RecentWinsSounds(this.sound);
+  final SoundService sound;
+  Set<String>? _known;
+
+  void onWins(List<RecentWin> wins) {
+    final ids = {for (final w in wins) w.id};
+    final known = _known;
+    _known = {...?known, ...ids};
+    if (known == null) return;
+    final fresh = wins.where((w) => !known.contains(w.id)).toList();
+    if (fresh.isEmpty) return;
+    if (fresh.any((w) => w.kind == WinKind.blackjack || w.kind == WinKind.bigWin)) {
+      sound.play(Sfx.slotJackpotBells, volume: 0.35);
+    } else {
+      sound.play(Sfx.coinSingle, volume: 0.4);
+    }
+  }
+}
+
+final recentWinsSoundsProvider = Provider<RecentWinsSounds>((ref) => RecentWinsSounds(ref.watch(soundProvider)));
 
 /// Wires [AppSoundEvents] to the signed-in user's streams. Kept alive by
 /// `AudioLifecycle` (listened for the whole app life).

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/app_sound_events.dart';
 import '../../core/audio/sound_providers.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
@@ -60,6 +61,11 @@ class LobbyScreen extends ConsumerWidget {
     final selected = ref.watch(_selectedTierProvider);
     final tables = ref.watch(liveTablesProvider(selected));
     final wins = ref.watch(recentWinsProvider);
+    // Other players' wins ring around the casino floor.
+    ref.listen(recentWinsProvider, (_, n) {
+      final list = n.value;
+      if (list != null) ref.read(recentWinsSoundsProvider).onWins(list);
+    });
 
     return Scaffold(
       appBar: AppBar(

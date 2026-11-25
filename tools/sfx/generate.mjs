@@ -14,7 +14,7 @@ import { SOUNDS } from './sounds.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 const OUT = path.join(ROOT, 'app', 'assets', 'sfx');
-const MAX_BYTES = 6 * 1024 * 1024;
+const MAX_BYTES = 8 * 1024 * 1024;
 
 // ------------------------------------------------------------------ rendu
 export function renderSound(def) {
@@ -173,8 +173,8 @@ function main() {
     const all = fs.readdirSync(OUT).filter((f) => f.endsWith('.wav')).reduce((a, f) => a + fs.statSync(path.join(OUT, f)).size, 0);
     const orphans = fs.readdirSync(OUT).filter((f) => f.endsWith('.wav') && !names.has(f.slice(0, -4)));
     for (const o of orphans) console.log(`ÉCHEC fichier orphelin hors catalogue : ${o}`);
-    console.log(`\n${sel.length} sons vérifiés, ${bad} en échec, ${warned} avec avertissement ; poids total du dossier : ${(all / 1024 / 1024).toFixed(2)} Mio (max 6).`);
-    if (all > MAX_BYTES) console.log('ÉCHEC : le dossier dépasse 6 Mio');
+    console.log(`\n${sel.length} sons vérifiés, ${bad} en échec, ${warned} avec avertissement ; poids total du dossier : ${(all / 1024 / 1024).toFixed(2)} Mio (max ${MAX_BYTES / 1024 / 1024}).`);
+    if (all > MAX_BYTES) console.log(`ÉCHEC : le dossier dépasse ${MAX_BYTES / 1024 / 1024} Mio`);
     process.exitCode = bad || orphans.length || all > MAX_BYTES ? 1 : 0;
     return;
   }

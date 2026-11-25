@@ -111,7 +111,14 @@ enum Sfx {
   // Ambience
   ambienceCasinoLoop('ambience_casino_loop', 10000, loop: true),
   slotReelSpin('slot_reel_spin', 1000, loop: true),
-  slotReelStop('slot_reel_stop', 500, cooldownMs: 120);
+  slotReelStop('slot_reel_stop', 500, cooldownMs: 120),
+  // Las Vegas pass
+  vegasIntro('vegas_intro', 3200, tier: SfxTier.jackpot),
+  slotJackpotBells('slot_jackpot_bells', 2600, tier: SfxTier.fanfare, cooldownMs: 6000),
+  crowdCheer('crowd_cheer', 1800, cooldownMs: 1500),
+  crowdOoh('crowd_ooh', 1400, cooldownMs: 1500),
+  ambienceSlotsLoop('ambience_slots_loop', 8000, loop: true),
+  uiChipTap('ui_chip_tap', 120, tier: SfxTier.ui, cooldownMs: 40);
 
   const Sfx(this.file, this.durationMs, {this.tier = SfxTier.game, this.loop = false, this.cooldownMs = 35});
 
@@ -193,7 +200,9 @@ const kTableSfx = <Sfx>{
   Sfx.powerFreeInsurance,
   Sfx.powerPeek,
   Sfx.powerSecondChance,
+  Sfx.crowdCheer,
+  Sfx.crowdOoh,
 };
 
 /// Interface sounds, decoded at start-up.
-const kUiSfx = <Sfx>{Sfx.uiTap, Sfx.uiToggle, Sfx.uiError, Sfx.uiSuccess, Sfx.navSwoosh};
+const kUiSfx = <Sfx>{Sfx.uiChipTap, Sfx.uiTap, Sfx.uiToggle, Sfx.uiError, Sfx.uiSuccess, Sfx.navSwoosh};
