@@ -100,6 +100,8 @@ class TableSoundscape implements DealerFeedback {
         haptics(Haptic.light);
       case DealerCue.peek:
         sound.play(SfxVariants.pick(SfxVariants.cardFlip, _random), volume: 0.45);
+        // "Does the dealer have blackjack?": a short roll for the seated viewer.
+        if (mySeat() != null) sound.play(Sfx.drumrollShort, volume: 0.8);
       case DealerCue.chipPlace:
         if (_mine(info) && (info.cents ?? 0) >= maxBetCents() && maxBetCents() > 0) {
           sound.play(Sfx.chipAllin);

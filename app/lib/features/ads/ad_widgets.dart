@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/audio/sfx.dart';
 import '../../core/audio/sound_providers.dart';
+import '../../core/audio/sound_service.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -202,13 +203,29 @@ class _Rewarded extends ConsumerStatefulWidget {
 }
 
 class _RewardedState extends ConsumerState<_Rewarded> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(vsync: this, duration: widget.length)..forward();
+  late final AnimationController _c = AnimationController(vsync: this, duration: widget.length);
+  late final SoundService _sound = ref.read(soundProvider);
   String? _error;
   bool _claiming = false;
   final _idempotencyKey = newIdempotencyKey();
 
   @override
+  void initState() {
+    super.initState();
+    // The "video" is a slot machine: reels spin while it plays, then stop
+    // with a clunk when the reward is ready.
+    _sound.startLoop(SoundChannel.reels, Sfx.slotReelSpin, volume: 0.7);
+    _c.addStatusListener((s) {
+      if (s != AnimationStatus.completed) return;
+      _sound.stopLoop(SoundChannel.reels);
+      _sound.play(Sfx.slotReelStop);
+    });
+    _c.forward();
+  }
+
+  @override
   void dispose() {
+    _sound.stopLoop(SoundChannel.reels);
     _c.dispose();
     super.dispose();
   }

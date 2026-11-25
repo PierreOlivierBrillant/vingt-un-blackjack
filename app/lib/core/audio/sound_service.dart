@@ -12,6 +12,9 @@ enum SoundChannel {
 
   /// Snare roll while the dealer draws.
   suspense,
+
+  /// Slot-machine reels while the rewarded parody video plays.
+  reels,
 }
 
 /// Output levels (0..1) and the master switch.

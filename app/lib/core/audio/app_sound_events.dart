@@ -23,6 +23,7 @@ class AppSoundEvents {
   Set<String>? _friends;
   Map<String, PositionStatus>? _positions;
   RankTier? _tier;
+  PlayerStats? _stats;
   int? _rank;
 
   static Sfx? ledgerSfx(LedgerKind k) => switch (k) {
@@ -93,11 +94,25 @@ class AppSoundEvents {
     }
   }
 
+  /// Hands-played and blackjack counts that unlock the "achievement" sting.
+  static const handMilestones = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000];
+  static const blackjackMilestones = [1, 5, 10, 25, 50, 100];
+
+  static bool crossed(List<int> milestones, int before, int now) => milestones.any((m) => before < m && now >= m);
+
   void onProfile(PlayerProfile? p) {
     if (p == null) return;
     final before = _tier;
+    final stats = _stats;
     _tier = p.rankTier;
-    if (before != null && p.rankTier.index > before.index) sound.play(Sfx.rankUp);
+    _stats = p.stats;
+    if (before == null || stats == null) return;
+    if (p.rankTier.index > before.index) {
+      sound.play(Sfx.rankUp);
+    } else if (crossed(handMilestones, stats.handsPlayed, p.stats.handsPlayed) ||
+        crossed(blackjackMilestones, stats.blackjacks, p.stats.blackjacks)) {
+      sound.play(Sfx.achievement);
+    }
   }
 
   /// [rank] is 1-based, null when outside the board.

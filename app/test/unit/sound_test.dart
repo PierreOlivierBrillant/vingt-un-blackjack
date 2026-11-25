@@ -448,6 +448,7 @@ void main() {
         s,
         containsAllInOrder([
           Sfx.actionInsurance,
+          Sfx.drumrollShort, // the dealer peeks for blackjack
           Sfx.chipsRakeLose, // insurance lost
           Sfx.powerFreeDouble,
           Sfx.powerSecondChance,
@@ -572,6 +573,29 @@ void main() {
         Sfx.rankUp,
         Sfx.leaderboardClimb,
       ]);
+    });
+
+    test('milestones: hands played and blackjacks ring the achievement once', () {
+      PlayerProfile prof({int hands = 0, int bj = 0, RankTier tier = RankTier.bronze}) => PlayerProfile(
+            uid: 'me',
+            username: 'Moi',
+            avatar: 'a',
+            isBot: false,
+            rankPoints: 0,
+            rankTier: tier,
+            weeklyPoints: 0,
+            weekId: 'w',
+            stats: PlayerStats(handsPlayed: hands, blackjacks: bj),
+          );
+      e.onProfile(prof(hands: 9)); // baseline: silent
+      e.onProfile(prof(hands: 10)); // 10 hands → achievement
+      e.onProfile(prof(hands: 11)); // nothing
+      e.onProfile(prof(hands: 12, bj: 1)); // first blackjack → achievement
+      e.onProfile(prof(hands: 25, bj: 1, tier: RankTier.silver)); // rank up wins over the milestone
+      e.onProfile(prof(hands: 26, bj: 1, tier: RankTier.silver));
+      expect(rec.sounds, [Sfx.achievement, Sfx.achievement, Sfx.rankUp]);
+      expect(AppSoundEvents.crossed(AppSoundEvents.handMilestones, 0, 9), isFalse);
+      expect(AppSoundEvents.crossed(AppSoundEvents.handMilestones, 49, 51), isTrue);
     });
   });
 }

@@ -15,3 +15,6 @@ local.properties
 # Classroom mode (tools/start_classroom.ps1): published APK + page, logs; emulator data export
 /.classroom/
 firebase/.emulator-data/
+
+# Flutter golden test failure output
+app/test/golden/failures/

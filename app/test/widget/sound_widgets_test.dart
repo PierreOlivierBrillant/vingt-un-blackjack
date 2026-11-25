@@ -7,6 +7,7 @@ import 'package:vingtun/core/settings/settings_controller.dart';
 import 'package:vingtun/data/error_messages.dart';
 import 'package:vingtun/data/fake/fake_repositories.dart';
 import 'package:vingtun/data/providers.dart';
+import 'package:vingtun/features/ads/ad_widgets.dart';
 import 'package:vingtun/features/settings/settings_screen.dart';
 import 'package:vingtun/features/table/table_screen.dart';
 
@@ -58,6 +59,30 @@ void main() {
     expect(rec.sounds, [Sfx.uiError]);
     await tester.pumpWidget(const SizedBox());
     expect(ErrorFeedback.hook, isNull);
+  });
+
+  testWidgets('rewarded ad: slot reels spin while it plays, stop with a clunk, silent once closed', (tester) async {
+    usePhoneSurface(tester);
+    final rec = RecordingSoundService();
+    await pumpScreen(
+      tester,
+      Builder(
+        builder: (context) => TextButton(
+          onPressed: () => showRewardedAd(context, length: const Duration(seconds: 2)),
+          child: const Text('go'),
+        ),
+      ),
+      overrides: [soundBackendProvider.overrideWithValue(rec)],
+    );
+    await tester.tap(find.text('go'));
+    await tester.pump();
+    expect(rec.loops[SoundChannel.reels], Sfx.slotReelSpin);
+    await tester.pump(const Duration(seconds: 3));
+    expect(rec.loops.containsKey(SoundChannel.reels), isFalse);
+    expect(rec.sounds, contains(Sfx.slotReelStop));
+    await tester.tap(find.text(l10nOf(const Locale('fr')).close));
+    await tester.pumpAndSettle();
+    expect(rec.loops, isEmpty);
   });
 
   for (final locale in const [Locale('fr'), Locale('en')]) {
