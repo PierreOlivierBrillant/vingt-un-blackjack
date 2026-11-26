@@ -239,7 +239,7 @@ describe('shop, ads, styles', () => {
 
   it('equipCardStyle validates enums', async () => {
     const c = await playerClient();
-    expect(await c.call('equipCardStyle', { cardBack: 'goldFiligree', felt: 'purple' })).toEqual({ cardBack: 'goldFiligree', cardFace: 'classic', felt: 'purple' });
+    expect(await c.call('equipCardStyle', { cardBack: 'goldFiligree', felt: 'purple' })).toEqual({ cardBack: 'goldFiligree', cardFace: 'classic', felt: 'purple', title: null });
     expect(await reason(c.raw('equipCardStyle', { requestId: randomUUID(), cardBack: 'pirate' }))).toBe('INVALID_ARGUMENT');
     expect(await reason(c.raw('equipCardStyle', { requestId: randomUUID() }))).toBe('INVALID_ARGUMENT');
     await c.close();

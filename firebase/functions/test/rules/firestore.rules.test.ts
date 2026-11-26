@@ -62,6 +62,24 @@ beforeEach(async () => {
     await put('tableCodes/ABC123', { tableId: 't1' });
     await put(`idempotency/${ALICE}_req12345`, { fn: 'deposit' });
     await put(`rateLimits/${ALICE}`, { deposit: { count: 1 } });
+    // Sprint 2: kernel-driven games
+    await put('gameTables/rl-t1', { phase: 'betting', game: 'roulette' });
+    await put('gameTables/rl-t1/private/state', { seed: 'x', g: {} });
+    await put(`gameTables/rl-t1/bets/${ALICE}`, { bets: { red: 100 } });
+    await put(`gameTables/ho-t1/holes/${ALICE}`, { cards: ['AS', 'KD'] });
+    await put('gameTables/rl-t1/rounds/00000001', { round: 1 });
+    // Sprint 2: Rendez-vous, cosmetics, dating
+    await put(`users/${ALICE}/romance/lucas`, { affinity: 10 });
+    await put(`users/${ALICE}/unlocks/rv_lucas_back`, { cosmeticId: 'rv_lucas_back' });
+    await put(`users/${ALICE}/private/dating`, { optedIn: true });
+    await put(`datingMatches/${ALICE}_${BOB}`, { uids: [ALICE, BOB], status: 'active', lastMessageAtMs: 1 });
+    await put(`datingMatches/${ALICE}_${BOB}/messages/m1`, { fromUid: BOB, kind: 'line', lineId: 'hello' });
+    await put(`datingMatches/${ALICE}_${EVE}`, { uids: [ALICE, EVE], status: 'ended', lastMessageAtMs: 1 });
+    await put(`datingMatches/${ALICE}_${EVE}/messages/m1`, { fromUid: EVE, kind: 'line', lineId: 'hello' });
+    await put(`datingProfiles/${ALICE}`, { uid: ALICE, active: true });
+    await put(`datingLikes/${BOB}_${ALICE}`, { fromUid: BOB });
+    await put(`datingBlocks/${ALICE}_${EVE}`, { by: ALICE });
+    await put('config/features', { dating: false });
   });
 });
 
@@ -85,12 +103,27 @@ describe('users/{uid} settings', () => {
     await assertFails(getDoc(doc(bob(), `users/${ALICE}`)));
     await assertFails(getDoc(doc(anon(), `users/${ALICE}`)));
   });
-  it('owner updates whitelisted fields with valid enums', async () => {
-    await assertSucceeds(updateDoc(doc(alice(), `users/${ALICE}`), { theme: 'light', language: 'en', felt: 'blue', updatedAtMs: 2 }));
-    await assertSucceeds(updateDoc(doc(alice(), `users/${ALICE}`), { cardBack: 'neonGrid', cardFace: 'neon' }));
+  it('owner updates theme / language / updatedAtMs only (also with set merge, as the app does)', async () => {
+    await assertSucceeds(updateDoc(doc(alice(), `users/${ALICE}`), { theme: 'light', language: 'en', updatedAtMs: 2 }));
+    await assertSucceeds(setDoc(doc(alice(), `users/${ALICE}`), { theme: 'system', updatedAtMs: 3 }, { merge: true }));
+    await assertSucceeds(updateDoc(doc(alice(), `users/${ALICE}`), { language: 'fr' }));
   });
-  it('owner can create own settings doc with valid fields', async () => {
-    await assertSucceeds(setDoc(doc(bob(), `users/${BOB}`), SETTINGS));
+  it('card styles are no longer client-writable, not even free ones (equipCardStyle checks unlocks)', async () => {
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { felt: 'blue' }));
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { cardBack: 'neonGrid' }));
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { cardFace: 'neon' }));
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { theme: 'light', felt: 'blue', updatedAtMs: 2 }));
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { cardBack: 'rv_lucas_back' })); // exclusive, even if unlocked
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { felt: 'rv_camille_felt' }));
+    await assertFails(setDoc(doc(alice(), `users/${ALICE}`), { ...SETTINGS, cardBack: 'duo_back' }));
+    await assertFails(setDoc(doc(alice(), `users/${ALICE}`), { felt: 'rv_ines_felt' }, { merge: true }));
+  });
+  it('owner can create own settings doc with theme / language only', async () => {
+    await assertSucceeds(setDoc(doc(bob(), `users/${BOB}`), { theme: 'dark', language: 'fr', updatedAtMs: 1 }));
+  });
+  it('creating a settings doc with card styles is refused', async () => {
+    await assertFails(setDoc(doc(bob(), `users/${BOB}`), SETTINGS));
+    await assertFails(setDoc(doc(bob(), `users/${BOB}`), { theme: 'dark', felt: 'green' }));
   });
   it('rejects non-whitelisted fields (money, rank) and bad values', async () => {
     await assertFails(updateDoc(doc(alice(), `users/${ALICE}`), { balanceCents: 1e9 }));
@@ -208,8 +241,88 @@ describe('feed', () => {
   });
 });
 
+describe('gameTables/{id} (kernel-driven games)', () => {
+  it('table state: signed-in read, unauthenticated cannot, nobody writes', async () => {
+    await assertSucceeds(getDoc(doc(alice(), 'gameTables/rl-t1')));
+    await assertSucceeds(getDocs(query(collection(bob(), 'gameTables'), where('game', '==', 'roulette'))));
+    await assertFails(getDoc(doc(anon(), 'gameTables/rl-t1')));
+    await assertFails(updateDoc(doc(alice(), 'gameTables/rl-t1'), { phase: 'settled' }));
+    await assertFails(setDoc(doc(alice(), 'gameTables/rl-t2'), { phase: 'betting' }));
+    await assertFails(deleteDoc(doc(alice(), 'gameTables/rl-t1')));
+  });
+  it('private state (seed, shoe, deck): nobody reads or writes', async () => {
+    await assertFails(getDoc(doc(alice(), 'gameTables/rl-t1/private/state')));
+    await assertFails(getDocs(collection(alice(), 'gameTables/rl-t1/private')));
+    await assertFails(setDoc(doc(alice(), 'gameTables/rl-t1/private/state'), { seed: 'mine' }));
+  });
+  it('bet boards: public to signed-in users, never client-written (not even your own)', async () => {
+    await assertSucceeds(getDoc(doc(bob(), `gameTables/rl-t1/bets/${ALICE}`)));
+    await assertSucceeds(getDocs(collection(bob(), 'gameTables/rl-t1/bets')));
+    await assertFails(getDoc(doc(anon(), `gameTables/rl-t1/bets/${ALICE}`)));
+    await assertFails(setDoc(doc(alice(), `gameTables/rl-t1/bets/${ALICE}`), { bets: { red: 1e9 } }));
+    await assertFails(deleteDoc(doc(alice(), `gameTables/rl-t1/bets/${ALICE}`)));
+  });
+  it('hole cards: only that player reads; nobody writes', async () => {
+    await assertSucceeds(getDoc(doc(alice(), `gameTables/ho-t1/holes/${ALICE}`)));
+    await assertFails(getDoc(doc(bob(), `gameTables/ho-t1/holes/${ALICE}`)));
+    await assertFails(getDocs(collection(bob(), 'gameTables/ho-t1/holes')));
+    await assertFails(setDoc(doc(alice(), `gameTables/ho-t1/holes/${ALICE}`), { cards: ['AS', 'AH'] }));
+  });
+  it('round history: signed-in read, not writable', async () => {
+    await assertSucceeds(getDoc(doc(bob(), 'gameTables/rl-t1/rounds/00000001')));
+    await assertFails(getDoc(doc(anon(), 'gameTables/rl-t1/rounds/00000001')));
+    await assertFails(setDoc(doc(bob(), 'gameTables/rl-t1/rounds/00000002'), { round: 2 }));
+  });
+});
+
+describe('Rendez-vous: romance, unlocks, private/dating', () => {
+  const paths = [`users/${ALICE}/romance/lucas`, `users/${ALICE}/unlocks/rv_lucas_back`, `users/${ALICE}/private/dating`];
+  it('owner reads (affinity, unlocked cosmetics, dating opt-in)', async () => {
+    for (const p of paths) await assertSucceeds(getDoc(doc(alice(), p)));
+    await assertSucceeds(getDocs(collection(alice(), `users/${ALICE}/unlocks`)));
+    await assertSucceeds(getDocs(collection(alice(), `users/${ALICE}/romance`)));
+  });
+  it('others cannot read; nobody writes (no self-unlocked cosmetic, no affinity edit)', async () => {
+    for (const p of paths) {
+      await assertFails(getDoc(doc(bob(), p)));
+      await assertFails(getDoc(doc(anon(), p)));
+    }
+    await assertFails(setDoc(doc(alice(), `users/${ALICE}/unlocks/duo_back`), { cosmeticId: 'duo_back' }));
+    await assertFails(updateDoc(doc(alice(), `users/${ALICE}/romance/lucas`), { affinity: 300 }));
+    await assertFails(setDoc(doc(alice(), `users/${ALICE}/romance/camille`), { tablePlay: { '2026-11-26': 99 } }));
+    await assertFails(setDoc(doc(alice(), `users/${ALICE}/private/dating`), { optedIn: true }));
+  });
+});
+
+describe('datingMatches and messages', () => {
+  it('members of an ACTIVE match read it and query their matches', async () => {
+    await assertSucceeds(getDoc(doc(alice(), `datingMatches/${ALICE}_${BOB}`)));
+    await assertSucceeds(getDoc(doc(bob(), `datingMatches/${ALICE}_${BOB}`)));
+    await assertSucceeds(getDocs(query(collection(alice(), 'datingMatches'), where('uids', 'array-contains', ALICE), where('status', '==', 'active'))));
+  });
+  it('an ended match is no longer readable; non-members and unfiltered queries are refused', async () => {
+    await assertFails(getDoc(doc(alice(), `datingMatches/${ALICE}_${EVE}`)));
+    await assertFails(getDoc(doc(eve(), `datingMatches/${ALICE}_${BOB}`)));
+    await assertFails(getDoc(doc(anon(), `datingMatches/${ALICE}_${BOB}`)));
+    await assertFails(getDocs(query(collection(alice(), 'datingMatches'), where('uids', 'array-contains', ALICE))));
+    await assertFails(getDocs(collection(eve(), 'datingMatches')));
+  });
+  it('messages: members of an active match only; nobody writes (no free text, ever)', async () => {
+    await assertSucceeds(getDocs(collection(alice(), `datingMatches/${ALICE}_${BOB}/messages`)));
+    await assertSucceeds(getDoc(doc(bob(), `datingMatches/${ALICE}_${BOB}/messages/m1`)));
+    await assertFails(getDoc(doc(eve(), `datingMatches/${ALICE}_${BOB}/messages/m1`)));
+    await assertFails(getDoc(doc(alice(), `datingMatches/${ALICE}_${EVE}/messages/m1`))); // ended
+    await assertFails(setDoc(doc(alice(), `datingMatches/${ALICE}_${BOB}/messages/m2`), { kind: 'line', text: 'hi' }));
+    await assertFails(updateDoc(doc(alice(), `datingMatches/${ALICE}_${BOB}`), { status: 'ended' }));
+    await assertFails(setDoc(doc(eve(), `datingMatches/${EVE}_${BOB}`), { uids: [EVE, BOB], status: 'active' }));
+  });
+});
+
 describe('server-only collections', () => {
-  for (const p of ['usernames/alice', 'tableCodes/ABC123', `idempotency/${ALICE}_req12345`, `rateLimits/${ALICE}`]) {
+  for (const p of [
+    'usernames/alice', 'tableCodes/ABC123', `idempotency/${ALICE}_req12345`, `rateLimits/${ALICE}`,
+    `datingProfiles/${ALICE}`, `datingLikes/${BOB}_${ALICE}`, `datingBlocks/${ALICE}_${EVE}`, 'config/features',
+  ]) {
     it(`${p.split('/')[0]}: no read, no write`, async () => {
       await assertFails(getDoc(doc(alice(), p)));
       await assertFails(setDoc(doc(alice(), p), { x: 1 }));

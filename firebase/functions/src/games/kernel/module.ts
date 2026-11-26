@@ -168,7 +168,7 @@ export interface GameCtx<P = Rec, S = Rec, V = Rec> extends ReadCtx<P, S> {
   idle(): void;
   /** Private cards of a player (`holes/{uid}`, readable by that player only). */
   secret(uid: string, cards: CardCode[]): void;
-  /** Removes a seat now (stack cashed out for humans; board must be empty). */
+  /** Removes a seat now (humans: stack cashed out, anything left on the board refunded). */
   removeSeat(seatIndex: number): void;
   readonly markets: GameMarkets;
 }

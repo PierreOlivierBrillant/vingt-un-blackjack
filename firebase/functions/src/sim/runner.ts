@@ -75,7 +75,7 @@ export interface RunnerStats {
 export interface RunnerOptions {
   /** Simulated tables per kernel game (default SIM_GAME_TABLES / 2). */
   gameTablesPerGame?: number;
-  /** Keep the 8 blackjack simulated tables alive (default true). */
+  /** Drive the blackjack tables too (listen, advance, keep the 8 simulated ones). Default true; false = load probe of the kernel games alone. */
   blackjackSims?: boolean;
 }
 
@@ -127,7 +127,9 @@ export class SimRunner {
       });
       this.unsubs.push(unsub);
     });
-    this.listening = Promise.all([follow('tables', this.bj), follow('gameTables', this.games)]).then(() => undefined);
+    const lists = [follow('gameTables', this.games)];
+    if (this.blackjackSims) lists.push(follow('tables', this.bj));
+    this.listening = Promise.all(lists).then(() => undefined);
     return this.listening;
   }
 
@@ -324,6 +326,7 @@ export class SimRunner {
       if (!s.exists) continue;
       const p = s.data() as ProfileDoc;
       const tableId = where.get(p.uid) ?? null;
+      if (!this.blackjackSims && tableId === null) continue; // blackjack tables not followed: leave them alone
       if (p.currentTableId !== tableId || (tableId && now - p.lastSeenAtMs > 60_000)) {
         batch.update(s.ref, { currentTableId: tableId, ...(tableId ? { lastSeenAtMs: now } : {}) });
         n++;
