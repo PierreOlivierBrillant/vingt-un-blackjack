@@ -134,7 +134,7 @@ export class TableTx {
           break;
         case 'marketCreate': {
           tx.set(r.market(e.market.marketId), e.market);
-          const pt: PricePointDoc = { atMs: now, priceYes: 0.5 };
+          const pt: PricePointDoc = { atMs: now, priceYes: e.market.priceYes };
           tx.set(r.priceHistory(e.market.marketId).doc(), pt);
           break;
         }

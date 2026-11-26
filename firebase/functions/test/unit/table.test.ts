@@ -346,6 +346,45 @@ describe('action validation', () => {
     throw new Error('no seed reached playerTurns');
   });
 
+  it('peek closes the dealerBust market (regression: hole-card knowledge sold to a second account)', () => {
+    for (let seed = 1; seed < 40; seed++) {
+      const h = new Harness({ seed });
+      h.run((m) => m.join(human(1)));
+      h.run((m) => m.placeBet('h1', 1, 500));
+      if (h.pub.phase !== 'playerTurns') continue;
+      const id = h.pub.markets.dealerBust!;
+      expect(h.ofKind('marketStatus').some((e) => e.marketId === id && e.status === 'closed')).toBe(false);
+      h.run((m) => m.act('h1', { handNumber: 1, action: 'peek', power: 'peek' }));
+      expect(h.ofKind('marketStatus').some((e) => e.marketId === id && e.status === 'closed')).toBe(true);
+      return;
+    }
+    throw new Error('no seed reached playerTurns');
+  });
+
+  it('a human seat\'s "player wins" market stops trading once their turn is reached (regression: bet NO then bust on purpose)', () => {
+    for (let seed = 1; seed < 40; seed++) {
+      const h = new Harness({ seed });
+      h.run((m) => m.join(human(1)));
+      h.run((m) => m.placeBet('h1', 1, 500));
+      if (h.pub.phase !== 'playerTurns') continue;
+      const id = h.pub.markets.players['0']!;
+      expect(h.ofKind('marketStatus').some((e) => e.marketId === id && e.status === 'closed')).toBe(true);
+      return;
+    }
+    throw new Error('no seed reached playerTurns');
+  });
+
+  it('markets open at the true prior, not 50 % (regression: buying NO on dealerBust every hand was +EV)', () => {
+    const h = new Harness();
+    h.run((m) => m.join(human(1)));
+    const by = (k: string) => h.ofKind('marketCreate').find((e) => e.market.kind === k)!.market;
+    expect(by('dealerBust').priceYes).toBeCloseTo(0.28, 5);
+    expect(by('natural').priceYes).toBeLessThan(0.15);
+    expect(by('shoeDealerBustRate').priceYes).toBe(0.5);
+    const d = by('dealerBust');
+    expect(1 / (1 + Math.exp((d.qNo - d.qYes) / d.b))).toBeCloseTo(0.28, 5);
+  });
+
   it('"player wins" market closes as soon as a natural makes YES certain (regression: risk-free spectator bet)', () => {
     for (let seed = 1; seed < 400; seed++) {
       const h = new Harness({ seed });
