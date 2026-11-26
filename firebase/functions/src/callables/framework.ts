@@ -3,6 +3,7 @@
  *   1. authentication,
  *   2. strict zod validation (unknown fields rejected),
  *   3. per-user fixed-window rate limit (its own small transaction, so failed calls count too),
+ *      plus an optional per-operation limit (`rateKeyOf`, e.g. romance/dating `op`),
  *   4. overdue table timeouts (the user's current table, or the table named in the request),
  *   5. the handler inside ONE Firestore transaction that also reads/writes the idempotency record
  *      `idempotency/{uid}_{requestId}` — a replay returns the stored response, never re-executes,
@@ -44,7 +45,14 @@ interface Def<N extends CallableName> {
   handler: Handler<N>;
   /** Table whose overdue deadlines are applied before the handler (default: user's current table). */
   tableIdOf?: (data: Callables[N][0]) => string | null;
+  /**
+   * Extra per-operation limit checked together with the callable's own (e.g. romance / dating
+   * `op`, see ROMANCE_OP_RATE_LIMITS / DATING_OP_RATE_LIMITS). `key`: [A-Za-z0-9_]+, unique per op.
+   */
+  rateKeyOf?: (data: Callables[N][0]) => RateKey | null;
 }
+
+export interface RateKey { key: string; count: number; windowMs: number }
 
 /** Hook installed by the table module (avoids an import cycle). */
 type OverdueHook = (db: Firestore, tableId: string, now: number) => Promise<void>;
@@ -73,17 +81,25 @@ function toHttps(e: unknown, name: string): HttpsError {
   return new HttpsError(app.code, app.message, { reason: app.reason });
 }
 
-async function rateLimit(db: Firestore, uid: string, name: CallableName, now: number): Promise<void> {
-  const { count, windowMs } = RATE_LIMITS[name];
+async function rateLimit(db: Firestore, uid: string, name: CallableName, now: number, extra: RateKey | null = null): Promise<void> {
+  const limits: RateKey[] = [{ key: name, ...RATE_LIMITS[name] }];
+  if (extra) {
+    if (!/^[A-Za-z0-9_]+$/.test(extra.key) || extra.key === name) throw new Error(`bad rate key ${extra.key}`);
+    limits.push(extra);
+  }
   const ref = refs(db).rateLimit(uid);
   await db.runTransaction(async (tx) => {
     const snap = await tx.get(ref);
     const all = (snap.data() ?? {}) as Record<string, { windowStartMs: number; count: number }>;
-    const cur = all[name];
-    const fresh = !cur || now - cur.windowStartMs >= windowMs;
-    const next = fresh ? { windowStartMs: now, count: 1 } : { windowStartMs: cur.windowStartMs, count: cur.count + 1 };
-    if (next.count > count) throw new AppError('resource-exhausted', 'RATE_LIMITED', 'too many requests');
-    tx.set(ref, { [name]: next }, { merge: true });
+    const out: Record<string, { windowStartMs: number; count: number }> = {};
+    for (const { key, count, windowMs } of limits) {
+      const cur = all[key];
+      const fresh = !cur || now - cur.windowStartMs >= windowMs;
+      const next = fresh ? { windowStartMs: now, count: 1 } : { windowStartMs: cur.windowStartMs, count: cur.count + 1 };
+      if (next.count > count) throw new AppError('resource-exhausted', 'RATE_LIMITED', 'too many requests');
+      out[key] = next;
+    }
+    tx.set(ref, out, { merge: true });
   });
 }
 
@@ -106,7 +122,7 @@ export async function execute<N extends CallableName>(def: Def<N>, uid: string |
     const data = def.schema.parse(raw ?? {});
     const db = firestore();
     const now = Date.now();
-    await rateLimit(db, uid, def.name, now);
+    await rateLimit(db, uid, def.name, now, def.rateKeyOf ? def.rateKeyOf(data) : null);
 
     if (overdueHook) {
       let tableId = def.tableIdOf ? def.tableIdOf(data) : null;

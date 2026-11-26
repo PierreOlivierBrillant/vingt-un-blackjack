@@ -179,7 +179,9 @@ export class TableMachine {
     if (!s) return;
     this.pub.seats[idx] = null;
     this.event('leave', { seatIndex: idx });
-    this.effects.push({ kind: 'location', uid: s.uid, tableId: null });
+    // A 'leaving' seat already cleared the location when its owner left (they may be seated at
+    // another table, of any game, by now: clearing it again would free them to sit at a third one).
+    if (s.status !== 'leaving') this.effects.push({ kind: 'location', uid: s.uid, tableId: null });
     this.refreshCounts();
     this.changed = true;
   }

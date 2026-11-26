@@ -3,11 +3,12 @@
  * need (table, private state, seated players' profiles and human wallets) BEFORE any write,
  * runs the machine, then applies its effects and writes everything in the same transaction.
  */
-import type { Firestore, Transaction } from 'firebase-admin/firestore';
+import { FieldValue, type Firestore, type Transaction } from 'firebase-admin/firestore';
 import { settleMarketPayouts } from './markets';
 import { fail } from '../shared/errors';
 import { refs } from '../shared/paths';
-import { weekId } from '../shared/time';
+import { DEALER_OF } from '../shared/romance';
+import { dayId, weekId } from '../shared/time';
 import type { InventoryDoc, PowerId, PricePointDoc, ProfileDoc, TableDoc } from '../shared/types';
 import { RANK_POINTS } from '../shared/types';
 import { rankTierFor } from '../sim/profiles';
@@ -121,6 +122,10 @@ export class TableTx {
             st.netCents += s.netCents;
             st.biggestWinCents = Math.max(st.biggestWinCents, s.netCents);
             upd(s.uid, { rankPoints: p.rankPoints, rankTier: p.rankTier, weekId: p.weekId, weeklyPoints: p.weeklyPoints, stats: st });
+            // Rendez-vous table affinity: blind increment (no read) for a human who played at least the minimum.
+            if (!s.isBot && s.stakedCents >= m.pub.minBetCents) {
+              tx.set(r.romance(s.uid, DEALER_OF.blackjack), { tablePlay: { [dayId(now)]: FieldValue.increment(1) } }, { merge: true });
+            }
           }
           break;
         case 'refund':

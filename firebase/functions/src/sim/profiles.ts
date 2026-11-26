@@ -1,7 +1,11 @@
 /**
- * The ~60 fake bot players, generated deterministically (fixed seed) so the seed script, the
- * table state machine and the tests all agree on uids, names and personalities without any
+ * The 120 fake bot players, generated deterministically (fixed seeds) so the seed script, the
+ * table state machines and the tests all agree on uids, names and personalities without any
  * Firestore read. Pure module.
+ *
+ * Sprint 2: bots 1..60 are strictly identical to Sprint 1 (same seed, same order). Bots 61..108
+ * are the rosters of the kernel games' simulated tables (8 rosters of 6, see gameSimRoster), bots
+ * 109..120 are 12 more free bots (matchmaking tables of every game).
  */
 import { fastRng, nextFloat } from '../engine/rng';
 import type { AvatarId, RankTier, StakeTier } from '../shared/types';
@@ -17,6 +21,18 @@ const NAMES = [
   'SophieSoft', 'EthanEdge', 'Lina_Lucky7', 'MathisMarker', 'NoraNoBust', 'Theo_Twentyone', 'ElsaEights',
   'AdamAnte', 'LolaLimit', 'KarimKings', 'MiaMartingale', 'Gabin_Gold', 'RoseRoyale', 'Axel_Aces',
   'CelesteCards', 'Ilyes_Insure', 'JuliaJack', 'OscarOnTilt',
+] as const;
+
+/** Sprint 2 bots (61..120): game sim rosters then free bots. Unique case-insensitively with NAMES. */
+const NAMES_V2 = [
+  'RougeRemy', 'NoirNadia', 'ZeroZoe', 'PleinPierre', 'ChevalChris', 'CarreClaire', 'SixainSam', 'DouzaineDina',
+  'ColonneColin', 'ImpairIrene', 'PasseParis', 'ManqueMarc', 'PuntoPaul', 'BancoBea', 'EgaliteEli', 'SabotSimon',
+  'SqueezeSue', 'NaturelNoe', 'PaireParfaite', 'FlopFabien', 'TurnTina', 'BluffBenoit', 'AllInAmelie', 'PocketPietro',
+  'ButtonBella', 'BigBlindBob', 'CheckRaiseCleo', 'SuitedSuzie', 'NutsNathan', 'FoldFanny', 'RoyalRayan', 'StraddleStan',
+  'DiceDiego', 'SnakeEyesSofia', 'BoxcarsBen', 'HardEightHana', 'YoYoYanis', 'PointPauline', 'ComeOutCyril', 'FieldFelix',
+  'ShooterSarah', 'SevenOutSeb', 'OddsOlga', 'LayLeon', 'PlaceSixPia', 'PuckPatrice', 'StickmanSteve', 'CrapsCarla',
+  'LuckyLaura', 'VelvetVince', 'NeonNina', 'JetonJules', 'TapisTess', 'MiseMaxime', 'RouletteRita', 'BaccaraBruno',
+  'PokerPaloma', 'CrapsCedric', 'CasinoCamelia', 'JackpotJoy',
 ] as const;
 
 export interface BotProfile {
@@ -43,9 +59,10 @@ export function rankTierFor(points: number): RankTier {
   return tier;
 }
 
-function build(): BotProfile[] {
-  const rng = fastRng(60_060);
-  return NAMES.map((username, i) => {
+function build(names: readonly string[], seed: number, offset: number): BotProfile[] {
+  const rng = fastRng(seed);
+  return names.map((username, j) => {
+    const i = offset + j;
     // Skewed rank distribution: many bronze/silver, few diamond.
     const u = nextFloat(rng);
     const rankPoints = Math.round(9_000 * u ** 2.2) + rng.nextInt(60);
@@ -67,7 +84,9 @@ function build(): BotProfile[] {
   });
 }
 
-export const BOTS: readonly BotProfile[] = build();
+/** Sprint 1 bots (bot_001..bot_060), unchanged. */
+export const BOTS_V1: readonly BotProfile[] = build(NAMES, 60_060, 0);
+export const BOTS: readonly BotProfile[] = [...BOTS_V1, ...build(NAMES_V2, 120_120, NAMES.length)];
 export const BOT_BY_UID: ReadonlyMap<string, BotProfile> = new Map(BOTS.map((b) => [b.uid, b]));
 
 export function isBotUid(uid: string): boolean {
@@ -86,8 +105,37 @@ export function simRoster(tableIndex: number): BotProfile[] {
   return BOTS.slice(tableIndex * SIM_ROSTER_SIZE, (tableIndex + 1) * SIM_ROSTER_SIZE);
 }
 
-/** Bots not owned by a simulated table: used to fill matchmaking tables. */
-export const FREE_BOTS: readonly BotProfile[] = BOTS.slice(SIM_TABLE_COUNT * SIM_ROSTER_SIZE);
+/** Kernel games' simulated tables: 8 rosters of 6 bots (bots 61..108), 2 tables per game by default. */
+export const GAME_SIM_ROSTERS = 8;
+const GAME_SIM_FIRST_BOT = 60;
+const GAME_SIM_PREFIXES = ['rl', 'bc', 'ho', 'cr'] as const;
+
+/** Id of the n-th (0-based) simulated table of a kernel game, from its id prefix: `rl-sim-01`. */
+export function gameSimTableId(prefix: string, n: number): string {
+  return `${prefix}-sim-${String(n + 1).padStart(2, '0')}`;
+}
+
+/**
+ * Bot roster of a kernel game's simulated table (`<prefix>-sim-NN`), or null for any other id.
+ * Tables 1 and 2 of each game have their own roster; further tables (more than 2 per game) reuse
+ * the rosters cyclically.
+ */
+export function gameSimRoster(tableId: string): BotProfile[] | null {
+  const m = /^(rl|bc|ho|cr)-sim-(\d{2})$/.exec(tableId);
+  if (!m) return null;
+  const g = (GAME_SIM_PREFIXES as readonly string[]).indexOf(m[1]);
+  const n = Number(m[2]) - 1;
+  if (n < 0) return null;
+  const slot = (g * 2 + n) % GAME_SIM_ROSTERS;
+  const start = GAME_SIM_FIRST_BOT + slot * SIM_ROSTER_SIZE;
+  return BOTS.slice(start, start + SIM_ROSTER_SIZE);
+}
+
+/** Bots not owned by a simulated table (bots 49..60 and 109..120): used to fill matchmaking tables. */
+export const FREE_BOTS: readonly BotProfile[] = [
+  ...BOTS.slice(SIM_TABLE_COUNT * SIM_ROSTER_SIZE, BOTS_V1.length),
+  ...BOTS.slice(GAME_SIM_FIRST_BOT + GAME_SIM_ROSTERS * SIM_ROSTER_SIZE),
+];
 
 export const SIM_TABLE_NAMES = [
   'Monte-Carlo', 'Las Vegas Strip', 'Atlantic', 'Riviera', 'Macao Nights', 'Le Lion d’Or', 'Blue Lagoon', 'Diamond Room',
@@ -98,7 +146,7 @@ export const SIM_TABLE_TIERS: StakeTier[] = ['low', 'low', 'low', 'mid', 'mid', 
 export function suggestionsFor(uid: string, points: number, n = 5): string[] {
   let h = 0;
   for (const ch of uid) h = (h * 31 + ch.charCodeAt(0)) | 0;
-  const ranked = [...BOTS].sort((a, b) => Math.abs(a.rankPoints - points) - Math.abs(b.rankPoints - points));
+  const ranked = [...BOTS_V1].sort((a, b) => Math.abs(a.rankPoints - points) - Math.abs(b.rankPoints - points));
   const pool = ranked.slice(0, 12);
   const out: string[] = [];
   for (let i = 0; out.length < n && i < pool.length; i++) {

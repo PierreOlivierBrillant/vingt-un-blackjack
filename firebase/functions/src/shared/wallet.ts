@@ -2,7 +2,7 @@
  * Wallet session inside a Firestore transaction: load once, apply debits/credits (each one
  * produces a ledger entry), write once. Balance can never go negative.
  */
-import type { Firestore, Transaction } from 'firebase-admin/firestore';
+import type { DocumentSnapshot, Firestore, Transaction } from 'firebase-admin/firestore';
 import { fail } from './errors';
 import { refs } from './paths';
 import type { LedgerEntryDoc, LedgerType, PaymentMethod, PowerId, WalletDoc } from './types';
@@ -28,6 +28,12 @@ export class WalletSession {
   /** Reads the wallet (must happen before any write of the transaction). PROFILE_REQUIRED if missing. */
   static async load(db: Firestore, tx: Transaction, uid: string, now: number): Promise<WalletSession> {
     const snap = await tx.get(refs(db).wallet(uid));
+    if (!snap.exists) throw fail.pre('PROFILE_REQUIRED', 'no wallet');
+    return new WalletSession(db, uid, snap.data() as WalletDoc, now);
+  }
+
+  /** Wallet from a snapshot read in a batch (`tx.getAll`). PROFILE_REQUIRED if missing. */
+  static fromSnapshot(db: Firestore, uid: string, snap: DocumentSnapshot, now: number): WalletSession {
     if (!snap.exists) throw fail.pre('PROFILE_REQUIRED', 'no wallet');
     return new WalletSession(db, uid, snap.data() as WalletDoc, now);
   }

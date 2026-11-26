@@ -63,7 +63,8 @@
   "MATCH_NOT_FOUND",
   "BLOCKED",
   "LINE_NOT_ALLOWED",
-  "NO_PRIVATE_TABLE"
+  "NO_PRIVATE_TABLE",
+  "FEATURE_UNAVAILABLE"
  ],
  "powerIds": [
   "freeSplit",
