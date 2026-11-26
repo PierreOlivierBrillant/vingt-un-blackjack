@@ -1,0 +1,16 @@
+{
+  "gifts": [
+    { "id": "rose", "priceCents": 1500, "drink": false, "icon": "rose", "name": { "fr": "Rose rouge", "en": "Red rose" } },
+    { "id": "chocolates", "priceCents": 2000, "drink": false, "icon": "chocolates", "name": { "fr": "Boîte de chocolats", "en": "Box of chocolates" } },
+    { "id": "coffee", "priceCents": 800, "drink": true, "icon": "coffee", "name": { "fr": "Café de spécialité", "en": "Specialty coffee" } },
+    { "id": "mocktail", "priceCents": 1000, "drink": true, "icon": "mocktail", "name": { "fr": "Mocktail fruité", "en": "Fruity mocktail" } },
+    { "id": "cocktail", "priceCents": 1800, "drink": true, "icon": "cocktail", "name": { "fr": "Cocktail signature", "en": "Signature cocktail" } },
+    { "id": "champagne", "priceCents": 3500, "drink": true, "icon": "champagne", "name": { "fr": "Coupe de champagne", "en": "Glass of champagne" } },
+    { "id": "vinyl", "priceCents": 4000, "drink": false, "icon": "vinyl", "name": { "fr": "Vinyle de jazz", "en": "Jazz vinyl record" } },
+    { "id": "book", "priceCents": 1200, "drink": false, "icon": "book", "name": { "fr": "Roman de poche", "en": "Paperback novel" } },
+    { "id": "plant", "priceCents": 2500, "drink": false, "icon": "plant", "name": { "fr": "Plante en pot", "en": "Potted plant" } },
+    { "id": "perfume", "priceCents": 6000, "drink": false, "icon": "perfume", "name": { "fr": "Flacon de parfum", "en": "Bottle of perfume" } },
+    { "id": "star_map", "priceCents": 3000, "drink": false, "icon": "star_map", "name": { "fr": "Carte du ciel", "en": "Star map" } },
+    { "id": "card_deck", "priceCents": 2200, "drink": false, "icon": "card_deck", "name": { "fr": "Jeu de cartes de collection", "en": "Collector's deck of cards" } }
+  ]
+}

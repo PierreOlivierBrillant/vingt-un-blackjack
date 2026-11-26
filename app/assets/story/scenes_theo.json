@@ -1,0 +1,61 @@
+{
+  "character": "theo",
+  "scenes": [
+    {
+      "id": "theo_small_request",
+      "character": "theo",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "lounge",
+      "title": { "fr": "Le morceau inconnu", "en": "The unknown tune" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au salon, le piano joue presque tout seul. Théo, les yeux mi-clos, glisse d’une ballade à l’autre sans jamais regarder ses mains.", "en": "In the lounge, the piano almost plays itself. Théo, eyes half closed, drifts from one ballad to the next without ever looking at his hands." }, "next": "b" },
+        "b": { "who": "theo", "expr": "surprised", "text": { "fr": "Oh. Pardon, je n’avais pas remarqué qu’on m’écoutait. D’habitude, on parle par-dessus.", "en": "Oh. Sorry, I hadn’t noticed anyone was listening. People usually talk over it." }, "next": "c" },
+        "c": { "who": "theo", "expr": "thinking", "text": { "fr": "Je connais le morceau préféré de chaque habitué. Monsieur Ferrand, c’est Satie. La dame au chapeau vert, Michel Legrand. Mais toi… tu es une énigme.", "en": "I know every regular’s favourite song. Monsieur Ferrand: Satie. The lady in the green hat: Michel Legrand. But you… you’re a mystery." },
+          "choices": [
+            { "id": "guess", "text": { "fr": "Devine. Je te laisse trois notes.", "en": "Guess. I’ll give you three notes." }, "delta": 6, "next": "d" },
+            { "id": "rain", "text": { "fr": "Quelque chose qui ressemble à la pluie.", "en": "Something that sounds like rain." }, "delta": 5, "next": "e" },
+            { "id": "upbeat", "text": { "fr": "Tu ne connais rien de plus entraînant ? C’est un peu triste, ici.", "en": "Don’t you know anything more upbeat? It’s a bit gloomy in here." }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "theo", "expr": "smile", "text": { "fr": "Trois notes, alors. Celle-ci, pour la curiosité. Celle-là, pour le sourire en coin. Et la dernière… je la garde pour la prochaine fois.", "en": "Three notes, then. This one for curiosity. That one for the half smile. And the last one… I’ll keep it for next time." }, "next": "g" },
+        "e": { "who": "theo", "expr": "blush", "text": { "fr": "La pluie… C’est exactement ce que je compose quand il pleut. Personne ne me l’avait jamais demandé.", "en": "Rain… That’s exactly what I compose when it rains. Nobody has ever asked me for it." }, "next": "g" },
+        "f": { "who": "theo", "expr": "sad", "text": { "fr": "Pas triste. Mélancolique. C’est une tristesse qui a mis un costume. Mais d’accord, je peux accélérer un peu.", "en": "Not gloomy. Melancholic. It’s sadness wearing a suit. But fine, I can pick up the pace a little." }, "next": "g" },
+        "g": { "who": "theo", "expr": "smile", "text": { "fr": "Reviens quand tu veux. D’ici là, je chercherai ton morceau. C’est devenu une question d’honneur.", "en": "Come back whenever you like. Until then, I’ll look for your song. It’s a matter of honour now." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Les mains de Théo reprennent leur promenade sur le clavier. Une mélodie inconnue commence, hésitante, comme si elle cherchait ton nom.", "en": "Théo’s hands resume their stroll across the keys. An unknown melody begins, hesitant, as if it were searching for your name." }, "end": true }
+      }
+    },
+    {
+      "id": "theo_small_rain",
+      "character": "theo",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "harbor",
+      "title": { "fr": "Partition de pluie", "en": "Score for rain" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Il bruine sur le port. Sous l’auvent d’un vieux hangar, Théo griffonne des notes dans un carnet détrempé, en fredonnant.", "en": "A drizzle falls over the harbour. Under the awning of an old shed, Théo scribbles notes in a soggy notebook, humming." }, "next": "b" },
+        "b": { "who": "theo", "expr": "smile", "text": { "fr": "Toi aussi, tu aimes la pluie ? Elle a un tempo parfait. Écoute : les gouttes sur les coques, ce sont des croches.", "en": "You like the rain too? It keeps perfect time. Listen: the drops on the hulls are eighth notes." }, "next": "c" },
+        "c": { "who": "theo", "expr": "thinking", "text": { "fr": "Il me manque juste une fin. Les morceaux de pluie sont les plus durs à terminer. On ne sait jamais quand ça s’arrête.", "en": "I’m just missing an ending. Rain songs are the hardest to finish. You never know when it’ll stop." },
+          "choices": [
+            { "id": "sunlight", "text": { "fr": "Termine-le par une éclaircie.", "en": "End it with a patch of sunlight." }, "delta": 5, "next": "d" },
+            { "id": "open_end", "text": { "fr": "Et si tu ne le terminais pas ? Laisse-le en suspens.", "en": "What if you didn’t finish it? Leave it hanging." }, "delta": 4, "next": "e" },
+            { "id": "umbrella", "text": { "fr": "Tu devrais plutôt t’acheter un parapluie.", "en": "You should probably buy an umbrella instead." }, "delta": -2, "next": "f" }
+          ] },
+        "d": { "who": "theo", "expr": "surprised", "text": { "fr": "Une éclaircie… en ré majeur. Bien sûr. Comment je n’y ai pas pensé ? Je te devrai une partition.", "en": "A patch of sunlight… in D major. Of course. How did I not think of that? I’ll owe you a score." }, "next": "g" },
+        "e": { "who": "theo", "expr": "smile", "text": { "fr": "En suspens… Comme une question qu’on n’ose pas poser. Tu parles comme une chanson, tu sais.", "en": "Hanging… Like a question you don’t dare to ask. You talk like a song, you know." }, "next": "g" },
+        "f": { "who": "theo", "expr": "laugh", "text": { "fr": "J’en ai eu sept. Je les oublie tous dans des cafés. Quelque part en ville, il existe une collection de mes parapluies.", "en": "I’ve had seven. I leave them all in cafés. Somewhere in town there’s a whole collection of my umbrellas." }, "next": "g" },
+        "g": { "who": "theo", "expr": "blush", "text": { "fr": "C’est étrange. D’habitude, je compose seul. Mais avec toi à côté, le carnet se remplit plus vite.", "en": "It’s strange. I usually compose alone. But with you here, the notebook fills up faster." },
+          "choices": [
+            { "id": "stay", "text": { "fr": "Alors je reste jusqu’à la dernière goutte.", "en": "Then I’ll stay until the last drop." }, "delta": 5, "next": "h" },
+            { "id": "title", "text": { "fr": "Comment il va s’appeler, ce morceau ?", "en": "What will this piece be called?" }, "delta": 3, "next": "i" }
+          ] },
+        "h": { "who": "theo", "expr": "blush", "text": { "fr": "Jusqu’à la dernière goutte… Avec un peu de chance, la pluie fera des heures supplémentaires.", "en": "Until the last drop… With a bit of luck, the rain will work overtime." }, "next": "end" },
+        "i": { "who": "theo", "expr": "thinking", "text": { "fr": "Je ne sais pas encore. Peut-être le prénom de quelqu’un. Je te le dirai quand je l’aurai trouvé.", "en": "I don’t know yet. Maybe someone’s name. I’ll tell you when I find it." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "La pluie redouble sur les coques. Théo tourne une page du carnet et, pour une fois, en laisse la moitié vide pour la suite.", "en": "The rain drums harder on the hulls. Théo turns a page in the notebook and, for once, leaves half of it blank for what comes next." }, "end": true }
+      }
+    }
+  ]
+}

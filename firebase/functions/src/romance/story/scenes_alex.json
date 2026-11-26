@@ -1,0 +1,61 @@
+{
+  "character": "alex",
+  "scenes": [
+    {
+      "id": "alex_small_tell",
+      "character": "alex",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Le tell", "en": "The tell" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "À la table du hold’em, Alex mélange un paquet sans même le regarder. Des cheveux bleus, des lunettes rondes, et un regard qui semble tout noter.", "en": "At the hold’em table, Alex shuffles a deck without even looking at it. Blue hair, round glasses, and a gaze that seems to take notes on everything." }, "next": "b" },
+        "b": { "who": "alex", "expr": "smile", "text": { "fr": "Nouvelle tête. Détends-toi : je ne mords pas, je calcule.", "en": "New face. Relax: I don’t do scary, I do maths." }, "next": "c" },
+        "c": { "who": "alex", "expr": "wink", "text": { "fr": "Par exemple, je sais déjà que tu as un tell. Tout le monde en a un. Tu veux connaître le tien ?", "en": "For instance, I already know you have a tell. Everyone does. Want to know yours?" },
+          "choices": [
+            { "id": "read_me", "text": { "fr": "Vas-y, analyse-moi. J’adore les défis.", "en": "Go on, read me. I love a challenge." }, "delta": 5, "next": "d" },
+            { "id": "bluff", "text": { "fr": "Je n’ai pas de tell. Ça, c’était un bluff.", "en": "I don’t have a tell. That was a bluff." }, "delta": 6, "next": "e" },
+            { "id": "luck", "text": { "fr": "Les maths, c’est pour les gens qui n’ont pas de chance.", "en": "Maths is for people who have no luck." }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "alex", "expr": "thinking", "text": { "fr": "Tu touches ta manche quand tu hésites. Et tu as souri quand j’ai dit « maths ». Ça, c’est très rare.", "en": "You touch your sleeve when you hesitate. And you smiled when I said “maths”. That’s very rare." }, "next": "g" },
+        "e": { "who": "alex", "expr": "laugh", "text": { "fr": "Ha ! Prétendre ne pas avoir de tell, c’est précisément un tell. Mais j’apprécie l’audace. Joli coup.", "en": "Ha! Claiming you have no tell is exactly a tell. But I respect the nerve. Nice move." }, "next": "g" },
+        "f": { "who": "alex", "expr": "neutral", "text": { "fr": "La chance, c’est juste des maths que personne n’a encore faites. Mais je te laisse croire le contraire, c’est plus drôle.", "en": "Luck is just maths nobody has done yet. But I’ll let you believe otherwise, it’s more fun." }, "next": "g" },
+        "g": { "who": "alex", "expr": "smile", "text": { "fr": "Je stream des parties d’échecs le mardi soir. Passe, si tu veux voir ma tête quand je perds. Spoiler : c’est rare.", "en": "I stream chess games on Tuesday nights. Drop by if you want to see my face when I lose. Spoiler: it’s rare." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Alex distribue une main imaginaire, juste pour toi, et la retourne : une paire d’as. Un sourire en coin, et la table rouvre.", "en": "Alex deals an imaginary hand just for you and flips it: a pair of aces. A wink, and the table opens again." }, "end": true }
+      }
+    },
+    {
+      "id": "alex_small_bread",
+      "character": "alex",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "kitchen",
+      "title": { "fr": "Le gambit du levain", "en": "The sourdough gambit" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Dans la cuisine du personnel, Alex surveille un bocal de levain comme un adversaire en fin de partie. Une miche refroidit sur la grille.", "en": "In the staff kitchen, Alex watches a jar of sourdough starter like an endgame opponent. A loaf is cooling on the rack." }, "next": "b" },
+        "b": { "who": "alex", "expr": "surprised", "text": { "fr": "Oh, c’est toi. Je te présente Gambit, mon levain. Huit ans d’âge : plus vieux que ma carrière au casino.", "en": "Oh, it’s you. Meet Gambit, my sourdough starter. Eight years old: older than my career at the casino." }, "next": "c" },
+        "c": { "who": "alex", "expr": "smile", "text": { "fr": "Je fais mon pain moi-même. Bluff, ma chatte, supervise la cuisson. Très stricte sur la croûte. Tu goûtes ?", "en": "I bake my own bread. Bluff, my cat, supervises the baking. Very strict about the crust. Want a taste?" },
+          "choices": [
+            { "id": "taste", "text": { "fr": "Avec plaisir. Je fais confiance au jugement de Bluff.", "en": "Gladly. I trust Bluff’s judgement." }, "delta": 5, "next": "d" },
+            { "id": "chess", "text": { "fr": "Gambit ? Ton levain porte un nom d’ouverture d’échecs ?", "en": "Gambit? Your starter is named after a chess opening?" }, "delta": 4, "next": "e" },
+            { "id": "store", "text": { "fr": "Le pain de supermarché, c’est pareil, non ?", "en": "Supermarket bread is the same thing, right?" }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "alex", "expr": "laugh", "text": { "fr": "Bon choix. Bluff ne valide qu’une miche sur trois. Celle-ci a eu droit à un ronronnement.", "en": "Good call. Bluff only approves one loaf in three. This one earned a purr." }, "next": "g" },
+        "e": { "who": "alex", "expr": "wink", "text": { "fr": "Le gambit dame. On sacrifie un peu de farine au début pour gagner toute la partie. C’est de la stratégie boulangère.", "en": "The Queen’s Gambit. You sacrifice a little flour early to win the whole game. It’s baking strategy." }, "next": "g" },
+        "f": { "who": "alex", "expr": "thinking", "text": { "fr": "Pareil ? C’est comme dire qu’un coup au hasard vaut une combinaison préparée. Je vais faire comme si je n’avais rien entendu.", "en": "The same? That’s like saying a random move equals a prepared combination. I’ll pretend I didn’t hear that." }, "next": "g" },
+        "g": { "who": "alex", "expr": "blush", "text": { "fr": "Tu sais quoi ? Je ne partage jamais mon pain avec les gens de la salle. Tu viens de créer un précédent.", "en": "You know what? I never share my bread with people from the floor. You’ve just set a precedent." },
+          "choices": [
+            { "id": "next_batch", "text": { "fr": "Alors je reviendrai pour la prochaine fournée. C’est promis.", "en": "Then I’ll be back for the next batch. Promise." }, "delta": 5, "next": "h" },
+            { "id": "strategy", "text": { "fr": "C’est une stratégie pour me faire perdre au hold’em ?", "en": "Is this a strategy to make me lose at hold’em?" }, "delta": 3, "next": "i" }
+          ] },
+        "h": { "who": "alex", "expr": "smile", "text": { "fr": "Promesse enregistrée. Je te garde le quignon. C’est le meilleur morceau, et je ne le donne pas à n’importe qui.", "en": "Promise logged. I’ll save you the heel. It’s the best part, and I don’t give it to just anyone." }, "next": "end" },
+        "i": { "who": "alex", "expr": "laugh", "text": { "fr": "Bien vu… Non, la vraie stratégie, c’est que tu reviennes. Le hold’em n’est qu’un prétexte.", "en": "Busted… No, the real strategy is getting you to come back. Hold’em is just the excuse." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Alex enveloppe un morceau de pain dans une serviette et te le tend avec un sérieux de grand maître. Dans le bocal, Gambit fait une bulle.", "en": "Alex wraps a piece of bread in a napkin and hands it over with grandmaster seriousness. In the jar, Gambit lets out a bubble." }, "end": true }
+      }
+    }
+  ]
+}

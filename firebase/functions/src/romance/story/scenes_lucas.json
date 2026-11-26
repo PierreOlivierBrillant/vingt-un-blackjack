@@ -1,0 +1,2639 @@
+{
+  "character": "lucas",
+  "scenes": [
+    {
+      "id": "lucas_talk_1",
+      "character": "lucas",
+      "kind": "talk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": {
+        "fr": "Première main",
+        "en": "First hand"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Minuit passé. La table de blackjack du fond est presque vide ; le croupier aligne ses jetons comme d’autres rangent une bibliothèque.",
+            "en": "Past midnight. The blackjack table at the back is nearly empty; the croupier lines up his chips the way other people shelve books."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Bonsoir. Lucas, croupier, et accessoirement la seule personne de la salle qui ne croit pas à la chance. Tu t’assieds ?",
+            "en": "Evening. I’m Lucas, your croupier, and incidentally the only person in this room who doesn’t believe in luck. Taking a seat?"
+          },
+          "next": "c"
+        },
+        "c": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu poses ta mise. Il distribue d’un geste sec, sans jamais regarder ses mains : un 9 et un 7 pour toi, un 10 visible pour lui.",
+            "en": "You place your bet. He deals with a crisp flick, never once glancing at his hands: a nine and a seven for you, a ten showing for him."
+          },
+          "next": "d"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Seize contre un dix. Statistiquement, la pire main du jeu. Je dis ça pour l’ambiance.",
+            "en": "Sixteen against a ten. Statistically the worst hand in the game. Just setting the mood."
+          },
+          "choices": [
+            {
+              "id": "ask",
+              "text": {
+                "fr": "Alors dis-moi ce que ferait un mathématicien.",
+                "en": "So tell me what a mathematician would do."
+              },
+              "delta": 6,
+              "next": "e"
+            },
+            {
+              "id": "lucky",
+              "text": {
+                "fr": "Je tire. J’ai une bonne étoile, ce soir.",
+                "en": "Hit me. My lucky star’s out tonight."
+              },
+              "delta": 3,
+              "next": "f"
+            },
+            {
+              "id": "rude",
+              "text": {
+                "fr": "Distribue, on ne t’a rien demandé.",
+                "en": "Just deal. Nobody asked you."
+              },
+              "delta": -4,
+              "next": "g"
+            }
+          ]
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Un mathématicien ? Tu as l’œil. J’ai failli en être un. Il tirerait, puis il ferait semblant de ne pas avoir peur.",
+            "en": "A mathematician? Sharp eye. I nearly was one. He’d hit, then pretend he wasn’t scared."
+          },
+          "next": "h"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Une bonne étoile. Je l’ajoute à mes calculs, quelque part entre l’écart type et la météo.",
+            "en": "A lucky star. I’ll factor it in, somewhere between the standard deviation and the weather forecast."
+          },
+          "next": "h"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Bien sûr. Distribuer, c’est mon métier. C’est même écrit sur mon badge.",
+            "en": "Of course. Dealing is my job. It says so on my badge."
+          },
+          "next": "g2"
+        },
+        "g2": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il retourne la carte sans un mot de plus. Son visage reste impeccable, mais quelque chose s’est refermé.",
+            "en": "He turns the card without another word. His face stays flawless, but something has quietly shut."
+          },
+          "next": "i"
+        },
+        "h": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu tires. Un 5. Vingt et un. Lucas lève un sourcil, ce qui, chez lui, ressemble beaucoup à une ovation.",
+            "en": "You hit. A five. Twenty-one. Lucas raises one eyebrow, which for him is practically a standing ovation."
+          },
+          "next": "j"
+        },
+        "i": {
+          "who": "narrator",
+          "text": {
+            "fr": "C’est un 5. Vingt et un. Il pousse tes gains vers toi, poliment, sans commentaire.",
+            "en": "It’s a five. Twenty-one. He slides your winnings across, politely, without comment."
+          },
+          "next": "k"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Félicitations. Note bien que je n’y suis pour rien : je ne triche pas et je n’ai pas de chouchou. Pas encore.",
+            "en": "Congratulations. For the record, I had nothing to do with it: I don’t cheat and I don’t have favourites. Not yet."
+          },
+          "choices": [
+            {
+              "id": "fav",
+              "text": {
+                "fr": "« Pas encore » ? Alors je reviendrai.",
+                "en": "“Not yet”? Then I’ll be back."
+              },
+              "delta": 7,
+              "next": "m"
+            },
+            {
+              "id": "luck",
+              "text": {
+                "fr": "Tu vois bien que la chance existe.",
+                "en": "See? Luck is real."
+              },
+              "delta": 2,
+              "next": "n"
+            },
+            {
+              "id": "hands",
+              "text": {
+                "fr": "Comment tu fais pour distribuer sans regarder tes mains ?",
+                "en": "How do you deal without ever looking at your hands?"
+              },
+              "delta": 5,
+              "next": "o"
+            }
+          ]
+        },
+        "k": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Autre chose ? Ou je continue à n’être qu’une paire de mains ?",
+            "en": "Anything else? Or shall I go on being just a pair of hands?"
+          },
+          "choices": [
+            {
+              "id": "sorry",
+              "text": {
+                "fr": "Pardon. Longue soirée. Je recommence : bonsoir, Lucas.",
+                "en": "Sorry. Long night. Let me try that again: good evening, Lucas."
+              },
+              "delta": 4,
+              "next": "l"
+            },
+            {
+              "id": "shrug",
+              "text": {
+                "fr": "Les mains suffiront.",
+                "en": "The hands will do."
+              },
+              "delta": -3,
+              "next": "end_cold"
+            }
+          ]
+        },
+        "l": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Bonsoir. Recommencer, c’est permis. C’est même ce qu’on fait toute la nuit, ici.",
+            "en": "Good evening. Starting over is allowed. It’s what we do in here all night long."
+          },
+          "next": "end"
+        },
+        "m": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il rit. Un rire bref, presque surpris de s’être échappé.",
+            "en": "He laughs. A short laugh, as if surprised it got out."
+          },
+          "next": "m2"
+        },
+        "m2": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Reviens. Je te garderai une place. Ça n’enfreint aucun règlement, j’ai vérifié.",
+            "en": "Come back. I’ll save you a seat. It breaks no rules. I checked."
+          },
+          "next": "end"
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "La chance, c’est le nom qu’on donne aux probabilités quand elles nous arrangent. Mais j’admets qu’elle te va bien.",
+            "en": "Luck is what people call probability when it goes their way. Though I admit it suits you."
+          },
+          "next": "end"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "wink",
+          "text": {
+            "fr": "Neuf ans de pratique, et beaucoup de cartes ramassées sous les tables. La précision, c’est de l’entêtement qui a bien tourné.",
+            "en": "Nine years of practice and a lot of cards picked up off the floor. Precision is just stubbornness that worked out."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le sabot se vide, la nuit avance. En partant, tu le surprends à te suivre des yeux. Une seconde, pas plus.",
+            "en": "The shoe empties, the night wears on. As you leave, you catch him watching you go. One second, no more."
+          },
+          "end": true
+        },
+        "end_cold": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu ramasses tes jetons. Lucas range ses cartes avec un soin extrême, comme si ta chaise était déjà vide.",
+            "en": "You gather your chips. Lucas tidies his cards with great care, as if your seat were already empty."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_talk_2",
+      "character": "lucas",
+      "kind": "talk",
+      "minTier": 1,
+      "requires": [
+        "lucas_talk_1"
+      ],
+      "place": "bar",
+      "title": {
+        "fr": "Pause café",
+        "en": "Coffee break"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Pause de vingt minutes. Lucas s’est posé au bout du bar, la cravate desserrée d’un millimètre, pas plus.",
+            "en": "Twenty-minute break. Lucas has settled at the end of the bar, tie loosened by one millimetre and not a hair more."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "jade",
+          "expr": "smile",
+          "text": {
+            "fr": "Son café : serré, sans sucre, tasse chauffée. Ça fait trois ans qu’il commande le même. Je pourrais le faire les yeux fermés.",
+            "en": "His coffee: short, no sugar, warmed cup. Three years he’s been ordering the same thing. I could make it with my eyes shut."
+          },
+          "next": "c"
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Elle exagère, ça fait trois ans et deux mois. Tu prends quelque chose ? C’est pour moi, j’ai mes entrées.",
+            "en": "She exaggerates. It’s three years and two months. Can I get you something? On me. I know people."
+          },
+          "choices": [
+            {
+              "id": "same",
+              "text": {
+                "fr": "La même chose que toi. Je veux percer le mystère.",
+                "en": "Whatever you’re having. I want to crack the mystery."
+              },
+              "delta": 5,
+              "next": "d"
+            },
+            {
+              "id": "mocktail",
+              "text": {
+                "fr": "Un mocktail, plutôt. Du café à cette heure-ci…",
+                "en": "A mocktail, I think. Coffee at this hour…"
+              },
+              "delta": 3,
+              "next": "e"
+            },
+            {
+              "id": "sad",
+              "text": {
+                "fr": "Un café sans sucre ? Quelle vie triste.",
+                "en": "Coffee with no sugar? What a sad way to live."
+              },
+              "delta": -2,
+              "next": "f"
+            }
+          ]
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "wink",
+          "text": {
+            "fr": "Bon choix. Un café, c’est comme une démonstration : moins il y a d’artifices, mieux on voit si c’est juste.",
+            "en": "Good call. Coffee is like a proof: the fewer tricks, the easier it is to see whether it holds up."
+          },
+          "next": "g"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Raisonnable. Moi, j’ai renoncé au sommeil il y a neuf ans. Depuis, on se croise, on se salue, sans plus.",
+            "en": "Sensible. I gave up on sleep nine years ago. These days we just nod at each other in passing."
+          },
+          "next": "g"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Triste ? Non. Précis. Mais c’est noté : tu préfères les vies sucrées.",
+            "en": "Sad? No. Precise. But noted: you like your life with sugar in it."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "narrator",
+          "text": {
+            "fr": "Sur le comptoir, à côté de sa tasse, il a posé un carnet. Des pages de chiffres serrés et de symboles que tu ne reconnais pas.",
+            "en": "There’s a notebook on the counter beside his cup. Pages of cramped figures and symbols you don’t recognise."
+          },
+          "next": "h"
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Ça ? Une vieille habitude. Je refais des problèmes de probabilités pendant mes pauses. D’autres font des mots croisés.",
+            "en": "That? Old habit. I work through probability problems on my breaks. Some people do crosswords."
+          },
+          "choices": [
+            {
+              "id": "studied",
+              "text": {
+                "fr": "Tu as fait des études de maths, non ? Raconte.",
+                "en": "You studied maths, didn’t you? Tell me about it."
+              },
+              "delta": 6,
+              "next": "i"
+            },
+            {
+              "id": "count",
+              "text": {
+                "fr": "Avoue, tu comptes les cartes.",
+                "en": "Admit it. You count cards."
+              },
+              "delta": 2,
+              "next": "j"
+            },
+            {
+              "id": "party",
+              "text": {
+                "fr": "Des maths pendant ta pause. Tu sais t’amuser, toi.",
+                "en": "Maths on your break. You really know how to party."
+              },
+              "delta": -3,
+              "next": "k"
+            }
+          ]
+        },
+        "i": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Jusqu’au master. J’allais commencer une thèse : un sujet, un directeur, un bureau sans fenêtre. J’étais très heureux dans ce bureau.",
+            "en": "All the way to a master’s. I was about to start a PhD: a topic, a supervisor, an office with no window. I was very happy in that office."
+          },
+          "next": "l"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Interdit de ce côté de la table. Mais oui, j’ai fait des maths. Des vraies, avec un directeur de thèse et tout.",
+            "en": "Strictly forbidden on my side of the table. But yes, I did maths. Real maths, thesis supervisor and everything."
+          },
+          "next": "l"
+        },
+        "k": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "On me disait déjà ça à la fac. Et pourtant, j’y étais heureux, au milieu de mes équations.",
+            "en": "People said that at university, too. And yet I was happy there, surrounded by equations."
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il fait tourner sa tasse d’un quart de tour. Puis d’un autre.",
+            "en": "He turns his cup a quarter turn. Then another."
+          },
+          "next": "m"
+        },
+        "m": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Ma mère est tombée malade cette année-là. Deux petites sœurs, un loyer. Le casino payait les nuits. J’ai fait le calcul.",
+            "en": "My mother got sick that year. Two little sisters, the rent. The casino paid for night shifts. I did the maths."
+          },
+          "choices": [
+            {
+              "id": "good",
+              "text": {
+                "fr": "C’était un beau calcul, Lucas. Elle va mieux ?",
+                "en": "That was a good calculation, Lucas. Is she better now?"
+              },
+              "delta": 7,
+              "next": "n"
+            },
+            {
+              "id": "back",
+              "text": {
+                "fr": "Tu pourrais reprendre tes études, non ?",
+                "en": "You could still go back to studying, couldn’t you?"
+              },
+              "delta": 3,
+              "next": "o"
+            },
+            {
+              "id": "waste",
+              "text": {
+                "fr": "Quel gâchis. Tout ce talent derrière une table de jeu.",
+                "en": "What a waste. All that talent stuck behind a card table."
+              },
+              "delta": -4,
+              "next": "p"
+            }
+          ]
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Elle va bien. Elle me reproche même de trop m’inquiéter. Merci. On ne me dit pas souvent que c’était un bon calcul.",
+            "en": "She’s fine. She tells me off for worrying too much. Thank you. People don’t often tell me I got that one right."
+          },
+          "next": "q"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Peut-être. Mais j’ai découvert que les probabilités, c’est plus drôle avec quelqu’un en face. Même quand ce quelqu’un perd.",
+            "en": "Maybe. But I found out probability is more fun with someone across the table. Even when that someone loses."
+          },
+          "next": "q"
+        },
+        "p": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Gâchis… C’était le mot de mon directeur. Moi, je dirais que ça a servi. Enfin.",
+            "en": "Waste… That was my supervisor’s word. I’d say it was put to good use. Anyway."
+          },
+          "next": "q_cold"
+        },
+        "q": {
+          "who": "narrator",
+          "text": {
+            "fr": "Jade fait glisser un carré de chocolat à côté de sa tasse. Lucas fait mine de ne rien voir, puis le mange quand même.",
+            "en": "Jade slides a square of chocolate next to his cup. Lucas pretends not to notice, then eats it anyway."
+          },
+          "next": "r"
+        },
+        "r": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Vingt minutes, pile. Merci. C’est la pause la plus courte de ma semaine, et c’est un compliment.",
+            "en": "Twenty minutes on the dot. Thank you. Shortest break of my week, and I mean that as a compliment."
+          },
+          "next": "end"
+        },
+        "q_cold": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il finit son café d’un trait et remet sa cravate en place, au millimètre près.",
+            "en": "He finishes his coffee in one go and straightens his tie, to the millimetre."
+          },
+          "next": "end_cold"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il retourne à sa table. En passant, il tapote deux fois le comptoir devant toi, comme on frappe à une porte qu’on compte rouvrir.",
+            "en": "He heads back to his table. On the way past, he taps the counter in front of you twice, like knocking on a door he means to come back to."
+          },
+          "end": true
+        },
+        "end_cold": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il regagne sa table d’un pas mesuré. Le carnet est resté fermé.",
+            "en": "He walks back to his table at a measured pace. The notebook stays shut."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_talk_3",
+      "character": "lucas",
+      "kind": "talk",
+      "minTier": 2,
+      "requires": [
+        "lucas_talk_2"
+      ],
+      "place": "lounge",
+      "title": {
+        "fr": "Face B",
+        "en": "B-side"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Au salon, Théo joue quelque chose de lent. Lucas, sans uniforme, serre contre lui un sac de disquaire comme un trésor.",
+            "en": "In the lounge, Théo is playing something slow. Lucas, out of uniform, is hugging a record-shop bag like buried treasure."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Oh. Bonsoir. Tu me prends en civil, c’est gênant : sans ma cravate, je n’ai plus aucune autorité.",
+            "en": "Oh. Hello. You’ve caught me in civilian clothes. Awkward: without the tie, I have zero authority."
+          },
+          "choices": [
+            {
+              "id": "suits",
+              "text": {
+                "fr": "Le civil te va bien. Qu’est-ce qu’il y a dans le sac ?",
+                "en": "Civilian suits you. What’s in the bag?"
+              },
+              "delta": 6,
+              "next": "c"
+            },
+            {
+              "id": "young",
+              "text": {
+                "fr": "Tu fais plus jeune sans cravate.",
+                "en": "You look younger without the tie."
+              },
+              "delta": 3,
+              "next": "d"
+            },
+            {
+              "id": "never",
+              "text": {
+                "fr": "Tu ne quittes jamais vraiment le casino, hein ?",
+                "en": "You never really leave the casino, do you?"
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Merci. Dans le sac : un pressage de 1959, déniché aux puces ce matin. Le vendeur ne savait pas ce qu’il avait entre les mains.",
+            "en": "Thanks. In the bag: a 1959 pressing I dug up at the flea market this morning. The seller had no idea what he had."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Plus jeune, donc moins sérieux. Je prends ça comme une promotion. Regarde plutôt : un pressage de 1959, déniché aux puces ce matin.",
+            "en": "Younger, so less serious. I’ll take that as a promotion. Look at this instead: a 1959 pressing from the flea market this morning."
+          },
+          "next": "f"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Si, le dimanche. Pour les puces. La preuve : un pressage de 1959, déniché ce matin.",
+            "en": "I do, on Sundays. For the flea market. Exhibit A: a 1959 pressing, found this morning."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il sort la pochette du bout des doigts, par les bords, comme on tient une vieille photo.",
+            "en": "He eases the sleeve out with his fingertips, by the edges, the way you’d hold an old photograph."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "J’en ai six cent douze à la maison. Classés par date d’enregistrement. L’ordre alphabétique, c’est pour les amateurs.",
+            "en": "I have six hundred and twelve at home. Filed by recording date. Alphabetical order is for amateurs."
+          },
+          "choices": [
+            {
+              "id": "one",
+              "text": {
+                "fr": "Et si tu ne pouvais en garder qu’un seul ?",
+                "en": "And if you could only keep one?"
+              },
+              "delta": 7,
+              "next": "h"
+            },
+            {
+              "id": "colour",
+              "text": {
+                "fr": "Moi, je les classerais par couleur de pochette.",
+                "en": "I’d sort them by sleeve colour."
+              },
+              "delta": 4,
+              "next": "i"
+            },
+            {
+              "id": "online",
+              "text": {
+                "fr": "Six cents disques ? Tout est en ligne, maintenant.",
+                "en": "Six hundred records? It’s all online now."
+              },
+              "delta": -3,
+              "next": "j"
+            }
+          ]
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Question cruelle. Celui de ma grand-mère, alors. Le premier qu’elle m’a offert. Il saute à la deuxième piste, et je ne le ferais réparer pour rien au monde.",
+            "en": "Cruel question. My grandmother’s, then. The first one she ever gave me. It skips on track two, and I wouldn’t get it fixed for the world."
+          },
+          "next": "k"
+        },
+        "i": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Par couleur… C’est monstrueux. Et un peu joli. Je t’en veux un tout petit peu.",
+            "en": "By colour… That’s monstrous. And slightly lovely. I resent you a tiny bit."
+          },
+          "next": "k"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "En ligne, oui. Mais en ligne, rien ne grésille, rien ne s’use. Un disque, il faut le retourner. Ça oblige à écouter.",
+            "en": "Sure, online. But online nothing crackles, nothing wears out. A record has to be flipped. It makes you listen."
+          },
+          "next": "k"
+        },
+        "k": {
+          "who": "theo",
+          "expr": "smile",
+          "text": {
+            "fr": "Lucas te fait visiter sa discothèque ? Courage. Je vous joue quelque chose pour adoucir l’épreuve ?",
+            "en": "Is Lucas giving you the record-collection tour? Stay strong. Shall I play something to ease the ordeal?"
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Théo est le seul pianiste qui accepte mes demandes. Il prétend que c’est par pitié. Tu choisis ?",
+            "en": "Théo is the only pianist who takes my requests. He claims it’s out of pity. Want to pick?"
+          },
+          "choices": [
+            {
+              "id": "his",
+              "text": {
+                "fr": "Ce que Lucas préfère. J’ai envie de le voir écouter.",
+                "en": "Whatever Lucas loves most. I want to watch him listen."
+              },
+              "delta": 6,
+              "next": "m"
+            },
+            {
+              "id": "fast",
+              "text": {
+                "fr": "Quelque chose de rapide, pour réveiller la salle !",
+                "en": "Something fast, to wake the room up!"
+              },
+              "delta": 3,
+              "next": "n"
+            },
+            {
+              "id": "pass",
+              "text": {
+                "fr": "Pas la peine, le jazz, ce n’est pas trop mon truc.",
+                "en": "No need. Jazz isn’t really my thing."
+              },
+              "delta": -3,
+              "next": "o"
+            }
+          ]
+        },
+        "m": {
+          "who": "narrator",
+          "text": {
+            "fr": "Théo entame une ballade. Lucas ferme les yeux dès la première mesure ; ses doigts battent le temps sur l’accoudoir, d’une exactitude parfaite.",
+            "en": "Théo eases into a ballad. Lucas closes his eyes on the very first bar; his fingers keep time on the armrest, perfectly exact."
+          },
+          "next": "p"
+        },
+        "n": {
+          "who": "narrator",
+          "text": {
+            "fr": "Théo part dans un swing endiablé. Lucas tient trois mesures avant de taper du pied, l’air de rien.",
+            "en": "Théo tears into a wild swing tune. Lucas lasts three bars before his foot starts tapping, ever so casually."
+          },
+          "next": "p"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Pas encore. Ça viendra. Le jazz est patient. Moi aussi, d’ailleurs.",
+            "en": "Not yet. It’ll come. Jazz is patient. So am I, as it happens."
+          },
+          "next": "end_plain"
+        },
+        "p": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Tu sais quoi ? Un jour, je te prêterai un disque. Je ne prête jamais mes disques. Considère ça comme une déclaration officielle.",
+            "en": "You know what? One day I’ll lend you a record. I never lend my records. Consider this an official statement."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "La musique continue. Le sac de disquaire est posé entre vous deux, et personne ne pense à regarder l’heure.",
+            "en": "The music plays on. The record bag sits between the two of you, and neither of you thinks to check the time."
+          },
+          "end": true
+        },
+        "end_plain": {
+          "who": "narrator",
+          "text": {
+            "fr": "Théo termine son morceau. Lucas range sa pochette avec soin et te salue d’un signe de tête, poli, un peu lointain.",
+            "en": "Théo finishes his piece. Lucas puts the sleeve away carefully and gives you a nod, polite and a little distant."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_talk_4",
+      "character": "lucas",
+      "kind": "talk",
+      "minTier": 3,
+      "requires": [
+        "lucas_talk_3"
+      ],
+      "place": "terrace",
+      "title": {
+        "fr": "Quarante places",
+        "en": "Forty seats"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Six heures du matin. Le casino tire ses rideaux ; sur la terrasse, le ciel hésite entre le bleu nuit et le gris.",
+            "en": "Six in the morning. The casino draws its curtains; out on the terrace, the sky can’t decide between midnight blue and grey."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Je viens ici après la fermeture. C’est la seule heure où personne ne me demande de faire de la monnaie.",
+            "en": "I come out here after closing. It’s the one hour of the day nobody asks me for change."
+          },
+          "next": "c"
+        },
+        "c": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il tient deux gobelets de café et t’en tend un sans rien demander. Il sait comment tu le bois, maintenant.",
+            "en": "He’s holding two cups of coffee and hands you one without asking. He knows how you take it by now."
+          },
+          "next": "d"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Je peux te dire un truc ridicule ? Je ne l’ai dit à personne. Même pas à ma grand-mère, et pourtant elle devine tout.",
+            "en": "Can I tell you something ridiculous? I haven’t told a soul. Not even my grandmother, and she guesses everything."
+          },
+          "choices": [
+            {
+              "id": "listen",
+              "text": {
+                "fr": "Dis-le. Je ne me moquerai pas, c’est promis.",
+                "en": "Say it. I won’t laugh, I promise."
+              },
+              "delta": 5,
+              "next": "e"
+            },
+            {
+              "id": "guess",
+              "text": {
+                "fr": "Laisse-moi deviner : tu veux quitter le casino.",
+                "en": "Let me guess: you want to leave the casino."
+              },
+              "delta": 4,
+              "next": "e2"
+            },
+            {
+              "id": "cheat",
+              "text": {
+                "fr": "Tu vas m’avouer que tu triches ?",
+                "en": "Are you about to confess you cheat?"
+              },
+              "delta": -2,
+              "next": "e3"
+            }
+          ]
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Je voudrais ouvrir un club de jazz. Un petit. Quarante places, un piano droit, du café le jour, des disques la nuit.",
+            "en": "I want to open a jazz club. A small one. Forty seats, an upright piano, coffee by day, records by night."
+          },
+          "next": "f"
+        },
+        "e2": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Tu es redoutable. Pas quitter : aller vers quelque chose. Un club de jazz. Quarante places, un piano droit, du café le jour.",
+            "en": "You’re frighteningly good at this. Not leave: go towards something. A jazz club. Forty seats, an upright piano, coffee by day."
+          },
+          "next": "f"
+        },
+        "e3": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Pire. Je voudrais ouvrir un club de jazz. Quarante places. Voilà. Tu peux rire, maintenant.",
+            "en": "Worse. I want to open a jazz club. Forty seats. There. You can laugh now."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il l’a dit très vite, comme on retourne une carte qu’on n’ose pas regarder.",
+            "en": "He says it very fast, like flipping a card he doesn’t dare look at."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Le problème, c’est que je connais les chiffres. Six bars sur dix ferment avant trois ans. Chaque nuit, je vois des gens tout miser. Je sais comment ça finit.",
+            "en": "The trouble is, I know the numbers. Six bars in ten close within three years. Every night I watch people bet everything. I know how that ends."
+          },
+          "choices": [
+            {
+              "id": "plan",
+              "text": {
+                "fr": "Ce n’est pas un pari, c’est un projet. Toi, tu as un plan.",
+                "en": "That’s not a bet, it’s a project. You actually have a plan."
+              },
+              "delta": 7,
+              "next": "h"
+            },
+            {
+              "id": "small",
+              "text": {
+                "fr": "Et si tu commençais petit ? Une soirée par mois, quelque part.",
+                "en": "What if you started small? One night a month, somewhere."
+              },
+              "delta": 5,
+              "next": "i"
+            },
+            {
+              "id": "dont",
+              "text": {
+                "fr": "Alors ne le fais pas. Garde ton poste, c’est plus sûr.",
+                "en": "Then don’t. Keep your job. It’s safer."
+              },
+              "delta": -4,
+              "next": "j"
+            }
+          ]
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Un plan… Oui. J’ai un tableur. Quatorze onglets. Je n’avais jamais pensé que ça faisait de moi quelqu’un de sérieux plutôt qu’un fou.",
+            "en": "A plan… Yes. I have a spreadsheet. Fourteen tabs. It never occurred to me that made me serious rather than crazy."
+          },
+          "next": "k"
+        },
+        "i": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Une soirée par mois. C’est une petite mise. Même moi, je peux supporter une petite mise.",
+            "en": "One night a month. That’s a small stake. Even I can live with a small stake."
+          },
+          "next": "k"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "C’est ce que je me répète. Ça sonne plus raisonnable dans la bouche de quelqu’un d’autre. Et tout aussi triste.",
+            "en": "That’s what I keep telling myself. It sounds more reasonable coming from someone else. And just as sad."
+          },
+          "next": "j2"
+        },
+        "j2": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Merci de ta franchise, en tout cas.",
+            "en": "Thanks for being straight with me, anyway."
+          },
+          "choices": [
+            {
+              "id": "retract",
+              "text": {
+                "fr": "Attends, je retire ça. Parle-moi encore du club.",
+                "en": "Wait, I take that back. Tell me more about the club."
+              },
+              "delta": 3,
+              "next": "k"
+            },
+            {
+              "id": "leave",
+              "text": {
+                "fr": "Il commence à faire froid. Je vais y aller.",
+                "en": "It’s getting cold. I’d better go."
+              },
+              "delta": -2,
+              "next": "end_cold"
+            }
+          ]
+        },
+        "k": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le soleil touche enfin la balustrade. Lucas regarde la ville comme s’il y cherchait déjà une adresse.",
+            "en": "The sun finally reaches the railing. Lucas gazes out over the city as if he were already hunting for an address."
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Si je le fais un jour, tu viendras ? Il me faut au moins une personne dans la salle qui ne soit pas de ma famille.",
+            "en": "If I ever do it, will you come? I need at least one person in the room who isn’t family."
+          },
+          "choices": [
+            {
+              "id": "first",
+              "text": {
+                "fr": "Je serai là le soir de l’ouverture. Au premier rang.",
+                "en": "I’ll be there on opening night. Front row."
+              },
+              "delta": 6,
+              "next": "m"
+            },
+            {
+              "id": "coffee",
+              "text": {
+                "fr": "Seulement si le café est aussi bon que le tien.",
+                "en": "Only if the coffee’s as good as yours."
+              },
+              "delta": 4,
+              "next": "n"
+            }
+          ]
+        },
+        "m": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Au premier rang. Il faudra que j’ajoute une chaise. Ça fera quarante et une.",
+            "en": "Front row. I’ll have to add a chair. That makes forty-one."
+          },
+          "next": "end"
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Meilleur. Je ferai venir le grain d’Éthiopie. C’est dans l’onglet neuf.",
+            "en": "Better. I’ll have the beans shipped from Ethiopia. It’s on tab nine."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Vous finissez vos cafés en silence. Un bon silence, de ceux qui ne demandent rien.",
+            "en": "You finish your coffee in silence. A good silence, the kind that asks for nothing."
+          },
+          "end": true
+        },
+        "end_cold": {
+          "who": "narrator",
+          "text": {
+            "fr": "Lucas hoche la tête sans quitter la ville des yeux. Derrière toi, la porte de la terrasse se referme doucement.",
+            "en": "Lucas nods without taking his eyes off the city. Behind you, the terrace door swings gently shut."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_date_1",
+      "character": "lucas",
+      "kind": "date",
+      "minTier": 3,
+      "requires": [
+        "lucas_talk_3"
+      ],
+      "reservationCents": 5000,
+      "place": "restaurant",
+      "title": {
+        "fr": "Le petit bistrot",
+        "en": "The little bistro"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le bistrot tient dans une ancienne mercerie : six tables, des nappes à carreaux et un patron qui appelle tout le monde « mon petit ».",
+            "en": "The bistro is squeezed into an old haberdashery: six tables, checked tablecloths and an owner who calls everyone “kiddo”."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "narrator",
+          "text": {
+            "fr": "Lucas est déjà là. Il se lève en te voyant, manque de renverser la carafe et la rattrape d’un réflexe de croupier.",
+            "en": "Lucas is already there. He stands when he sees you, nearly knocks over the water jug and catches it with a croupier’s reflexes."
+          },
+          "next": "c"
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Je suis arrivé douze minutes en avance. C’est une marge de sécurité, pas de la nervosité. Enfin. Un peu des deux.",
+            "en": "I got here twelve minutes early. That’s a safety margin, not nerves. Well. A bit of both."
+          },
+          "choices": [
+            {
+              "id": "same",
+              "text": {
+                "fr": "Moi, j’ai fait trois fois le tour du pâté de maisons.",
+                "en": "I walked around the block three times."
+              },
+              "delta": 6,
+              "next": "d"
+            },
+            {
+              "id": "cute",
+              "text": {
+                "fr": "C’est mignon, un croupier qui tremble.",
+                "en": "A croupier with the jitters. That’s cute."
+              },
+              "delta": 4,
+              "next": "e"
+            },
+            {
+              "id": "almost",
+              "text": {
+                "fr": "Pour tout dire, j’ai failli ne pas venir.",
+                "en": "Truth is, I nearly didn’t come."
+              },
+              "delta": -3,
+              "next": "f"
+            }
+          ]
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Trois fois ? Je t’aurais vu passer. J’étais trop occupé à aligner les couverts.",
+            "en": "Three times? I should have spotted you. I was too busy lining up the cutlery."
+          },
+          "next": "g"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Mes mains sont parfaitement stables, merci. C’est le reste qui fait des siennes.",
+            "en": "My hands are perfectly steady, thank you. It’s the rest of me that’s misbehaving."
+          },
+          "next": "g"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Ah. Eh bien, je suis content que la probabilité ait penché du bon côté.",
+            "en": "Ah. Well, I’m glad the odds tipped the right way."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le patron apporte les ardoises. Lucas commande sans les lire : « Deux plats du jour, une carafe d’eau, et le pain d’hier, il est meilleur. »",
+            "en": "The owner brings the chalkboard menus. Lucas orders without reading them: “Two specials, a jug of water, and yesterday’s bread, it’s better.”"
+          },
+          "next": "h"
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Pardon. J’ai commandé pour toi. Déformation professionnelle : je décide vite, sinon le sabot attend.",
+            "en": "Sorry. I ordered for you. Occupational hazard: I decide fast, or the shoe sits there waiting."
+          },
+          "choices": [
+            {
+              "id": "trust",
+              "text": {
+                "fr": "Je te fais confiance. Tu connais la maison.",
+                "en": "I trust you. You know the place."
+              },
+              "delta": 5,
+              "next": "i"
+            },
+            {
+              "id": "look",
+              "text": {
+                "fr": "Je vais quand même jeter un œil à l’ardoise.",
+                "en": "I’ll still have a look at the board."
+              },
+              "delta": 3,
+              "next": "j"
+            },
+            {
+              "id": "read",
+              "text": {
+                "fr": "Je sais lire une ardoise, merci.",
+                "en": "I can read a menu, thanks."
+              },
+              "delta": -3,
+              "next": "k"
+            }
+          ]
+        },
+        "i": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Je connais surtout le patron. Il m’a vu réviser mes partiels à cette table. Il me fait encore crédit.",
+            "en": "Mostly I know the owner. He watched me cram for exams at this very table. He still lets me run a tab."
+          },
+          "next": "l"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Bonne idée. Je viens de m’apercevoir que je ne sais rien de ce que tu aimes manger. C’est une grosse lacune dans mes données.",
+            "en": "Good idea. I’ve just realised I know nothing about what you like to eat. That’s a serious gap in my data."
+          },
+          "next": "l"
+        },
+        "k": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Bien sûr. Pardon. Je reprends : qu’est-ce qui te ferait plaisir ?",
+            "en": "Of course. Sorry. Let me start again: what would you like?"
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "narrator",
+          "text": {
+            "fr": "Les plats arrivent : un pot-au-feu qui mijote depuis l’aube. Lucas goûte et ferme les yeux une demi-seconde.",
+            "en": "The food arrives: a pot-au-feu that’s been simmering since dawn. Lucas tastes it and closes his eyes for half a second."
+          },
+          "next": "m"
+        },
+        "m": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Presque aussi bon que celui de ma grand-mère. Ne le répète jamais : elle a des espions partout.",
+            "en": "Almost as good as my grandmother’s. Never repeat that. She has spies everywhere."
+          },
+          "choices": [
+            {
+              "id": "gratin",
+              "text": {
+                "fr": "Et ton gratin du dimanche, elle a fini par le valider ?",
+                "en": "And your Sunday gratin? Did she give it her blessing?"
+              },
+              "delta": 8,
+              "next": "n",
+              "if": {
+                "seen": "lucas_small_dimanche"
+              }
+            },
+            {
+              "id": "her",
+              "text": {
+                "fr": "Parle-moi d’elle. Elle compte beaucoup pour toi, ça se voit.",
+                "en": "Tell me about her. Anyone can see she means a lot to you."
+              },
+              "delta": 6,
+              "next": "o"
+            },
+            {
+              "id": "cook",
+              "text": {
+                "fr": "Il faudra que tu me cuisines ça, un jour.",
+                "en": "You’ll have to cook it for me someday."
+              },
+              "delta": 3,
+              "next": "p"
+            }
+          ]
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Tu t’en souviens ? Elle a dit « c’est mangeable ». Chez elle, ça vaut une médaille d’or. J’ai pleuré dans la voiture.",
+            "en": "You remembered? She said “it’s edible”. From her, that’s a gold medal. I cried in the car."
+          },
+          "next": "q"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Elle m’a à moitié élevé. Elle m’a appris le jazz, les cartes et la patience. Le dimanche, je cuisine pour elle. Pour lui rendre un peu.",
+            "en": "She half raised me. She taught me jazz, cards and patience. On Sundays I cook for her. To pay a little of it back."
+          },
+          "next": "q"
+        },
+        "p": {
+          "who": "lucas",
+          "expr": "wink",
+          "text": {
+            "fr": "Un jour. Mais je te préviens : ma cuisine est rigoureuse. Les carottes sont toutes coupées à la même longueur.",
+            "en": "Someday. Fair warning, though: my cooking is rigorous. Every carrot is cut to the same length."
+          },
+          "next": "q"
+        },
+        "q": {
+          "who": "narrator",
+          "text": {
+            "fr": "Au dessert, le patron apporte une seule mousse au chocolat et deux cuillères, avec un clin d’œil appuyé. Lucas devient écarlate.",
+            "en": "For dessert, the owner brings one chocolate mousse and two spoons, with a very pointed wink. Lucas turns scarlet."
+          },
+          "next": "r"
+        },
+        "r": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Je n’ai rien demandé, je le jure. Il fait ça chaque fois que j’amène quelqu’un. Enfin… il l’a fait une fois. Je n’amène jamais personne.",
+            "en": "I didn’t ask for this, I swear. He does it every time I bring someone. Well… he’s done it once. I never bring anyone."
+          },
+          "choices": [
+            {
+              "id": "share",
+              "text": {
+                "fr": "Alors on partage. Moitié-moitié, au millimètre.",
+                "en": "Then we share. Fifty-fifty, to the millimetre."
+              },
+              "delta": 7,
+              "next": "s"
+            },
+            {
+              "id": "first",
+              "text": {
+                "fr": "Première cuillère pour moi. D’habitude, c’est toi qui sers.",
+                "en": "First spoonful’s mine. You’re usually the one serving."
+              },
+              "delta": 4,
+              "next": "t"
+            },
+            {
+              "id": "face",
+              "text": {
+                "fr": "Il a raison, c’est drôle. Surtout ta tête.",
+                "en": "He’s right, it is funny. Especially your face."
+              },
+              "delta": -2,
+              "next": "u"
+            }
+          ]
+        },
+        "s": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Au millimètre. Tu commences à parler comme moi. C’est inquiétant. Et très agréable.",
+            "en": "To the millimetre. You’re starting to talk like me. That’s worrying. And very nice."
+          },
+          "next": "v"
+        },
+        "t": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Accordé. Pour une fois, c’est la maison qui te sert.",
+            "en": "Granted. For once, the house serves you."
+          },
+          "next": "v"
+        },
+        "u": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Ma tête va très bien, merci. Elle a juste un peu chaud.",
+            "en": "My face is fine, thank you. It’s just a little warm."
+          },
+          "next": "v"
+        },
+        "v": {
+          "who": "narrator",
+          "text": {
+            "fr": "Dehors, la rue est calme. Lucas marche à ta hauteur, les mains dans les poches, puis hors des poches, sans savoir quoi en faire.",
+            "en": "Outside, the street is quiet. Lucas walks beside you, hands in his pockets, then out of them, at a loss what to do with them."
+          },
+          "next": "w"
+        },
+        "w": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Merci pour ce soir. Statistiquement, c’est le meilleur dîner de l’année. Et je tiens des statistiques.",
+            "en": "Thank you for tonight. Statistically, that was the best dinner of the year. And I do keep statistics."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Au coin de la rue, il te fait un petit salut, deux doigts sur le front, et s’éloigne en sifflotant un air de piano.",
+            "en": "At the corner he gives you a little salute, two fingers to his brow, and walks off whistling a piano tune."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_date_2",
+      "character": "lucas",
+      "kind": "date",
+      "minTier": 4,
+      "requires": [
+        "lucas_date_1",
+        "lucas_talk_4"
+      ],
+      "reservationCents": 12000,
+      "place": "rooftop",
+      "title": {
+        "fr": "Jazz sur le toit",
+        "en": "Jazz on the roof"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Sur le toit d’un ancien entrepôt, un quartet s’installe sous des guirlandes lumineuses. En contrebas, la ville entière bourdonne.",
+            "en": "On the roof of an old warehouse, a quartet sets up under strings of fairy lights. Below, the whole city hums."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "J’ai apporté une couverture, un thermos de café et deux tasses en porcelaine. Le gobelet en carton, c’est une insulte au café.",
+            "en": "I brought a blanket, a thermos of coffee and two china cups. Paper cups are an insult to coffee."
+          },
+          "choices": [
+            {
+              "id": "touched",
+              "text": {
+                "fr": "Tu as pensé à tout. Ça me touche, tu sais.",
+                "en": "You thought of everything. That really touches me."
+              },
+              "delta": 6,
+              "next": "c"
+            },
+            {
+              "id": "list",
+              "text": {
+                "fr": "Laisse-moi deviner : il y avait une liste.",
+                "en": "Let me guess: there was a list."
+              },
+              "delta": 4,
+              "next": "d"
+            },
+            {
+              "id": "much",
+              "text": {
+                "fr": "De la porcelaine sur un toit ? Tu en fais un peu trop.",
+                "en": "China cups on a rooftop? Bit much, isn’t it?"
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "C’était le but. Enfin, je veux dire : de rien. Installe-toi, ils vont commencer.",
+            "en": "That was the idea. I mean: you’re welcome. Get comfy, they’re about to start."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Une liste en trois colonnes. La troisième s’intitule « si ça se passe bien ». Je ne te dirai pas ce qu’il y a dedans.",
+            "en": "A list in three columns. The third is headed “if it goes well”. I’m not telling you what’s in it."
+          },
+          "next": "f"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Peut-être. Mais quand on aime quelque chose, on lui offre une belle tasse. C’est mon principe.",
+            "en": "Maybe. But when you love something, you give it a proper cup. That’s my policy."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "narrator",
+          "text": {
+            "fr": "La contrebasse lance la première note. Lucas se tait d’un coup, comme quelqu’un qui entre dans une église.",
+            "en": "The double bass plays the first note. Lucas falls silent at once, like someone stepping into a church."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Écoute le batteur. Il joue juste derrière le temps, exprès. Le swing, c’est ça : être un tout petit peu en retard, avec précision.",
+            "en": "Listen to the drummer. He’s playing just behind the beat, on purpose. That’s swing: being a tiny bit late, precisely."
+          },
+          "choices": [
+            {
+              "id": "early",
+              "text": {
+                "fr": "En retard avec précision ? Toi qui arrives toujours en avance…",
+                "en": "Late, precisely? Says the man who’s always early…"
+              },
+              "delta": 5,
+              "next": "h"
+            },
+            {
+              "id": "hand",
+              "text": {
+                "fr": "Montre-moi. Tape le temps sur ma main.",
+                "en": "Show me. Tap the beat on my hand."
+              },
+              "delta": 7,
+              "next": "i"
+            },
+            {
+              "id": "noise",
+              "text": {
+                "fr": "Pour moi, c’est juste du bruit agréable.",
+                "en": "To me it’s just nice noise."
+              },
+              "delta": 2,
+              "next": "j"
+            }
+          ]
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Touché. Douze minutes d’avance au bistrot, quinze ce soir. Je progresse dans le mauvais sens.",
+            "en": "Touché. Twelve minutes early at the bistro, fifteen tonight. I’m improving in the wrong direction."
+          },
+          "next": "k"
+        },
+        "i": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il hésite, puis pose deux doigts sur le dos de ta main et marque le temps, doucement. Un, deux. Un, deux. À la fin du morceau, il ne les retire pas.",
+            "en": "He hesitates, then rests two fingers on the back of your hand and taps out the beat, softly. One, two. One, two. When the song ends, he leaves them there."
+          },
+          "next": "k"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Du bruit agréable. Excellente définition. Je la ferai encadrer à l’entrée du club.",
+            "en": "Nice noise. Excellent definition. I’ll have it framed by the club’s front door."
+          },
+          "next": "k"
+        },
+        "k": {
+          "who": "narrator",
+          "text": {
+            "fr": "Entre deux morceaux, la ville se tait, ou presque. Lucas fixe l’horizon, du côté du port.",
+            "en": "Between songs, the city goes quiet, or nearly. Lucas is gazing at the skyline, out towards the harbour."
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "J’ai visité une salle, la semaine dernière. Sur le port. Une ancienne voilerie, soixante mètres carrés et un piano oublié par l’ancien locataire.",
+            "en": "I went to see a space last week. Down by the harbour. An old sail loft, sixty square metres and a piano the last tenant left behind."
+          },
+          "next": "m"
+        },
+        "m": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Le bail est à signer avant la fin du mois. J’ai refait les calculs onze fois. Ils sont bons. C’est moi qui ne le suis pas.",
+            "en": "The lease has to be signed by the end of the month. I’ve run the numbers eleven times. They’re fine. I’m the one who isn’t."
+          },
+          "choices": [
+            {
+              "id": "together",
+              "text": {
+                "fr": "Tu n’es pas obligé de sauter tout seul. Je peux venir la voir avec toi ?",
+                "en": "You don’t have to jump alone. Can I come and see it with you?"
+              },
+              "delta": 8,
+              "next": "n"
+            },
+            {
+              "id": "nerve",
+              "text": {
+                "fr": "Si les chiffres sont bons, il ne manque qu’un peu de courage. Et tu en as.",
+                "en": "If the numbers are good, all that’s missing is a bit of nerve. And you have it."
+              },
+              "delta": 5,
+              "next": "o"
+            },
+            {
+              "id": "wait",
+              "text": {
+                "fr": "Rien ne presse. Attends l’année prochaine, par prudence.",
+                "en": "No rush. Wait until next year, just to be safe."
+              },
+              "delta": -3,
+              "next": "p"
+            }
+          ]
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Avec moi ? Tu ferais ça ?… Oui. Viens. J’ai besoin de quelqu’un qui regarde la salle, pas le tableur.",
+            "en": "With me? You’d do that?… Yes. Come. I need someone who looks at the room, not the spreadsheet."
+          },
+          "next": "q"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Du courage. Je n’avais pas d’onglet pour ça. Je vais en créer un.",
+            "en": "Nerve. I didn’t have a tab for that. I’ll make one."
+          },
+          "next": "q"
+        },
+        "p": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "L’année prochaine… Je dis ça depuis cinq ans. Tu vois, les chiffres ne mentent pas : je suis très doué pour attendre.",
+            "en": "Next year… I’ve been saying that for five years. See, numbers don’t lie: I’m extremely good at waiting."
+          },
+          "next": "q"
+        },
+        "q": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le quartet entame une ballade, la dernière de la soirée. Autour de vous, des couples se lèvent pour danser lentement.",
+            "en": "The quartet starts a ballad, the last of the night. Around you, couples get up to slow dance."
+          },
+          "next": "r"
+        },
+        "r": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Je danse très mal. Je compte les pas à voix haute. Mais si ça ne te fait pas peur…",
+            "en": "I’m a terrible dancer. I count the steps out loud. But if that doesn’t scare you off…"
+          },
+          "choices": [
+            {
+              "id": "dance",
+              "text": {
+                "fr": "Compte pour nous deux. Je te suis.",
+                "en": "Count for both of us. I’ll follow."
+              },
+              "delta": 7,
+              "next": "s"
+            },
+            {
+              "id": "blanket",
+              "text": {
+                "fr": "Restons sur la couverture. On est bien, là.",
+                "en": "Let’s stay on the blanket. This is nice."
+              },
+              "delta": 4,
+              "next": "t"
+            },
+            {
+              "id": "no",
+              "text": {
+                "fr": "Non merci, je ne veux pas me ridiculiser.",
+                "en": "No thanks. I’d rather not make a fool of myself."
+              },
+              "delta": -2,
+              "next": "u"
+            }
+          ]
+        },
+        "s": {
+          "who": "narrator",
+          "text": {
+            "fr": "Vous dansez sous les guirlandes. Il compte, un-deux-trois, puis il oublie de compter, et c’est là que ça devient beau.",
+            "en": "You dance beneath the lights. He counts, one-two-three, then forgets to count, and that’s when it gets beautiful."
+          },
+          "next": "v"
+        },
+        "t": {
+          "who": "narrator",
+          "text": {
+            "fr": "Vous restez sur la couverture. Sa main trouve la tienne, sans calcul cette fois, et la garde jusqu’à la dernière note.",
+            "en": "You stay on the blanket. His hand finds yours, no calculations this time, and holds it until the very last note."
+          },
+          "next": "v"
+        },
+        "u": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "D’accord. Moi qui avais répété dans ma cuisine… Une autre fois, peut-être.",
+            "en": "Alright. And I’d been practising in my kitchen… Another time, maybe."
+          },
+          "next": "end_cool"
+        },
+        "v": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Je crois que je vais signer ce bail. Ne me demande pas pourquoi ce soir. Enfin, si. Tu sais pourquoi.",
+            "en": "I think I’m going to sign that lease. Don’t ask me why tonight. Actually, do. You know why."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Les musiciens rangent leurs instruments. Lucas plie la couverture au carré d’une seule main, pour ne pas lâcher la tienne.",
+            "en": "The musicians pack up. Lucas folds the blanket into a perfect square one-handed, so he doesn’t have to let go of yours."
+          },
+          "end": true
+        },
+        "end_cool": {
+          "who": "narrator",
+          "text": {
+            "fr": "Les guirlandes s’éteignent une à une. Lucas range les tasses, songeur, et te raccompagne jusqu’à l’escalier.",
+            "en": "The lights go out one by one. Lucas packs away the cups, lost in thought, and walks you to the stairs."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_finale",
+      "character": "lucas",
+      "kind": "finale",
+      "minTier": 5,
+      "requires": [
+        "lucas_date_2"
+      ],
+      "reservationCents": 20000,
+      "place": "harbor",
+      "title": {
+        "fr": "Quarante et une places",
+        "en": "Forty-one seats"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le port dort. Lucas t’attend devant une porte en bois écaillé, une vieille clé à la main, avec la tête de quelqu’un qui va sauter d’un plongeoir.",
+            "en": "The harbour is asleep. Lucas is waiting by a door of peeling wood, an old key in his hand, with the look of someone about to leap off a high dive."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "J’ai signé. Hier, à seize heures quatre. Je ne l’ai encore dit à personne. Sauf à toi, là, maintenant.",
+            "en": "I signed. Yesterday, at 4:04 p.m. I haven’t told anyone yet. Except you, right now."
+          },
+          "choices": [
+            {
+              "id": "yes",
+              "text": {
+                "fr": "Lucas ! Tu l’as fait ! C’est la meilleure nouvelle de l’année.",
+                "en": "Lucas! You did it! Best news of the year."
+              },
+              "delta": 7,
+              "next": "c"
+            },
+            {
+              "id": "time",
+              "text": {
+                "fr": "Seize heures quatre. Évidemment que tu as noté l’heure.",
+                "en": "4:04 p.m. Of course you wrote down the time."
+              },
+              "delta": 4,
+              "next": "d"
+            },
+            {
+              "id": "sure",
+              "text": {
+                "fr": "Tu es sûr de toi ? C’est beaucoup d’argent.",
+                "en": "Are you sure about this? It’s a lot of money."
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "J’espérais que tu dirais ça. Enfin, je l’avais estimé à quatre-vingt-dix pour cent. Mais l’entendre, c’est autre chose.",
+            "en": "I hoped you’d say that. Well, I’d put it at ninety per cent. But hearing it is something else."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Et la minute. Les grandes décisions méritent d’être horodatées. Viens, entre.",
+            "en": "And the minute. Big decisions deserve a timestamp. Come on, come in."
+          },
+          "next": "f"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Non. Je ne suis sûr de rien. C’est la première fois de ma vie, et c’est étrangement agréable. Viens voir.",
+            "en": "No. I’m not sure of anything. First time in my life, and it feels strangely good. Come and see."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il pousse la porte. La salle sent le bois et le sel. Un piano droit dort sous un drap. Au milieu, une seule chaise fait face à une scène qui n’existe pas encore.",
+            "en": "He pushes the door open. The room smells of wood and salt. An upright piano sleeps under a dust sheet. In the middle, a single chair faces a stage that doesn’t exist yet."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "La quarante et unième. Celle du premier rang. Je l’ai installée en premier ; les quarante autres viendront après.",
+            "en": "The forty-first. Front row. I put it in first; the other forty can wait."
+          },
+          "choices": [
+            {
+              "id": "photo",
+              "text": {
+                "fr": "On dirait ta pochette du musée : une salle vide, au petit matin.",
+                "en": "It’s your sleeve from the museum: an empty club at dawn."
+              },
+              "delta": 8,
+              "next": "h",
+              "if": {
+                "seen": "lucas_small_vinyle"
+              }
+            },
+            {
+              "id": "mine",
+              "text": {
+                "fr": "Alors elle est à moi. Premier rang.",
+                "en": "Then it’s mine. Front row."
+              },
+              "delta": 7,
+              "next": "i"
+            },
+            {
+              "id": "work",
+              "text": {
+                "fr": "C’est un peu vide, quand même. Il y a du boulot.",
+                "en": "It’s pretty bare, though. There’s work to do."
+              },
+              "delta": 2,
+              "next": "j"
+            }
+          ]
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Tu t’en souviens ? C’est exactement ça. Je crois que j’ai loué cette salle pour pouvoir entrer dans cette photo.",
+            "en": "You remember? That’s exactly it. I think I rented this place so I could step inside that picture."
+          },
+          "next": "l"
+        },
+        "i": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Elle t’attendait. Je n’ai jamais été aussi sûr d’une réservation.",
+            "en": "It was waiting for you. I’ve never been so sure of a reservation."
+          },
+          "next": "l"
+        },
+        "j": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Beaucoup de boulot. Les murs, l’électricité, la licence, le piano à accorder. J’ai un onglet pour chaque.",
+            "en": "Loads. The walls, the wiring, the licence, the piano tuning. I have a tab for each."
+          },
+          "next": "l"
+        },
+        "l": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Tu sais ce qui me fait peur ? Pas de perdre l’argent. Tant que c’était un rêve, ça ne pouvait pas rater. Maintenant, si.",
+            "en": "Do you know what scares me? Not losing the money. As long as it was a dream, it couldn’t fail. Now it can."
+          },
+          "choices": [
+            {
+              "id": "succeed",
+              "text": {
+                "fr": "Un rêve qui ne peut pas rater ne peut pas réussir non plus. Celui-là a sa chance.",
+                "en": "A dream that can’t fail can’t succeed either. This one has a shot."
+              },
+              "delta": 8,
+              "next": "m"
+            },
+            {
+              "id": "here",
+              "text": {
+                "fr": "Si ça rate, je serai là. Et si ça marche aussi.",
+                "en": "If it fails, I’ll be here. If it works, too."
+              },
+              "delta": 7,
+              "next": "n"
+            },
+            {
+              "id": "odds",
+              "text": {
+                "fr": "Six bars sur dix ferment. C’est toi qui l’as dit.",
+                "en": "Six bars in ten close. Your words."
+              },
+              "delta": -4,
+              "next": "o"
+            }
+          ]
+        },
+        "m": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "… Tu viens de résumer cinq ans de doutes en une phrase. Je devrais te confier mon tableur.",
+            "en": "…You just summed up five years of doubt in one sentence. I should hand you my spreadsheet."
+          },
+          "next": "p"
+        },
+        "n": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Dans les deux cas. C’est la seule variable qui me manquait.",
+            "en": "Either way. That’s the only variable I was missing."
+          },
+          "next": "p"
+        },
+        "o": {
+          "who": "lucas",
+          "expr": "sad",
+          "text": {
+            "fr": "Oui. Et quatre sur dix tiennent. Je mise sur les quatre. Je pensais que tu miserais avec moi.",
+            "en": "Yes. And four in ten make it. I’m betting on the four. I thought you’d bet with me."
+          },
+          "choices": [
+            {
+              "id": "sorry",
+              "text": {
+                "fr": "Pardon. Je mise sur les quatre avec toi. Pour de bon.",
+                "en": "Sorry. I’m betting on the four with you. For real."
+              },
+              "delta": 4,
+              "next": "p"
+            },
+            {
+              "id": "go",
+              "text": {
+                "fr": "Il est tard. Je crois que je vais rentrer.",
+                "en": "It’s late. I think I’ll head home."
+              },
+              "delta": -3,
+              "next": "end_alone"
+            }
+          ]
+        },
+        "p": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il sort de son sac un vieux tourne-disque et pose l’aiguille sur un disque à la pochette usée.",
+            "en": "He takes an old record player out of his bag and lowers the needle onto a record in a worn sleeve."
+          },
+          "next": "q"
+        },
+        "q": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Le disque d’Odette, ma grand-mère. Ce sera le premier qu’on passera ici, le soir de l’ouverture. Il saute à la deuxième piste. C’est la tradition.",
+            "en": "Odette’s record. My grandmother’s. It’ll be the first thing we play here on opening night. It skips on track two. That’s tradition."
+          },
+          "next": "r"
+        },
+        "r": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Il me manque un nom. J’en ai trois cents dans un fichier, et aucun ne va. Tu m’aides ?",
+            "en": "I still need a name. I have three hundred in a file and none of them fit. Help me?"
+          },
+          "choices": [
+            {
+              "id": "odette",
+              "text": {
+                "fr": "Chez Odette. Pour celle qui t’a appris le jazz.",
+                "en": "Chez Odette. For the woman who taught you jazz."
+              },
+              "delta": 7,
+              "next": "s"
+            },
+            {
+              "id": "offbeat",
+              "text": {
+                "fr": "Le Contretemps. Un peu en retard, avec précision.",
+                "en": "The Offbeat. A little late, precisely."
+              },
+              "delta": 6,
+              "next": "t"
+            },
+            {
+              "id": "twentyone",
+              "text": {
+                "fr": "Le Vingt-et-Un. Tout simplement.",
+                "en": "The Twenty-One. Simple as that."
+              },
+              "delta": 3,
+              "next": "u"
+            }
+          ]
+        },
+        "s": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Chez Odette… Elle va faire semblant d’être vexée pendant une semaine, puis elle viendra tous les soirs. C’est parfait.",
+            "en": "Chez Odette… She’ll pretend to be offended for a week, then turn up every single night. It’s perfect."
+          },
+          "next": "v"
+        },
+        "t": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Le Contretemps. Le swing et la vie, en un seul mot. Tu écoutais, sur le toit. Tu écoutes toujours.",
+            "en": "The Offbeat. Swing and life in a single word. You were listening, up on that roof. You always listen."
+          },
+          "next": "v"
+        },
+        "u": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Le Vingt-et-Un. Là où tout a commencé. C’est sentimental et un peu facile. J’adore.",
+            "en": "The Twenty-One. Where it all began. Sentimental and a bit obvious. I love it."
+          },
+          "next": "v"
+        },
+        "v": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le disque grésille, puis la musique monte. À la deuxième piste, l’aiguille saute, et vous éclatez de rire en même temps.",
+            "en": "The record crackles, then the music swells. On track two the needle skips, and you both burst out laughing at once."
+          },
+          "next": "w"
+        },
+        "w": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "J’ai passé ma vie à calculer les chances de tout. Les miennes avec toi, je n’ai jamais réussi. Trop de variables. Elles me plaisent toutes.",
+            "en": "I’ve spent my life working out the odds of everything. Mine with you, I never could. Too many variables. I like every one of them."
+          },
+          "next": "x"
+        },
+        "x": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il est tout près, maintenant. Le réverbère trace une ligne de lumière sur son visage. Il ne compte plus rien.",
+            "en": "He’s very close now. The streetlight draws a line of gold across his face. He isn’t counting anything anymore."
+          },
+          "choices": [
+            {
+              "id": "stop",
+              "text": {
+                "fr": "Alors arrête de calculer.",
+                "en": "Then stop calculating."
+              },
+              "delta": 8,
+              "next": "y"
+            },
+            {
+              "id": "hold",
+              "text": {
+                "fr": "Je prends ta main. On a tout le temps.",
+                "en": "I’m taking your hand. We have all the time in the world."
+              },
+              "delta": 6,
+              "next": "z"
+            },
+            {
+              "id": "stats",
+              "text": {
+                "fr": "C’était une déclaration en statistiques, ça ?",
+                "en": "Was that a declaration of love, in statistics?"
+              },
+              "delta": 4,
+              "next": "aa"
+            }
+          ]
+        },
+        "y": {
+          "who": "narrator",
+          "text": {
+            "fr": "Lucas sourit, de ce sourire rare qu’il ne montre jamais à sa table. Il se penche, et vous vous embrassez, doucement, pendant que le disque saute encore.",
+            "en": "Lucas smiles, that rare smile he never shows at his table. He leans in, and you kiss, softly, while the record skips again."
+          },
+          "next": "y_end"
+        },
+        "y_end": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Bon. Ça, je ne l’avais pas mis dans le tableur.",
+            "en": "Well. That wasn’t in the spreadsheet."
+          },
+          "end": true,
+          "fade": true
+        },
+        "z": {
+          "who": "narrator",
+          "text": {
+            "fr": "Ses doigts se referment sur les tiens. Il pose son front contre le tien, et vous restez ainsi jusqu’à la fin de la face A.",
+            "en": "His fingers close around yours. He rests his forehead against yours, and you stay like that until side A runs out."
+          },
+          "end": true,
+          "fade": true
+        },
+        "aa": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Une déclaration, oui. Marge d’erreur : zéro.",
+            "en": "A declaration, yes. Margin of error: zero."
+          },
+          "next": "aa_end"
+        },
+        "aa_end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il rit, tu ris, et quelque part entre deux rires, sa main trouve la tienne et ne la lâche plus.",
+            "en": "He laughs, you laugh, and somewhere in between, his hand finds yours and doesn’t let go."
+          },
+          "end": true,
+          "fade": true
+        },
+        "end_alone": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu repars dans la nuit du port. Derrière la vitre, Lucas reste seul face au piano, le drap encore dans les mains.",
+            "en": "You head back out into the harbour night. Through the window, Lucas stands alone by the piano, the dust sheet still in his hands."
+          },
+          "end": true,
+          "fade": true
+        }
+      }
+    },
+    {
+      "id": "lucas_small_cafe",
+      "character": "lucas",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "garden",
+      "title": {
+        "fr": "Quatre minutes",
+        "en": "Four minutes"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Dans le jardin du casino, Lucas boit son café debout, à l’ombre d’un olivier, les yeux sur sa montre.",
+            "en": "In the casino garden, Lucas is drinking his coffee standing up in the shade of an olive tree, eyes on his watch."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Quatre minutes. Le temps idéal pour un expresso : assez pour l’apprécier, pas assez pour qu’il refroidisse.",
+            "en": "Four minutes. The ideal time for an espresso: long enough to enjoy it, not long enough for it to go cold."
+          },
+          "choices": [
+            {
+              "id": "technique",
+              "text": {
+                "fr": "Tu chronomètres ton café ? Montre-moi ta technique.",
+                "en": "You time your coffee? Show me your technique."
+              },
+              "delta": 6,
+              "next": "c"
+            },
+            {
+              "id": "relax",
+              "text": {
+                "fr": "Tu ne pourrais pas juste le boire tranquillement ?",
+                "en": "Couldn’t you just drink it in peace?"
+              },
+              "delta": 2,
+              "next": "d"
+            },
+            {
+              "id": "weird",
+              "text": {
+                "fr": "C’est un peu bizarre, non ?",
+                "en": "That’s a bit odd, isn’t it?"
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Une gorgée par minute. La dernière, on la garde un instant en pensant à quelque chose d’agréable. Aujourd’hui, c’était facile.",
+            "en": "One sip per minute. The last one you hold for a moment while thinking of something nice. Today that was easy."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Je pourrais. Mais je n’aurais rien à raconter, et tu n’aurais pas engagé la conversation.",
+            "en": "I could. But then I’d have nothing to say, and you wouldn’t have struck up a conversation."
+          },
+          "next": "f"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Un peu. Mais c’est ma bizarrerie, et je l’entretiens avec soin. Comme un bonsaï.",
+            "en": "A little. But it’s my quirk, and I tend it with great care. Like a bonsai."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "hugo",
+          "expr": "smile",
+          "text": {
+            "fr": "Lucas, ta table rouvre dans une minute. Et ta tasse est encore pleine : c’est une première.",
+            "en": "Lucas, your table reopens in one minute. And your cup is still full. That’s a first."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Hugo exagère. Mais il a raison : j’ai parlé au lieu de boire. Ça ne m’arrive jamais. Je mets ça sur ton compte.",
+            "en": "Hugo exaggerates. But he’s right: I talked instead of drinking. That never happens. I’m putting it on your tab."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il avale son café d’une traite, ce qui, vu sa tête, est un vrai sacrifice.",
+            "en": "He downs his coffee in one go, which, judging by his face, is a genuine sacrifice."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_small_dimanche",
+      "character": "lucas",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "kitchen",
+      "title": {
+        "fr": "Le gratin du dimanche",
+        "en": "Sunday gratin"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Dans la cuisine du personnel, Lucas, tablier noué au cordeau, coupe des pommes de terre en tranches d’une régularité inquiétante.",
+            "en": "In the staff kitchen, Lucas, apron tied just so, is slicing potatoes with unsettling regularity."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "Ah. Tu me surprends en pleine répétition. Dimanche, je déjeune chez ma grand-mère, Odette, et je tente son gratin. Le sien est légendaire.",
+            "en": "Ah. You’ve caught me mid-rehearsal. Sunday is lunch at my grandmother Odette’s, and I’m attempting her gratin. It’s legendary."
+          },
+          "next": "c"
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Trois millimètres par tranche. Elle dit que la précision ne remplace pas l’amour. Moi, je pense qu’on peut faire les deux.",
+            "en": "Three millimetres a slice. She says precision is no substitute for love. I think you can do both."
+          },
+          "choices": [
+            {
+              "id": "help",
+              "text": {
+                "fr": "Je peux t’aider ? Je promets de couper droit.",
+                "en": "Can I help? I promise to cut straight."
+              },
+              "delta": 5,
+              "next": "d"
+            },
+            {
+              "id": "garlic",
+              "text": {
+                "fr": "Le secret, c’est de frotter le plat avec une gousse d’ail.",
+                "en": "The secret is rubbing the dish with a clove of garlic."
+              },
+              "delta": 4,
+              "next": "e"
+            },
+            {
+              "id": "buy",
+              "text": {
+                "fr": "Achètes-en un tout prêt, elle n’y verra que du feu.",
+                "en": "Just buy one ready-made. She’ll never know."
+              },
+              "delta": -3,
+              "next": "f"
+            }
+          ]
+        },
+        "d": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il te tend un couteau et te regarde faire avec une angoisse touchante. Tes tranches ne font pas trois millimètres. Il ne dit rien. Héroïquement.",
+            "en": "He hands you a knife and watches with touching anxiety. Your slices are not three millimetres. He says nothing. Heroically."
+          },
+          "next": "g"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "L’ail ! C’est ça qui manquait. Tu viens de résoudre un problème sur lequel je sèche depuis trois dimanches.",
+            "en": "Garlic! That’s what was missing. You’ve just solved a problem I’ve been stuck on for three Sundays."
+          },
+          "next": "g"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Elle verrait. Elle voit tout. Un jour, elle a deviné que j’avais perdu au poker rien qu’à ma façon de m’asseoir.",
+            "en": "She would. She sees everything. Once she guessed I’d lost at poker just from the way I sat down."
+          },
+          "next": "g"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Je te dirai dimanche soir si elle a dit « c’est mangeable ». Chez elle, c’est la note maximale.",
+            "en": "I’ll let you know on Sunday night if she says “it’s edible”. From her, that’s top marks."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le four ronronne. Lucas essuie le plan de travail trois fois, par sécurité.",
+            "en": "The oven hums. Lucas wipes down the counter three times, just to be safe."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_small_vinyle",
+      "character": "lucas",
+      "kind": "smalltalk",
+      "minTier": 2,
+      "requires": [],
+      "place": "museum",
+      "title": {
+        "fr": "Pochettes de jazz",
+        "en": "Jazz sleeves"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "Le musée expose des pochettes de disques. Lucas est planté devant le même cadre depuis dix minutes, immobile comme une statue.",
+            "en": "The museum is showing an exhibition of record sleeves. Lucas has been rooted in front of the same frame for ten minutes, still as a statue."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Celle-ci. Un club vide à cinq heures du matin, les chaises retournées sur les tables. C’est ma préférée, de loin.",
+            "en": "This one. An empty club at five in the morning, chairs upside down on the tables. My favourite, by far."
+          },
+          "choices": [
+            {
+              "id": "why",
+              "text": {
+                "fr": "Pourquoi une salle vide ? Il n’y a personne dessus.",
+                "en": "Why an empty room? There’s nobody in it."
+              },
+              "delta": 5,
+              "next": "c"
+            },
+            {
+              "id": "music",
+              "text": {
+                "fr": "On entend presque la musique qui vient de s’arrêter.",
+                "en": "You can almost hear the music that just stopped."
+              },
+              "delta": 4,
+              "next": "d"
+            },
+            {
+              "id": "chairs",
+              "text": {
+                "fr": "Franchement, ce ne sont que des chaises.",
+                "en": "Honestly, it’s just chairs."
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Justement. Tout vient de finir, ou tout va commencer. On ne sait pas. Pour une fois, j’aime ne pas savoir.",
+            "en": "That’s the point. Everything has just ended, or is about to begin. You can’t tell. For once, I like not knowing."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "lucas",
+          "expr": "surprised",
+          "text": {
+            "fr": "C’est exactement ça. La musique s’est arrêtée, mais elle est encore dans la pièce.",
+            "en": "That’s exactly it. The music has stopped, but it’s still in the room."
+          },
+          "next": "f"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "neutral",
+          "text": {
+            "fr": "Que des chaises. Et quarante histoires qui viennent de rentrer chez elles.",
+            "en": "Just chairs. And forty stories that have just gone home."
+          },
+          "next": "f"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Un jour, j’aimerais entrer dans cette photo. Derrière le comptoir, je veux dire. Oublie ce que je viens de dire.",
+            "en": "One day I’d like to step inside that picture. Behind the bar, I mean. Forget I said that."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Vous passez à la salle suivante. Il se retourne une dernière fois vers la pochette, comme on salue quelqu’un.",
+            "en": "You move on to the next room. He turns back to the sleeve one last time, the way you’d wave goodbye to someone."
+          },
+          "end": true
+        }
+      }
+    },
+    {
+      "id": "lucas_small_pince",
+      "character": "lucas",
+      "kind": "smalltalk",
+      "minTier": 3,
+      "requires": [],
+      "place": "arcade",
+      "title": {
+        "fr": "La pince",
+        "en": "The claw"
+      },
+      "start": "a",
+      "nodes": {
+        "a": {
+          "who": "narrator",
+          "text": {
+            "fr": "À l’arcade, Lucas étudie une machine à pince avec le sérieux d’un juge. Des pièces dans une main, un calepin dans l’autre.",
+            "en": "At the arcade, Lucas is studying a claw machine with the gravity of a judge. Coins in one hand, notebook in the other."
+          },
+          "next": "b"
+        },
+        "b": {
+          "who": "lucas",
+          "expr": "thinking",
+          "text": {
+            "fr": "Cette pince serre à pleine force une fois sur vingt-trois. J’ai compté. Le chat en peluche est à moi dans quatre essais.",
+            "en": "This claw grips at full strength one time in twenty-three. I counted. That plush cat is mine in four tries."
+          },
+          "choices": [
+            {
+              "id": "race",
+              "text": {
+                "fr": "Je parie que je l’attrape avant toi.",
+                "en": "Bet I can grab it before you do."
+              },
+              "delta": 5,
+              "next": "c"
+            },
+            {
+              "id": "cheer",
+              "text": {
+                "fr": "Vas-y, je t’encourage d’ici.",
+                "en": "Go for it. I’ll cheer you on."
+              },
+              "delta": 3,
+              "next": "d"
+            },
+            {
+              "id": "rigged",
+              "text": {
+                "fr": "Ces machines sont truquées, tu perds ton temps.",
+                "en": "Those machines are rigged. You’re wasting your time."
+              },
+              "delta": -2,
+              "next": "e"
+            }
+          ]
+        },
+        "c": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu glisses une pièce. La pince descend, hésite, et remonte avec le chat. Lucas fixe la machine comme si elle l’avait trahi.",
+            "en": "You slip a coin in. The claw drops, wobbles, and comes up with the cat. Lucas stares at the machine as if it had betrayed him."
+          },
+          "next": "f"
+        },
+        "d": {
+          "who": "narrator",
+          "text": {
+            "fr": "Il joue. Un, deux, trois essais ratés. Au quatrième, la pince remonte avec le chat. Lucas ne sourit pas : il rayonne.",
+            "en": "He plays. One, two, three misses. On the fourth, the claw comes up with the cat. Lucas doesn’t smile. He glows."
+          },
+          "next": "g"
+        },
+        "e": {
+          "who": "lucas",
+          "expr": "wink",
+          "text": {
+            "fr": "Truquées, oui. Mais prévisibles. Et ce qui est prévisible finit toujours par céder. Regarde.",
+            "en": "Rigged, yes. But predictable. And predictable things always give in eventually. Watch."
+          },
+          "next": "d"
+        },
+        "f": {
+          "who": "lucas",
+          "expr": "laugh",
+          "text": {
+            "fr": "Une chance sur vingt-trois, et tu l’attrapes du premier coup. Tu défies les statistiques.",
+            "en": "One chance in twenty-three, and you get it first try. You’re defying statistics."
+          },
+          "next": "h"
+        },
+        "g": {
+          "who": "lucas",
+          "expr": "blush",
+          "text": {
+            "fr": "Tiens. Il est pour toi. Je voulais surtout prouver que j’avais raison.",
+            "en": "Here. It’s for you. Mostly I just wanted to prove I was right."
+          },
+          "next": "end"
+        },
+        "h": {
+          "who": "lucas",
+          "expr": "smile",
+          "text": {
+            "fr": "Garde-le. C’est la preuve qu’il existe des choses que je ne sais pas calculer. Toi, par exemple.",
+            "en": "Keep it. Proof that there are things I can’t calculate. You, for example."
+          },
+          "next": "end"
+        },
+        "end": {
+          "who": "narrator",
+          "text": {
+            "fr": "Tu repars avec un chat en peluche sous le bras. Lucas, lui, repart avec une page de notes en plus.",
+            "en": "You leave with a plush cat under your arm. Lucas leaves with one more page of notes."
+          },
+          "end": true
+        }
+      }
+    }
+  ]
+}

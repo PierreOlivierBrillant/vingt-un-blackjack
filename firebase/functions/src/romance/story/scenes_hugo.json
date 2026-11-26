@@ -1,0 +1,61 @@
+{
+  "character": "hugo",
+  "scenes": [
+    {
+      "id": "hugo_small_roses",
+      "character": "hugo",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "garden",
+      "title": { "fr": "Les roses du concierge", "en": "The concierge’s roses" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Dans le jardin du casino, un homme en costume impeccable inspecte un rosier, un sécateur à la main et un mouchoir plié dans la poche.", "en": "In the casino garden, a man in an impeccable suit inspects a rosebush, pruning shears in hand and a folded handkerchief in his pocket." }, "next": "b" },
+        "b": { "who": "hugo", "expr": "neutral", "text": { "fr": "Bonsoir. Hugo, concierge VIP. Inutile de te présenter : je sais déjà qui tu es. Je sais qui est tout le monde, c’est mon métier.", "en": "Good evening. Hugo, VIP concierge. No need to introduce yourself: I already know who you are. I know who everyone is, it’s my job." }, "next": "c" },
+        "c": { "who": "hugo", "expr": "thinking", "text": { "fr": "Ces rosiers, c’est le jardinier qui s’en occupe. Officiellement. Officieusement, je viens corriger ses tailles pendant ma pause.", "en": "The gardener looks after these rosebushes. Officially. Unofficially, I come and fix his pruning on my break." },
+          "choices": [
+            { "id": "secret", "text": { "fr": "Ton secret est bien gardé avec moi.", "en": "Your secret is safe with me." }, "delta": 5, "next": "d" },
+            { "id": "balcony", "text": { "fr": "Tu as l’air de t’y connaître. Tu en cultives chez toi ?", "en": "You seem to know your stuff. Do you grow them at home?" }, "delta": 6, "next": "e" },
+            { "id": "cliche", "text": { "fr": "Des roses… C’est un peu cliché, non ?", "en": "Roses… A bit of a cliché, isn’t it?" }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "hugo", "expr": "smile", "text": { "fr": "Un concierge dont on garde le secret. Le monde à l’envers. Merci, c’est très aimable.", "en": "A concierge having a secret kept for him. The world upside down. Thank you, that’s very kind." }, "next": "g" },
+        "e": { "who": "hugo", "expr": "blush", "text": { "fr": "Sur mon balcon. Onze rosiers, chacun porte le nom d’une actrice de vieux films. Ne le répète pas, j’ai une réputation de sérieux.", "en": "On my balcony. Eleven rosebushes, each named after an old-movie actress. Don’t repeat that, I have a serious reputation." }, "next": "g" },
+        "f": { "who": "hugo", "expr": "neutral", "text": { "fr": "Un cliché, c’est une vérité qui a beaucoup servi. Les roses n’ont pas besoin d’être originales. Juste d’être bien soignées.", "en": "A cliché is a truth that’s been well used. Roses don’t need to be original. Just well looked after." }, "next": "g" },
+        "g": { "who": "hugo", "expr": "smile", "text": { "fr": "Si tu as besoin de quoi que ce soit au casino, une table, un taxi, une rose, demande à Hugo. Je trouve toujours.", "en": "If you ever need anything at the casino, a table, a taxi, a rose, ask Hugo. I always find a way." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Hugo range son sécateur, lisse sa veste et repart vers les salons privés. Le rosier, lui, a l’air bien plus en forme.", "en": "Hugo puts away the shears, smooths his jacket and heads back to the private lounges. The rosebush looks much happier for it." }, "end": true }
+      }
+    },
+    {
+      "id": "hugo_small_cinema",
+      "character": "hugo",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "rooftop",
+      "title": { "fr": "Séance sur le toit", "en": "Rooftop screening" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Sur le toit, une projection en plein air : un vieux film en noir et blanc. Au dernier rang, Hugo se tient droit comme un i… et s’essuie discrètement les yeux.", "en": "On the rooftop, an open-air screening: an old black-and-white film. In the back row, Hugo sits bolt upright… and discreetly dabs at his eyes." }, "next": "b" },
+        "b": { "who": "hugo", "expr": "surprised", "text": { "fr": "Ah. Bonsoir. Une poussière, sans doute. Le vent du toit. Rien à voir avec le film, évidemment.", "en": "Ah. Good evening. A speck of dust, no doubt. The rooftop wind. Nothing to do with the film, obviously." }, "next": "c" },
+        "c": { "who": "hugo", "expr": "sad", "text": { "fr": "Tu connais ce film ? À la fin, elle part en train et lui reste sur le quai. Je l’ai vu quarante fois. Ça ne s’arrange jamais.", "en": "Do you know this film? At the end, she leaves on a train and he stays on the platform. I’ve seen it forty times. It never gets better." },
+          "choices": [
+            { "id": "hanky", "text": { "fr": "Tiens, prends mon mouchoir. Pour la poussière.", "en": "Here, take my handkerchief. For the dust." }, "delta": 5, "next": "d" },
+            { "id": "cry_too", "text": { "fr": "Moi aussi, je pleure à chaque fois. Aucune honte.", "en": "I cry every time too. No shame." }, "delta": 6, "next": "e" },
+            { "id": "spoiler", "text": { "fr": "Tu viens de me raconter la fin, là.", "en": "You just spoiled the ending for me." }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "hugo", "expr": "blush", "text": { "fr": "Pour la poussière, bien sûr. Merci. Tu as un tact remarquable. Je m’en souviendrai.", "en": "For the dust, of course. Thank you. You have remarkable tact. I’ll remember that." }, "next": "g" },
+        "e": { "who": "hugo", "expr": "smile", "text": { "fr": "Vraiment ? Alors nous sommes deux. Quel soulagement. Je croyais être le seul concierge sentimental de la ville.", "en": "Really? Then that makes two of us. What a relief. I thought I was the only sentimental concierge in town." }, "next": "g" },
+        "f": { "who": "hugo", "expr": "surprised", "text": { "fr": "Oh non. Pardon. Quarante séances, et je n’ai toujours pas appris à me taire. Fais semblant d’avoir oublié.", "en": "Oh no. Forgive me. Forty viewings, and I still haven’t learned to keep quiet. Pretend you’ve forgotten." }, "next": "g" },
+        "g": { "who": "hugo", "expr": "smile", "text": { "fr": "Il reste une place à côté de moi. D’habitude, je la garde pour mon manteau. Ce soir, il peut aller au vestiaire.", "en": "There’s a free seat next to me. I usually save it for my coat. Tonight, the coat can go to the cloakroom." },
+          "choices": [
+            { "id": "sit", "text": { "fr": "Je m’assois. Mais je veux le mouchoir à portée de main.", "en": "I’ll sit. But I want the handkerchief within reach." }, "delta": 4, "next": "h" },
+            { "id": "popcorn", "text": { "fr": "Seulement si tu partages le pop-corn.", "en": "Only if you share the popcorn." }, "delta": 3, "next": "i" }
+          ] },
+        "h": { "who": "hugo", "expr": "laugh", "text": { "fr": "Marché conclu. Il est repassé, bien sûr. Un concierge ne pleure jamais dans un mouchoir froissé.", "en": "Deal. It’s ironed, of course. A concierge never cries into a crumpled handkerchief." }, "next": "end" },
+        "i": { "who": "hugo", "expr": "wink", "text": { "fr": "Le pop-corn ? J’en ai fait monter deux cornets avant le générique. Un concierge prévoit toujours de la compagnie.", "en": "Popcorn? I had two cones sent up before the opening credits. A concierge always plans for company." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Sur l’écran, le train s’éloigne dans la fumée. Hugo ne dit rien, mais il ne pleure plus tout seul, et ça se voit à son sourire.", "en": "On the screen, the train pulls away into the smoke. Hugo says nothing, but he isn’t crying alone anymore, and it shows in his smile." }, "end": true }
+      }
+    }
+  ]
+}

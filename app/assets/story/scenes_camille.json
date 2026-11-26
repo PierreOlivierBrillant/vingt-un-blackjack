@@ -1,0 +1,436 @@
+{
+  "character": "camille",
+  "scenes": [
+    {
+      "id": "camille_talk_1",
+      "character": "camille",
+      "kind": "talk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Les rituels de la roue", "en": "Rituals of the wheel" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Il est tard. À la roulette, il ne reste que toi et une croupière rousse aux taches de rousseur, qui fredonne en lustrant le cylindre.", "en": "It’s late. At the roulette table, it’s just you and a red-haired, freckled croupier humming as she polishes the wheel." }, "next": "b" },
+        "b": { "who": "narrator", "text": { "fr": "Avant chaque lancer, elle tapote trois fois le rebord en bois, souffle sur la bille et lui murmure quelque chose.", "en": "Before every spin, she taps the wooden rim three times, blows on the ball and whispers something to it." }, "next": "c" },
+        "c": { "who": "camille", "expr": "smile", "text": { "fr": "Tu m’as vue, hein ? Tout le monde fait semblant de ne pas voir. Moi, c’est Camille. Et oui, je parle à ma bille.", "en": "You caught that, huh? Everyone pretends not to notice. I’m Camille. And yes, I talk to my ball." }, "choices": [
+          { "id": "ask", "text": { "fr": "Et qu’est-ce que tu lui dis ?", "en": "So what do you tell it?" }, "delta": 5, "next": "d" },
+          { "id": "tease", "text": { "fr": "Elle te répond, au moins ?", "en": "Does it ever talk back?" }, "delta": 3, "next": "e" },
+          { "id": "mock", "text": { "fr": "C’est un peu ridicule, non ?", "en": "Isn’t that a bit silly?" }, "delta": -3, "next": "f" }
+        ] },
+        "d": { "who": "camille", "expr": "wink", "text": { "fr": "« Fais un beau voyage et reviens-moi entière. » C’est une petite planète, tu sais. Elle mérite des encouragements.", "en": "“Have a nice trip and come back to me in one piece.” It’s a tiny planet, you know. It deserves a little encouragement." }, "next": "g" },
+        "e": { "who": "camille", "expr": "laugh", "text": { "fr": "Tout le temps ! Elle claque sur les losanges, elle hésite, elle boude… Ce soir, elle est d’humeur joueuse.", "en": "All the time! It clatters over the diamonds, it hesitates, it sulks… Tonight it’s in a playful mood." }, "next": "g" },
+        "f": { "who": "camille", "expr": "neutral", "text": { "fr": "Peut-être. Mais ça fait six ans que je le fais, et la roue ne m’a jamais trahie. Je ne vais pas tenter le diable ce soir.", "en": "Maybe. But I’ve done it for six years and the wheel has never let me down. I’m not about to tempt fate tonight." }, "next": "g" },
+        "g": { "who": "narrator", "text": { "fr": "Elle lance. La bille file le long du cylindre en sifflant, tourne, tourne encore, comme si elle refusait de choisir.", "en": "She spins. The ball whistles along the rim, round and round and round, as if it refuses to choose." }, "next": "h" },
+        "h": { "who": "camille", "expr": "thinking", "text": { "fr": "Tu vois cette trajectoire ? C’est une orbite. Elle perd de la vitesse, se rapproche du centre… Exactement comme une comète qui tombe vers le Soleil.", "en": "See that path? That’s an orbit. It loses speed, drifts toward the center… Just like a comet falling toward the Sun." }, "next": "i" },
+        "i": { "who": "camille", "expr": "blush", "text": { "fr": "Pardon, je m’emballe. Je fais de l’astronomie, le soir, avec un petit télescope. Tu dois me trouver bizarre.", "en": "Sorry, I get carried away. I do astronomy in the evenings, with a little telescope. You must think I’m weird." }, "choices": [
+          { "id": "more", "text": { "fr": "Pas du tout. Continue, ça me plaît.", "en": "Not at all. Keep going, I like it." }, "delta": 7, "next": "j" },
+          { "id": "original", "text": { "fr": "Une croupière astronome, c’est original.", "en": "A croupier who’s an astronomer. That’s a first." }, "delta": 4, "next": "k" },
+          { "id": "rush", "text": { "fr": "Un peu. Et elle tombe quand, ta bille ?", "en": "A little. So when does the ball land?" }, "delta": -2, "next": "l" }
+        ] },
+        "j": { "who": "camille", "expr": "laugh", "text": { "fr": "Ah oui ? Alors je te préviens : je peux parler des anneaux de Saturne jusqu’à la fermeture.", "en": "Really? Fair warning, then: I can talk about Saturn’s rings until closing time." }, "next": "m" },
+        "k": { "who": "camille", "expr": "smile", "text": { "fr": "Original, c’est le mot poli. Mes collègues disent « perchée ». Lucas prétend que je compte les étoiles pendant qu’il compte les cartes.", "en": "“Original” is the polite word. My coworkers say “head in the clouds.” Lucas claims I count stars while he counts cards." }, "next": "m" },
+        "l": { "who": "camille", "expr": "neutral", "text": { "fr": "Patience. Une orbite, ça ne se presse pas.", "en": "Patience. You can’t rush an orbit." }, "next": "m" },
+        "m": { "who": "narrator", "text": { "fr": "Clac. La bille se pose sur le 9 rouge. Camille la contemple avec tendresse, comme une vieille amie qui rentre de voyage.", "en": "Clack. The ball settles on red 9. Camille gazes at it fondly, like an old friend back from a trip." }, "next": "n" },
+        "n": { "who": "camille", "expr": "thinking", "text": { "fr": "Neuf. C’est bon signe : neuf, comme les planètes quand j’étais petite, avant qu’on retire Pluton de la liste. Et toi, tu as un porte-bonheur ?", "en": "Nine. Good sign: nine, like the planets when I was little, before they kicked Pluto off the list. What about you, got a lucky charm?" }, "choices": [
+          { "id": "you", "text": { "fr": "Peut-être que c’est toi, ce soir.", "en": "Maybe it’s you, tonight." }, "delta": 6, "next": "o" },
+          { "id": "coin", "text": { "fr": "Une vieille pièce que je garde toujours sur moi.", "en": "An old coin I always keep on me." }, "delta": 4, "next": "p" },
+          { "id": "odds", "text": { "fr": "Non, je fais confiance aux probabilités.", "en": "No, I trust the odds." }, "delta": 2, "next": "q" }
+        ] },
+        "o": { "who": "camille", "expr": "blush", "text": { "fr": "Oh, celle-là ! Attention, je suis superstitieuse : si je te porte chance, il faudra revenir pour vérifier.", "en": "Oh, smooth! Careful, I’m superstitious: if I’m your lucky charm, you’ll have to come back and check." }, "next": "r" },
+        "p": { "who": "camille", "expr": "smile", "text": { "fr": "Une pièce ! Garde-la bien. Les objets qui traversent le temps avec nous finissent par savoir des choses.", "en": "A coin! Hold on to it. Things that travel through time with us end up knowing a thing or two." }, "next": "r" },
+        "q": { "who": "camille", "expr": "wink", "text": { "fr": "Les probabilités, hein ? Elles sont du côté du casino. Moi, je suis de ton côté, c’est déjà ça.", "en": "The odds, huh? They’re on the house’s side. I’m on yours, at least. That’s something." }, "next": "r" },
+        "r": { "who": "narrator", "text": { "fr": "Le chef de salle annonce la fermeture. Camille tapote trois fois la roue, puis, sans prévenir, trois fois le tapis devant toi.", "en": "The floor manager calls closing time. Camille taps the wheel three times, then, out of nowhere, three times on the felt in front of you." }, "next": "s" },
+        "s": { "who": "camille", "expr": "laugh", "text": { "fr": "Voilà, rituel terminé. Maintenant, la chance sait où te trouver. À bientôt, j’espère !", "en": "There. Ritual complete. Now luck knows where to find you. See you soon, I hope!" }, "end": true }
+      }
+    },
+    {
+      "id": "camille_talk_2",
+      "character": "camille",
+      "kind": "talk",
+      "minTier": 1,
+      "requires": ["camille_talk_1"],
+      "place": "kitchen",
+      "title": { "fr": "Défi en salle de pause", "en": "Break-room showdown" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Camille t’a fait entrer par la porte du personnel. Entre le micro-ondes et une plante qui a connu des jours meilleurs, un jeu de Uno attend sur la table.", "en": "Camille sneaked you in through the staff door. Between the microwave and a plant that has seen better days, a deck of Uno waits on the table." }, "next": "b" },
+        "b": { "who": "camille", "expr": "wink", "text": { "fr": "Quinze minutes de pause, une partie. Qui perd range la cuisine. Tu te sens d’attaque ?", "en": "Fifteen-minute break, one game. Loser cleans the kitchen. Feeling brave?" }, "next": "c" },
+        "c": { "who": "lucas", "expr": "neutral", "text": { "fr": "Je préviens : Camille déteste perdre. La dernière fois, elle a boudé jusqu’au lendemain. Je distribue.", "en": "Fair warning: Camille hates losing. Last time she sulked until the next day. I’ll deal." }, "next": "d" },
+        "d": { "who": "camille", "expr": "surprised", "text": { "fr": "Je n’ai pas boudé ! J’ai… médité. Longtemps. En silence.", "en": "I did not sulk! I… meditated. For a long time. In silence." }, "next": "e" },
+        "e": { "who": "camille", "expr": "thinking", "text": { "fr": "Avant de commencer, une question sérieuse : tu joues pour gagner, ou pour me faire plaisir ?", "en": "Before we start, a serious question: are you playing to win, or to be nice to me?" }, "choices": [
+          { "id": "win", "text": { "fr": "Pour gagner. Aucune pitié.", "en": "To win. No mercy." }, "delta": 6, "next": "f" },
+          { "id": "fun", "text": { "fr": "Pour m’amuser, surtout.", "en": "Mostly to have fun." }, "delta": 3, "next": "g" },
+          { "id": "letwin", "text": { "fr": "Je vais te laisser gagner, ce sera plus simple.", "en": "I’ll just let you win, it’s easier." }, "delta": -4, "next": "h" }
+        ] },
+        "f": { "who": "camille", "expr": "laugh", "text": { "fr": "Parfait ! Enfin quelqu’un à ma taille. Lucas, tu peux commencer à trembler.", "en": "Perfect! Finally someone at my level. Lucas, you can start shaking." }, "next": "i" },
+        "g": { "who": "camille", "expr": "smile", "text": { "fr": "S’amuser, c’est bien. Mais je te préviens : moi, je m’amuse en gagnant.", "en": "Fun is good. But fair warning: my idea of fun is winning." }, "next": "i" },
+        "h": { "who": "camille", "expr": "sad", "text": { "fr": "Me laisser gagner ? C’est pire que perdre ! Une victoire offerte, ça porte malheur, tout le monde sait ça.", "en": "Let me win? That’s worse than losing! A gifted win is bad luck, everyone knows that." }, "next": "i" },
+        "i": { "who": "narrator", "text": { "fr": "La partie s’emballe. Lucas pose ses cartes sans un mot ; Camille commente chacune des siennes comme une finale de coupe du monde.", "en": "The game heats up. Lucas lays down his cards without a word; Camille plays hers with running commentary, like it’s a cup final." }, "next": "j" },
+        "j": { "who": "camille", "expr": "wink", "text": { "fr": "Plus quatre ! Et je passe au rouge. Rouge comme la case du zéro… Non, le zéro est vert. Rouge comme mes joues quand je gagne.", "en": "Draw four! And I’m switching to red. Red like the zero pocket… no, zero’s green. Red like my cheeks when I win." }, "next": "k" },
+        "k": { "who": "narrator", "text": { "fr": "Il te reste deux cartes. À elle aussi. Lucas, impassible, n’en a plus qu’une.", "en": "You’re down to two cards. So is she. Lucas, poker-faced, has just one left." }, "next": "l" },
+        "l": { "who": "camille", "expr": "surprised", "text": { "fr": "Attends… Lucas n’a plus qu’une carte. Il faut l’arrêter. On fait alliance, juste pour ce tour ?", "en": "Wait… Lucas has one card left. We have to stop him. Truce, just for this turn?" }, "choices": [
+          { "id": "ally", "text": { "fr": "Alliance acceptée. Je lui fais piocher deux cartes.", "en": "Deal. I’ll hit him with a draw two." }, "delta": 6, "next": "m" },
+          { "id": "solo", "text": { "fr": "Pas question ! Au Uno, pas d’alliance qui tienne.", "en": "No way! There are no truces in Uno." }, "delta": 3, "next": "n" }
+        ] },
+        "m": { "who": "narrator", "text": { "fr": "Ton plus deux tombe sur Lucas. Camille enchaîne avec un changement de sens, puis pose sa dernière carte en criant « Uno ! » une seconde trop tard.", "en": "Your draw two lands on Lucas. Camille follows with a reverse, then slaps down her last card yelling “Uno!” one second too late." }, "next": "o" },
+        "n": { "who": "narrator", "text": { "fr": "Tu poses ta carte. Lucas pose la sienne. Fin de partie. Il se lève, rince sa tasse et ne prononce qu’un mot : « Statistiques. »", "en": "You play your card. Lucas plays his. Game over. He gets up, rinses his mug, and says one word: “Statistics.”" }, "next": "p" },
+        "o": { "who": "lucas", "expr": "smile", "text": { "fr": "Pas de « Uno » à temps, Camille : deux cartes de pénalité. Et pendant que tu pioches, quelqu’un d’autre pose sa dernière carte. Bien joué.", "en": "No “Uno” in time, Camille: two penalty cards. And while you’re drawing, someone else just played their last card. Well done." }, "next": "q" },
+        "p": { "who": "camille", "expr": "sad", "text": { "fr": "Encore lui ! Il gagne à chaque fois. Je suis sûre qu’il compte les cartes, même au Uno.", "en": "Him again! He wins every single time. I swear he counts cards, even at Uno." }, "next": "q" },
+        "q": { "who": "camille", "expr": "thinking", "text": { "fr": "Bon. Officiellement, j’ai perdu. Et tu sais ce que ça veut dire : je vais bouder. Tu as un remède ?", "en": "Okay. Officially, I lost. And you know what that means: I’m about to sulk. Got a cure?" }, "choices": [
+          { "id": "together", "text": { "fr": "On range la cuisine à deux, et revanche demain.", "en": "We clean the kitchen together, and rematch tomorrow." }, "delta": 7, "next": "r" },
+          { "id": "lemonade", "text": { "fr": "Je t’offre une citronnade pour te consoler.", "en": "Let me buy you a lemonade to cheer you up." }, "delta": 4, "next": "s" },
+          { "id": "really", "text": { "fr": "Tu vas vraiment bouder pour un jeu de cartes ?", "en": "You’re really going to sulk over a card game?" }, "delta": -3, "next": "t" }
+        ] },
+        "r": { "who": "camille", "expr": "laugh", "text": { "fr": "À deux ? D’accord, tu viens de me guérir. Revanche demain, et cette fois je dis « Uno » en avance.", "en": "Together? Okay, you just cured me. Rematch tomorrow, and this time I’m calling “Uno” early." }, "next": "u" },
+        "s": { "who": "camille", "expr": "smile", "text": { "fr": "Une citronnade… Tu as compris comment je fonctionne, toi. Avec une paille, s’il te plaît.", "en": "A lemonade… You’ve figured out how I work. With a straw, please." }, "next": "u" },
+        "t": { "who": "camille", "expr": "neutral", "text": { "fr": "Oui. Vraiment. C’est mon seul défaut, alors laisse-le-moi.", "en": "Yes. Really. It’s my only flaw, so let me have it." }, "next": "u" },
+        "u": { "who": "narrator", "text": { "fr": "La sonnerie de fin de pause retentit. Camille glisse le paquet de cartes dans la poche de son gilet, avec le soin qu’on réserve aux reliques.", "en": "The end-of-break buzzer goes off. Camille slips the deck into her vest pocket with the care usually saved for holy relics." }, "next": "v" },
+        "v": { "who": "camille", "expr": "wink", "text": { "fr": "Merci pour la partie. La prochaine fois, c’est moi qui gagne. C’est écrit dans les étoiles.", "en": "Thanks for the game. Next time, I win. It’s written in the stars." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_talk_3",
+      "character": "camille",
+      "kind": "talk",
+      "minTier": 2,
+      "requires": ["camille_talk_2"],
+      "place": "rooftop",
+      "title": { "fr": "Le toit du casino", "en": "Up on the roof" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Après la fermeture, Camille t’entraîne dans un escalier de service, puis sur une petite échelle. Une trappe grince, et soudain : le ciel entier.", "en": "After closing, Camille leads you up a service stairway, then a short ladder. A hatch creaks open, and suddenly: the whole sky." }, "next": "b" },
+        "b": { "who": "camille", "expr": "smile", "text": { "fr": "Bienvenue dans mon bureau secret. Personne ne monte jamais ici, à part moi et les goélands.", "en": "Welcome to my secret office. Nobody ever comes up here, except me and the seagulls." }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "Contre une bouche d’aération, un petit télescope blanc attend sous sa housse, à côté d’un coussin et d’un thermos de tisane.", "en": "Against an air vent, a small white telescope waits under its cover, next to a cushion and a thermos of herbal tea." }, "next": "d" },
+        "d": { "who": "camille", "expr": "thinking", "text": { "fr": "Avant que je règle le télescope, dis-moi : juste avec tes yeux, qu’est-ce que tu vois ?", "en": "Before I set up the telescope, tell me: just with your eyes, what do you see?" }, "choices": [
+          { "id": "bright", "text": { "fr": "Une étoile qui brille plus que les autres, là-bas.", "en": "One star brighter than all the others, over there." }, "delta": 5, "next": "e" },
+          { "id": "dipper", "text": { "fr": "La Grande Ourse, je crois ?", "en": "The Big Dipper, I think?" }, "delta": 4, "next": "f" },
+          { "id": "city", "text": { "fr": "Surtout les lumières de la ville, honnêtement.", "en": "Mostly city lights, honestly." }, "delta": 2, "next": "g" }
+        ] },
+        "e": { "who": "camille", "expr": "surprised", "text": { "fr": "Bien vu ! Mais ce n’est pas une étoile, c’est Jupiter. Regarde dans l’oculaire… Les petits points alignés, ce sont ses lunes.", "en": "Good eye! But that’s not a star, it’s Jupiter. Look through here… Those little dots in a row are its moons." }, "next": "h" },
+        "f": { "who": "camille", "expr": "laugh", "text": { "fr": "Exactement ! « La casserole », comme disait mon père. Prolonge les deux étoiles du bord, cinq fois l’écart… et voilà l’étoile Polaire.", "en": "Exactly! “The saucepan,” my dad used to call it. Follow the two stars on the edge, five times the gap… and there’s Polaris." }, "next": "h" },
+        "g": { "who": "camille", "expr": "wink", "text": { "fr": "C’est vrai, la ville triche. Mais laisse tes yeux s’habituer. Deux minutes, et le ciel se remplit tout seul.", "en": "True, the city cheats. But give your eyes a moment. Two minutes, and the sky fills in all by itself." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Elle te laisse le télescope et s’assied sur le rebord, les genoux repliés contre elle, le visage éclairé par la lune.", "en": "She leaves you the telescope and sits on the ledge, knees hugged to her chest, her face lit by the moon." }, "next": "i" },
+        "i": { "who": "camille", "expr": "thinking", "text": { "fr": "Tu sais pourquoi j’aime la roulette ? Trente-sept cases, une bille qui tourne… C’est un petit système solaire. Je fais tourner des planètes toute la nuit.", "en": "You know why I love roulette? Thirty-seven pockets, a ball going round… It’s a tiny solar system. I spin planets all night long." }, "next": "j" },
+        "j": { "who": "camille", "expr": "smile", "text": { "fr": "Et quand j’ai une mauvaise soirée, je monte ici. Les étoiles se fichent bien de mes erreurs de paiement.", "en": "And when I have a bad night, I come up here. The stars couldn’t care less about my payout mistakes." }, "choices": [
+          { "id": "often", "text": { "fr": "Ça t’arrive souvent, les mauvaises soirées ?", "en": "Do you get a lot of bad nights?" }, "delta": 6, "next": "k" },
+          { "id": "smaller", "text": { "fr": "Je comprends. D’ici, tout paraît plus petit.", "en": "I get it. From up here, everything looks smaller." }, "delta": 5, "next": "l" },
+          { "id": "horoscope", "text": { "fr": "Tu devrais peut-être lire ton horoscope.", "en": "Maybe you should check your horoscope." }, "delta": -2, "next": "m" }
+        ] },
+        "k": { "who": "camille", "expr": "sad", "text": { "fr": "Pas tant que ça. Mais parfois je me demande si je suis à ma place. Derrière une table, alors que j’ai envie d’horizon.", "en": "Not that many. But sometimes I wonder if I’m where I belong. Stuck behind a table, when what I want is the horizon." }, "next": "n" },
+        "l": { "who": "camille", "expr": "smile", "text": { "fr": "Plus petit, et plus grand à la fois. C’est ça qui me rassure, je crois.", "en": "Smaller, and bigger at the same time. That’s what comforts me, I think." }, "next": "n" },
+        "m": { "who": "camille", "expr": "laugh", "text": { "fr": "Ah non ! Je suis superstitieuse, pas astrologue. Les planètes ne décident rien, elles tournent, c’est tout. Mon trèfle, en revanche…", "en": "Oh no! I’m superstitious, not an astrologer. Planets don’t decide anything, they just orbit. My lucky clover, on the other hand…" }, "next": "n" },
+        "n": { "who": "narrator", "text": { "fr": "Une traînée de lumière raye le ciel, si vite qu’on pourrait croire l’avoir rêvée.", "en": "A streak of light scratches across the sky, so fast it might have been a dream." }, "next": "o" },
+        "o": { "who": "camille", "expr": "surprised", "text": { "fr": "Une étoile filante ! Vite, fais un vœu. Mais surtout, ne le dis pas à voix haute, sinon il ne se réalise pas.", "en": "A shooting star! Quick, make a wish. But whatever you do, don’t say it out loud, or it won’t come true." }, "choices": [
+          { "id": "done", "text": { "fr": "C’est fait. Et toi, tu as fait le tien ?", "en": "Done. Did you make yours?" }, "delta": 7, "next": "p" },
+          { "id": "aloud", "text": { "fr": "Je souhaite revenir ici avec toi.", "en": "I wish I could come back up here with you." }, "delta": 3, "next": "q" },
+          { "id": "nowish", "text": { "fr": "Je ne crois pas trop aux vœux.", "en": "I don’t really believe in wishes." }, "delta": -3, "next": "r" }
+        ] },
+        "p": { "who": "camille", "expr": "blush", "text": { "fr": "Oui. Et je ne te dirai rien, même sous la torture. Mais il te concerne peut-être un tout petit peu.", "en": "Yes. And I’m not telling you, not even under torture. But it might involve you. Just a tiny bit." }, "next": "s" },
+        "q": { "who": "camille", "expr": "blush", "text": { "fr": "Tu l’as dit à voix haute ! Bon… Celui-là, je vais m’arranger pour qu’il se réalise quand même.", "en": "You said it out loud! Well… I’ll make sure that one comes true anyway." }, "next": "s" },
+        "r": { "who": "camille", "expr": "neutral", "text": { "fr": "Dommage. Moi, j’en fais un à chaque fois. Ça ne coûte rien, et ça oblige à savoir ce qu’on veut.", "en": "Too bad. I make one every time. It costs nothing, and it makes you figure out what you want." }, "next": "s" },
+        "s": { "who": "narrator", "text": { "fr": "Vous restez là-haut jusqu’à ce que le froid vous pique le nez. En redescendant, Camille referme la trappe avec soin, comme on range un trésor.", "en": "You stay up there until the cold nips at your noses. On the way down, Camille closes the hatch carefully, like someone putting away treasure." }, "next": "t" },
+        "t": { "who": "camille", "expr": "smile", "text": { "fr": "Tu es la première personne que j’emmène là-haut. Garde le secret, d’accord ?", "en": "You’re the first person I’ve ever taken up there. Keep it a secret, okay?" }, "end": true }
+      }
+    },
+    {
+      "id": "camille_talk_4",
+      "character": "camille",
+      "kind": "talk",
+      "minTier": 3,
+      "requires": ["camille_talk_3"],
+      "place": "terrace",
+      "title": { "fr": "Une lettre à l’aube", "en": "A letter at dawn" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Six heures du matin. Le casino se vide et le ciel pâlit au-dessus de la terrasse. Camille est assise sur une chaise longue, une lettre pliée entre les doigts.", "en": "Six in the morning. The casino is emptying out and the sky is turning pale over the terrace. Camille sits on a deck chair, a folded letter between her fingers." }, "next": "b" },
+        "b": { "who": "camille", "expr": "sad", "text": { "fr": "Ah, c’est toi. Viens, assieds-toi… J’ai besoin d’un avis, et tu es la seule personne à qui j’ose en parler.", "en": "Oh, it’s you. Come, sit… I need some advice, and you’re the only one I dare to ask." }, "next": "c" },
+        "c": { "who": "camille", "expr": "thinking", "text": { "fr": "Une école de voile me propose un poste de skippeuse pour la saison. Six mois en mer, à convoyer des bateaux jusqu’aux Canaries.", "en": "A sailing school has offered me a skipper job for the season. Six months at sea, delivering boats all the way to the Canaries." }, "next": "d" },
+        "d": { "who": "camille", "expr": "sad", "text": { "fr": "Mais le casino m’a donné ma chance quand j’avais vingt ans. Et mes parents sont si fiers de mon « vrai travail ». Si je pars, je déçois tout le monde.", "en": "But the casino gave me my first break when I was twenty. And my parents are so proud of my “real job.” If I leave, I let everyone down." }, "choices": [
+          { "id": "want", "text": { "fr": "Et toi, qu’est-ce que tu veux vraiment ?", "en": "And you? What do you really want?" }, "delta": 7, "next": "e" },
+          { "id": "proud", "text": { "fr": "Ils seront fiers de toi, quoi que tu choisisses.", "en": "They’ll be proud of you, whatever you choose." }, "delta": 5, "next": "f" },
+          { "id": "stay", "text": { "fr": "Tu ne peux pas partir, qui va me porter chance ?", "en": "You can’t leave, who’ll be my lucky charm?" }, "delta": -4, "next": "g" }
+        ] },
+        "e": { "who": "camille", "expr": "thinking", "text": { "fr": "Ce que je veux… Sentir le vent tourner avant qu’il tourne. Naviguer avec la Polaire. Mais j’ai peur de ne pas être à la hauteur, là-bas.", "en": "What I want… To feel the wind shift before it does. To steer by Polaris. But I’m scared I won’t measure up out there." }, "next": "h" },
+        "f": { "who": "camille", "expr": "smile", "text": { "fr": "Tu crois ? Mon père m’a appris le nœud de chaise avant de m’apprendre à faire mes lacets. Peut-être qu’il comprendrait.", "en": "You think? My dad taught me a bowline before he taught me to tie my shoes. Maybe he’d understand." }, "next": "h" },
+        "g": { "who": "camille", "expr": "sad", "text": { "fr": "C’est gentil… mais ce n’est pas vraiment la question, si ? J’avais besoin qu’on pense à moi, pas à la roulette.", "en": "That’s sweet… but that’s not really the point, is it? I needed someone to think about me, not about the roulette." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Elle déplie la lettre et la relit pour la centième fois. En bas de la page, une date limite entourée au stylo rouge : vendredi.", "en": "She unfolds the letter and reads it for the hundredth time. At the bottom of the page, a deadline circled in red ink: Friday." }, "next": "i" },
+        "i": { "who": "camille", "expr": "thinking", "text": { "fr": "Tu sais ce qui me fait le plus peur ? Pas la mer. Échouer. Je déteste perdre, tu l’as vu au Uno. Alors perdre à quelque chose qui compte vraiment…", "en": "You know what scares me most? Not the sea. Failing. I hate losing, you saw me at Uno. So losing at something that really matters…" }, "choices": [
+          { "id": "rematch", "text": { "fr": "Perdre au Uno ne t’a jamais empêchée de rejouer.", "en": "Losing at Uno never stopped you from playing again." }, "delta": 6, "next": "j" },
+          { "id": "wheel", "text": { "fr": "Si ça ne marche pas, tu reviendras. La roue sera toujours là.", "en": "If it doesn’t work out, you come back. The wheel will still be here." }, "delta": 4, "next": "k" },
+          { "id": "here", "text": { "fr": "Quoi que tu décides, je serai là. Promis.", "en": "Whatever you decide, I’ll be right here. Promise." }, "delta": 7, "next": "l", "if": { "minTier": 4 } }
+        ] },
+        "j": { "who": "camille", "expr": "laugh", "text": { "fr": "C’est vrai ! J’ai perdu trois cents parties contre Lucas, et je redemande toujours une revanche. Vu comme ça…", "en": "That’s true! I’ve lost three hundred games to Lucas and I still demand a rematch every time. When you put it like that…" }, "next": "m" },
+        "k": { "who": "camille", "expr": "smile", "text": { "fr": "La roue sera toujours là… Oui. Elle tourne et elle revient toujours au même endroit. C’est rassurant.", "en": "The wheel will still be here… Yes. It turns, and it always comes back around. That’s reassuring." }, "next": "m" },
+        "l": { "who": "camille", "expr": "blush", "text": { "fr": "Tu… Merci. Je crois que c’est exactement ce que j’avais besoin d’entendre. Ne bouge pas, je veux me souvenir de ce lever de soleil.", "en": "You… Thank you. I think that’s exactly what I needed to hear. Don’t move, I want to remember this sunrise." }, "next": "m" },
+        "m": { "who": "narrator", "text": { "fr": "Le soleil franchit l’horizon. Camille sort un stylo de sa poche, hésite longtemps, puis écrit quelque chose tout en haut de la lettre.", "en": "The sun clears the horizon. Camille takes a pen from her pocket, hesitates for a long moment, then writes something at the very top of the letter." }, "next": "n" },
+        "n": { "who": "camille", "expr": "wink", "text": { "fr": "Je ne te dis pas ce que j’ai écrit. Pas encore. Superstition. Tu me fais confiance ?", "en": "I’m not telling you what I wrote. Not yet. Superstition. Do you trust me?" }, "choices": [
+          { "id": "trust", "text": { "fr": "Complètement. Tu me le diras quand tu voudras.", "en": "Completely. Tell me whenever you want." }, "delta": 6, "next": "o" },
+          { "id": "hint", "text": { "fr": "Allez, juste un indice !", "en": "Come on, just a hint!" }, "delta": 3, "next": "p" }
+        ] },
+        "o": { "who": "camille", "expr": "smile", "text": { "fr": "Alors c’est promis : tu le sauras avant tout le monde.", "en": "Then it’s a promise: you’ll know before anyone else." }, "next": "q" },
+        "p": { "who": "camille", "expr": "laugh", "text": { "fr": "Un indice ? Trois lettres. Pas une de plus. C’est tout ce que tu auras !", "en": "A hint? Three letters. Not one more. That’s all you’re getting!" }, "next": "q" },
+        "q": { "who": "camille", "expr": "neutral", "text": { "fr": "Merci d’avoir tenu jusqu’à l’aube avec moi. Va dormir un peu. Moi, je reste regarder le port encore cinq minutes.", "en": "Thanks for staying up till dawn with me. Go get some sleep. I’m going to watch the harbor for five more minutes." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_date_1",
+      "character": "camille",
+      "kind": "date",
+      "minTier": 3,
+      "requires": ["camille_talk_3"],
+      "reservationCents": 5000,
+      "place": "harbor",
+      "title": { "fr": "Coucher de soleil à la voile", "en": "Sunset under sail" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Le port scintille dans la lumière dorée de la fin d’après-midi. Au bout du ponton, Camille agite les bras à côté d’un petit voilier blanc.", "en": "The harbor glitters in the golden late-afternoon light. At the end of the pier, Camille waves both arms beside a little white sailboat." }, "next": "b" },
+        "b": { "who": "camille", "expr": "laugh", "text": { "fr": "Te voilà ! Je te présente Petite Ourse. Elle a trente ans, elle prend un peu l’eau, et c’est le plus beau bateau du port.", "en": "There you are! Meet Little Bear. She’s thirty years old, she leaks a little, and she’s the prettiest boat in the harbor." }, "next": "c" },
+        "c": { "who": "camille", "expr": "wink", "text": { "fr": "Règle numéro un à bord : on ne prononce jamais le mot « lapin ». Ça porte malheur aux marins. Tu sauras tenir ta langue ?", "en": "Rule number one on board: no whistling. Whistle on a boat and you whistle up a storm. Think you can manage?" }, "choices": [
+          { "id": "promise", "text": { "fr": "Promis. Je dirai « animal aux grandes oreilles ».", "en": "Promise. Not a single note." }, "delta": 6, "next": "d" },
+          { "id": "slip", "text": { "fr": "Et si ça m’échappe par accident ?", "en": "And what if I slip up?" }, "delta": 3, "next": "e" },
+          { "id": "defy", "text": { "fr": "Lapin, lapin, lapin. Tu vois ? Il ne se passe rien.", "en": "Fweet-fweeet! See? Not a cloud in the sky." }, "delta": -3, "next": "f" }
+        ] },
+        "d": { "who": "camille", "expr": "smile", "text": { "fr": "Parfait. Tu as droit au gilet de sauvetage rouge, couleur chance. Il te va très bien, d’ailleurs.", "en": "Perfect. You get the red life jacket, the lucky color. It looks good on you, by the way." }, "next": "g" },
+        "e": { "who": "camille", "expr": "thinking", "text": { "fr": "Alors on touche du bois tout de suite. Ça tombe bien, le pont est en teck. Tiens, enfile ce gilet rouge.", "en": "Then you knock on wood right away. Lucky for us, the deck is teak. Here, put on this red life jacket." }, "next": "g" },
+        "f": { "who": "camille", "expr": "surprised", "text": { "fr": "Non ! Vite, touche du bois ! … Bon. Le ciel est toujours bleu. Mais si on chavire, je saurai à qui la faute. Enfile ce gilet.", "en": "No! Quick, knock on wood! … Okay. The sky’s still blue. But if we capsize, I’ll know who to blame. Put this life jacket on." }, "next": "g" },
+        "g": { "who": "narrator", "text": { "fr": "Le moteur ronronne jusqu’à la sortie du port. Puis Camille hisse la grand-voile, coupe le moteur, et soudain il ne reste que le vent et le clapotis.", "en": "The motor purrs all the way to the harbor mouth. Then Camille hoists the mainsail, cuts the engine, and suddenly there’s only the wind and the lap of the water." }, "next": "h" },
+        "h": { "who": "camille", "expr": "smile", "text": { "fr": "Viens, prends la barre. Tu la tires vers toi, le bateau part de l’autre côté. Doucement… Tu sens comme il respire ?", "en": "Come take the tiller. Pull it toward you and the boat turns the other way. Gently… Feel how she breathes?" }, "choices": [
+          { "id": "hand", "text": { "fr": "Je sens surtout ta main sur la mienne.", "en": "Mostly I feel your hand on mine." }, "delta": 6, "next": "i" },
+          { "id": "hard", "text": { "fr": "C’est plus dur que ça en a l’air !", "en": "It’s harder than it looks!" }, "delta": 4, "next": "j" },
+          { "id": "alone", "text": { "fr": "Laisse-moi faire, j’ai compris le principe.", "en": "Let me do it, I’ve got the hang of it." }, "delta": -2, "next": "k" }
+        ] },
+        "i": { "who": "camille", "expr": "blush", "text": { "fr": "Ah. Oui. C’est… pour la sécurité. Uniquement pour la sécurité.", "en": "Oh. Right. That’s… for safety. Strictly for safety." }, "next": "l" },
+        "j": { "who": "camille", "expr": "laugh", "text": { "fr": "Tout le monde dit ça ! Ne la serre pas si fort. Une barre, c’est comme une bille : il faut la laisser vivre un peu.", "en": "Everyone says that! Don’t grip it so hard. A tiller is like a roulette ball: you have to let it breathe a little." }, "next": "l" },
+        "k": { "who": "narrator", "text": { "fr": "Trois secondes plus tard, la voile claque, le bateau se couche sur le côté et une gerbe d’écume te trempe la manche.", "en": "Three seconds later, the sail cracks, the boat heels over hard and a burst of spray soaks your sleeve." }, "next": "k2" },
+        "k2": { "who": "camille", "expr": "laugh", "text": { "fr": "Le vent t’a répondu ! Allez, je reprends la barre, et tu regardes comment je fais.", "en": "The wind had an opinion about that! Okay, I’m taking the tiller back, and you watch how it’s done." }, "next": "l" },
+        "l": { "who": "narrator", "text": { "fr": "Le bateau prend de la vitesse. Camille s’assied sur le bord, une écoute enroulée autour du poignet, les cheveux pleins de sel et de lumière.", "en": "The boat picks up speed. Camille sits on the rail, a line wrapped around her wrist, her hair full of salt and light." }, "next": "m" },
+        "m": { "who": "camille", "expr": "thinking", "text": { "fr": "C’est mon père qui m’a appris. Le dimanche, on sortait avant l’aube. Il disait que la mer, c’est la seule roulette où l’on peut lire la bille avant qu’elle tombe.", "en": "My dad taught me. On Sundays we’d head out before dawn. He used to say the sea is the only roulette where you can read the ball before it drops." }, "next": "n" },
+        "n": { "who": "camille", "expr": "smile", "text": { "fr": "Et toi ? Il existe un endroit où tu te sens vraiment chez toi ?", "en": "What about you? Is there a place where you really feel at home?" }, "choices": [
+          { "id": "here", "text": { "fr": "Ici, en ce moment. Je ne m’y attendais pas.", "en": "Here, right now. I didn’t see that coming." }, "delta": 7, "next": "o" },
+          { "id": "bookshop", "text": { "fr": "Une petite librairie où je perds la notion du temps.", "en": "A little bookshop where I lose all track of time." }, "delta": 4, "next": "p" },
+          { "id": "table", "text": { "fr": "Au casino, devant ta table, évidemment.", "en": "At the casino, at your table, obviously." }, "delta": 3, "next": "q" }
+        ] },
+        "o": { "who": "camille", "expr": "blush", "text": { "fr": "Ici ? Sur Petite Ourse qui prend l’eau ? … D’accord. Je crois que je vais garder cette réponse précieusement.", "en": "Here? On leaky old Little Bear? … Okay. I think I’m going to keep that answer somewhere safe." }, "next": "r" },
+        "p": { "who": "camille", "expr": "smile", "text": { "fr": "Une librairie… Ça te ressemble. Tu me la montreras ? J’y chercherai de vieilles cartes du ciel.", "en": "A bookshop… That sounds like you. Will you show me? I’ll hunt for old star charts." }, "next": "r" },
+        "q": { "who": "camille", "expr": "laugh", "text": { "fr": "Tu dis ça pour me faire plaisir ! Mais ça marche, je l’avoue.", "en": "You’re just saying that to make me happy! But it works, I admit it." }, "next": "r" },
+        "r": { "who": "narrator", "text": { "fr": "Le soleil touche l’eau. Le ciel passe de l’orange au rose, puis au violet, et un premier point de lumière s’allume au-dessus de l’horizon.", "en": "The sun touches the water. The sky slides from orange to pink to violet, and a first point of light switches on above the horizon." }, "next": "s" },
+        "s": { "who": "camille", "expr": "surprised", "text": { "fr": "Regarde ! L’étoile du berger. C’est une planète, en vérité, mais c’est toujours elle qui arrive la première, comme une invitée trop pressée.", "en": "Look! Venus, the evening star. Technically a planet, but she always shows up first, like a guest who couldn’t wait." }, "next": "t" },
+        "t": { "who": "camille", "expr": "thinking", "text": { "fr": "Les marins faisaient un vœu sur elle avant de rentrer au port. Tu veux essayer ? En silence, hein.", "en": "Sailors used to make a wish on her before heading home. Want to try? Silently, mind you." }, "choices": [
+          { "id": "wish", "text": { "fr": "Les yeux fermés, un vœu… Voilà. Et je garde le secret.", "en": "Eyes closed, one wish… There. And my lips are sealed." }, "delta": 6, "next": "u" },
+          { "id": "watch", "text": { "fr": "Je préfère te regarder faire le tien.", "en": "I’d rather watch you make yours." }, "delta": 5, "next": "v" }
+        ] },
+        "u": { "who": "camille", "expr": "smile", "text": { "fr": "Parfait. Moi aussi. Et je parie qu’on a fait le même.", "en": "Perfect. Me too. And I bet we made the same one." }, "next": "w" },
+        "v": { "who": "camille", "expr": "blush", "text": { "fr": "Ne me regarde pas comme ça, je vais rater mon vœu… Voilà. C’est fait. Il est très réussi, mon vœu.", "en": "Don’t look at me like that, I’ll mess up my wish… There. Done. It’s a very good wish." }, "next": "w" },
+        "w": { "who": "narrator", "text": { "fr": "Petite Ourse rentre au port à la nuit tombée. Sur le ponton, Camille l’amarre d’un nœud rapide et précis, puis se tourne vers toi.", "en": "Little Bear glides back into the harbor at nightfall. On the pier, Camille ties her up with a quick, neat knot, then turns to you." }, "next": "x" },
+        "x": { "who": "camille", "expr": "smile", "text": { "fr": "Merci pour ce coucher de soleil. La mer t’aime bien, je l’ai senti. Et moi aussi, je crois.", "en": "Thank you for this sunset. The sea likes you, I could tell. And so do I, I think." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_date_2",
+      "character": "camille",
+      "kind": "date",
+      "minTier": 4,
+      "requires": ["camille_date_1", "camille_talk_4"],
+      "reservationCents": 12000,
+      "place": "museum",
+      "title": { "fr": "Nuit au planétarium", "en": "A night at the planetarium" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Le musée des sciences ouvre ses portes pour une nocturne au planétarium. Sous la grande verrière, Camille t’attend dans une robe bleu nuit semée de minuscules étoiles.", "en": "The science museum is open late for a planetarium night. Under the great glass roof, Camille is waiting for you in a midnight-blue dress scattered with tiny stars." }, "next": "b" },
+        "b": { "who": "camille", "expr": "blush", "text": { "fr": "Ne dis rien sur la robe. Enfin si, dis quelque chose, mais quelque chose de gentil. J’ai brodé les étoiles moi-même, chacune à sa vraie place.", "en": "Don’t say anything about the dress. Well, no, say something, but something nice. I stitched the stars myself, each one in its real place." }, "choices": [
+          { "id": "orion", "text": { "fr": "Je reconnais Orion sur ton épaule. C’est magnifique.", "en": "I can spot Orion on your shoulder. It’s gorgeous." }, "delta": 7, "next": "c" },
+          { "id": "stunning", "text": { "fr": "Tu es superbe ce soir.", "en": "You look stunning tonight." }, "delta": 5, "next": "d" },
+          { "id": "much", "text": { "fr": "C’est un peu chargé, non ?", "en": "Isn’t it a bit much?" }, "delta": -3, "next": "e" }
+        ] },
+        "c": { "who": "camille", "expr": "surprised", "text": { "fr": "Tu as reconnu Orion ! Bételgeuse, c’est un bouton rouge, j’en suis assez fière. Bon, la soirée commence très bien.", "en": "You found Orion! Betelgeuse is a little red button, I’m rather proud of that. Well, this evening is off to a great start." }, "next": "f" },
+        "d": { "who": "camille", "expr": "laugh", "text": { "fr": "Superbe ! Note-le quelque part, je veux pouvoir le relire les jours de pluie.", "en": "Stunning! Write that down somewhere, I want to reread it on rainy days." }, "next": "f" },
+        "e": { "who": "camille", "expr": "sad", "text": { "fr": "Ah… Peut-être. Tant pis, moi je l’aime. Et la Voie lactée aussi est chargée, personne ne s’en plaint.", "en": "Oh… Maybe. Too bad, I love it. And the Milky Way is pretty busy too, but nobody complains about that." }, "next": "f" },
+        "f": { "who": "narrator", "text": { "fr": "Dans la salle ronde, les fauteuils s’inclinent presque à l’horizontale. La lumière baisse, et le dôme se couvre de milliers d’étoiles.", "en": "In the round hall, the seats tilt back until they’re almost flat. The lights dim, and the dome fills with thousands of stars." }, "next": "g" },
+        "g": { "who": "camille", "expr": "wink", "text": { "fr": "Psst. Le présentateur vient de dire que Sirius est l’étoile la plus proche. Faux : c’est la plus brillante. La plus proche, c’est Proxima du Centaure.", "en": "Psst. The presenter just said Sirius is the closest star. Wrong: it’s the brightest. The closest is Proxima Centauri." }, "next": "h" },
+        "h": { "who": "camille", "expr": "laugh", "text": { "fr": "Tu crois que je devrais lever la main ?", "en": "Do you think I should raise my hand?" }, "choices": [
+          { "id": "whisper", "text": { "fr": "Murmure-moi plutôt la vraie version. Je préfère la tienne.", "en": "Whisper me the real version instead. I like yours better." }, "delta": 6, "next": "i" },
+          { "id": "raise", "text": { "fr": "Lève la main, je te soutiens.", "en": "Raise your hand, I’ve got your back." }, "delta": 4, "next": "j" },
+          { "id": "shush", "text": { "fr": "Chut, j’essaie d’écouter.", "en": "Shh, I’m trying to listen." }, "delta": -2, "next": "k" }
+        ] },
+        "i": { "who": "camille", "expr": "blush", "text": { "fr": "D’accord… Alors approche. Tu vois cette tache floue ? C’est Andromède. Sa lumière est partie il y a deux millions et demi d’années, juste pour arriver ce soir.", "en": "Okay… Lean in, then. See that fuzzy smudge? That’s Andromeda. Its light set off two and a half million years ago, just to get here tonight." }, "next": "l" },
+        "j": { "who": "narrator", "text": { "fr": "Camille lève la main, la baisse aussitôt en pouffant, puis la relève. Le présentateur se corrige, et elle te serre le bras, ravie.", "en": "Camille raises her hand, drops it with a giggle, then raises it again. The presenter corrects himself, and she squeezes your arm, delighted." }, "next": "l" },
+        "k": { "who": "camille", "expr": "thinking", "text": { "fr": "Pardon… Je me tais. Mais je pense très fort.", "en": "Sorry… I’ll be quiet. But I’m thinking very loudly." }, "next": "l" },
+        "l": { "who": "narrator", "text": { "fr": "Au-dessus de vous, la Voie lactée se lève lentement. Dans le noir, la main de Camille trouve la tienne sur l’accoudoir.", "en": "Above you, the Milky Way slowly rises. In the dark, Camille’s hand finds yours on the armrest." }, "next": "m" },
+        "m": { "who": "camille", "expr": "thinking", "text": { "fr": "Il faut que je te dise. Tu te souviens de la lettre ? Les trois lettres que j’ai écrites en haut, c’était « OUI ». Je pars au printemps. Six mois.", "en": "I have to tell you something. Remember the letter? The three letters I wrote at the top were “YES.” I leave in the spring. Six months." }, "choices": [
+          { "id": "bravo", "text": { "fr": "C’est merveilleux, Camille. Tu l’as fait !", "en": "That’s wonderful, Camille. You did it!" }, "delta": 6, "next": "n" },
+          { "id": "miss", "text": { "fr": "Six mois… Tu vas me manquer.", "en": "Six months… I’m going to miss you." }, "delta": 5, "next": "o" },
+          { "id": "risky", "text": { "fr": "Tu es sûre ? C’est risqué.", "en": "Are you sure? It’s risky." }, "delta": -2, "next": "p" }
+        ] },
+        "n": { "who": "camille", "expr": "laugh", "text": { "fr": "Je l’ai fait ! Et j’ai appelé mes parents. Mon père a pleuré. De joie, je précise. Il a dit qu’il attendait ce coup de fil depuis sept ans.", "en": "I did it! And I called my parents. My dad cried. Happy tears, I should add. He said he’d been waiting seven years for that call." }, "next": "q" },
+        "o": { "who": "camille", "expr": "sad", "text": { "fr": "Toi aussi. C’est ça le plus dur, en vérité. Pas la mer. Partir juste au moment où quelque chose commence.", "en": "You too. That’s the hardest part, honestly. Not the sea. Leaving right when something is just beginning." }, "next": "q" },
+        "p": { "who": "camille", "expr": "thinking", "text": { "fr": "Oui, c’est risqué. Comme lancer la bille. Mais mon père a pleuré de joie au téléphone, alors je crois que le risque en vaut la peine.", "en": "Yes, it’s risky. Like spinning the ball. But my dad cried happy tears on the phone, so I think it’s worth the risk." }, "next": "q" },
+        "q": { "who": "narrator", "text": { "fr": "Le spectacle se termine. Les lumières reviennent doucement, mais Camille ne lâche pas ta main.", "en": "The show ends. The lights come back up slowly, but Camille doesn’t let go of your hand." }, "next": "r" },
+        "r": { "who": "narrator", "text": { "fr": "Dans le hall, un long pendule oscille au-dessus d’un cercle de petites quilles. Il en renverse une, sans bruit, comme une bille qui choisit sa case.", "en": "In the hall, a long pendulum swings over a ring of little pegs. It tips one over without a sound, like a ball choosing its pocket." }, "next": "s" },
+        "s": { "who": "camille", "expr": "smile", "text": { "fr": "Le pendule de Foucault. Il ne change pas de direction : c’est la Terre qui tourne sous lui. Tout tourne, même quand on croit que rien ne bouge.", "en": "Foucault’s pendulum. It never changes direction: it’s the Earth turning underneath it. Everything turns, even when it feels like nothing’s moving." }, "next": "t" },
+        "t": { "who": "camille", "expr": "thinking", "text": { "fr": "Quand je serai loin, est-ce que tu… Non. Rien. Superstition : on ne pose pas les questions importantes sous un toit.", "en": "When I’m far away, will you… No. Never mind. Superstition: you don’t ask the important questions under a roof." }, "choices": [
+          { "id": "stars", "text": { "fr": "Alors pose-la-moi sous les étoiles. Je t’écouterai.", "en": "Then ask me under the stars. I’ll be listening." }, "delta": 7, "next": "u" },
+          { "id": "anything", "text": { "fr": "Tu peux tout me demander, même ici.", "en": "You can ask me anything, even here." }, "delta": 4, "next": "v" }
+        ] },
+        "u": { "who": "camille", "expr": "blush", "text": { "fr": "Sous les étoiles… D’accord. Le 13 décembre, ce sont les Géminides : des dizaines d’étoiles filantes par heure. Tu me retrouves sur la plage ?", "en": "Under the stars… Okay. December 13th is the Geminids: dozens of shooting stars an hour. Meet me on the beach?" }, "next": "w" },
+        "v": { "who": "camille", "expr": "smile", "text": { "fr": "Je sais. C’est pour ça que je veux attendre le bon moment. Les Géminides, le 13 décembre, sur la plage. Tu viendras ?", "en": "I know. That’s why I want to wait for the right moment. The Geminids, December 13th, on the beach. Will you come?" }, "next": "w" },
+        "w": { "who": "narrator", "text": { "fr": "Elle écrit la date au stylo sur le dos de ta main, à côté d’une petite étoile dessinée à la hâte.", "en": "She writes the date in pen on the back of your hand, next to a little star she draws in a hurry." }, "next": "x" },
+        "x": { "who": "camille", "expr": "wink", "text": { "fr": "Comme ça, tu ne pourras pas oublier. Et ne te lave pas la main avant, ça porte malheur. Je plaisante. À moitié.", "en": "That way you can’t forget. And don’t wash that hand before then, it’s bad luck. I’m kidding. Half kidding." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_finale",
+      "character": "camille",
+      "kind": "finale",
+      "minTier": 5,
+      "requires": ["camille_date_2"],
+      "reservationCents": 20000,
+      "place": "beach",
+      "title": { "fr": "Pluie d’étoiles", "en": "Starfall" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "13 décembre, minuit passé. La plage est déserte, le sable froid, et le ciel d’un noir parfait. Une couverture attend au pied des dunes.", "en": "December 13th, just past midnight. The beach is deserted, the sand is cold, and the sky is perfectly black. A blanket waits at the foot of the dunes." }, "next": "b" },
+        "b": { "who": "camille", "expr": "laugh", "text": { "fr": "Te voilà ! J’avais peur que tu te sois lavé la main.", "en": "There you are! I was afraid you’d washed that hand." }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "Elle a apporté deux plaids, un thermos de chocolat chaud et une bouteille de champagne plantée dans le sable, avec deux coupes.", "en": "She’s brought two throws, a thermos of hot chocolate and a bottle of champagne planted in the sand, with two glasses." }, "next": "d" },
+        "d": { "who": "camille", "expr": "wink", "text": { "fr": "Une coupe, pas plus. Le champagne, c’est pour les grandes occasions, et ce soir en est une. On trinque à quoi ?", "en": "One glass, no more. Champagne is for big occasions, and tonight is one. What shall we toast to?" }, "choices": [
+          { "id": "season", "text": { "fr": "À toi, et à ta saison en mer.", "en": "To you, and your season at sea." }, "delta": 6, "next": "e" },
+          { "id": "wheel", "text": { "fr": "À la roulette. Sans elle, on ne se serait jamais parlé.", "en": "To the roulette wheel. Without it, we’d never have met." }, "delta": 7, "next": "f" },
+          { "id": "cold", "text": { "fr": "À ce que tu veux, mais vite : il fait un froid de canard !", "en": "To anything you like, but quickly: it’s freezing!" }, "delta": 2, "next": "g" }
+        ] },
+        "e": { "who": "camille", "expr": "blush", "text": { "fr": "À ma saison en mer… et à ce qui m’attendra au retour. Tchin.", "en": "To my season at sea… and to whatever will be waiting for me when I get back. Cheers." }, "next": "h" },
+        "f": { "who": "camille", "expr": "laugh", "text": { "fr": "À la roue ! C’est elle qui a choisi ta place, pile en face de moi. Je te l’ai toujours dit : elle sait ce qu’elle fait.", "en": "To the wheel! It put you right across from me. I always told you: it knows what it’s doing." }, "next": "h" },
+        "g": { "who": "camille", "expr": "laugh", "text": { "fr": "Tu as raison, j’ai les doigts gelés ! Tchin. Viens sous le plaid, on sera mieux.", "en": "You’re right, my fingers are frozen! Cheers. Come under the throw, it’s warmer." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Une première étoile filante, puis une deuxième. Camille pousse un petit cri à chacune, comme si c’était la toute première de sa vie.", "en": "One shooting star, then another. Camille lets out a little gasp at each one, as if it were the very first of her life." }, "next": "i" },
+        "i": { "who": "camille", "expr": "blush", "text": { "fr": "J’ai un cadeau pour toi. Une carte du ciel, dessinée à la main : le ciel exact du premier soir où tu as joué à ma table.", "en": "I have a gift for you. A star map, drawn by hand: the exact sky from the first night you played at my table." }, "next": "j" },
+        "j": { "who": "narrator", "text": { "fr": "Sur le papier épais, des centaines de points à l’encre dorée. Dans un coin, d’une petite écriture ronde : « Le soir où la bille a bien choisi. »", "en": "On the thick paper, hundreds of dots in gold ink. In one corner, in small round handwriting: “The night the ball chose well.”" }, "next": "k" },
+        "k": { "who": "camille", "expr": "thinking", "text": { "fr": "Ça m’a pris trois semaines. J’ai recalculé la position de chaque planète. Tu trouves ça bizarre ?", "en": "It took me three weeks. I recalculated where every planet was that night. Do you think that’s weird?" }, "choices": [
+          { "id": "best", "text": { "fr": "C’est le plus beau cadeau qu’on m’ait jamais fait.", "en": "It’s the most beautiful gift anyone has ever given me." }, "delta": 8, "next": "l" },
+          { "id": "clover", "text": { "fr": "Moi aussi, j’ai un porte-bonheur pour toi : un trèfle à quatre feuilles, pour la mer.", "en": "I brought you a lucky charm too: a four-leaf clover, for the sea." }, "delta": 8, "next": "m", "if": { "seen": "camille_small_trefle" } },
+          { "id": "weird", "text": { "fr": "Un peu bizarre, oui. Mais j’adore.", "en": "A little weird, yes. But I love it." }, "delta": 3, "next": "l" }
+        ] },
+        "l": { "who": "camille", "expr": "blush", "text": { "fr": "Tant mieux. Comme ça, même au milieu de l’Atlantique, je saurai qu’il y a un bout de mon ciel chez toi.", "en": "Good. That way, even in the middle of the Atlantic, I’ll know there’s a piece of my sky at your place." }, "next": "n" },
+        "m": { "who": "camille", "expr": "surprised", "text": { "fr": "Un trèfle à quatre feuilles ? Tu n’as pas oublié le coup de Nora… Il faut des semaines pour en trouver un ! Je l’emporte. Il ne me quittera pas.", "en": "A four-leaf clover? You remembered Nora’s little trick… It takes weeks to find one! I’m taking it with me. It won’t leave my side." }, "next": "n" },
+        "n": { "who": "narrator", "text": { "fr": "Le vent tombe. Camille replie les genoux sous le plaid et regarde la mer, là où l’horizon se confond avec le ciel.", "en": "The wind drops. Camille tucks her knees under the throw and gazes out to sea, where the horizon melts into the sky." }, "next": "o" },
+        "o": { "who": "camille", "expr": "sad", "text": { "fr": "Tu sais, la question que je n’ai pas osé poser au planétarium… Ce n’est pas la mer qui me fait peur. C’est revenir et découvrir que tout a changé. Que les gens ont arrêté d’attendre.", "en": "You know, the question I didn’t dare ask at the planetarium… It’s not the sea that scares me. It’s coming back and finding everything has changed. That people stopped waiting." }, "next": "p" },
+        "p": { "who": "camille", "expr": "thinking", "text": { "fr": "Je déteste perdre, tu le sais. Mais pour une fois, j’ai peur de perdre quelque chose qui n’est pas un jeu. Est-ce que tu seras encore là, à mon retour ?", "en": "I hate losing, you know that. But for once, I’m scared of losing something that isn’t a game. Will you still be here when I come back?" }, "choices": [
+          { "id": "dock", "text": { "fr": "Je serai sur le quai, ta carte du ciel sous le bras.", "en": "I’ll be on the dock, with your star map under my arm." }, "delta": 8, "next": "q" },
+          { "id": "light", "text": { "fr": "Six mois, ce n’est rien. La lumière des étoiles met bien plus longtemps.", "en": "Six months is nothing. Starlight takes far longer to get here." }, "delta": 6, "next": "r" },
+          { "id": "try", "text": { "fr": "Je ne peux rien promettre, mais j’ai envie d’essayer.", "en": "I can’t promise anything, but I want to try." }, "delta": 3, "next": "s" }
+        ] },
+        "q": { "who": "camille", "expr": "blush", "text": { "fr": "Sur le quai… Je vais m’accrocher à cette image pendant toutes mes nuits de quart.", "en": "On the dock… I’m going to hold on to that picture through every night watch." }, "next": "t" },
+        "r": { "who": "camille", "expr": "smile", "text": { "fr": "Tu as raison. La lumière d’Andromède a voyagé deux millions et demi d’années. Je peux bien patienter six mois. Et toi aussi.", "en": "You’re right. Andromeda’s light traveled two and a half million years. I can manage six months. And so can you." }, "next": "t" },
+        "s": { "who": "camille", "expr": "thinking", "text": { "fr": "Essayer, c’est honnête. Ça me va. C’est même plus que ce que la roue m’a jamais promis.", "en": "Trying is honest. I’ll take it. It’s more than the wheel ever promised me." }, "next": "t" },
+        "t": { "who": "narrator", "text": { "fr": "Soudain, une étoile filante immense traverse le ciel d’un bout à l’autre et laisse une traînée verte au-dessus de la mer.", "en": "Suddenly, a huge shooting star crosses the entire sky and leaves a green trail hanging over the sea." }, "next": "u" },
+        "u": { "who": "camille", "expr": "surprised", "text": { "fr": "Tu as vu ?! Celle-là, c’était la plus belle de toute ma vie. Vite, un vœu !", "en": "Did you see that?! That was the most beautiful one of my whole life. Quick, a wish!" }, "next": "v" },
+        "v": { "who": "camille", "expr": "blush", "text": { "fr": "Mon vœu, je n’ai pas le droit de le dire à voix haute, sinon il ne se réalise pas. C’est la règle. Mais je pourrais peut-être… te le montrer ?", "en": "I can’t say my wish out loud, or it won’t come true. That’s the rule. But maybe I could… show you?" }, "choices": [
+          { "id": "show", "text": { "fr": "Montre-moi.", "en": "Show me." }, "delta": 8, "next": "w" },
+          { "id": "same", "text": { "fr": "Je crois que j’ai fait le même vœu.", "en": "I think I made the same wish." }, "delta": 7, "next": "w" },
+          { "id": "slow", "text": { "fr": "Prenons notre temps. On a tout l’hiver devant nous.", "en": "Let’s take our time. We have the whole winter ahead of us." }, "delta": 3, "next": "x" }
+        ] },
+        "w": { "who": "narrator", "text": { "fr": "Camille se penche vers toi, une main froide posée sur ta joue, et t’embrasse doucement, tandis qu’au-dessus de vous le ciel continue de pleuvoir des étoiles.", "en": "Camille leans in, one cold hand on your cheek, and kisses you softly, while above you the sky keeps raining stars." }, "next": "y" },
+        "y": { "who": "camille", "expr": "smile", "text": { "fr": "Voilà. Mon vœu est en train de se réaliser.", "en": "There. My wish is coming true." }, "end": true, "fade": true },
+        "x": { "who": "camille", "expr": "smile", "text": { "fr": "Tout l’hiver… Tu as raison. Alors pour ce soir, juste ça.", "en": "The whole winter… You’re right. Then for tonight, just this." }, "next": "x2" },
+        "x2": { "who": "narrator", "text": { "fr": "Elle glisse sa main dans la tienne et pose la tête sur ton épaule. Vous comptez les étoiles filantes jusqu’à ce que l’aube les efface une à une.", "en": "She slips her hand into yours and rests her head on your shoulder. Together you count shooting stars until dawn erases them one by one." }, "end": true, "fade": true }
+      }
+    },
+    {
+      "id": "camille_small_trefle",
+      "character": "camille",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Le trèfle envolé", "en": "The vanishing clover" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Entre deux tours de roue, Camille fouille ses poches, puis le dessous de sa table, puis à nouveau ses poches.", "en": "Between two spins, Camille checks her pockets, then under her table, then her pockets again." }, "next": "b" },
+        "b": { "who": "camille", "expr": "surprised", "text": { "fr": "Mon trèfle à quatre feuilles ! Il était épinglé sous mon badge. Sans lui, je ne lance pas la bille, c’est la règle.", "en": "My four-leaf clover! It was pinned under my name tag. I don’t spin without it, that’s the rule." }, "choices": [
+          { "id": "help", "text": { "fr": "Je t’aide à chercher. Il ne doit pas être bien loin.", "en": "Let me help you look. It can’t have gone far." }, "delta": 4, "next": "c" },
+          { "id": "nora", "text": { "fr": "Nora est passée par ici il y a deux minutes…", "en": "Nora walked past here two minutes ago…" }, "delta": 6, "next": "d" },
+          { "id": "luck", "text": { "fr": "Lance quand même. La chance, ça n’existe pas.", "en": "Just spin anyway. There’s no such thing as luck." }, "delta": -3, "next": "f" }
+        ] },
+        "c": { "who": "narrator", "text": { "fr": "Vous cherchez sous le tapis vert, côte à côte. Rien. Puis Camille s’immobilise et plonge la main dans sa poche gauche.", "en": "You search under the green felt side by side. Nothing. Then Camille freezes and slips a hand into her left pocket." }, "next": "g" },
+        "d": { "who": "camille", "expr": "laugh", "text": { "fr": "Nora ! Évidemment. Elle fait disparaître les montres, et maintenant elle s’attaque aux porte-bonheur.", "en": "Nora! Of course. She makes watches vanish, and now she’s moved on to lucky charms." }, "next": "e" },
+        "e": { "who": "nora", "expr": "wink", "text": { "fr": "Je n’ai rien volé, je l’ai mis à l’abri. Regarde dans ta poche gauche, Camille. Il y a un petit mot avec.", "en": "I didn’t steal anything, I kept it safe. Check your left pocket, Camille. There’s a note with it." }, "next": "g" },
+        "f": { "who": "camille", "expr": "sad", "text": { "fr": "Dit comme ça… Mais moi, j’y crois. Et la roue le sent, je te jure. Attends, ma poche gauche…", "en": "When you put it like that… But I believe in it. And the wheel can tell, I swear. Wait, my left pocket…" }, "next": "g" },
+        "g": { "who": "narrator", "text": { "fr": "Le trèfle est là, avec une carte signée Nora : « La chance revient toujours à qui la cherche. »", "en": "The clover is there, along with a card signed by Nora: “Luck always comes back to whoever looks for it.”" }, "next": "h" },
+        "h": { "who": "camille", "expr": "smile", "text": { "fr": "Ouf. Maintenant, je peux lancer. Tu choisis un numéro ? On dirait que tu portes chance.", "en": "Phew. Now I can spin. Want to pick a number? Looks like you bring luck." }, "choices": [
+          { "id": "four", "text": { "fr": "Le 4. Comme les feuilles du trèfle.", "en": "Four. Like the clover’s leaves." }, "delta": 4, "next": "i" },
+          { "id": "yours", "text": { "fr": "Choisis, toi. C’est ta roue.", "en": "You pick. It’s your wheel." }, "delta": 2, "next": "j" }
+        ] },
+        "i": { "who": "camille", "expr": "laugh", "text": { "fr": "Le 4 ! Si ça tombe dessus, je te dois une coupe de champagne. Croise les doigts.", "en": "Four! If it lands there, I owe you a glass of champagne. Fingers crossed." }, "end": true },
+        "j": { "who": "camille", "expr": "wink", "text": { "fr": "Alors je pense très fort au 7, mon chiffre fétiche. Croise les doigts avec moi.", "en": "Then I’m thinking really hard about 7, my lucky number. Cross your fingers with me." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_small_cafe",
+      "character": "camille",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "bar",
+      "title": { "fr": "Pas de café, merci", "en": "No coffee, thanks" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au bar, Jade aligne des tasses fumantes. Camille arrive pour sa pause et recule d’un pas devant l’odeur.", "en": "At the bar, Jade is lining up steaming cups. Camille arrives on her break and takes a step back from the smell." }, "next": "b" },
+        "b": { "who": "jade", "expr": "wink", "text": { "fr": "Un petit serré, Camille ? Pour tenir jusqu’à la fermeture.", "en": "Quick espresso, Camille? To make it to closing time." }, "next": "c" },
+        "c": { "who": "camille", "expr": "laugh", "text": { "fr": "Surtout pas ! Une gorgée et la bille part dans le salon d’à côté. Mes mains tremblent comme une voile qui faseye.", "en": "Absolutely not! One sip and the ball ends up in the next room. My hands flap like a luffing sail." }, "next": "d" },
+        "d": { "who": "camille", "expr": "thinking", "text": { "fr": "Et toi, tu bois quoi pour tenir la nuit ?", "en": "What about you? What gets you through the night?" }, "choices": [
+          { "id": "mocktail", "text": { "fr": "Un mocktail. Jade m’en invente un nouveau à chaque fois.", "en": "A mocktail. Jade invents a new one for me every time." }, "delta": 4, "next": "e" },
+          { "id": "espresso", "text": { "fr": "Un café bien serré. Ça ne me fait rien du tout.", "en": "A strong coffee. It doesn’t do a thing to me." }, "delta": 2, "next": "f" },
+          { "id": "order", "text": { "fr": "Je te commande quelque chose sans caféine ?", "en": "Can I get you something caffeine-free?" }, "delta": 6, "next": "g" }
+        ] },
+        "e": { "who": "jade", "expr": "smile", "text": { "fr": "Celui de ce soir, je l’ai baptisé en ton honneur : « Bonne Pioche ». Fraise, citron vert, une pointe de basilic.", "en": "I named tonight’s in your honor: “Lucky Draw.” Strawberry, lime, a hint of basil." }, "next": "h" },
+        "f": { "who": "camille", "expr": "surprised", "text": { "fr": "Rien du tout ? Tu es une énigme. Moi, je serais déjà en train de compter les étoiles en plein jour.", "en": "Nothing at all? You’re a mystery. I’d already be counting stars in broad daylight." }, "next": "h" },
+        "g": { "who": "camille", "expr": "blush", "text": { "fr": "Oh, c’est gentil… Une citronnade, alors. Avec une paille. Oui, comme une enfant de six ans.", "en": "Oh, that’s sweet… A lemonade, then. With a straw. Yes, like a six-year-old." }, "next": "h" },
+        "h": { "who": "camille", "expr": "smile", "text": { "fr": "Merci de m’avoir tenu compagnie. Les pauses passent toujours trop vite en bonne compagnie.", "en": "Thanks for keeping me company. Breaks always fly by when the company is good." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_small_vent",
+      "character": "camille",
+      "kind": "smalltalk",
+      "minTier": 2,
+      "requires": [],
+      "place": "restaurant",
+      "title": { "fr": "Bulletin météo marine", "en": "Shipping forecast" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au restaurant du casino, Camille déjeune près d’une fenêtre ouverte, un œil sur le ciel et l’autre sur son téléphone, où une application de vent clignote en bleu.", "en": "At the casino restaurant, Camille is having lunch by an open window, one eye on the sky and the other on her phone, where a wind app is blinking blue." }, "next": "b" },
+        "b": { "who": "camille", "expr": "thinking", "text": { "fr": "Quinze nœuds de nord-ouest samedi… Parfait pour sortir en mer. Tu sais lire les nuages, toi ?", "en": "Fifteen knots from the northwest on Saturday… Perfect for sailing. Can you read clouds?" }, "choices": [
+          { "id": "die", "text": { "fr": "Celui-là ressemble à un dé à six faces.", "en": "That one looks like a six-sided die." }, "delta": 3, "next": "c" },
+          { "id": "teach", "text": { "fr": "Pas du tout. Tu m’apprends ?", "en": "Not at all. Will you teach me?" }, "delta": 6, "next": "d" },
+          { "id": "wrong", "text": { "fr": "La météo se trompe tout le temps, de toute façon.", "en": "Forecasts are always wrong anyway." }, "delta": -2, "next": "e" }
+        ] },
+        "c": { "who": "camille", "expr": "laugh", "text": { "fr": "Un dé ! Marco serait ravi. Moi, j’y vois surtout un cumulus qui promet du beau temps.", "en": "A die! Marco would love that. I mostly see a cumulus promising nice weather." }, "next": "f" },
+        "d": { "who": "camille", "expr": "smile", "text": { "fr": "Avec plaisir. Les petits moutons ronds, c’est le beau temps. Les longues traînées tout là-haut annoncent du vent pour demain.", "en": "Gladly. Little round puffs mean fair weather. Long wisps way up high mean wind tomorrow." }, "next": "f" },
+        "e": { "who": "camille", "expr": "wink", "text": { "fr": "Tout le temps ? Alors pari tenu : si le vent est au rendez-vous samedi, tu me dois une citronnade.", "en": "Always? Then it’s a bet: if the wind shows up on Saturday, you owe me a lemonade." }, "next": "f" },
+        "f": { "who": "narrator", "text": { "fr": "Par la fenêtre, un souffle tiède soulève ses mèches rousses. Elle ferme les yeux une seconde, comme si elle sentait déjà la barre sous ses doigts.", "en": "Through the window, a warm breeze lifts her red curls. She closes her eyes for a second, as if she could already feel the tiller in her hands." }, "next": "g" },
+        "g": { "who": "camille", "expr": "smile", "text": { "fr": "Samedi, je serai sur l’eau. Ce soir, je suis à la roue. Les deux me font tourner la tête, chacune à sa façon.", "en": "Saturday, I’ll be on the water. Tonight, I’m at the wheel. Both make my head spin, each in its own way." }, "end": true }
+      }
+    },
+    {
+      "id": "camille_small_lune",
+      "character": "camille",
+      "kind": "smalltalk",
+      "minTier": 3,
+      "requires": [],
+      "place": "garden",
+      "title": { "fr": "Croissant de lune", "en": "Crescent moon" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Dans le jardin du casino, Camille t’attrape par la manche et pointe le ciel au-dessus des palmiers.", "en": "In the casino garden, Camille tugs at your sleeve and points at the sky above the palm trees." }, "next": "b" },
+        "b": { "who": "camille", "expr": "surprised", "text": { "fr": "Regarde ! Le croissant de lune, et l’étoile du berger juste à côté. On dirait un sourire avec un grain de beauté.", "en": "Look! The crescent moon, with Venus right beside it. Like a smile with a beauty mark." }, "choices": [
+          { "id": "smile", "text": { "fr": "Un sourire comme le tien, alors.", "en": "A smile like yours, then." }, "delta": 6, "next": "c" },
+          { "id": "plane", "text": { "fr": "L’étoile du berger ? Je croyais que c’était un avion.", "en": "The evening star? I thought that was a plane." }, "delta": 3, "next": "d" },
+          { "id": "lucky", "text": { "fr": "Et d’après toi, ça porte bonheur ?", "en": "So, is that lucky, in your book?" }, "delta": 4, "next": "e" }
+        ] },
+        "c": { "who": "camille", "expr": "blush", "text": { "fr": "Oh… Tu sais que je rougis plus vite que la case 32 ? Arrête, sinon je ne pourrai plus regarder la lune sans y penser.", "en": "Oh… You know I turn red faster than pocket 32? Stop it, or I’ll never be able to look at the moon without thinking of that." }, "next": "f" },
+        "d": { "who": "camille", "expr": "laugh", "text": { "fr": "Un avion qui ne bouge pas depuis une heure ? Ce serait le pire pilote du monde ! Non, c’est bien l’étoile du berger. Une planète, d’ailleurs, mais chut.", "en": "A plane that hasn’t moved in an hour? Worst pilot in the world! No, that really is Venus. A planet, by the way, not a star." }, "next": "f" },
+        "e": { "who": "camille", "expr": "thinking", "text": { "fr": "D’après ma grand-mère, oui : il faut retourner une pièce dans sa poche. D’après mon télescope, c’est juste de la géométrie. Je garde les deux.", "en": "According to my grandmother, yes: you flip a coin over in your pocket. According to my telescope, it’s just geometry. I keep both." }, "next": "f" },
+        "f": { "who": "narrator", "text": { "fr": "Vous restez un moment sans rien dire, le nez levé, pendant que la musique du salon s’échappe par les fenêtres ouvertes.", "en": "You stay quiet for a while, faces tilted up, as music from the lounge drifts out through the open windows." }, "next": "g" },
+        "g": { "who": "camille", "expr": "smile", "text": { "fr": "Merci d’avoir pris le temps de regarder avec moi. Ici, peu de gens lèvent la tête.", "en": "Thanks for taking the time to look with me. Not many people look up around here." }, "end": true }
+      }
+    }
+  ]
+}

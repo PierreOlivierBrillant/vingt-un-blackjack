@@ -1,0 +1,62 @@
+{
+  "character": "nora",
+  "scenes": [
+    {
+      "id": "nora_small_watch",
+      "character": "nora",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "bar",
+      "title": { "fr": "L’heure envolée", "en": "Time flies" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au bar, une femme en veste à paillettes fait rouler une pièce sur ses phalanges. Elle te sourit comme si elle connaissait déjà la fin de l’histoire.", "en": "At the bar, a woman in a sequined jacket rolls a coin across her knuckles. She smiles at you as if she already knew how the story ends." }, "next": "b" },
+        "b": { "who": "nora", "expr": "wink", "text": { "fr": "Bonsoir. Quelle heure est-il, à ton avis ?", "en": "Good evening. What time is it, would you say?" }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "Ton poignet est vide. Ta montre a disparu. À sa place, un petit carton plié : « Pas si vite. »", "en": "Your wrist is empty. Your watch is gone. In its place, a small folded card: “Not so fast.”" }, "next": "d" },
+        "d": { "who": "nora", "expr": "laugh", "text": { "fr": "Je suis Nora, la magicienne de la maison. Et toi, tu as l’air de quelqu’un qui va réagir de façon intéressante.", "en": "I’m Nora, the house magician. And you look like someone who’s about to react in an interesting way." },
+          "choices": [
+            { "id": "bravo", "text": { "fr": "Bravo. Je n’ai rien senti du tout.", "en": "Bravo. I didn’t feel a thing." }, "delta": 2, "next": "e" },
+            { "id": "secret", "text": { "fr": "Garde-la. Je préfère savoir comment tu as fait.", "en": "Keep it. I’d rather know how you did it." }, "delta": 6, "next": "f" },
+            { "id": "give_back", "text": { "fr": "Rends-moi ça tout de suite, ce n’est pas drôle.", "en": "Give that back right now, it’s not funny." }, "delta": -3, "next": "g" }
+          ] },
+        "e": { "who": "nora", "expr": "neutral", "text": { "fr": "« Bravo », c’est ce que tout le monde dit. Tu me déçois un tout petit peu… mais tu as encore le temps de me surprendre.", "en": "“Bravo” is what everyone says. You disappoint me a tiny bit… but there’s still time to surprise me." }, "next": "h" },
+        "f": { "who": "nora", "expr": "surprised", "text": { "fr": "Oh ! Tu ne veux pas ta montre, tu veux le secret ? On ne me l’avait jamais faite, celle-là. Mais un secret de magicienne, ça se mérite.", "en": "Oh! You don’t want the watch, you want the secret? Nobody’s ever tried that one. But a magician’s secret has to be earned." }, "next": "h" },
+        "g": { "who": "nora", "expr": "sad", "text": { "fr": "D’accord, d’accord. Mais tu remarqueras que je la rends toujours. Avec un mot. Je suis une voleuse très bien élevée.", "en": "All right, all right. But you’ll notice I always give it back. With a note. I’m a very well-mannered thief." }, "next": "h" },
+        "h": { "who": "nora", "expr": "wink", "text": { "fr": "Ne t’habitue pas à ce tour. La prochaine fois, ce sera autre chose. Je déteste être prévisible.", "en": "Don’t get used to that trick. Next time it’ll be something else. I hate being predictable." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Nora claque des doigts. La montre est de retour à ton poignet, pile à l’heure. Le carton, lui, a changé : « À bientôt. »", "en": "Nora snaps her fingers. The watch is back on your wrist, right on time. The card has changed: “See you soon.”" }, "end": true }
+      }
+    },
+    {
+      "id": "nora_small_claw",
+      "character": "nora",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "arcade",
+      "title": { "fr": "La pince capricieuse", "en": "The fickle claw" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Dans la salle d’arcade, Nora fait face à une machine à pince. Elle n’a pas mis de jeton. La pince bouge quand même.", "en": "In the arcade, Nora is facing a claw machine. She hasn’t put in a token. The claw moves anyway." }, "next": "b" },
+        "b": { "who": "nora", "expr": "wink", "text": { "fr": "Chut. Cette machine et moi, on a un arrangement. Choisis une peluche. Attention : si tu prends celle que j’ai devinée, tu as perdu.", "en": "Shh. This machine and I have an arrangement. Pick a plush toy. Careful: if you choose the one I predicted, you lose." },
+          "choices": [
+            { "id": "octopus", "text": { "fr": "La pieuvre violette au fond, coincée sous les autres.", "en": "The purple octopus at the back, stuck under the others." }, "delta": 5, "next": "c" },
+            { "id": "the_claw", "text": { "fr": "Aucune. Je choisis la pince elle-même.", "en": "None. I pick the claw itself." }, "delta": 6, "next": "d" },
+            { "id": "teddy", "text": { "fr": "Le gros ours en peluche, devant. Un classique.", "en": "The big teddy bear at the front. A classic." }, "delta": -2, "next": "e" }
+          ] },
+        "c": { "who": "nora", "expr": "surprised", "text": { "fr": "La pieuvre ? Personne ne prend la pieuvre. Bon. Elle avait l’air d’attendre quelqu’un comme toi depuis des années.", "en": "The octopus? Nobody picks the octopus. Well. It looks like it’s been waiting years for someone like you." }, "next": "f" },
+        "d": { "who": "nora", "expr": "laugh", "text": { "fr": "La pince ! Ha ! Celle-là, je ne l’avais pas vue venir. Tu sais que tu viens de me battre à mon propre jeu ?", "en": "The claw! Ha! I did not see that coming. You know you just beat me at my own game?" }, "next": "f" },
+        "e": { "who": "nora", "expr": "thinking", "text": { "fr": "L’ours. Je l’avais écrit sur ce papier avant ton arrivée. Regarde. Raté… mais merci de jouer le jeu.", "en": "The bear. I wrote it on this slip before you arrived. Look. Missed… but thanks for playing along." }, "next": "f" },
+        "f": { "who": "narrator", "text": { "fr": "Nora pose la main sur le levier. La pince plonge, attrape, remonte… et revient sans peluche, avec un petit carton plié coincé entre ses doigts de métal.", "en": "Nora rests a hand on the lever. The claw dives, grabs, rises… and comes back with no plush, just a small folded card wedged in its metal fingers." }, "next": "g" },
+        "g": { "who": "nora", "expr": "blush", "text": { "fr": "Ah. Celui-là, je ne l’avais pas prévu pour aujourd’hui. Tu le lis maintenant ou tu le gardes pour plus tard ?", "en": "Ah. That one wasn’t meant for today. Will you read it now or keep it for later?" },
+          "choices": [
+            { "id": "read", "text": { "fr": "Je le lis maintenant. Je n’ai aucune patience.", "en": "I’ll read it now. I have zero patience." }, "delta": 3, "next": "h" },
+            { "id": "keep", "text": { "fr": "Je le garde. Un peu de mystère ne fait pas de mal.", "en": "I’ll keep it. A little mystery never hurt." }, "delta": 4, "next": "i" }
+          ] },
+        "h": { "who": "nora", "expr": "laugh", "text": { "fr": "« Tu vas sourire en lisant ceci. » Tu vois ? Tu souris. Je ne me trompe jamais… presque jamais.", "en": "“You’ll smile reading this.” See? You’re smiling. I’m never wrong… almost never." }, "next": "end" },
+        "i": { "who": "nora", "expr": "surprised", "text": { "fr": "Tu le gardes ? Personne ne fait ça. Décidément, tu ruines toutes mes prédictions. J’adore ça.", "en": "You’re keeping it? Nobody does that. You keep ruining all my predictions. I love it." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Nora tapote la vitre, et la machine clignote comme pour lui répondre. Quand tu te retournes, la magicienne a disparu. Il ne reste qu’une pièce qui tourne encore sur le comptoir.", "en": "Nora taps the glass, and the machine blinks as if answering her. When you turn around, the magician is gone. Only a coin is left, still spinning on the counter." }, "end": true }
+      }
+    }
+  ]
+}

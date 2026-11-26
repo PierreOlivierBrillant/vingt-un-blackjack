@@ -1,0 +1,61 @@
+{
+  "character": "marco",
+  "scenes": [
+    {
+      "id": "marco_small_dice",
+      "character": "marco",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Des dés et de la pâte", "en": "Dice and dough" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "À la table de craps, un rire énorme couvre le bruit des machines. Le croupier fait tourner deux dés sur le bout de son doigt, comme une pâte à pizza.", "en": "At the craps table, a huge laugh drowns out the slot machines. The croupier spins two dice on a fingertip, like pizza dough." }, "next": "b" },
+        "b": { "who": "marco", "expr": "laugh", "text": { "fr": "Benvenuto ! Approche, approche ! Moi, c’est Marco. Ici, les dés sont chauds et l’ambiance aussi !", "en": "Benvenuto! Come closer, come closer! I’m Marco. Here the dice are hot and so is the mood!" }, "next": "c" },
+        "c": { "who": "marco", "expr": "wink", "text": { "fr": "Règle de la maison : la première fois, on souffle sur les dés. Pour la chance. Tu veux essayer ?", "en": "House rule: the first time, you blow on the dice. For luck. Want to try?" },
+          "choices": [
+            { "id": "blow", "text": { "fr": "Allez, pour la chance ! Je souffle de toutes mes forces.", "en": "Go on, for luck! I’ll blow with all my might." }, "delta": 5, "next": "d" },
+            { "id": "spin", "text": { "fr": "Montre-moi plutôt ton tour de la pâte à pizza.", "en": "Show me your pizza dough trick instead." }, "delta": 6, "next": "e" },
+            { "id": "germs", "text": { "fr": "Souffler sur des dés ? Ce n’est pas très hygiénique.", "en": "Blow on dice? That’s not very hygienic." }, "delta": -2, "next": "f" }
+          ] },
+        "d": { "who": "marco", "expr": "laugh", "text": { "fr": "Mamma mia, quel souffle ! Les dés ont failli s’envoler jusqu’au bar. Ça, c’est de l’enthousiasme !", "en": "Mamma mia, what a breath! The dice nearly flew to the bar. Now that’s enthusiasm!" }, "next": "g" },
+        "e": { "who": "marco", "expr": "smile", "text": { "fr": "Ah, une personne de goût ! Regarde : on lance, on tourne, on rattrape. Comme à Naples, dans la pizzeria de mon oncle.", "en": "Ah, a person of taste! Watch: toss, spin, catch. Just like in Naples, in my uncle’s pizzeria." }, "next": "g" },
+        "f": { "who": "marco", "expr": "surprised", "text": { "fr": "Hygiénique ? Haha ! Tu parles comme ma nièce Giulia. Sept ans, et elle me fait déjà la leçon sur les microbes.", "en": "Hygienic? Haha! You sound like my niece Giulia. Seven years old and already lecturing me about germs." }, "next": "g" },
+        "g": { "who": "marco", "expr": "smile", "text": { "fr": "Avant, j’étais cuisinier. Maintenant, je pétris la chance au lieu de la farine. C’est moins bon, mais ça fait plus de bruit !", "en": "I used to be a cook. Now I knead luck instead of flour. It tastes worse, but it makes more noise!" }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Les dés roulent sur le tapis et s’arrêtent sur un sept. Le rire de Marco fait se retourner toute la salle.", "en": "The dice tumble across the felt and land on a seven. Marco’s laugh turns every head in the room." }, "end": true }
+      }
+    },
+    {
+      "id": "marco_small_pizza",
+      "character": "marco",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "restaurant",
+      "title": { "fr": "Une pizza qui ne rêve pas", "en": "Pizza without dreams" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au restaurant du casino, Marco fixe une part de pizza comme un lanceur qui vient de sortir un double un.", "en": "At the casino restaurant, Marco stares at a slice of pizza like a shooter who just rolled snake eyes." }, "next": "b" },
+        "b": { "who": "marco", "expr": "sad", "text": { "fr": "Regarde-moi ça. La pâte est triste. Elle n’a pas eu le temps de rêver. Une pâte qui ne rêve pas, c’est une semelle.", "en": "Look at this. The dough is sad. It never had time to dream. Dough that doesn’t dream is a shoe sole." }, "next": "c" },
+        "c": { "who": "marco", "expr": "thinking", "text": { "fr": "Et toi, tu la manges comment, la pizza ? Attention, la réponse compte beaucoup pour moi.", "en": "And you, how do you eat your pizza? Careful, the answer matters a lot to me." },
+          "choices": [
+            { "id": "folded", "text": { "fr": "Pliée en deux, comme à Naples, en marchant.", "en": "Folded in half, like in Naples, while walking." }, "delta": 5, "next": "d" },
+            { "id": "pineapple", "text": { "fr": "Avec de l’ananas. J’assume.", "en": "With pineapple. And proud of it." }, "delta": -2, "next": "e" },
+            { "id": "yours", "text": { "fr": "Je ne sais pas encore. J’attends de goûter la tienne.", "en": "I don’t know yet. I’m waiting to taste yours." }, "delta": 6, "next": "f" }
+          ] },
+        "d": { "who": "marco", "expr": "laugh", "text": { "fr": "Pliée, en marchant ! Bravo ! Tu as un cœur napolitain, je le savais. Ça se voit dans les yeux.", "en": "Folded, on the move! Bravo! You have a Neapolitan heart, I knew it. It shows in the eyes." }, "next": "g" },
+        "e": { "who": "marco", "expr": "surprised", "text": { "fr": "De l’ananas… Mamma mia. Il faut que je m’assoie. Non, je reste debout, pour la dignité. Bon. Personne n’est parfait.", "en": "Pineapple… Mamma mia. I need to sit down. No, I’ll stand, for dignity. Fine. Nobody’s perfect." }, "next": "g" },
+        "f": { "who": "marco", "expr": "blush", "text": { "fr": "La mienne ? Ah… Tu sais parler à un ancien cuisinier, toi. Depuis Naples, je ne l’ai faite que pour ma famille.", "en": "Mine? Ah… You know how to talk to a former cook. Since Naples, I’ve only made it for my family." }, "next": "g" },
+        "g": { "who": "marco", "expr": "smile", "text": { "fr": "Le dimanche, je fais des pizzas pour mes nièces. Elles décorent avec les olives : des sourires, des chats, une fois un dinosaure.", "en": "On Sundays I make pizzas for my nieces. They decorate them with olives: smiley faces, cats, once a dinosaur." },
+          "choices": [
+            { "id": "dino", "text": { "fr": "Un dinosaure en olives ? Je veux voir la photo.", "en": "An olive dinosaur? I need to see the photo." }, "delta": 4, "next": "h" },
+            { "id": "uncle", "text": { "fr": "Elles ont de la chance d’avoir un oncle pareil.", "en": "They’re lucky to have an uncle like you." }, "delta": 3, "next": "i" }
+          ] },
+        "h": { "who": "marco", "expr": "laugh", "text": { "fr": "Tiens, regarde ! Elle est dans mon portefeuille, à côté de ma licence de croupier. Les priorités, tu vois ?", "en": "Here, look! It’s in my wallet, next to my croupier licence. Priorities, you see?" }, "next": "end" },
+        "i": { "who": "marco", "expr": "blush", "text": { "fr": "Arrête, tu vas me faire pleurer dans la pizza, et elle est déjà assez triste comme ça. Grazie, vraiment.", "en": "Stop, you’ll make me cry into the pizza, and it’s sad enough already. Grazie, really." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Marco repousse l’assiette et te fait un clin d’œil. « Un dimanche, je t’en ferai une vraie. Promesse de Napolitain. »", "en": "Marco pushes the plate away and winks. “One Sunday, I’ll make you a real one. A Neapolitan’s promise.”" }, "end": true }
+      }
+    }
+  ]
+}

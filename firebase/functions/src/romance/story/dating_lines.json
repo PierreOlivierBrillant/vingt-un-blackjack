@@ -1,0 +1,548 @@
+{
+ "lines": [
+  {
+   "id": "hello",
+   "kind": "opener",
+   "text": {
+    "fr": "Salut ! Ton profil m’a fait sourire.",
+    "en": "Hi! Your profile made me smile."
+   },
+   "replies": [
+    "hello_back",
+    "thanks_smile",
+    "shy_hi"
+   ]
+  },
+  {
+   "id": "fav_game",
+   "kind": "opener",
+   "text": {
+    "fr": "Alors, c’est quoi ton jeu préféré ici ?",
+    "en": "So, what’s your favourite game here?"
+   },
+   "replies": [
+    "game_cards",
+    "game_wheel",
+    "game_dice",
+    "game_all"
+   ]
+  },
+  {
+   "id": "lucky_day",
+   "kind": "opener",
+   "text": {
+    "fr": "La chance est avec toi aujourd’hui ?",
+    "en": "Is luck on your side today?"
+   },
+   "replies": [
+    "luck_yes",
+    "luck_no",
+    "luck_you"
+   ]
+  },
+  {
+   "id": "coffee_or_tea",
+   "kind": "opener",
+   "text": {
+    "fr": "Question importante : plutôt café ou thé ?",
+    "en": "Important question: coffee or tea?"
+   },
+   "replies": [
+    "coffee",
+    "tea",
+    "neither_juice"
+   ]
+  },
+  {
+   "id": "weekend",
+   "kind": "opener",
+   "text": {
+    "fr": "Un bon plan pour le week-end ?",
+    "en": "Any good plans for the weekend?"
+   },
+   "replies": [
+    "plan_movie",
+    "plan_nature",
+    "plan_games",
+    "plan_rest"
+   ]
+  },
+  {
+   "id": "music",
+   "kind": "opener",
+   "text": {
+    "fr": "Qu’est-ce que tu écoutes en ce moment ?",
+    "en": "What are you listening to these days?"
+   },
+   "replies": [
+    "music_jazz",
+    "music_pop",
+    "music_secret"
+   ]
+  },
+  {
+   "id": "compliment",
+   "kind": "opener",
+   "text": {
+    "fr": "J’adore ton avatar, il a beaucoup de classe.",
+    "en": "Love your avatar, it’s got real class."
+   },
+   "replies": [
+    "compliment_back",
+    "blush",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "play_together",
+   "kind": "opener",
+   "text": {
+    "fr": "Une partie ensemble un de ces jours ?",
+    "en": "Play a round together sometime?"
+   },
+   "replies": [
+    "yes_play",
+    "maybe_later",
+    "you_deal"
+   ]
+  },
+  {
+   "id": "joke",
+   "kind": "opener",
+   "text": {
+    "fr": "J’ai une blague nulle sur les dés… tu veux l’entendre ?",
+    "en": "I have a terrible dice joke… want to hear it?"
+   },
+   "replies": [
+    "joke_yes",
+    "joke_no_laugh"
+   ]
+  },
+  {
+   "id": "good_night",
+   "kind": "opener",
+   "text": {
+    "fr": "Bonne soirée ! Merci pour la discussion.",
+    "en": "Have a lovely evening! Thanks for the chat."
+   },
+   "replies": [
+    "good_night_back",
+    "see_you"
+   ]
+  },
+  {
+   "id": "hello_back",
+   "kind": "reply",
+   "text": {
+    "fr": "Salut ! Ça me fait plaisir de te lire.",
+    "en": "Hi! Lovely to hear from you."
+   },
+   "replies": [
+    "thanks_smile",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "thanks_smile",
+   "kind": "reply",
+   "text": {
+    "fr": "Merci, ça me fait sourire !",
+    "en": "Thanks, that made me smile!"
+   },
+   "replies": [
+    "blush",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "shy_hi",
+   "kind": "reply",
+   "text": {
+    "fr": "Oh, salut… je suis un peu timide, mais bonjour !",
+    "en": "Oh, hi… I’m a bit shy, but hello!"
+   },
+   "replies": [
+    "no_worries",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "no_worries",
+   "kind": "reply",
+   "text": {
+    "fr": "Pas de souci, on y va tout doucement.",
+    "en": "No worries, we can take it slow."
+   },
+   "replies": [
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "game_cards",
+   "kind": "reply",
+   "text": {
+    "fr": "Les cartes, sans hésiter : blackjack ou baccarat.",
+    "en": "Cards, no doubt: blackjack or baccarat."
+   },
+   "replies": [
+    "me_too",
+    "teach_me"
+   ]
+  },
+  {
+   "id": "game_wheel",
+   "kind": "reply",
+   "text": {
+    "fr": "La roulette ! Le bruit de la bille, j’adore.",
+    "en": "Roulette! I love the sound of the ball."
+   },
+   "replies": [
+    "me_too",
+    "teach_me"
+   ]
+  },
+  {
+   "id": "game_dice",
+   "kind": "reply",
+   "text": {
+    "fr": "Le craps, pour l’ambiance autour de la table.",
+    "en": "Craps, for the buzz around the table."
+   },
+   "replies": [
+    "me_too",
+    "teach_me"
+   ]
+  },
+  {
+   "id": "game_all",
+   "kind": "reply",
+   "text": {
+    "fr": "Un peu de tout, j’aime la variété.",
+    "en": "A bit of everything, I like variety."
+   },
+   "replies": [
+    "me_too",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "me_too",
+   "kind": "reply",
+   "text": {
+    "fr": "Moi aussi !",
+    "en": "Me too!"
+   },
+   "replies": [
+    "laugh_r",
+    "yes_play"
+   ]
+  },
+  {
+   "id": "teach_me",
+   "kind": "reply",
+   "text": {
+    "fr": "Tu pourrais m’apprendre tes astuces ?",
+    "en": "Could you teach me your tricks?"
+   },
+   "replies": [
+    "yes_play",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "luck_yes",
+   "kind": "reply",
+   "text": {
+    "fr": "Oui, je le sens bien aujourd’hui !",
+    "en": "Yes, I have a good feeling today!"
+   },
+   "replies": [
+    "luck_you",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "luck_no",
+   "kind": "reply",
+   "text": {
+    "fr": "Pas vraiment… mais ça peut changer.",
+    "en": "Not really… but that could change."
+   },
+   "replies": [
+    "luck_you",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "luck_you",
+   "kind": "reply",
+   "text": {
+    "fr": "Et toi, la chance te sourit ?",
+    "en": "What about you, is luck smiling at you?"
+   },
+   "replies": [
+    "luck_yes",
+    "luck_no",
+    "luck_now"
+   ]
+  },
+  {
+   "id": "luck_now",
+   "kind": "reply",
+   "text": {
+    "fr": "Depuis ce message, un peu plus.",
+    "en": "Since this message, a little more."
+   },
+   "replies": [
+    "blush",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "coffee",
+   "kind": "reply",
+   "text": {
+    "fr": "Café, toujours !",
+    "en": "Coffee, always!"
+   },
+   "replies": [
+    "me_too",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "tea",
+   "kind": "reply",
+   "text": {
+    "fr": "Thé, avec un nuage de lait.",
+    "en": "Tea, with a splash of milk."
+   },
+   "replies": [
+    "me_too",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "neither_juice",
+   "kind": "reply",
+   "text": {
+    "fr": "Ni l’un ni l’autre : jus d’orange !",
+    "en": "Neither: orange juice!"
+   },
+   "replies": [
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "plan_movie",
+   "kind": "reply",
+   "text": {
+    "fr": "Une soirée cinéma, avec du pop-corn.",
+    "en": "A movie night, with popcorn."
+   },
+   "replies": [
+    "me_too",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "plan_nature",
+   "kind": "reply",
+   "text": {
+    "fr": "Une balade en forêt, pour respirer.",
+    "en": "A walk in the woods, to breathe."
+   },
+   "replies": [
+    "me_too",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "plan_games",
+   "kind": "reply",
+   "text": {
+    "fr": "Des jeux de société entre amis.",
+    "en": "Board games with friends."
+   },
+   "replies": [
+    "me_too",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "plan_rest",
+   "kind": "reply",
+   "text": {
+    "fr": "Rien du tout, et c’est très bien comme ça.",
+    "en": "Nothing at all, and that’s perfect."
+   },
+   "replies": [
+    "laugh_r",
+    "me_too"
+   ]
+  },
+  {
+   "id": "music_jazz",
+   "kind": "reply",
+   "text": {
+    "fr": "Du jazz, pour rester zen.",
+    "en": "Jazz, to stay calm."
+   },
+   "replies": [
+    "me_too",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "music_pop",
+   "kind": "reply",
+   "text": {
+    "fr": "De la pop, à fond dans la cuisine.",
+    "en": "Pop, loud, in the kitchen."
+   },
+   "replies": [
+    "me_too",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "music_secret",
+   "kind": "reply",
+   "text": {
+    "fr": "C’est un secret… et c’est très gênant.",
+    "en": "It’s a secret… a very embarrassing one."
+   },
+   "replies": [
+    "laugh_r",
+    "tell_more"
+   ]
+  },
+  {
+   "id": "compliment_back",
+   "kind": "reply",
+   "text": {
+    "fr": "Merci ! Le tien est super aussi.",
+    "en": "Thanks! Yours is great too."
+   },
+   "replies": [
+    "blush",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "blush",
+   "kind": "reply",
+   "text": {
+    "fr": "Tu me fais rougir…",
+    "en": "You’re making me blush…"
+   },
+   "replies": [
+    "laugh_r",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "yes_play",
+   "kind": "reply",
+   "text": {
+    "fr": "Avec plaisir, on se retrouve à une table !",
+    "en": "Gladly, see you at a table!"
+   },
+   "replies": [
+    "see_you",
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "maybe_later",
+   "kind": "reply",
+   "text": {
+    "fr": "Peut-être plus tard, là je dois filer.",
+    "en": "Maybe later, I have to run right now."
+   },
+   "replies": [
+    "no_worries",
+    "see_you"
+   ]
+  },
+  {
+   "id": "you_deal",
+   "kind": "reply",
+   "text": {
+    "fr": "D’accord, mais c’est toi qui distribues !",
+    "en": "Deal, but you’re dealing!"
+   },
+   "replies": [
+    "laugh_r",
+    "yes_play"
+   ]
+  },
+  {
+   "id": "joke_yes",
+   "kind": "reply",
+   "text": {
+    "fr": "Vas-y, je t’écoute !",
+    "en": "Go on, I’m listening!"
+   },
+   "replies": [
+    "laugh_r"
+   ]
+  },
+  {
+   "id": "joke_no_laugh",
+   "kind": "reply",
+   "text": {
+    "fr": "Je ris déjà, rien que pour l’effort.",
+    "en": "I’m laughing already, just for the effort."
+   },
+   "replies": [
+    "laugh_r",
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "laugh_r",
+   "kind": "reply",
+   "text": {
+    "fr": "Haha, j’adore !",
+    "en": "Haha, love it!"
+   },
+   "replies": [
+    "thanks_smile"
+   ]
+  },
+  {
+   "id": "good_night_back",
+   "kind": "reply",
+   "text": {
+    "fr": "Bonne soirée à toi aussi !",
+    "en": "Have a lovely evening too!"
+   },
+   "replies": [
+    "see_you"
+   ]
+  },
+  {
+   "id": "see_you",
+   "kind": "reply",
+   "text": {
+    "fr": "À bientôt, alors !",
+    "en": "See you soon, then!"
+   },
+   "replies": []
+  },
+  {
+   "id": "tell_more",
+   "kind": "reply",
+   "text": {
+    "fr": "Raconte-moi tout !",
+    "en": "Tell me everything!"
+   },
+   "replies": [
+    "laugh_r",
+    "thanks_smile",
+    "me_too"
+   ]
+  }
+ ]
+}

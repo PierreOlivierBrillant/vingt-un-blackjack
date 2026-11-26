@@ -95,6 +95,10 @@ export interface RomanceStateDto {
   giftsLeftToday: number;
   datesDone: string[];
   finaleDone: boolean;
+  /** Rounds played today at this croupier's tables, as counted for affinity (≤ TABLE_AFFINITY_DAILY_CAP). */
+  tableToday: number;
+  /** Tiers whose rewards were granted. */
+  rewardsGranted: number[];
 }
 
 /**
@@ -140,6 +144,19 @@ export const DATING_REACTION_IDS = ['heart', 'laugh', 'wow', 'blush', 'clap', 'w
 export type DatingReactionId = (typeof DATING_REACTION_IDS)[number];
 export const DATING_LIKES_PER_DAY = 10;
 export const DATING_MESSAGES_PER_MATCH_PER_DAY = 30;
+/** Duo affinity of a match: minimum of duo levels 0..3; each level unlocks DUO_REWARDS for the human members. */
+export const DUO_TIER_THRESHOLDS = [0, 10, 30, 60] as const;
+/** +1 duo affinity per message (line or reaction), at most this many per member per UTC day. */
+export const DUO_MESSAGE_AFFINITY_DAILY_CAP = 10;
+/** Duo affinity of a drink offered to a match (dating{op:'gift'}). */
+export const DUO_GIFT_AFFINITY = 5;
+export const DUO_REWARDS: Record<number, CosmeticId> = { 1: 'duo_back', 2: 'duo_felt', 3: 'duo_title' };
+
+export function duoTier(duoAffinity: number): number {
+  let t = 0;
+  for (let i = 0; i < DUO_TIER_THRESHOLDS.length; i++) if (duoAffinity >= DUO_TIER_THRESHOLDS[i]) t = i;
+  return t;
+}
 
 /** `datingProfiles/{uid}` (server only; exposed through `dating{op:'discover'}` and match docs). */
 export interface DatingProfileDoc {
@@ -158,6 +175,10 @@ export interface DatingProfileDoc {
 export interface DatingPrivateDoc {
   optedIn: boolean;
   likes: { day: string; count: number };
+  /** The player's own card (mirror of datingProfiles/{uid}, which only the server reads). */
+  favoriteGame?: AnyGame | null;
+  interests?: DatingInterestId[];
+  lookingFor?: DatingLookingFor | null;
   updatedAtMs: EpochMs;
 }
 

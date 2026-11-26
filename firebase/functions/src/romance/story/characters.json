@@ -1,0 +1,508 @@
+{
+  "characters": {
+    "lucas": {
+      "age": 32,
+      "pronoun": "he",
+      "bio": {
+        "fr": "Croupier du blackjack, précis et pince-sans-rire. Ancien étudiant en maths, il collectionne les vinyles de jazz et rêve d’ouvrir un petit club.",
+        "en": "The blackjack croupier, precise and deadpan. A former maths student, he collects jazz records and dreams of opening a tiny club."
+      },
+      "tastes": {
+        "vinyl": "loved",
+        "coffee": "loved",
+        "book": "liked",
+        "chocolates": "liked",
+        "card_deck": "liked",
+        "perfume": "disliked",
+        "rose": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "peek",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_lucas_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "peek",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_lucas_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_lucas_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "peek",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "camille": {
+      "age": 27,
+      "pronoun": "she",
+      "bio": {
+        "fr": "Croupière de la roulette, solaire et un peu superstitieuse. Astronome amatrice, elle fait de la voile le week-end et déteste perdre au Uno.",
+        "en": "The roulette croupier, sunny and a little superstitious. An amateur astronomer, she sails on weekends and hates losing at Uno."
+      },
+      "tastes": {
+        "star_map": "loved",
+        "champagne": "loved",
+        "chocolates": "liked",
+        "plant": "liked",
+        "mocktail": "liked",
+        "coffee": "disliked",
+        "perfume": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "zeroShield",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_camille_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "zeroShield",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_camille_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_camille_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "zeroShield",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "ines": {
+      "age": 30,
+      "pronoun": "she",
+      "bio": {
+        "fr": "Croupière du baccarat, élégante et réservée. Ancienne danseuse classique, elle collectionne les stylos plume et écrit des lettres à la main.",
+        "en": "The baccarat croupier, elegant and reserved. A former ballet dancer, she collects fountain pens and still writes letters by hand."
+      },
+      "tastes": {
+        "perfume": "loved",
+        "rose": "loved",
+        "book": "liked",
+        "champagne": "liked",
+        "chocolates": "liked",
+        "mocktail": "disliked",
+        "card_deck": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "freeCommission",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_ines_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "freeCommission",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_ines_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_ines_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "freeCommission",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "alex": {
+      "age": 29,
+      "pronoun": "they",
+      "bio": {
+        "fr": "Croupier·e du hold’em (iel). Analytique et taquin·e, iel anime un stream d’échecs, fait son propre pain et vit avec une chatte nommée Bluff.",
+        "en": "The hold’em croupier (they/them). Analytical and teasing, they run a chess stream, bake their own bread and live with a cat named Bluff."
+      },
+      "tastes": {
+        "card_deck": "loved",
+        "coffee": "loved",
+        "book": "liked",
+        "star_map": "liked",
+        "plant": "liked",
+        "rose": "disliked",
+        "champagne": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_alex_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_alex_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_alex_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "marco": {
+      "age": 36,
+      "pronoun": "he",
+      "bio": {
+        "fr": "Croupier du craps, au rire qui remplit la salle. Ancien cuisinier napolitain, il fait tourner les dés comme une pâte à pizza et adore ses nièces.",
+        "en": "The craps croupier, with a laugh that fills the room. A former Neapolitan cook, he spins dice like pizza dough and adores his nieces."
+      },
+      "tastes": {
+        "chocolates": "loved",
+        "cocktail": "loved",
+        "coffee": "liked",
+        "vinyl": "liked",
+        "plant": "liked",
+        "mocktail": "disliked",
+        "perfume": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "safetyNet",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_marco_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "safetyNet",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_marco_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_marco_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "safetyNet",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "jade": {
+      "age": 26,
+      "pronoun": "she",
+      "bio": {
+        "fr": "Mixologue du bar, inventive et moqueuse. Ancienne étudiante en chimie, elle baptise ses mocktails d’après les clients et joue de la basse dans un groupe.",
+        "en": "The bar’s mixologist, inventive and teasing. A former chemistry student, she names her mocktails after the guests and plays bass in a band."
+      },
+      "tastes": {
+        "plant": "loved",
+        "vinyl": "loved",
+        "book": "liked",
+        "star_map": "liked",
+        "chocolates": "liked",
+        "cocktail": "disliked",
+        "rose": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "freeDouble",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_jade_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "freeDouble",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_jade_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_jade_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "freeDouble",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "theo": {
+      "age": 33,
+      "pronoun": "he",
+      "bio": {
+        "fr": "Pianiste du salon, rêveur et un brin mélancolique. Il compose les jours de pluie et connaît par cœur le morceau préféré de chaque habitué.",
+        "en": "The lounge pianist, dreamy and a touch melancholic. He composes on rainy days and knows every regular’s favourite song by heart."
+      },
+      "tastes": {
+        "vinyl": "loved",
+        "book": "loved",
+        "coffee": "liked",
+        "rose": "liked",
+        "star_map": "liked",
+        "card_deck": "disliked",
+        "champagne": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "freeInsurance",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_theo_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "freeInsurance",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_theo_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_theo_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "freeInsurance",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "nora": {
+      "age": 31,
+      "pronoun": "she",
+      "bio": {
+        "fr": "Magicienne du casino, espiègle et insaisissable. Elle fait disparaître les montres des clients et les rend toujours, avec un petit mot.",
+        "en": "The casino’s magician, mischievous and elusive. She makes guests’ watches vanish and always gives them back, with a little note."
+      },
+      "tastes": {
+        "card_deck": "loved",
+        "rose": "loved",
+        "chocolates": "liked",
+        "star_map": "liked",
+        "champagne": "liked",
+        "plant": "disliked",
+        "coffee": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_nora_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_nora_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_nora_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "secondChance",
+            "qty": 3
+          }
+        ]
+      }
+    },
+    "hugo": {
+      "age": 38,
+      "pronoun": "he",
+      "bio": {
+        "fr": "Concierge VIP, impeccable et discret. Il connaît tout le monde, cultive des roses sur son balcon et pleure en secret devant les vieux films.",
+        "en": "The VIP concierge, impeccable and discreet. He knows everyone, grows roses on his balcony and secretly cries at old movies."
+      },
+      "tastes": {
+        "rose": "loved",
+        "champagne": "loved",
+        "perfume": "liked",
+        "book": "liked",
+        "coffee": "liked",
+        "mocktail": "disliked",
+        "card_deck": "disliked"
+      },
+      "rewards": {
+        "1": [
+          {
+            "kind": "power",
+            "powerId": "freeSplit",
+            "qty": 1
+          }
+        ],
+        "2": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_hugo_back"
+          }
+        ],
+        "3": [
+          {
+            "kind": "power",
+            "powerId": "freeSplit",
+            "qty": 2
+          }
+        ],
+        "4": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_hugo_felt"
+          }
+        ],
+        "5": [
+          {
+            "kind": "cosmetic",
+            "id": "rv_hugo_title"
+          },
+          {
+            "kind": "power",
+            "powerId": "freeSplit",
+            "qty": 3
+          }
+        ]
+      }
+    }
+  }
+}

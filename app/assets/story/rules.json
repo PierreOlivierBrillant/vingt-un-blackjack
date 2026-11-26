@@ -1,0 +1,15 @@
+{
+  "affinityMax": 300,
+  "tierThresholds": [0, 25, 70, 130, 200, 270],
+  "tableAffinityDailyCap": 10,
+  "giftsPerCharacterPerDay": 3,
+  "giftAffinity": { "loved": 15, "liked": 8, "neutral": 3, "disliked": -5 },
+  "choiceDeltaMin": -5,
+  "choiceDeltaMax": 10,
+  "dateTiers": [3, 4, 5],
+  "duoTierThresholds": [0, 10, 30, 60],
+  "duoMessageAffinityDailyCap": 10,
+  "duoGiftAffinity": 5,
+  "datingLikesPerDay": 10,
+  "datingMessagesPerMatchPerDay": 30
+}

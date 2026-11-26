@@ -1,0 +1,460 @@
+{
+  "character": "jade",
+  "scenes": [
+    {
+      "id": "jade_talk_1",
+      "character": "jade",
+      "kind": "talk",
+      "minTier": 0,
+      "requires": [],
+      "place": "bar",
+      "title": { "fr": "Le mocktail mystère", "en": "The mystery mocktail" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Fin de soirée au bar du casino. Derrière le comptoir, une jeune femme au carré noir, une fleur glissée derrière l’oreille, fait tournoyer un shaker comme une baguette de cheffe d’orchestre.", "en": "Late evening at the casino bar. Behind the counter, a young woman with a black bob and a flower tucked behind her ear twirls a shaker like a conductor’s baton." }, "next": "b" },
+        "b": { "who": "jade", "expr": "smile", "text": { "fr": "Une nouvelle tête ! Ici, chaque visage a droit à sa boisson. Moi, c’est Jade, et je ne sers jamais deux fois la même chose.", "en": "A new face! Around here, every face gets its own drink. I’m Jade, and I never serve the same thing twice." }, "next": "c" },
+        "c": { "who": "jade", "expr": "wink", "text": { "fr": "Pas de carte pour toi ce soir : je t’invente quelque chose. Devine trois ingrédients et tu as gagné. Sinon, c’est toi qui essuies les verres.", "en": "No menu for you tonight: I’m inventing something. Guess three ingredients and you win. Otherwise, you’re on glass-drying duty." },
+          "choices": [
+            { "id": "dare", "text": { "fr": "Défi accepté. Mais je préviens : j’ai un palais redoutable.", "en": "Challenge accepted. Fair warning: I have a fearsome palate." }, "delta": 6, "next": "d" },
+            { "id": "trust", "text": { "fr": "Je ne promets rien, mais je veux bien goûter.", "en": "I can’t promise anything, but I’d love a taste." }, "delta": 3, "next": "d" },
+            { "id": "juice", "text": { "fr": "Euh… tu n’aurais pas juste un jus d’orange ?", "en": "Um… could I just get an orange juice?" }, "delta": -3, "next": "e" }
+          ] },
+        "e": { "who": "jade", "expr": "surprised", "text": { "fr": "Un jus d’orange. À une mixologue. Tu viens de briser un petit cœur de chimiste.", "en": "An orange juice. To a mixologist. You just broke a tiny chemist’s heart." }, "next": "e2" },
+        "e2": { "who": "jade", "expr": "laugh", "text": { "fr": "Je plaisante. Presque. Goûte quand même, ça ne mord pas. Enfin, pas beaucoup.", "en": "Kidding. Mostly. Try it anyway, it won’t hurt you. Well, not much." }, "next": "d" },
+        "d": { "who": "narrator", "text": { "fr": "Elle verse, mélange, secoue. Le verre arrive d’un rose pâle, une feuille verte flottant à la surface, un zeste en spirale accroché au bord.", "en": "She pours, stirs, shakes. The glass arrives pale pink, a green leaf floating on top and a spiral of zest hooked over the rim." }, "next": "f" },
+        "f": { "who": "jade", "expr": "thinking", "text": { "fr": "Alors, ce palais ? Premier ingrédient. Prends ton temps, j’adore regarder les gens réfléchir.", "en": "So, how’s that palate? First ingredient. Take your time, I love watching people think." },
+          "choices": [
+            { "id": "basil", "text": { "fr": "Du basilic… et de la pastèque ?", "en": "Basil… and watermelon?" }, "delta": 5, "next": "g" },
+            { "id": "strawberry", "text": { "fr": "De la fraise. Tout ce qui est rose, c’est de la fraise.", "en": "Strawberry. Anything pink is strawberry." }, "delta": 2, "next": "h" },
+            { "id": "sugar", "text": { "fr": "Du sucre. Beaucoup, beaucoup de sucre.", "en": "Sugar. Lots and lots of sugar." }, "delta": -2, "next": "h" }
+          ] },
+        "g": { "who": "jade", "expr": "surprised", "text": { "fr": "Basilic et pastèque, du premier coup ! Tu triches, ou tu as vraiment un palais ?", "en": "Basil and watermelon, first try! Are you cheating, or do you actually have a palate?" }, "next": "i" },
+        "h": { "who": "jade", "expr": "laugh", "text": { "fr": "Raté ! C’est de la pastèque, avec une feuille de basilic. Mais j’aime ton aplomb.", "en": "Wrong! It’s watermelon, with a basil leaf. But I like your nerve." }, "next": "i" },
+        "i": { "who": "jade", "expr": "smile", "text": { "fr": "Dernier ingrédient, le plus sournois. Indice : il pousse sur mon balcon, et il sent le citron sans en être.", "en": "Last ingredient, the sneakiest one. Hint: it grows on my balcony, and it smells like lemon without being lemon." },
+          "choices": [
+            { "id": "lemongrass", "text": { "fr": "De la citronnelle ?", "en": "Lemongrass?" }, "delta": 6, "next": "j" },
+            { "id": "lemon", "text": { "fr": "Du citron. Je maintiens : du citron.", "en": "Lemon. I’m sticking with lemon." }, "delta": 2, "next": "k" },
+            { "id": "giveup", "text": { "fr": "J’abandonne. Tu as gagné, passe-moi un torchon.", "en": "I give up. You win, hand me a towel." }, "delta": -2, "next": "k" }
+          ] },
+        "j": { "who": "jade", "expr": "blush", "text": { "fr": "Trois sur trois. Personne n’avait jamais fait ça. Bon… je déteste perdre, mais là, j’ai presque envie d’applaudir.", "en": "Three for three. Nobody’s ever done that. Okay… I hate losing, but right now I almost want to applaud." }, "next": "l" },
+        "k": { "who": "jade", "expr": "wink", "text": { "fr": "Non ! De la citronnelle : le citron, en plus rusé. Elle pousse dans une vieille boîte de conserve. Tu échappes au torchon, je suis de bonne humeur.", "en": "Nope! Lemongrass: lemon’s sneakier cousin. It grows in an old tin can. You’re spared the towel, I’m in a good mood." }, "next": "l" },
+        "l": { "who": "jade", "expr": "smile", "text": { "fr": "Je baptise mes mocktails d’après les gens. Mais toi, tu restes une énigme. Alors celui-ci s’appellera « L’Énigme ». Provisoirement.", "en": "I name my mocktails after people. But you’re still a mystery. So this one’s called “The Mystery”. For now." }, "next": "m" },
+        "m": { "who": "narrator", "text": { "fr": "Elle note quelque chose dans un petit carnet taché de sirop, puis le referme d’un geste sec. Tu repars avec un goût de basilic et l’envie de revenir.", "en": "She jots something in a little syrup-stained notebook, then snaps it shut. You leave with a taste of basil and the urge to come back." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_talk_2",
+      "character": "jade",
+      "kind": "talk",
+      "minTier": 1,
+      "requires": ["jade_talk_1"],
+      "place": "lounge",
+      "title": { "fr": "Les Glaçons", "en": "The Ice Cubes" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Au salon, Théo joue un air tranquille. Jade se laisse tomber dans un fauteuil, un étui à basse presque aussi grand qu’elle calé contre le genou.", "en": "In the lounge, Theo is playing something gentle. Jade drops into an armchair, a bass case nearly as tall as she is propped against her knee." }, "next": "b" },
+        "b": { "who": "jade", "expr": "sad", "text": { "fr": "Ne dis rien. Je sors de répétition. Enfin, d’un naufrage avec des instruments.", "en": "Don’t say a word. I just got out of rehearsal. Well, out of a shipwreck with instruments." },
+          "choices": [
+            { "id": "tell", "text": { "fr": "Raconte-moi tout. J’ai le temps, et j’adore les naufrages.", "en": "Tell me everything. I’ve got time, and I love a good shipwreck." }, "delta": 6, "next": "d" },
+            { "id": "cheer", "text": { "fr": "Ça ne peut pas être si terrible, si ?", "en": "It can’t have been that bad, can it?" }, "delta": 3, "next": "d" },
+            { "id": "hobby", "text": { "fr": "Bah, c’est juste un loisir, non ?", "en": "Eh, it’s just a hobby, right?" }, "delta": -4, "next": "e" }
+          ] },
+        "e": { "who": "jade", "expr": "thinking", "text": { "fr": "« Juste un loisir. » C’est exactement ce que disent mes parents. Avec le même petit sourire.", "en": "“Just a hobby.” That’s exactly what my parents say. With the same little smile." }, "next": "e2" },
+        "e2": { "who": "jade", "expr": "neutral", "text": { "fr": "Bon. Je te raconte quand même. Tu vas voir que même un loisir peut virer à la catastrophe.", "en": "Fine. I’ll tell you anyway. You’ll see that even a hobby can turn into a disaster." }, "next": "d" },
+        "d": { "who": "jade", "expr": "laugh", "text": { "fr": "Notre batteur a fait tomber sa cymbale sur le pied du chanteur. Le chanteur a hurlé pile dans le micro. Et le micro a fait sauter les plombs de tout l’étage.", "en": "Our drummer dropped his cymbal on the singer’s foot. The singer screamed right into the mic. And the mic blew the fuses for the whole floor." }, "next": "f" },
+        "f": { "who": "jade", "expr": "surprised", "text": { "fr": "On répète dans la réserve, sous les cuisines. Dans le noir, la sécurité a cru à une effraction. On a fini la soirée à expliquer à deux vigiles ce qu’est une basse fretless.", "en": "We rehearse in the storeroom under the kitchens. In the dark, security thought it was a break-in. We spent the rest of the night explaining to two guards what a fretless bass is." }, "next": "g" },
+        "g": { "who": "theo", "expr": "smile", "text": { "fr": "Pour ta défense, Jade, j’ai tout entendu d’ici. La cymbale était presque en rythme.", "en": "In your defense, Jade, I heard the whole thing from here. The cymbal was almost on the beat." }, "next": "h" },
+        "h": { "who": "jade", "expr": "laugh", "text": { "fr": "Merci, Théo. Toujours le petit mot gentil qui achève.", "en": "Thanks, Theo. Always the kind word that finishes me off." }, "next": "i" },
+        "i": { "who": "jade", "expr": "thinking", "text": { "fr": "Le pire, c’est qu’on joue dans trois semaines. Sur une vraie scène. Tu crois qu’on devrait annuler ?", "en": "The worst part is we have a gig in three weeks. On a real stage. Do you think we should cancel?" },
+          "choices": [
+            { "id": "keep", "text": { "fr": "Surtout pas. Une répétition ratée, c’est le meilleur des présages.", "en": "No way. A disastrous rehearsal is the best omen there is." }, "delta": 7, "next": "j" },
+            { "id": "anecdote", "text": { "fr": "Au moins, vous aurez une anecdote à raconter sur scène.", "en": "At least you’ll have a great story to tell on stage." }, "delta": 4, "next": "j" },
+            { "id": "cancel", "text": { "fr": "Franchement ? Peut-être, oui.", "en": "Honestly? Maybe, yeah." }, "delta": -3, "next": "k" }
+          ] },
+        "j": { "who": "jade", "expr": "smile", "text": { "fr": "Tu as raison. Le pire est derrière nous. Statistiquement. J’ai fait de la chimie, je crois aux statistiques.", "en": "You’re right. The worst is behind us. Statistically. I studied chemistry, I believe in statistics." }, "next": "l" },
+        "k": { "who": "jade", "expr": "sad", "text": { "fr": "Hm. Peut-être. Mais les affiches sont déjà imprimées. Et abandonner un truc de plus… je n’en ai pas envie.", "en": "Hm. Maybe. But the posters are already printed. And giving up on one more thing… I don’t want that." }, "next": "l" },
+        "l": { "who": "jade", "expr": "wink", "text": { "fr": "Au fait, tu sais pourquoi on s’appelle Les Glaçons ? À notre premier concert, on a jeté un froid.", "en": "By the way, know why we’re called The Ice Cubes? Our first gig got a very frosty reception." },
+          "choices": [
+            { "id": "laugh", "text": { "fr": "Je ris. Contre ma volonté, mais je ris.", "en": "I’m laughing. Against my will, but I’m laughing." }, "delta": 5, "next": "m" },
+            { "id": "groan", "text": { "fr": "C’est la pire blague que j’aie entendue ce mois-ci.", "en": "That’s the worst joke I’ve heard all month." }, "delta": 2, "next": "n" }
+          ] },
+        "m": { "who": "jade", "expr": "laugh", "text": { "fr": "Voilà ! Tu as du goût. Garde ce rire pour le concert, on va en avoir besoin.", "en": "There it is! You have taste. Save that laugh for the gig, we’re going to need it." }, "next": "o" },
+        "n": { "who": "jade", "expr": "wink", "text": { "fr": "Ce mois-ci seulement ? Attends le concert, j’en garde une encore pire en réserve.", "en": "Only this month? Wait till the gig, I’ve got an even worse one saved up." }, "next": "o" },
+        "o": { "who": "narrator", "text": { "fr": "Théo enchaîne sur un air plus léger. Jade tapote le rythme sur son étui, déjà un peu moins défaite.", "en": "Theo slides into something lighter. Jade taps the beat on her case, already looking a little less defeated." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_talk_3",
+      "character": "jade",
+      "kind": "talk",
+      "minTier": 2,
+      "requires": ["jade_talk_2"],
+      "place": "terrace",
+      "title": { "fr": "Le jardin secret", "en": "The secret garden" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Après la fermeture, Jade te fait signe de la suivre par une porte de service. Un escalier en colimaçon, une porte qui grince… et soudain, l’air sent la menthe.", "en": "After closing, Jade waves you through a service door. A spiral staircase, a creaky door… and suddenly the air smells of mint." }, "next": "b" },
+        "b": { "who": "jade", "expr": "smile", "text": { "fr": "Bienvenue dans mon laboratoire secret. Personne du bar n’est jamais monté ici. Pour toi, je fais une exception.", "en": "Welcome to my secret lab. Nobody from the bar has ever been up here. For you, I’m making an exception." }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "Sur la terrasse s’entassent des dizaines de pots dépareillés : boîtes de conserve, théières fêlées, et une vieille roue de roulette dont chaque case abrite une herbe différente.", "en": "Dozens of mismatched pots crowd the terrace: tin cans, cracked teapots, and an old roulette wheel with a different herb growing in every pocket." }, "next": "d" },
+        "d": { "who": "jade", "expr": "thinking", "text": { "fr": "Vas-y, pose la question. Celle que tout le monde poserait, si quelqu’un savait que cet endroit existe.", "en": "Go on, ask. The question everyone would ask, if anyone knew this place existed." },
+          "choices": [
+            { "id": "wheel", "text": { "fr": "C’est une roue de roulette, là ? Avec du thym dans le 17 ?", "en": "Is that a roulette wheel? With thyme in number 17?" }, "delta": 6, "next": "e" },
+            { "id": "why", "text": { "fr": "Pourquoi garder un endroit pareil secret ?", "en": "Why keep a place like this a secret?" }, "delta": 4, "next": "f" },
+            { "id": "allowed", "text": { "fr": "Tu as le droit d’être ici, au moins ?", "en": "Are you even allowed up here?" }, "delta": -3, "next": "g" }
+          ] },
+        "e": { "who": "jade", "expr": "laugh", "text": { "fr": "Le 17, c’est le romarin, voyons. Camille m’a donné cette roue quand le casino l’a remplacée. Elle jure que ça porte chance aux plantes.", "en": "Seventeen is rosemary, obviously. Camille gave me this wheel when the casino replaced it. She swears it brings the plants luck." }, "next": "h" },
+        "f": { "who": "jade", "expr": "blush", "text": { "fr": "Parce que c’est à moi. Au bar, tout le monde me regarde travailler. Ici, les seules qui me jugent, ce sont les limaces.", "en": "Because it’s mine. At the bar, everyone watches me work. Up here, the only ones judging me are the slugs." }, "next": "h" },
+        "g": { "who": "jade", "expr": "wink", "text": { "fr": "Techniquement ? Hugo ferme les yeux. En échange, il a de la menthe fraîche pour son thé. La corruption, version potager.", "en": "Technically? Hugo looks the other way. In exchange, he gets fresh mint for his tea. Corruption, garden edition." }, "next": "h" },
+        "h": { "who": "jade", "expr": "smile", "text": { "fr": "Presque tout ce que je sers en bas vient d’ici. La citronnelle de ton premier verre ? Elle est là, dans la vieille boîte de tomates pelées.", "en": "Almost everything I serve downstairs comes from up here. The lemongrass in your first drink? Right there, in the old tomato can." }, "next": "i" },
+        "i": { "who": "narrator", "text": { "fr": "Elle s’accroupit, froisse une feuille entre ses doigts et te la tend. Ça sent le citron, et quelque chose de plus sauvage.", "en": "She crouches, crushes a leaf between her fingers and holds it out to you. It smells of lemon, and of something wilder." }, "next": "j" },
+        "j": { "who": "jade", "expr": "thinking", "text": { "fr": "Devine celle-là. Aucune pression : si tu te trompes, je ne te fais plus jamais monter ici.", "en": "Guess this one. No pressure: get it wrong and you’re never coming up here again." },
+          "choices": [
+            { "id": "verbena", "text": { "fr": "De la verveine ? Ça sent les vacances chez ma grand-mère.", "en": "Lemon verbena? It smells like summers at my grandmother’s." }, "delta": 5, "next": "k" },
+            { "id": "mint", "text": { "fr": "De la menthe. C’est toujours de la menthe.", "en": "Mint. It’s always mint." }, "delta": 2, "next": "l" },
+            { "id": "leaves", "text": { "fr": "Franchement, toutes les feuilles se ressemblent.", "en": "Honestly, all leaves look the same to me." }, "delta": -3, "next": "l" }
+          ] },
+        "k": { "who": "jade", "expr": "surprised", "text": { "fr": "De la verveine citronnée ! Tu as un palais, un nez… Il ne te manque plus que la main verte.", "en": "Lemon verbena! You’ve got the palate, the nose… All you’re missing is a green thumb." }, "next": "m" },
+        "l": { "who": "jade", "expr": "laugh", "text": { "fr": "Verveine citronnée. Je te pardonne, mais seulement parce que la nuit est belle.", "en": "Lemon verbena. I forgive you, but only because it’s a beautiful night." }, "next": "m" },
+        "m": { "who": "jade", "expr": "blush", "text": { "fr": "Tu sais ce qui est bête ? J’ai planté tout ça la semaine où j’ai quitté la fac. Il fallait que quelque chose pousse quelque part.", "en": "Want to know something silly? I planted all of this the week I dropped out of university. Something had to grow somewhere." },
+          "choices": [
+            { "id": "grew", "text": { "fr": "Et regarde : tout a poussé. C’est toi qui as fait ça.", "en": "And look: it all grew. You did that." }, "delta": 7, "next": "o" },
+            { "id": "ask", "text": { "fr": "Pourquoi tu as quitté la fac ?", "en": "Why did you leave university?" }, "delta": 3, "next": "p" },
+            { "id": "exams", "text": { "fr": "Au moins, les plantes ne font pas passer d’examens.", "en": "At least plants don’t give exams." }, "delta": -2, "next": "p" }
+          ] },
+        "o": { "who": "jade", "expr": "blush", "text": { "fr": "…Tu es en train de me faire le coup de la phrase parfaite au moment parfait. C’est déloyal, tu sais.", "en": "…You’re pulling the perfect-line-at-the-perfect-moment trick on me. That’s not fair, you know." }, "next": "q" },
+        "p": { "who": "jade", "expr": "sad", "text": { "fr": "C’est une longue histoire. Une autre fois, d’accord ? Ce soir, on est là pour les herbes.", "en": "It’s a long story. Another time, okay? Tonight we’re here for the herbs." }, "next": "q" },
+        "q": { "who": "jade", "expr": "smile", "text": { "fr": "Tiens. Un brin de menthe, pour ta poche. Garde-le secret, comme l’endroit.", "en": "Here. A sprig of mint, for your pocket. Keep it secret, like this place." }, "next": "r" },
+        "r": { "who": "narrator", "text": { "fr": "En contrebas, les lumières de la ville clignotent. Jade arrose ses pots en fredonnant une ligne de basse, et le parfum de menthe te suit jusque chez toi.", "en": "Below, the city lights flicker. Jade waters her pots, humming a bass line, and the scent of mint follows you all the way home." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_talk_4",
+      "character": "jade",
+      "kind": "talk",
+      "minTier": 3,
+      "requires": ["jade_talk_3"],
+      "place": "kitchen",
+      "title": { "fr": "La chimiste", "en": "The chemist" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Dans les cuisines désertes du casino, une casserole frémit. Jade pèse son sucre au gramme près, une pipette coincée derrière l’oreille, juste à côté de sa fleur.", "en": "In the casino’s empty kitchens, a pot is simmering. Jade weighs her sugar to the gram, a pipette tucked behind her ear, right next to her flower." }, "next": "b" },
+        "b": { "who": "jade", "expr": "smile", "text": { "fr": "Sirop de rhubarbe au poivre de Timut. Il me faut la concentration parfaite. Oui, j’utilise une pipette. Non, je n’ai aucune honte.", "en": "Rhubarb syrup with Timut pepper. I need the perfect concentration. Yes, I use a pipette. No, I have no shame." }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "Son téléphone vibre sur le plan de travail. Elle jette un œil à l’écran, et son sourire s’éteint d’un coup.", "en": "Her phone buzzes on the counter. She glances at the screen, and her smile switches off." }, "next": "d" },
+        "d": { "who": "jade", "expr": "sad", "text": { "fr": "Ma mère. Ma cousine vient de soutenir sa thèse. En chimie. Elle m’envoie la photo, « pour info ».", "en": "My mom. My cousin just defended her PhD. In chemistry. Mom sent me the photo, “just so you know”." },
+          "choices": [
+            { "id": "gentle", "text": { "fr": "« Pour info », ça pique. Tu veux en parler ?", "en": "“Just so you know” stings. Want to talk about it?" }, "delta": 6, "next": "e" },
+            { "id": "congrats", "text": { "fr": "C’est plutôt une bonne nouvelle pour ta cousine, non ?", "en": "That’s good news for your cousin, though, isn’t it?" }, "delta": 2, "next": "f" },
+            { "id": "thesis", "text": { "fr": "C’est vrai qu’une thèse, ça impressionne plus qu’un sirop.", "en": "Well, a PhD is more impressive than a syrup." }, "delta": -4, "next": "g" }
+          ] },
+        "f": { "who": "jade", "expr": "thinking", "text": { "fr": "Si, si. Elle le mérite. C’est juste que… c’était censé être moi, sur cette photo.", "en": "It is. She deserves it. It’s just that… it was supposed to be me in that photo." }, "next": "e" },
+        "g": { "who": "jade", "expr": "sad", "text": { "fr": "…Ouais. C’est exactement ce que dit la petite voix dans ma tête. Elle n’avait pas besoin de renfort.", "en": "…Yeah. That’s exactly what the little voice in my head says. It didn’t need backup." }, "next": "e" },
+        "e": { "who": "jade", "expr": "thinking", "text": { "fr": "J’étais en troisième année. Tout le monde me voyait déjà en blouse, dans un labo. Moi aussi, je crois. Et puis un matin, je ne suis plus allée en cours.", "en": "I was in my third year. Everyone already pictured me in a lab coat. Me too, I think. And then one morning, I just stopped going to class." }, "next": "h" },
+        "h": { "who": "jade", "expr": "smile", "text": { "fr": "Cet été-là, j’ai servi des boissons dans un bar de plage pour payer mon loyer. J’ai été plus heureuse en deux mois qu’en trois ans de fac.", "en": "That summer, I made drinks at a beach bar to pay my rent. I was happier in two months than in three years of university." }, "next": "i" },
+        "i": { "who": "jade", "expr": "sad", "text": { "fr": "Mes parents ne m’ont jamais rien reproché. C’est presque pire. Ils me regardent comme une expérience qui n’a pas donné le résultat attendu.", "en": "My parents never blamed me for anything. That’s almost worse. They look at me like an experiment that didn’t give the expected result." },
+          "choices": [
+            { "id": "chemist", "text": { "fr": "Mais tu n’as jamais arrêté la chimie. Tu pèses ton sucre à la pipette !", "en": "But you never quit chemistry. You measure sugar with a pipette!" }, "delta": 7, "next": "j" },
+            { "id": "show", "text": { "fr": "Tu leur as déjà montré ce que tu fais au bar ?", "en": "Have you ever shown them what you do at the bar?" }, "delta": 4, "next": "k" },
+            { "id": "resume", "text": { "fr": "Tu pourrais toujours reprendre tes études, non ?", "en": "You could always go back to school, right?" }, "delta": -3, "next": "l" }
+          ] },
+        "j": { "who": "jade", "expr": "surprised", "text": { "fr": "…Je n’avais jamais vu ça comme ça. Un laboratoire, avec des glaçons et de la musique.", "en": "…I never thought of it that way. A lab, with ice cubes and music." }, "next": "m" },
+        "k": { "who": "jade", "expr": "thinking", "text": { "fr": "Jamais. J’ai peur qu’ils voient un comptoir, et pas le reste. Les fiches, les dosages, les quarante essais ratés.", "en": "Never. I’m afraid they’d see a counter and nothing else. The notes, the measurements, the forty failed attempts." }, "next": "m" },
+        "l": { "who": "jade", "expr": "sad", "text": { "fr": "Tout le monde me dit ça. Comme si j’étais en pause. Je ne suis pas en pause. Je suis là, et j’aime ce que je fais.", "en": "Everyone tells me that. As if I were on pause. I’m not on pause. I’m here, and I love what I do." }, "next": "m" },
+        "m": { "who": "jade", "expr": "blush", "text": { "fr": "Je n’ai jamais raconté ça à personne ici. Même pas au groupe. C’est bizarre… je me sens plus légère.", "en": "I’ve never told anyone here about this. Not even the band. It’s strange… I feel lighter." },
+          "choices": [
+            { "id": "stay", "text": { "fr": "Merci de me l’avoir confié. Je reste, si tu veux continuer.", "en": "Thank you for trusting me with that. I’m staying, if you want to keep talking." }, "delta": 6, "next": "n" },
+            { "id": "taste", "text": { "fr": "Et si on goûtait ce sirop ? Je veux voir la chimiste à l’œuvre.", "en": "How about we taste that syrup? I want to see the chemist at work." }, "delta": 4, "next": "o" }
+          ] },
+        "n": { "who": "jade", "expr": "smile", "text": { "fr": "Reste, alors. Mais je te préviens : tu vas goûter les douze versions.", "en": "Stay, then. But fair warning: you’re tasting all twelve versions." }, "next": "o" },
+        "o": { "who": "narrator", "text": { "fr": "Elle trempe une cuillère dans la casserole et te la tend. Le sirop est acidulé, poivré, presque floral. Elle guette ta réaction comme le résultat d’une expérience.", "en": "She dips a spoon into the pot and holds it out. The syrup is tart, peppery, almost floral. She watches your face like she’s waiting on lab results." }, "next": "p" },
+        "p": { "who": "jade", "expr": "laugh", "text": { "fr": "Cette tête ! C’est un oui. Je note : version 12, validée par une personne de confiance.", "en": "That face! That’s a yes. Noted: version 12, approved by someone I trust." }, "next": "q" },
+        "q": { "who": "narrator", "text": { "fr": "Elle écrit dans un carnet couvert de formules et de taches de sirop. Sur le plan de travail, le téléphone reste face contre le bois.", "en": "She writes in a notebook covered in formulas and syrup stains. On the counter, the phone stays face down." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_date_1",
+      "character": "jade",
+      "kind": "date",
+      "minTier": 3,
+      "requires": ["jade_talk_3"],
+      "reservationCents": 5000,
+      "place": "arcade",
+      "title": { "fr": "Soirée arcade", "en": "Arcade night" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "La salle d’arcade clignote de partout : bornes rétro, flippers, une machine à pince remplie de peluches. Jade arrive en veste en jean, un souci orange piqué dans les cheveux.", "en": "The arcade blinks in every direction: retro cabinets, pinball machines, a claw machine stuffed with plushies. Jade shows up in a denim jacket, an orange marigold pinned in her hair." }, "next": "b" },
+        "b": { "who": "jade", "expr": "wink", "text": { "fr": "Je te préviens : j’ai été championne de hockey sur table de ma résidence universitaire. Trois ans de suite. Je ne fais pas de cadeaux.", "en": "Fair warning: I was air hockey champion of my university dorm. Three years running. I show no mercy." }, "next": "c" },
+        "c": { "who": "jade", "expr": "smile", "text": { "fr": "Alors ? On attaque directement par le hockey, ou tu préfères t’échauffer avant ta défaite ?", "en": "So? Straight to air hockey, or would you like to warm up before your defeat?" },
+          "choices": [
+            { "id": "hockey", "text": { "fr": "Au hockey. Et je réserve déjà ma revanche.", "en": "Air hockey. And I’m booking my rematch right now." }, "delta": 6, "next": "d" },
+            { "id": "pinball", "text": { "fr": "Échauffement d’abord. Le flipper, là-bas ?", "en": "Warm-up first. That pinball machine over there?" }, "delta": 3, "next": "e" },
+            { "id": "jacket", "text": { "fr": "Joue, toi. Moi, je garde ta veste.", "en": "You play. I’ll hold your jacket." }, "delta": -3, "next": "f" }
+          ] },
+        "e": { "who": "narrator", "text": { "fr": "Au flipper, Jade commente chaque rebond : angle d’incidence, coefficient de frottement, et « ça, c’est juste de la chance ».", "en": "At the pinball machine, Jade narrates every bounce: angle of incidence, coefficient of friction, and “that one’s just luck”." }, "next": "e2" },
+        "e2": { "who": "jade", "expr": "laugh", "text": { "fr": "La physique, c’est de la chimie qui prend l’air. Bon, fin de l’échauffement. Place au hockey !", "en": "Physics is just chemistry getting some fresh air. Okay, warm-up’s over. Air hockey time!" }, "next": "d" },
+        "f": { "who": "jade", "expr": "surprised", "text": { "fr": "Garder ma veste ? Sûrement pas. Ici, personne ne regarde : tout le monde joue. Allez, viens !", "en": "Hold my jacket? No chance. Nobody just watches here: everybody plays. Come on!" }, "next": "d" },
+        "d": { "who": "narrator", "text": { "fr": "Le palet claque contre les bords. Jade joue avec une concentration de chirurgienne, la langue entre les dents, et éclate de rire à chaque but, même ceux qu’elle encaisse.", "en": "The puck cracks against the rails. Jade plays with a surgeon’s focus, tongue between her teeth, and bursts out laughing at every goal, even the ones she lets in." }, "next": "d2" },
+        "d2": { "who": "jade", "expr": "laugh", "text": { "fr": "7 à 5 ! Pas mal du tout. Tu as un sacré poignet. Ma résidence se serait battue pour t’avoir dans son équipe.", "en": "Seven to five! Not bad at all. You’ve got a serious wrist. My dorm would’ve fought to get you on the team." }, "next": "g" },
+        "g": { "who": "narrator", "text": { "fr": "Vient la machine à pince. Au fond, coincée entre deux ours, une peluche en forme de petit cactus aux yeux immenses.", "en": "Next up, the claw machine. At the very back, wedged between two bears, sits a little plush cactus with enormous eyes." }, "next": "h" },
+        "h": { "who": "jade", "expr": "surprised", "text": { "fr": "Le cactus. Il me faut ce cactus. C’est une question de vie ou de mort. Enfin, de vie : c’est une plante.", "en": "The cactus. I need that cactus. It’s a matter of life and death. Well, life: it’s a plant." }, "next": "i" },
+        "i": { "who": "jade", "expr": "thinking", "text": { "fr": "J’ai calculé l’angle. La pince est truquée, mais pas assez pour me résister. Tu tiens la manette, je te guide ?", "en": "I’ve worked out the angle. The claw is rigged, but not enough to beat me. You take the joystick, I’ll guide you?" },
+          "choices": [
+            { "id": "team", "text": { "fr": "Toi les calculs, moi la manette. On forme une équipe.", "en": "You do the math, I’ll work the stick. We make a team." }, "delta": 7, "next": "j" },
+            { "id": "solo", "text": { "fr": "Laisse-moi d’abord tenter ma chance.", "en": "Let me try my luck first." }, "delta": 3, "next": "k" },
+            { "id": "shop", "text": { "fr": "Il y a sûrement le même en boutique, non ?", "en": "They probably sell the same one in a shop, right?" }, "delta": -3, "next": "l" }
+          ] },
+        "l": { "who": "jade", "expr": "laugh", "text": { "fr": "En boutique ? Ce cactus a grandi ici, dans l’adversité. Il mérite d’être conquis ! Allez, je te guide.", "en": "In a shop? This cactus grew up here, against all odds. He deserves to be won! Come on, I’ll guide you." }, "next": "j" },
+        "j": { "who": "narrator", "text": { "fr": "« Un peu à gauche… stop… descends ! » La pince se referme, tremble, remonte… et le cactus tombe dans le bac. Jade pousse un cri qui fait se retourner toute la salle.", "en": "“A little left… stop… drop!” The claw closes, wobbles, rises… and the cactus tumbles into the tray. Jade lets out a shriek that turns every head in the arcade." }, "next": "m" },
+        "k": { "who": "narrator", "text": { "fr": "Ta première tentative effleure le cactus. La deuxième le déplace. À la troisième, Jade te souffle les angles à l’oreille, et il tombe enfin dans le bac.", "en": "Your first try grazes the cactus. The second nudges it. On the third, Jade whispers angles in your ear, and it finally drops into the tray." }, "next": "m" },
+        "m": { "who": "jade", "expr": "laugh", "text": { "fr": "On l’a eu ! Il lui faut un nom. Pipette ? Non… si : Pipette. Enfin, tu as ton mot à dire.", "en": "We got him! He needs a name. Pipette? No… yes: Pipette. Well, you get a say." },
+          "choices": [
+            { "id": "pipette", "text": { "fr": "Pipette. C’est parfait, ça te ressemble.", "en": "Pipette. It’s perfect, it’s so you." }, "delta": 5, "next": "n" },
+            { "id": "prickles", "text": { "fr": "Je propose Piquant.", "en": "I vote for Prickles." }, "delta": 3, "next": "n" },
+            { "id": "whatever", "text": { "fr": "Bof, c’est une peluche. Peu importe.", "en": "Meh, it’s a plushie. Who cares." }, "delta": -2, "next": "o" }
+          ] },
+        "n": { "who": "jade", "expr": "blush", "text": { "fr": "Va pour Pipette… Pipette-Piquant, même. Un nom composé, comme une vieille famille d’aristocrates. Garde partagée, évidemment.", "en": "Pipette it is… Pipette-Prickles, even. A double-barrelled name, like old aristocracy. Joint custody, obviously." }, "next": "p" },
+        "o": { "who": "jade", "expr": "thinking", "text": { "fr": "Peu importe ? Les noms, c’est mon métier. Ce qui a un nom, on y tient un peu plus. Bon : Pipette. Garde partagée.", "en": "Who cares? Names are my job. Once something has a name, you hold on to it a little tighter. Right: Pipette. Joint custody." }, "next": "p" },
+        "p": { "who": "narrator", "text": { "fr": "Vous terminez sur un vieux jeu de rythme. Jade s’empare de la fausse guitare, joue la partie de basse les yeux fermés et signe un score parfait.", "en": "You wrap up at an old rhythm game. Jade grabs the plastic guitar, plays the bass part with her eyes closed and posts a perfect score." }, "next": "q" },
+        "q": { "who": "jade", "expr": "wink", "text": { "fr": "Quoi ? C’est mon instrument. Je ne vais pas jouer mal exprès pour ménager ton ego.", "en": "What? It’s my instrument. I’m not going to play badly on purpose to spare your ego." }, "next": "r" },
+        "r": { "who": "jade", "expr": "smile", "text": { "fr": "Merci pour ce soir. Sérieusement. Je ne m’étais pas autant amusée depuis… très longtemps.", "en": "Thanks for tonight. Seriously. I haven’t had this much fun in… a really long time." },
+          "choices": [
+            { "id": "again", "text": { "fr": "Moi non plus. On recommence quand tu veux, Pipette compris.", "en": "Me neither. Let’s do it again whenever you want, Pipette included." }, "delta": 7, "next": "s" },
+            { "id": "record", "text": { "fr": "La prochaine fois, on part à la chasse à ton vinyle introuvable.", "en": "Next time, we go hunting for that impossible record of yours." }, "delta": 6, "next": "s", "if": { "seen": "jade_small_vinyl" } },
+            { "id": "noisy", "text": { "fr": "C’était sympa. Un peu bruyant, mais sympa.", "en": "It was nice. A bit loud, but nice." }, "delta": -2, "next": "t" }
+          ] },
+        "s": { "who": "jade", "expr": "blush", "text": { "fr": "Marché conclu. Tu portes Pipette jusqu’à la sortie, et moi, je te tiens la main. Pour l’équilibre, évidemment.", "en": "Deal. You carry Pipette to the exit, and I’ll hold your hand. For balance, obviously." }, "next": "u" },
+        "t": { "who": "jade", "expr": "neutral", "text": { "fr": "Un peu bruyant, oui. La prochaine fois, je choisirai plus calme. Mais tu as quand même gagné le droit de porter Pipette jusqu’à la sortie.", "en": "A bit loud, yeah. Next time I’ll pick somewhere quieter. But you’ve still earned the right to carry Pipette to the exit." }, "next": "u" },
+        "u": { "who": "narrator", "text": { "fr": "Dans le couloir désert, la musique des bornes s’éloigne. Pipette dépasse de ta poche, et Jade marche tout près, son épaule contre la tienne.", "en": "In the empty hallway, the arcade music fades behind you. Pipette pokes out of your pocket, and Jade walks close, her shoulder against yours." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_date_2",
+      "character": "jade",
+      "kind": "date",
+      "minTier": 4,
+      "requires": ["jade_date_1", "jade_talk_4"],
+      "reservationCents": 12000,
+      "place": "beach",
+      "title": { "fr": "Les Glaçons en concert", "en": "The Ice Cubes, live" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Sur la plage, une guinguette a tendu des guirlandes entre deux pins. Une scène en palettes, trois amplis, et une banderole peinte à la main : « LES GLAÇONS – CE SOIR ».", "en": "On the beach, a little open-air bar has strung lights between two pines. A stage made of pallets, three amps, and a hand-painted banner: “THE ICE CUBES – TONIGHT”." }, "next": "b" },
+        "b": { "who": "jade", "expr": "surprised", "text": { "fr": "Te voilà ! Parfait. Génial. J’ai les mains qui tremblent comme un shaker. Regarde, même mon bleuet a le trac.", "en": "There you are! Perfect. Great. My hands are shaking like a cocktail shaker. Look, even my cornflower has stage fright." }, "next": "c" },
+        "c": { "who": "jade", "expr": "sad", "text": { "fr": "Il y a au moins quatre-vingts personnes. Quatre-vingts ! À la dernière répétition, j’ai raté le pont trois fois de suite.", "en": "There are at least eighty people out there. Eighty! At the last rehearsal, I blew the bridge three times in a row." },
+          "choices": [
+            { "id": "eyes", "text": { "fr": "À l’arcade, tu as joué les yeux fermés. Refais exactement pareil.", "en": "At the arcade, you played with your eyes closed. Do exactly that again." }, "delta": 7, "next": "d" },
+            { "id": "flowers", "text": { "fr": "Imagine-les tous avec une fleur dans les cheveux.", "en": "Picture every one of them with a flower in their hair." }, "delta": 4, "next": "e" },
+            { "id": "stats", "text": { "fr": "Trois fois de suite ? Statistiquement, ça promet.", "en": "Three times in a row? Statistically, that’s not great." }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "jade", "expr": "blush", "text": { "fr": "Les yeux fermés… D’accord. Et si je les ouvre, je regarde par ici. Alors ne bouge pas de cet endroit.", "en": "Eyes closed… Okay. And if I open them, I’m looking this way. So don’t you move from that spot." }, "next": "g" },
+        "e": { "who": "jade", "expr": "laugh", "text": { "fr": "Quatre-vingts fleurs. Bon, ça, c’est un public que je comprends. Merci.", "en": "Eighty flowers. Okay, that’s an audience I understand. Thanks." }, "next": "g" },
+        "f": { "who": "jade", "expr": "sad", "text": { "fr": "Merci. Ça m’aide énormément. …Bon. Je retourne paniquer dans mon coin.", "en": "Thanks. That helps a ton. …Okay. I’m going back to panic in my corner." }, "next": "f2" },
+        "f2": { "who": "jade", "expr": "thinking", "text": { "fr": "Non. Je ne recule pas. J’ai assez abandonné de choses comme ça. Pas celle-là.", "en": "No. I’m not backing out. I’ve given up on enough things. Not this one." }, "next": "g" },
+        "g": { "who": "narrator", "text": { "fr": "Les lumières baissent. Le batteur compte : « Un, deux, trois, quatre ! » et la basse de Jade fait vibrer le sable jusque sous tes pieds.", "en": "The lights drop. The drummer counts off, “One, two, three, four!” and Jade’s bass makes the sand hum right under your feet." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Le premier morceau est un peu brouillon. Le deuxième décolle. Au troisième, toute la guinguette tape dans ses mains, et Jade sourit enfin.", "en": "The first song is a little messy. The second takes off. By the third, the whole crowd is clapping along, and Jade finally smiles." }, "next": "i" },
+        "i": { "who": "jade", "expr": "wink", "text": { "fr": "Merci ! Celle-ci s’appelle « Cristallisation ». Je l’ai écrite pendant un TP de chimie, au lieu d’écouter le prof. Maman, si tu m’entends : pardon.", "en": "Thank you! This one’s called “Crystallization”. I wrote it during a chemistry lab instead of listening to the teacher. Mom, if you can hear me: sorry." }, "next": "j" },
+        "j": { "who": "narrator", "text": { "fr": "Arrive le pont, le fameux pont. Jade ouvre les yeux, cherche dans la foule… et te trouve. Elle ne rate pas une seule note.", "en": "Here comes the bridge, the famous bridge. Jade opens her eyes, searches the crowd… and finds you. She doesn’t miss a single note." },
+          "choices": [
+            { "id": "cheer", "text": { "fr": "JADE ! LA BASSE ! LA BASSE !", "en": "JADE! THE BASS! THE BASS!" }, "delta": 6, "next": "l" },
+            { "id": "film", "text": { "fr": "Je filme le pont en entier. Pour que ses parents le voient.", "en": "I’m filming the whole bridge. So her parents can see it." }, "delta": 5, "next": "m" },
+            { "id": "counter", "text": { "fr": "Je file au comptoir, je reviens pour le rappel.", "en": "I’ll pop over to the counter, back in time for the encore." }, "delta": -3, "next": "n" }
+          ] },
+        "l": { "who": "jade", "expr": "laugh", "text": { "fr": "Ta voix, en plein pont ! Je l’ai entendue par-dessus la batterie. J’ai failli éclater de rire au milieu du solo.", "en": "Your voice, right in the bridge! I heard it over the drums. I nearly burst out laughing mid-solo." }, "next": "o" },
+        "m": { "who": "jade", "expr": "surprised", "text": { "fr": "Tu as filmé le pont ? Le pont entier ? …Envoie-le-moi. Je crois que je vais le montrer à mes parents.", "en": "You filmed the bridge? The whole thing? …Send it to me. I think I’m going to show it to my parents." }, "next": "o" },
+        "n": { "who": "jade", "expr": "thinking", "text": { "fr": "Tu as raté le pont. Le seul moment où j’ai osé ouvrir les yeux. …Bon. Au moins, te voilà pour le rappel.", "en": "You missed the bridge. The one moment I dared to open my eyes. …Well. At least you’re back for the encore." }, "next": "o" },
+        "o": { "who": "narrator", "text": { "fr": "Après le concert, la plage se vide peu à peu. Jade s’installe au bord de la scène, la basse en travers des genoux, les joues encore rouges.", "en": "After the show, the beach slowly empties. Jade settles on the edge of the stage, bass across her knees, cheeks still flushed." }, "next": "p" },
+        "p": { "who": "jade", "expr": "smile", "text": { "fr": "Le groupe va manger des frites au port. Moi, je voulais rester encore un peu. Ici. Avec toi, si ça te va.", "en": "The band’s heading to the harbor for fries. I wanted to stay a little longer. Here. With you, if that’s okay." },
+          "choices": [
+            { "id": "stay", "text": { "fr": "Ça me va très bien. Raconte-moi le pont, de l’intérieur.", "en": "That’s more than okay. Tell me about the bridge, from the inside." }, "delta": 7, "next": "q" },
+            { "id": "fries", "text": { "fr": "Des frites, quand même… c’est tentant.", "en": "Fries, though… that’s tempting." }, "delta": 2, "next": "r" }
+          ] },
+        "q": { "who": "jade", "expr": "blush", "text": { "fr": "Le pont ? J’ai eu peur. Et puis j’ai cherché ton visage, et j’ai arrêté d’avoir peur. C’est un peu niais, non ?", "en": "The bridge? I was scared. Then I looked for your face, and I stopped being scared. That’s a bit cheesy, isn’t it?" }, "next": "s" },
+        "r": { "who": "jade", "expr": "laugh", "text": { "fr": "Priorités, d’accord. On vole un cornet de frites au groupe, et on revient s’asseoir ici.", "en": "Priorities, fair enough. We steal a cone of fries off the band and come right back here." }, "next": "s" },
+        "s": { "who": "narrator", "text": { "fr": "Vous restez au bord de la scène, les pieds dans le sable. Les vagues jouent une ligne de basse très lente, que Jade suit du bout des doigts sur ses cordes.", "en": "You stay on the edge of the stage, feet in the sand. The waves play a very slow bass line, and Jade follows it with her fingertips on the strings." }, "next": "t" },
+        "t": { "who": "jade", "expr": "thinking", "text": { "fr": "À la fac, j’avais toujours l’impression de jouer un rôle. Avec toi, non. Je suis juste Jade. Avec une basse, et du sable dans les chaussures.", "en": "At university, I always felt like I was playing a part. With you, I don’t. I’m just Jade. With a bass, and sand in my shoes." },
+          "choices": [
+            { "id": "just", "text": { "fr": "Juste Jade, c’est exactement la personne que j’avais envie de voir ce soir.", "en": "Just Jade is exactly who I wanted to see tonight." }, "delta": 7, "next": "u" },
+            { "id": "star", "text": { "fr": "Juste Jade, et future star du rock.", "en": "Just Jade, future rock star." }, "delta": 3, "next": "v" }
+          ] },
+        "v": { "who": "jade", "expr": "laugh", "text": { "fr": "Une star du rock qui dose ses sirops à la pipette. Le monde n’est pas prêt.", "en": "A rock star who measures her syrups with a pipette. The world isn’t ready." }, "next": "u" },
+        "u": { "who": "narrator", "text": { "fr": "Jade glisse sa main dans la tienne, les doigts encore marqués par les cordes. Elle ne dit plus rien pendant un long moment, et c’est parfait.", "en": "Jade slips her hand into yours, her fingers still marked by the strings. She doesn’t say anything for a long while, and it’s perfect." }, "next": "w" },
+        "w": { "who": "jade", "expr": "smile", "text": { "fr": "La prochaine fois, c’est moi qui t’emmène quelque part. Un endroit secret. Encore plus secret que la terrasse.", "en": "Next time, I’m taking you somewhere. A secret place. Even more secret than the terrace." }, "next": "x" },
+        "x": { "who": "narrator", "text": { "fr": "Au-dessus de la plage, les guirlandes s’éteignent une à une. Tu rentres avec du sable dans les chaussures et une ligne de basse dans la tête.", "en": "Above the beach, the string lights go out one by one. You head home with sand in your shoes and a bass line stuck in your head." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_finale",
+      "character": "jade",
+      "kind": "finale",
+      "minTier": 5,
+      "requires": ["jade_date_2"],
+      "reservationCents": 20000,
+      "place": "garden",
+      "title": { "fr": "Un mocktail à ton nom", "en": "Named after you" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Cinq heures du matin. Le ciel pâlit au-dessus des grilles du jardin botanique. Jade t’attend devant le portail, un panier au bras, une capucine orange dans les cheveux.", "en": "Five in the morning. The sky is paling above the botanical garden’s railings. Jade waits for you at the gate, a basket on her arm, an orange nasturtium in her hair." }, "next": "b" },
+        "b": { "who": "hugo", "expr": "neutral", "text": { "fr": "Le jardinier en chef me devait un service. Vous avez jusqu’à sept heures. Et Jade : on ne cueille rien. Rien.", "en": "The head gardener owed me a favor. You have until seven. And Jade: nothing gets picked. Nothing." }, "next": "c" },
+        "c": { "who": "jade", "expr": "wink", "text": { "fr": "Promis, Hugo. Je ne cueille rien. Je goûte avec les yeux.", "en": "Promise, Hugo. Nothing gets picked. I only taste with my eyes." }, "next": "d" },
+        "d": { "who": "narrator", "text": { "fr": "Hugo lève les yeux au ciel, déverrouille le portail et disparaît dans la brume. Le jardin s’ouvre devant vous, encore trempé de rosée.", "en": "Hugo rolls his eyes, unlocks the gate and vanishes into the mist. The garden opens up before you, still soaked with dew." }, "next": "e" },
+        "e": { "who": "jade", "expr": "smile", "text": { "fr": "À l’époque de la fac, quand je séchais les cours, c’est ici que je venais. Je n’y ai jamais amené personne.", "en": "Back at university, whenever I skipped class, this is where I came. I’ve never brought anyone here." },
+          "choices": [
+            { "id": "precious", "text": { "fr": "Alors je vais marcher doucement. Cet endroit est précieux.", "en": "Then I’ll tread softly. This place is precious." }, "delta": 6, "next": "f" },
+            { "id": "favorite", "text": { "fr": "Montre-moi ton coin préféré.", "en": "Show me your favorite spot." }, "delta": 4, "next": "f" },
+            { "id": "early", "text": { "fr": "Cinq heures du matin, quand même… c’était obligatoire ?", "en": "Five a.m., though… was that really necessary?" }, "delta": -2, "next": "g" }
+          ] },
+        "f": { "who": "jade", "expr": "blush", "text": { "fr": "Par ici. Attention aux escargots : ce sont les seuls à se lever plus tôt que moi.", "en": "This way. Mind the snails: they’re the only ones who get up earlier than I do." }, "next": "h" },
+        "g": { "who": "jade", "expr": "laugh", "text": { "fr": "Obligatoire. La lumière de l’aube, c’est un ingrédient. Tu vas comprendre.", "en": "Absolutely necessary. Dawn light is an ingredient. You’ll see." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Au bout d’une allée de lavande se dresse une vieille serre aux vitres embuées. À l’intérieur : une table en fer forgé, un shaker, et une rangée de fioles étiquetées à la main.", "en": "At the end of a lavender path stands an old greenhouse with fogged-up panes. Inside: a wrought-iron table, a shaker, and a row of hand-labeled vials." }, "next": "i" },
+        "i": { "who": "jade", "expr": "thinking", "text": { "fr": "Depuis le premier soir, je travaille sur quelque chose. Quarante-trois essais. Mes carnets sont pleins de ratures.", "en": "Since that very first night, I’ve been working on something. Forty-three attempts. My notebooks are full of crossings-out." }, "next": "j" },
+        "j": { "who": "narrator", "text": { "fr": "Elle verse trois fioles, ajoute un zeste, puis frappe le shaker en rythme, comme une ligne de basse. Le liquide est d’un vert pâle, presque lumineux dans l’aube.", "en": "She pours three vials, adds a twist of zest, then shakes in rhythm, like a bass line. The drink comes out pale green, almost glowing in the dawn light." }, "next": "k" },
+        "k": { "who": "jade", "expr": "blush", "text": { "fr": "Basilic, pastèque et citronnelle : ton premier verre. Verveine et menthe de la terrasse. Le sirop de rhubarbe, version 12. Et un dernier ingrédient, secret.", "en": "Basil, watermelon and lemongrass: your very first drink. Verbena and mint from the terrace. The rhubarb syrup, version 12. And one last, secret ingredient." }, "next": "l" },
+        "l": { "who": "jade", "expr": "smile", "text": { "fr": "Je ne baptise jamais un verre avant de bien connaître la personne. Toi, je te connais, maintenant. C’est un mocktail à ton nom. Le premier.", "en": "I never name a drink until I really know the person. And I know you now. This is a mocktail named after you. The very first." },
+          "choices": [
+            { "id": "sip", "text": { "fr": "Je le goûte lentement. Je veux reconnaître chaque ingrédient.", "en": "I’ll sip it slowly. I want to recognize every ingredient." }, "delta": 7, "next": "m" },
+            { "id": "touched", "text": { "fr": "Personne n’a jamais rien fait de pareil pour moi.", "en": "No one has ever done anything like this for me." }, "delta": 6, "next": "n" },
+            { "id": "rule", "text": { "fr": "Tu es sûre d’avoir respecté la règle d’Hugo ?", "en": "Are you sure you stuck to Hugo’s rule?" }, "delta": 3, "next": "o" }
+          ] },
+        "n": { "who": "jade", "expr": "blush", "text": { "fr": "Eh bien, maintenant, si. Goûte, avant que la glace fonde.", "en": "Well, now someone has. Taste it, before the ice melts." }, "next": "m" },
+        "o": { "who": "jade", "expr": "laugh", "text": { "fr": "À la lettre ! Rien de ce jardin n’est dans ce verre. Tout vient de ma terrasse. Enfin… presque tout. Goûte, au lieu de me dénoncer.", "en": "To the letter! Nothing from this garden is in that glass. It all comes from my terrace. Well… almost all of it. Taste it, instead of turning me in." }, "next": "m" },
+        "m": { "who": "narrator", "text": { "fr": "Tu goûtes. D’abord la pastèque, puis le basilic, la citronnelle qui pique un peu… et tout au fond, une note que tu ne reconnais pas, douce et poivrée à la fois.", "en": "You take a sip. First the watermelon, then the basil, the lemongrass with its little kick… and deep down, a note you can’t place, sweet and peppery at once." }, "next": "p" },
+        "p": { "who": "jade", "expr": "thinking", "text": { "fr": "Alors ? Le dernier ingrédient. Tu l’as trouvé ?", "en": "So? The last ingredient. Did you find it?" },
+          "choices": [
+            { "id": "you", "text": { "fr": "Je ne le reconnais pas… mais il me fait penser à toi.", "en": "I can’t place it… but it reminds me of you." }, "delta": 7, "next": "q" },
+            { "id": "pepper", "text": { "fr": "Du poivre de Timut ? Comme le sirop de la cuisine ?", "en": "Timut pepper? Like the syrup in the kitchen?" }, "delta": 3, "next": "r" },
+            { "id": "flower", "text": { "fr": "De la capucine. Ta fleur des très bons jours.", "en": "Nasturtium. Your flower for the very best days." }, "delta": 8, "next": "s", "if": { "seen": "jade_small_flower" } }
+          ] },
+        "q": { "who": "jade", "expr": "blush", "text": { "fr": "…C’est de la capucine. Ma fleur préférée. Mais ta réponse est plus jolie que la mienne.", "en": "…It’s nasturtium. My favorite flower. But your answer is prettier than mine." }, "next": "t" },
+        "r": { "who": "jade", "expr": "smile", "text": { "fr": "Presque ! C’est de la capucine. Elle pique comme du poivre, mais c’est une fleur. Un peu comme moi, j’imagine.", "en": "Close! It’s nasturtium. It bites like pepper, but it’s a flower. A bit like me, I guess." }, "next": "t" },
+        "s": { "who": "jade", "expr": "surprised", "text": { "fr": "Tu t’en souviens ? Le toit, les étoiles, ma théorie des fleurs… Tu écoutes vraiment tout ce que je dis, toi.", "en": "You remember? The rooftop, the stars, my flower theory… You really do listen to everything I say." }, "next": "t" },
+        "t": { "who": "narrator", "text": { "fr": "Le soleil passe enfin au-dessus des arbres. La serre s’illumine d’un coup, et des dizaines de reflets verts dansent sur les vitres.", "en": "The sun finally clears the trees. The greenhouse lights up all at once, and dozens of green glints dance across the glass." }, "next": "u" },
+        "u": { "who": "jade", "expr": "sad", "text": { "fr": "Longtemps, j’ai cru que j’avais tout raté. La chimie, mes parents… Et puis j’ai compris que je n’avais rien abandonné. J’ai juste changé de laboratoire.", "en": "For a long time, I thought I’d messed everything up. Chemistry, my parents… Then I realized I hadn’t given up on anything. I just changed labs." }, "next": "v" },
+        "v": { "who": "jade", "expr": "blush", "text": { "fr": "Et dans ce laboratoire-là, maintenant, il y a toi. Je ne sais pas le dire mieux qu’avec un verre.", "en": "And in that lab, now, there’s you. I don’t know how to say it better than with a drink." },
+          "choices": [
+            { "id": "perfect", "text": { "fr": "Tu l’as dit parfaitement. Avec un verre, et avec ces mots-là.", "en": "You said it perfectly. With a drink, and with those words." }, "delta": 7, "next": "w" },
+            { "id": "care", "text": { "fr": "Moi, je n’ai pas de verre. Juste ça : je tiens à toi, Jade.", "en": "I don’t have a drink. Just this: you matter to me, Jade." }, "delta": 6, "next": "w" },
+            { "id": "lab", "text": { "fr": "Donc je suis une expérience, c’est ça ?", "en": "So I’m an experiment, is that it?" }, "delta": -2, "next": "x" }
+          ] },
+        "x": { "who": "jade", "expr": "laugh", "text": { "fr": "La plus réussie de toutes. Quarante-trois essais pour le verre… et un seul pour toi.", "en": "The most successful one of all. Forty-three attempts for the drink… and just one for you." }, "next": "w" },
+        "w": { "who": "narrator", "text": { "fr": "Elle pose le verre sur la table de fer et s’approche. Sa main trouve la tienne, et la capucine de ses cheveux effleure ta joue.", "en": "She sets the glass down on the iron table and steps closer. Her hand finds yours, and the nasturtium in her hair brushes your cheek." }, "next": "y" },
+        "y": { "who": "jade", "expr": "blush", "text": { "fr": "Je peux ?", "en": "May I?" },
+          "choices": [
+            { "id": "yes", "text": { "fr": "Oui.", "en": "Yes." }, "delta": 5, "next": "z" },
+            { "id": "same", "text": { "fr": "J’allais te poser la même question.", "en": "I was about to ask you the same thing." }, "delta": 5, "next": "z" }
+          ] },
+        "z": { "who": "narrator", "text": { "fr": "Dans la lumière de l’aube, entre les fioles et les feuilles de menthe, vous échangez un baiser léger, qui a le goût du basilic et de la capucine.", "en": "In the dawn light, among the vials and the mint leaves, you share a soft kiss that tastes of basil and nasturtium." }, "next": "fin" },
+        "fin": { "who": "jade", "expr": "smile", "text": { "fr": "Le premier mocktail à ton nom. Je crois que je vais en inventer beaucoup d’autres.", "en": "The first mocktail named after you. I think I’m going to invent a lot more." }, "end": true, "fade": true }
+      }
+    },
+    {
+      "id": "jade_small_names",
+      "character": "jade",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "bar",
+      "title": { "fr": "L’ardoise du jour", "en": "Today’s chalkboard" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Jade écrit à la craie sur l’ardoise du bar. Ce soir, tous les mocktails portent le nom d’un habitué.", "en": "Jade is chalking up the bar’s board. Tonight, every mocktail is named after a regular." }, "next": "b" },
+        "b": { "who": "jade", "expr": "smile", "text": { "fr": "Le Hugo : impeccable, un peu amer, une larme de vanille. Le Théo : thé fumé et mélancolie. Le Camille : agrumes et badiane, pour la chance.", "en": "The Hugo: impeccable, a little bitter, a drop of vanilla. The Theo: smoked tea and melancholy. The Camille: citrus and star anise, for luck." }, "next": "c" },
+        "c": { "who": "jade", "expr": "thinking", "text": { "fr": "Il m’en manque un. Mangue, citron vert, piment doux. Ça pique, mais avec le sourire. Tu l’appellerais comment ?", "en": "I’m missing one. Mango, lime, sweet chili. It bites, but with a smile. What would you call it?" },
+          "choices": [
+            { "id": "nora", "text": { "fr": "Le Nora ? Elle fait disparaître les montres avec le même sourire.", "en": "The Nora? She makes watches vanish with that exact smile." }, "delta": 5, "next": "d" },
+            { "id": "jade", "text": { "fr": "Le Jade, évidemment. Ça pique et ça sourit.", "en": "The Jade, obviously. It bites and it smiles." }, "delta": 3, "next": "e" },
+            { "id": "plain", "text": { "fr": "Mangue-citron, tout simplement ?", "en": "Just… Mango-Lime?" }, "delta": -2, "next": "f" }
+          ] },
+        "d": { "who": "jade", "expr": "laugh", "text": { "fr": "Le Nora ! Parfait. Si elle le voit, elle est capable de faire disparaître l’ardoise entière.", "en": "The Nora! Perfect. If she sees it, she’s liable to make the whole board vanish." }, "next": "g" },
+        "e": { "who": "jade", "expr": "blush", "text": { "fr": "Moi ? Jamais. Règle numéro un : on ne se baptise pas soi-même. Mais je note que tu me trouves souriante.", "en": "Me? Never. Rule number one: you don’t name a drink after yourself. But duly noted: you think I’m all smiles." }, "next": "g" },
+        "f": { "who": "jade", "expr": "surprised", "text": { "fr": "« Mangue-citron. » Tu viens de vider un verre de toute sa poésie.", "en": "“Mango-Lime.” You just drained a drink of all its poetry." }, "next": "g" },
+        "g": { "who": "jade", "expr": "wink", "text": { "fr": "Question bonus : si tu étais un ingrédient, tu serais quoi ?", "en": "Bonus question: if you were an ingredient, what would you be?" },
+          "choices": [
+            { "id": "mint", "text": { "fr": "Une feuille de menthe : fraîche, et toujours là.", "en": "A mint leaf: fresh, and always around." }, "delta": 4, "next": "h" },
+            { "id": "ice", "text": { "fr": "Un glaçon. Discret, mais ça rend service.", "en": "An ice cube. Low-key, but useful." }, "delta": 2, "next": "i" }
+          ] },
+        "h": { "who": "jade", "expr": "laugh", "text": { "fr": "La menthe ! Je m’en doutais. Ça pousse partout, et une fois qu’elle s’installe, impossible de s’en débarrasser.", "en": "Mint! I knew it. It grows everywhere, and once it moves in, you can never get rid of it." }, "next": "end" },
+        "i": { "who": "jade", "expr": "smile", "text": { "fr": "Un glaçon. Simple, utile, transparent. Tu sais que mon groupe s’appelle Les Glaçons ? Tu viens de marquer des points.", "en": "An ice cube. Simple, useful, transparent. Did you know my band is called The Ice Cubes? You just scored points." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Elle ajoute un dernier nom à la craie, recule pour admirer l’ardoise, et te fait goûter le fond du shaker.", "en": "She chalks up one last name, steps back to admire the board, and lets you taste what’s left in the shaker." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_small_vinyl",
+      "character": "jade",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "harbor",
+      "title": { "fr": "La brocante du port", "en": "The harbor flea market" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Samedi matin, brocante du port. Entre deux étals de cartes postales, tu reconnais un carré noir et une fleur, penchés sur un bac de vinyles.", "en": "Saturday morning, the harbor flea market. Between two stalls of old postcards, you spot a black bob and a flower bent over a crate of records." }, "next": "b" },
+        "b": { "who": "jade", "expr": "surprised", "text": { "fr": "Toi ! Tu tombes bien, j’ai besoin d’un avis. Celui-là : un album de funk de 1974. Pochette déchirée, mais la ligne de basse… une merveille.", "en": "You! Perfect timing, I need a second opinion. This one: a 1974 funk album. Torn sleeve, but that bass line… a marvel." }, "next": "c" },
+        "c": { "who": "jade", "expr": "thinking", "text": { "fr": "Le vendeur en demande le prix de trois plants de basilic. C’est mon budget jardin du mois. Tu en penses quoi ?", "en": "The seller wants the price of three basil plants for it. That’s my whole garden budget for the month. What do you think?" },
+          "choices": [
+            { "id": "buy", "text": { "fr": "Une ligne de basse pareille, ça ne se laisse pas filer.", "en": "A bass line like that? You don’t let it get away." }, "delta": 5, "next": "d" },
+            { "id": "haggle", "text": { "fr": "Laisse-moi négocier. J’ai un talent caché.", "en": "Let me haggle. I have a hidden talent." }, "delta": 4, "next": "e" },
+            { "id": "online", "text": { "fr": "Tu peux sûrement l’écouter en ligne, gratuitement.", "en": "You can probably stream it online for free." }, "delta": -2, "next": "f" }
+          ] },
+        "d": { "who": "jade", "expr": "laugh", "text": { "fr": "Tu as raison. Le basilic attendra. Le funk, jamais.", "en": "You’re right. The basil can wait. Funk can’t." }, "next": "g" },
+        "e": { "who": "narrator", "text": { "fr": "Tu discutes trois minutes avec le vendeur. Il finit par baisser son prix, à condition que Jade lui explique ce qu’est une ligne de basse. Elle parle vingt minutes.", "en": "You chat with the seller for three minutes. He finally drops his price, on one condition: Jade explains what a bass line is. She talks for twenty minutes." }, "next": "g" },
+        "f": { "who": "jade", "expr": "sad", "text": { "fr": "En ligne ? Sans le craquement, sans l’odeur du carton ? Tu me brises le cœur, là.", "en": "Online? Without the crackle, without the smell of the cardboard? You’re breaking my heart." }, "next": "g" },
+        "g": { "who": "jade", "expr": "smile", "text": { "fr": "Il va rejoindre ma pile. Un jour, je trouverai celui qui me manque : un vieux pressage de La Nouvelle-Orléans. Introuvable, évidemment.", "en": "This one’s joining my stack. Someday I’ll find the one I’m missing: an old New Orleans pressing. Impossible to find, of course." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Elle glisse le disque sous son bras comme un trésor, et vous remontez le quai en parlant de lignes de basse.", "en": "She tucks the record under her arm like treasure, and the two of you stroll up the quay talking bass lines." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_small_rose",
+      "character": "jade",
+      "kind": "smalltalk",
+      "minTier": 2,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Encore une rose", "en": "Another rose" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Jade traverse la salle de jeu, un plateau de mocktails en équilibre. Une rose rouge dépasse de la poche de son tablier.", "en": "Jade crosses the gaming floor, a tray of mocktails balanced on one hand. A red rose sticks out of her apron pocket." }, "next": "b" },
+        "b": { "who": "jade", "expr": "thinking", "text": { "fr": "Un client vient de me l’offrir. Une rose rouge. La quatrième de la semaine. Je ne sais plus où les mettre.", "en": "A guest just gave it to me. A red rose. The fourth one this week. I’m running out of places to put them." }, "next": "c" },
+        "c": { "who": "jade", "expr": "neutral", "text": { "fr": "Ne fais pas la tête que tout le monde fait. Oui, c’est gentil. Mais une rose, c’est… la réponse par défaut.", "en": "Don’t make the face everyone makes. Yes, it’s sweet. But a rose is… the default answer." },
+          "choices": [
+            { "id": "basil", "text": { "fr": "Moi, je t’aurais offert un pot de basilic. Au moins, ça sert.", "en": "I’d have given you a pot of basil. At least that’s useful." }, "delta": 5, "next": "d" },
+            { "id": "record", "text": { "fr": "Un vinyle te parlerait plus, non ?", "en": "A record would speak to you more, right?" }, "delta": 4, "next": "e" },
+            { "id": "classic", "text": { "fr": "Une rose, c’est un classique. Tout le monde aime les roses.", "en": "A rose is a classic. Everyone loves roses." }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "jade", "expr": "laugh", "text": { "fr": "Un pot de basilic ! Enfin quelqu’un qui comprend. Une plante vivante, voilà le vrai romantisme.", "en": "A pot of basil! Finally, someone who gets it. A living plant: now that’s real romance." }, "next": "g" },
+        "e": { "who": "jade", "expr": "smile", "text": { "fr": "Un vinyle… Tu commences à me connaître, toi. C’est dangereux.", "en": "A record… You’re starting to figure me out. That’s dangerous." }, "next": "g" },
+        "f": { "who": "jade", "expr": "wink", "text": { "fr": "Tout le monde, sauf moi. Et sauf Hugo, qui en cultive sur son balcon et les trouve toutes imparfaites.", "en": "Everyone except me. And except Hugo, who grows them on his balcony and finds every single one imperfect." }, "next": "g" },
+        "g": { "who": "camille", "expr": "laugh", "text": { "fr": "Encore une, Jade ? Pose-la sur ma table, elle commence à ressembler à une boutique de fleuriste.", "en": "Another one, Jade? Leave it on my table, it’s starting to look like a flower shop." }, "next": "h" },
+        "h": { "who": "narrator", "text": { "fr": "Jade dépose la rose près de la roulette, adresse un clin d’œil à Camille, et repart vers les tables, plateau en équilibre.", "en": "Jade sets the rose down by the roulette wheel, winks at Camille, and heads back to the tables, tray balanced." }, "end": true }
+      }
+    },
+    {
+      "id": "jade_small_flower",
+      "character": "jade",
+      "kind": "smalltalk",
+      "minTier": 3,
+      "requires": [],
+      "place": "rooftop",
+      "title": { "fr": "La fleur du jour", "en": "Flower of the day" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Pause de minuit sur le toit du casino. Jade est assise sur une caisse, les écouteurs autour du cou, le nez dans les étoiles.", "en": "Midnight break on the casino roof. Jade sits on a crate, headphones around her neck, nose turned up to the stars." }, "next": "b" },
+        "b": { "who": "jade", "expr": "smile", "text": { "fr": "Tu t’es déjà demandé pourquoi je porte une fleur différente chaque jour ?", "en": "Ever wondered why I wear a different flower every day?" },
+          "choices": [
+            { "id": "mood", "text": { "fr": "J’ai une théorie : c’est ton humeur du jour.", "en": "I have a theory: it’s your mood of the day." }, "delta": 5, "next": "c" },
+            { "id": "tell", "text": { "fr": "Tu vas me le dire, j’espère.", "en": "You’re going to tell me, I hope." }, "delta": 3, "next": "d" },
+            { "id": "same", "text": { "fr": "Ah bon ? Je croyais que c’était toujours la même.", "en": "Really? I thought it was always the same one." }, "delta": -2, "next": "e" }
+          ] },
+        "c": { "who": "jade", "expr": "surprised", "text": { "fr": "Exactement ! Le souci, c’est la bonne humeur. La lavande, la fatigue. Le bleuet, le trac.", "en": "Exactly! Marigold means a good mood. Lavender, tired. Cornflower, stage fright." }, "next": "f" },
+        "d": { "who": "jade", "expr": "wink", "text": { "fr": "C’est mon humeur du jour, affichée pour qui sait lire. Le souci, la bonne humeur. La lavande, la fatigue. Le bleuet, le trac.", "en": "It’s my mood of the day, on display for anyone who can read it. Marigold, good mood. Lavender, tired. Cornflower, stage fright." }, "next": "f" },
+        "e": { "who": "jade", "expr": "laugh", "text": { "fr": "La même ? Tu me vexes ! C’est mon humeur du jour : le souci pour la joie, la lavande pour la fatigue, le bleuet pour le trac.", "en": "The same one? I’m wounded! It’s my mood of the day: marigold for joy, lavender for tired, cornflower for stage fright." }, "next": "f" },
+        "f": { "who": "jade", "expr": "blush", "text": { "fr": "Et la capucine, c’est ma préférée. Elle se mange, et elle pique comme du poivre. Je la garde pour les très bons jours.", "en": "And the nasturtium is my favorite. You can eat it, and it bites like pepper. I save it for the very best days." },
+          "choices": [
+            { "id": "someday", "text": { "fr": "J’espère te voir avec une capucine, un jour.", "en": "I hope I get to see you wearing one someday." }, "delta": 4, "next": "g" },
+            { "id": "spicy", "text": { "fr": "Une fleur qui pique ? Ça te ressemble bien.", "en": "A flower that bites? Sounds just like you." }, "delta": 2, "next": "h" }
+          ] },
+        "g": { "who": "jade", "expr": "smile", "text": { "fr": "Peut-être. Si tu continues comme ça, ça pourrait arriver plus vite que prévu.", "en": "Maybe. Keep this up, and it could happen sooner than you think." }, "next": "i" },
+        "h": { "who": "jade", "expr": "laugh", "text": { "fr": "Je prends ça comme un compliment. Avec une pincée de poivre.", "en": "I’ll take that as a compliment. With a pinch of pepper." }, "next": "i" },
+        "i": { "who": "narrator", "text": { "fr": "Une étoile filante raie le ciel. Jade ferme les yeux une seconde, et tu ne sauras jamais quel vœu elle a fait.", "en": "A shooting star streaks across the sky. Jade closes her eyes for a second, and you’ll never know what she wished for." }, "end": true }
+      }
+    }
+  ]
+}

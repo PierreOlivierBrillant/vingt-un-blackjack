@@ -1,0 +1,62 @@
+{
+  "character": "ines",
+  "scenes": [
+    {
+      "id": "ines_small_pens",
+      "character": "ines",
+      "kind": "smalltalk",
+      "minTier": 0,
+      "requires": [],
+      "place": "casino",
+      "title": { "fr": "Une goutte d’encre", "en": "A drop of ink" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Fin de service au baccarat. Inès range ses cartes avec une précision de métronome, puis sort un stylo plume d’un étui en cuir.", "en": "End of the shift at the baccarat table. Inès squares the cards with metronome precision, then takes a fountain pen from a leather case." }, "next": "b" },
+        "b": { "who": "ines", "expr": "neutral", "text": { "fr": "Bonsoir. La table est fermée, je le crains. Il ne me reste qu’à noter les comptes du sabot.", "en": "Good evening. The table is closed, I’m afraid. All that’s left is to note down the shoe’s tally." }, "next": "c" },
+        "c": { "who": "narrator", "text": { "fr": "La plume crache une petite étoile d’encre sur la feuille. Inès la fixe comme une fausse note en plein ballet.", "en": "The nib spits a small star of ink onto the page. Inès stares at it like a wrong note in the middle of a ballet." }, "next": "d" },
+        "d": { "who": "ines", "expr": "thinking", "text": { "fr": "Elle boude. Une plume de 1952 a bien le droit d’avoir ses humeurs, vous ne trouvez pas ?", "en": "It’s sulking. A nib from 1952 is entitled to its moods, don’t you think?" },
+          "choices": [
+            { "id": "ink", "text": { "fr": "Elle a peut-être envie d’écrire autre chose que des comptes.", "en": "Maybe it wants to write something other than numbers." }, "delta": 6, "next": "e" },
+            { "id": "pen", "text": { "fr": "1952 ? Vous en avez combien, des stylos comme celui-là ?", "en": "1952? How many pens like that do you own?" }, "delta": 4, "next": "f" },
+            { "id": "ballpoint", "text": { "fr": "Un stylo à bille, ça ne boude jamais, vous savez.", "en": "A ballpoint never sulks, you know." }, "delta": -3, "next": "g" }
+          ] },
+        "e": { "who": "ines", "expr": "smile", "text": { "fr": "Autre chose que des comptes… Une lettre, peut-être. Vous avez l’âme d’un stylo plume, on dirait.", "en": "Something other than numbers… A letter, perhaps. You seem to have the soul of a fountain pen." }, "next": "h" },
+        "f": { "who": "ines", "expr": "blush", "text": { "fr": "Trente-sept. Trente-huit, avec celui que je répare encore. Pardon, je n’en parle jamais. Vous posez les bonnes questions.", "en": "Thirty-seven. Thirty-eight, counting the one I’m still repairing. Forgive me, I never talk about them. You ask the right questions." }, "next": "h" },
+        "g": { "who": "ines", "expr": "surprised", "text": { "fr": "Il ne chante pas non plus, et il ne danse pas. Le stylo à bille est l’employé modèle de la papeterie. Je préfère les caractères.", "en": "Nor does it sing, or dance. The ballpoint is the model employee of stationery. I prefer a little character." }, "next": "h" },
+        "h": { "who": "ines", "expr": "smile", "text": { "fr": "Revenez au baccarat un de ces soirs. Je vous montrerai comment on apprivoise une plume qui boude.", "en": "Come back to the baccarat table some evening. I’ll show you how to tame a sulking nib." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Inès referme l’étui d’un geste de danseuse. La petite étoile d’encre, elle, reste sur la page.", "en": "Inès closes the case with a dancer’s gesture. The little star of ink stays on the page." }, "end": true }
+      }
+    },
+    {
+      "id": "ines_small_letter",
+      "character": "ines",
+      "kind": "smalltalk",
+      "minTier": 1,
+      "requires": [],
+      "place": "terrace",
+      "title": { "fr": "Lettre à l’Opéra", "en": "A letter to the Opera" },
+      "start": "a",
+      "nodes": {
+        "a": { "who": "narrator", "text": { "fr": "Sur la terrasse, Inès écrit une lettre à la main, un pied posé sur la pointe, comme à la barre d’un studio de danse.", "en": "On the terrace, Inès is writing a letter by hand, one foot up on its toes, as if at the barre of a dance studio." }, "next": "b" },
+        "b": { "who": "ines", "expr": "surprised", "text": { "fr": "Oh. Vous me prenez en pleine correspondance. C’est un vice très démodé, je sais.", "en": "Oh. You’ve caught me mid-correspondence. A terribly old-fashioned vice, I know." }, "next": "c" },
+        "c": { "who": "ines", "expr": "thinking", "text": { "fr": "J’écris à une amie de l’Opéra. Elle me demande si je danse encore. Que lui répondriez-vous, à ma place ?", "en": "I’m writing to a friend from the Opera. She asks whether I still dance. What would you tell her, in my place?" },
+          "choices": [
+            { "id": "dealing", "text": { "fr": "Que vous dansez encore, mais avec des cartes.", "en": "That you still dance, just with cards now." }, "delta": 5, "next": "d" },
+            { "id": "truth", "text": { "fr": "La vérité. Elle la devinera de toute façon.", "en": "The truth. She’ll guess it anyway." }, "delta": 3, "next": "e" },
+            { "id": "peek", "text": { "fr": "Je peux lire le reste de la lettre ?", "en": "Can I read the rest of the letter?" }, "delta": -3, "next": "f" }
+          ] },
+        "d": { "who": "ines", "expr": "laugh", "text": { "fr": "Avec des cartes… Je vais l’écrire mot pour mot. Elle va rire, puis elle sera jalouse de ne pas y avoir pensé.", "en": "Just with cards… I’ll write that word for word. She’ll laugh, then be jealous she didn’t think of it." }, "next": "g" },
+        "e": { "who": "ines", "expr": "smile", "text": { "fr": "La vérité, donc : mes chevilles ont pris leur retraite, mais pas mes mains. C’est plus doux, écrit comme ça.", "en": "The truth, then: my ankles have retired, but not my hands. It sounds gentler, written that way." }, "next": "g" },
+        "f": { "who": "ines", "expr": "neutral", "text": { "fr": "Une lettre ne se lit qu’une fois, par la personne à qui elle est adressée. C’est tout son charme. Et ce n’est pas vous. Pas encore.", "en": "A letter is read once, by the person it is addressed to. That’s its whole charm. And that isn’t you. Not yet." }, "next": "g" },
+        "g": { "who": "ines", "expr": "wink", "text": { "fr": "Vous avez une belle écriture, j’en suis sûre. Cela se devine à la façon dont on tient un verre.", "en": "You have lovely handwriting, I’m sure of it. One can tell from the way a person holds a glass." },
+          "choices": [
+            { "id": "write_back", "text": { "fr": "Si vous m’écrivez un jour, je promets de répondre à la main.", "en": "If you ever write to me, I promise to answer by hand." }, "delta": 5, "next": "h" },
+            { "id": "scrawl", "text": { "fr": "Mon écriture ressemble à un électrocardiogramme, je préfère prévenir.", "en": "My handwriting looks like a heart monitor, fair warning." }, "delta": 2, "next": "i" }
+          ] },
+        "h": { "who": "ines", "expr": "blush", "text": { "fr": "C’est noté. À l’encre bleu nuit, je pense. Elle convient aux promesses.", "en": "Duly noted. In midnight-blue ink, I think. It suits promises." }, "next": "end" },
+        "i": { "who": "ines", "expr": "laugh", "text": { "fr": "Un électrocardiogramme prouve au moins qu’il y a du cœur derrière. Je saurai le déchiffrer.", "en": "A heart monitor at least proves there’s a heart behind it. I’ll manage to decipher it." }, "next": "end" },
+        "end": { "who": "narrator", "text": { "fr": "Inès souffle doucement sur l’encre pour la sécher. Quand vous partez, elle a déjà repris la plume, un sourire au coin des lèvres.", "en": "Inès blows softly on the ink to dry it. As you leave, she has already picked up her pen again, a smile at the corner of her lips." }, "end": true }
+      }
+    }
+  ]
+}

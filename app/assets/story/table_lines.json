@@ -1,0 +1,134 @@
+{
+ "lines": {
+  "lucas": {
+   "greet": {
+    "0": [{ "fr": "Bienvenue à ma table, {name}. Les règles sont simples, la chance un peu moins.", "en": "Welcome to my table, {name}. The rules are simple, luck less so." }],
+    "1": [{ "fr": "Re-bonjour, {name}. Toujours fidèle au 21 ?", "en": "Hello again, {name}. Still loyal to 21?" }],
+    "2": [{ "fr": "Ah, {name} ! Je t’ai gardé la meilleure place.", "en": "Ah, {name}! I saved you the best seat." }],
+    "3": [{ "fr": "{name}… la soirée commence vraiment quand tu t’assieds.", "en": "{name}… the evening really starts when you sit down." }],
+    "4": [{ "fr": "Je distribue mieux quand tu es là, {name}. C’est mathématique.", "en": "I deal better when you’re here, {name}. It’s mathematical." }],
+    "5": [{ "fr": "{name}. Tu as gardé mon cœur… et ta mise, j’espère.", "en": "{name}. You kept my heart… and your stake, I hope." }]
+   },
+   "win": [
+    { "fr": "Joli coup, {name}.", "en": "Nice hand, {name}." },
+    { "fr": "La maison s’incline. Pour cette fois.", "en": "The house bows. This time." }
+   ],
+   "bigWin": [
+    { "fr": "Là, je suis impressionné, {name} !", "en": "Now that impresses me, {name}!" },
+    { "fr": "Tu viens de faire sourire un croupier. C’est rare.", "en": "You just made a croupier smile. That’s rare." }
+   ],
+   "lose": [
+    { "fr": "Pas cette fois. La prochaine est pour toi.", "en": "Not this time. The next one’s yours." },
+    { "fr": "Les cartes ont de la mémoire, pas de rancune.", "en": "Cards have memory, not grudges." }
+   ],
+   "push": [
+    { "fr": "Égalité. On reprend nos esprits.", "en": "A push. We catch our breath." },
+    { "fr": "Personne ne gagne, personne ne boude.", "en": "Nobody wins, nobody sulks." }
+   ]
+  },
+  "camille": {
+   "greet": {
+    "0": [{ "fr": "Bonsoir {name} ! Faites vos jeux, la roue a faim.", "en": "Good evening {name}! Place your bets, the wheel is hungry." }],
+    "1": [{ "fr": "Te revoilà, {name} ! Tu as un numéro fétiche ?", "en": "There you are, {name}! Got a lucky number?" }],
+    "2": [{ "fr": "{name} ! J’ai lancé la bille en pensant à toi.", "en": "{name}! I spun the ball thinking of you." }],
+    "3": [{ "fr": "Ma table préférée, c’est celle où tu t’assieds, {name}.", "en": "My favourite table is the one you sit at, {name}." }],
+    "4": [{ "fr": "Si la bille tombe sur le rouge, c’est que je rougis, {name}.", "en": "If the ball lands on red, it’s because I’m blushing, {name}." }],
+    "5": [{ "fr": "{name}, ma bonne étoile. La roue peut tourner, moi je reste.", "en": "{name}, my lucky star. The wheel may spin, I’m staying." }]
+   },
+   "win": [
+    { "fr": "Bien vu, {name} !", "en": "Well called, {name}!" },
+    { "fr": "La bille t’aime bien ce soir.", "en": "The ball likes you tonight." }
+   ],
+   "bigWin": [
+    { "fr": "Waouh ! Les étoiles sont alignées, {name} !", "en": "Wow! The stars are aligned, {name}!" },
+    { "fr": "Je n’ai jamais vu la roue aussi généreuse !", "en": "I’ve never seen the wheel this generous!" }
+   ],
+   "lose": [
+    { "fr": "Oh non… la bille est capricieuse.", "en": "Oh no… the ball is moody." },
+    { "fr": "On relance ? Je croise les doigts pour toi.", "en": "Spin again? I’ll cross my fingers for you." }
+   ],
+   "push": [
+    { "fr": "Partage ! La roue joue les diplomates.", "en": "Split! The wheel plays diplomat." },
+    { "fr": "Ni gagné ni perdu, on recommence.", "en": "Neither won nor lost, let’s go again." }
+   ]
+  },
+  "ines": {
+   "greet": {
+    "0": [{ "fr": "Bonsoir, {name}. Punto ou Banco ?", "en": "Good evening, {name}. Punto or Banco?" }],
+    "1": [{ "fr": "Ravie de vous revoir, {name}.", "en": "Lovely to see you again, {name}." }],
+    "2": [{ "fr": "{name}. J’espérais votre visite ce soir.", "en": "{name}. I was hoping you’d come tonight." }],
+    "3": [{ "fr": "On peut se tutoyer, {name}. Je crois qu’on a dépassé le vous.", "en": "Let’s drop the formalities, {name}. I think we’re past them." }],
+    "4": [{ "fr": "Quand tu es là, {name}, je tire les cartes un peu plus lentement.", "en": "When you’re here, {name}, I draw the cards a little slower." }],
+    "5": [{ "fr": "{name}… j’ai écrit ton nom sur ma plus belle page.", "en": "{name}… I wrote your name on my finest page." }]
+   },
+   "win": [
+    { "fr": "Élégant, {name}.", "en": "Elegant, {name}." },
+    { "fr": "Un coup digne d’un salon privé.", "en": "A hand worthy of a private salon." }
+   ],
+   "bigWin": [
+    { "fr": "Magnifique, {name}. Je l’encadrerais presque.", "en": "Magnificent, {name}. I could almost frame it." },
+    { "fr": "Le sabot vous adore ce soir.", "en": "The shoe adores you tonight." }
+   ],
+   "lose": [
+    { "fr": "Le baccarat a ses humeurs. Respirez.", "en": "Baccarat has its moods. Breathe." },
+    { "fr": "Une main perdue, pas une soirée.", "en": "A lost hand, not a lost evening." }
+   ],
+   "push": [
+    { "fr": "Égalité. Le sabot hésite.", "en": "A tie. The shoe hesitates." },
+    { "fr": "Rien de joué, tout reste possible.", "en": "Nothing played, everything still possible." }
+   ]
+  },
+  "alex": {
+   "greet": {
+    "0": [{ "fr": "Salut {name}. Cartes sur table, émotions dans la poche.", "en": "Hi {name}. Cards on the table, feelings in your pocket." }],
+    "1": [{ "fr": "Tiens, {name}. J’avais noté tes habitudes de mise.", "en": "Oh, {name}. I’d noted your betting habits." }],
+    "2": [{ "fr": "{name} ! Bluff te passe le bonjour. C’est ma chatte.", "en": "{name}! Bluff says hi. That’s my cat." }],
+    "3": [{ "fr": "Ton tell, {name} ? Tu souris quand tu me vois.", "en": "Your tell, {name}? You smile when you see me." }],
+    "4": [{ "fr": "Je calcule toutes les probabilités, sauf celles avec toi, {name}.", "en": "I compute every odd, except the ones with you, {name}." }],
+    "5": [{ "fr": "{name}. Je fais tapis. Sur toi.", "en": "{name}. I’m going all in. On you." }]
+   },
+   "win": [
+    { "fr": "Bien joué, {name}. Très bien lu.", "en": "Well played, {name}. Very well read." },
+    { "fr": "Échec et mat… pardon, mauvais jeu.", "en": "Checkmate… sorry, wrong game." }
+   ],
+   "bigWin": [
+    { "fr": "Énorme pot ! Je vais le raconter sur mon stream, {name}.", "en": "Huge pot! I’m telling my stream about this, {name}." },
+    { "fr": "Ça, c’était du grand art.", "en": "Now that was fine art." }
+   ],
+   "lose": [
+    { "fr": "Le tableau n’était pas avec toi. Ça arrive.", "en": "The board wasn’t with you. It happens." },
+    { "fr": "Respire, analyse, recommence.", "en": "Breathe, analyse, go again." }
+   ],
+   "push": [
+    { "fr": "Pot partagé. Tout le monde garde sa dignité.", "en": "Split pot. Everyone keeps their dignity." },
+    { "fr": "Égalité parfaite, j’adore les maths.", "en": "A perfect tie, I love maths." }
+   ]
+  },
+  "marco": {
+   "greet": {
+    "0": [{ "fr": "Benvenuto, {name} ! Les dés sont chauds !", "en": "Benvenuto, {name}! The dice are hot!" }],
+    "1": [{ "fr": "{name} ! Tu reviens pour mes dés ou pour mon rire ?", "en": "{name}! Back for my dice or my laugh?" }],
+    "2": [{ "fr": "Ah, {name}, mio amico ! Je t’ai gardé une place au bord.", "en": "Ah, {name}, my friend! I saved you a spot at the rail." }],
+    "3": [{ "fr": "Avec toi à la table, {name}, même le sept a l’air sympa.", "en": "With you at the table, {name}, even the seven looks friendly." }],
+    "4": [{ "fr": "{name}, tu fais tourner les dés et la tête de Marco.", "en": "{name}, you spin the dice and Marco’s head." }],
+    "5": [{ "fr": "{name}, amore mio… de la table, bien sûr ! Haha !", "en": "{name}, amore mio… of the table, of course! Haha!" }]
+   },
+   "win": [
+    { "fr": "Bravo, {name} ! Che fortuna !", "en": "Bravo, {name}! Che fortuna!" },
+    { "fr": "Ça, c’est un lancer de chef !", "en": "Now that’s a chef’s throw!" }
+   ],
+   "bigWin": [
+    { "fr": "Mamma mia, {name} ! Toute la table applaudit !", "en": "Mamma mia, {name}! The whole table cheers!" },
+    { "fr": "Je vais le raconter à mes nièces, celui-là !", "en": "I’m telling my nieces about this one!" }
+   ],
+   "lose": [
+    { "fr": "Aïe, les dés sont têtus ce soir.", "en": "Ouch, the dice are stubborn tonight." },
+    { "fr": "Pas grave, on pétrit et on recommence !", "en": "No matter, we knead and go again!" }
+   ],
+   "push": [
+    { "fr": "Rien ne bouge, comme une pâte qui repose.", "en": "Nothing moves, like dough resting." },
+    { "fr": "Égalité ! On relance, allez !", "en": "A push! Roll again, come on!" }
+   ]
+  }
+ }
+}
