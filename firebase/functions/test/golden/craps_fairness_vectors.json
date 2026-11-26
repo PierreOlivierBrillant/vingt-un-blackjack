@@ -1,0 +1,221 @@
+{
+ "algorithm": "d1 = seededRng(seed).nextInt(6) + 1; d2 = nextInt(6) + 1 (same stream); commit = sha256(seed)",
+ "vectors": [
+  {
+   "seed": "98cacd78ec559715a46884c514e62afc37a116e4eefc307a6ee1e38bb8d7617c",
+   "commit": "15db670d499b883d8526a5a6277ea296cd8f5a7119c490fcadbb09a572745093",
+   "dice": [
+    3,
+    1
+   ],
+   "total": 4
+  },
+  {
+   "seed": "88e73dac372519e73b5790d838a18272f0546e2121fa0a3220fc51b8d306926b",
+   "commit": "d5cd98c883c94661fd1366e5ecff2ec79e06b414903b7a349c1933c3c05b453f",
+   "dice": [
+    2,
+    4
+   ],
+   "total": 6
+  },
+  {
+   "seed": "8c3927e2bacba4c314ae4e630673eda9afc0f339042c325af6383dc82a9e9a6e",
+   "commit": "38f37b27bb59a135eb60c275ef844fb6ee6475bfc564a837cb3fda54447c9531",
+   "dice": [
+    3,
+    5
+   ],
+   "total": 8
+  },
+  {
+   "seed": "1597486f5c15e6d86f44a3d5cce716af6e385c7d5b3f623ea7e05ec20d69f911",
+   "commit": "12252fbfb63b8bff8cc4b1ac40e80265daf78cf040392d18707bb73d58beec1a",
+   "dice": [
+    1,
+    2
+   ],
+   "total": 3
+  },
+  {
+   "seed": "5db91ad8cb90d5eedbcf2dc82bba5344f8a1e7d0234b1c719fb5b0f18917aa07",
+   "commit": "3f4e488eb046252b87afd57ad5cb471fadb8fd1f7b8e2bd42eb360fb78b33c2d",
+   "dice": [
+    5,
+    4
+   ],
+   "total": 9
+  },
+  {
+   "seed": "a8feb2f225f440f38afb959b730146dd1c454cd457e7ad532c666e5e1f8fb151",
+   "commit": "7b0cc6e6d59db7870e0f11bef995c4f259ca6d8187e70f5c7fb9defc1acb483f",
+   "dice": [
+    6,
+    4
+   ],
+   "total": 10
+  },
+  {
+   "seed": "f1105130a098fc6e378924308a49c1bfcd059e01a43e1042dea95daf6ab8a7be",
+   "commit": "0dce3b2904ee44001f4f70ce22cb7780bf80d1083230aa8afa482c7b45508142",
+   "dice": [
+    2,
+    3
+   ],
+   "total": 5
+  },
+  {
+   "seed": "abdce2bd40cab709cb5d0a0c2dea4f22c126a8d464e7b8def5585ef960c7bc6c",
+   "commit": "b1c3131af27fdbb934557943477672f694b3ff204f9c5b86338896251eaaa00e",
+   "dice": [
+    3,
+    1
+   ],
+   "total": 4
+  },
+  {
+   "seed": "f24afb54db4b234563d1c316011c9184369b07f0efc36ccbd165aea07b330a1a",
+   "commit": "87a22f727438229ace401e87b7e7ab91ff317fde258fa0270a02eeaf4416166c",
+   "dice": [
+    4,
+    6
+   ],
+   "total": 10
+  },
+  {
+   "seed": "c35db08212b5224e90513abacc8c7ba0c8d6c887f742b77d99c87918eae3a61a",
+   "commit": "60383a0db1732f975ae9aa1b8b2ecc5f141572d9a584e3c36cf0284dc828b8f4",
+   "dice": [
+    4,
+    3
+   ],
+   "total": 7
+  },
+  {
+   "seed": "b353eaa037849a558b5f657d8445a6ee8c0e0cebccf2adce476163e68f98044b",
+   "commit": "0d53253980c6a4e2d1a93fe9a99fae41d3b157af3eaf866d56370527d425f1fb",
+   "dice": [
+    6,
+    4
+   ],
+   "total": 10
+  },
+  {
+   "seed": "84727680f22466fb67a26151238ddf2dd89a60d24fc48afc24b4463e1228c930",
+   "commit": "8da1dd3e7823b730348f8dbcc842c0a1732f1bb912b5e7adc1e23bb0e6d90575",
+   "dice": [
+    1,
+    4
+   ],
+   "total": 5
+  },
+  {
+   "seed": "05b75e1e30c5fcded7538b34e572afb533cdb8ca3bef48bd92db2da7aff24e7b",
+   "commit": "0037253a4a30a82ca3ada5bc4d23cbc2f4d55e21cc1d7c21aba52b2b2d9285a4",
+   "dice": [
+    4,
+    4
+   ],
+   "total": 8
+  },
+  {
+   "seed": "491c72593b51566a814106b84d44bdd6556634244aaaec29da54c4663c3f8dab",
+   "commit": "90a7bec43c6aedb0508bd013c113863b72f99aa4aee33f7baaa7a134c3e1ade3",
+   "dice": [
+    5,
+    3
+   ],
+   "total": 8
+  },
+  {
+   "seed": "0dacde7e3100fd27c7da7951c41d4e29382ea5633ecbb44bd0b1d472e0bc5598",
+   "commit": "4f7cb65f59b30557e537805d8e519480bbd92fb8429913d1e619d933bba27011",
+   "dice": [
+    2,
+    1
+   ],
+   "total": 3
+  },
+  {
+   "seed": "9674b8001401f0db5acb1db01645c18b58abe748923f96cfbac614fb7b730135",
+   "commit": "8d5c82227bbec7ae4ff76e8c0c937aaffdf99979cf3b944b3955342100ffd1a5",
+   "dice": [
+    5,
+    4
+   ],
+   "total": 9
+  },
+  {
+   "seed": "ecb11e62d3c46d6a39bc15e337300ff2742a05d63b423accb7ec3205a7799371",
+   "commit": "4f18b4d896eda335dba77c87550528c7c5d25ef564f1df39376c1b4bd68d3989",
+   "dice": [
+    2,
+    3
+   ],
+   "total": 5
+  },
+  {
+   "seed": "2a4bf91e419f11c6bcd48a7a8a4f96882fef54c74184d635256dccfc7f7ce2f4",
+   "commit": "4e8ccc0b5dbb7f6d71252fb68393d77c8230353e5265b63b0c3eff10373c4588",
+   "dice": [
+    1,
+    4
+   ],
+   "total": 5
+  },
+  {
+   "seed": "cf1ad291873b68feaaacac691bd6988a4da7dced6d94d442db68756c00d9f8f1",
+   "commit": "cd92f2ccc318cb2ca909d145e300c1992170c30d8ae442c752fbea762cc24c20",
+   "dice": [
+    4,
+    4
+   ],
+   "total": 8
+  },
+  {
+   "seed": "812ea58cdff9038c46b39a7bb797770d0dd2473669e5775b68a9e821cdb950d8",
+   "commit": "e78bf436b44f3a5f0ac1e9cdc6cd49daf49b836c6900526e0fabd53b769d4db3",
+   "dice": [
+    3,
+    2
+   ],
+   "total": 5
+  },
+  {
+   "seed": "e2f499d9fac6a36e21f1acb05a90a15ddae569234f8b94bce872fb5dc85a8461",
+   "commit": "207f9f0f7cc58e73139f8d0abb0ea98c011330848933dd48e32e7017e6576608",
+   "dice": [
+    5,
+    3
+   ],
+   "total": 8
+  },
+  {
+   "seed": "63419183f88e33754f194ba436daedebd696c6b6a1c8fdacaf4048863aebbc11",
+   "commit": "9ffd0f4bf2a01d61876381bbaa6310d9b0ea08837be10dd2f415224647432c8b",
+   "dice": [
+    2,
+    4
+   ],
+   "total": 6
+  },
+  {
+   "seed": "bca4273690dffd25801c7b66bd5e54d8456020d7782bb3cce5530bd3a8279fc5",
+   "commit": "3b641402f80fc9960a7980eb8d6b6f07280bd010b7944510f433b60098930696",
+   "dice": [
+    4,
+    5
+   ],
+   "total": 9
+  },
+  {
+   "seed": "20ae9442c3e4ba4c76e86899585fc9384d6625dc0aefb355907454f3bb069060",
+   "commit": "55cc1ec21753e4e9a3fcc91ed0e5db005b04ab2aba82377d5a312433535261f5",
+   "dice": [
+    5,
+    4
+   ],
+   "total": 9
+  }
+ ]
+}

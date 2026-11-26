@@ -89,6 +89,7 @@ String localizeServerReason(AppLocalizations l, ServerReason v) => switch (v) {
       ServerReason.BUY_IN_REQUIRED => l.errReasonBuyInRequired,
       ServerReason.NOT_SHOOTER => l.errReasonNotShooter,
       ServerReason.MUST_BET_LINE => l.errReasonMustBetLine,
+      ServerReason.BET_NOT_OPEN => l.crapsErrBetNotOpen,
       ServerReason.SCENE_NOT_AVAILABLE => l.errReasonSceneNotAvailable,
       ServerReason.SCENE_INVALID_PATH => l.errReasonSceneInvalidPath,
       ServerReason.TALK_DONE_TODAY => l.errReasonTalkDoneToday,

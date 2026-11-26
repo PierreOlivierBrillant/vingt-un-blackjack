@@ -66,6 +66,7 @@ enum ServerReason {
   // craps
   NOT_SHOOTER,
   MUST_BET_LINE,
+  BET_NOT_OPEN,
   // Rendez-vous
   SCENE_NOT_AVAILABLE,
   SCENE_INVALID_PATH,

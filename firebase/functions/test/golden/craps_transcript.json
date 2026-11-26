@@ -1,0 +1,3065 @@
+{
+ "out": [
+  {
+   "round": 1,
+   "commit": "4f0301898e843b757dda916028f6cc6edceea904796bbcab7423a1b1b241e1ce",
+   "result": {
+    "dice": [
+     2,
+     3
+    ],
+    "total": 5,
+    "pointBefore": null,
+    "pointAfter": 5,
+    "verdict": "pointOn",
+    "shooter": 0,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     0
+    ],
+    [
+     "roll",
+     0
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 2,
+   "commit": "f9ffb1eb8bad52f2eebe41bbe5e19ebca0733fd089c2ae9ab8ebd26a8d0202bf",
+   "result": {
+    "dice": [
+     5,
+     3
+    ],
+    "total": 8,
+    "pointBefore": 5,
+    "pointAfter": 5,
+    "verdict": "roll",
+    "shooter": 0,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "roll",
+     0
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 3,
+   "commit": "e20a9e1e65bbfd2dc7fa0488fc016d6fad918212505e029f11d26a58acc9fcb1",
+   "result": {
+    "dice": [
+     3,
+     4
+    ],
+    "total": 7,
+    "pointBefore": 5,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 0,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     1000,
+     0,
+     -1000,
+     "lose",
+     {
+      "actionCents": 1000
+     }
+    ],
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     4100,
+     1000,
+     -3100,
+     "lose",
+     {
+      "actionCents": 4100
+     }
+    ],
+    [
+     3,
+     500,
+     500,
+     0,
+     "none",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "roll",
+     0
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 4,
+   "commit": "f038c1a0bc90bfcc557f4b816c555e46a9a4a163626ddc38dca76ff9edaaa55b",
+   "result": {
+    "dice": [
+     1,
+     5
+    ],
+    "total": 6,
+    "pointBefore": null,
+    "pointAfter": 6,
+    "verdict": "pointOn",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     1
+    ],
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 5,
+   "commit": "182d510596e437c78eac5fbc7813429ad75277e05a1aa438bbc56b51f30b6a31",
+   "result": {
+    "dice": [
+     4,
+     2
+    ],
+    "total": 6,
+    "pointBefore": 6,
+    "pointAfter": null,
+    "verdict": "pointMade",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     0,
+     200,
+     200,
+     "win",
+     {
+      "actionCents": 200
+     }
+    ],
+    [
+     1,
+     100,
+     320,
+     220,
+     "win",
+     {
+      "actionCents": 200,
+      "pointsMade": 1
+     }
+    ],
+    [
+     2,
+     2000,
+     5400,
+     3400,
+     "win",
+     {
+      "actionCents": 3000
+     }
+    ],
+    [
+     3,
+     1000,
+     0,
+     -1000,
+     "lose",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "point",
+     1
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 6,
+   "commit": "b2edb563bf2d40ca28642fd71327575529c4aa75b8234ae64755f143686a6bf0",
+   "result": {
+    "dice": [
+     5,
+     3
+    ],
+    "total": 8,
+    "pointBefore": null,
+    "pointAfter": 8,
+    "verdict": "pointOn",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 7,
+   "commit": "a4e27cd335ebc7cf8f5d83df2b7ba1d7273943d2681467c7118bad8ed6ea859c",
+   "result": {
+    "dice": [
+     6,
+     6
+    ],
+    "total": 12,
+    "pointBefore": 8,
+    "pointAfter": 8,
+    "verdict": "roll",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     200,
+     0,
+     -200,
+     "lose",
+     {
+      "actionCents": 200
+     }
+    ],
+    [
+     3,
+     500,
+     2000,
+     1500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 400
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 8,
+   "commit": "ce6c04bdeda67e5c2f625466cd62541cb39c7a2fc4d782ad7f132406a12be06f",
+   "result": {
+    "dice": [
+     4,
+     1
+    ],
+    "total": 5,
+    "pointBefore": 8,
+    "pointAfter": 8,
+    "verdict": "roll",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 400
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 9,
+   "commit": "0aea30b6dd9b3c6d2c8421cd2ce0209b603320ec9e4aae626eed13fb5e8da735",
+   "result": {
+    "dice": [
+     1,
+     6
+    ],
+    "total": 7,
+    "pointBefore": 8,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     600,
+     0,
+     -600,
+     "lose",
+     {
+      "actionCents": 600
+     }
+    ],
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     4100,
+     1000,
+     -3100,
+     "lose",
+     {
+      "actionCents": 4100
+     }
+    ],
+    [
+     3,
+     600,
+     500,
+     -100,
+     "none",
+     {
+      "actionCents": 1100
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 10,
+   "commit": "4be46e2fdbee89c278131cf80fd018fea4e3528c6c306459caa85592b74d0f9e",
+   "result": {
+    "dice": [
+     1,
+     6
+    ],
+    "total": 7,
+    "pointBefore": null,
+    "pointAfter": null,
+    "verdict": "natural",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     1,
+     0,
+     100,
+     100,
+     "win",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     0,
+     1000,
+     1000,
+     "win",
+     {
+      "actionCents": 1000
+     }
+    ],
+    [
+     3,
+     1000,
+     0,
+     -1000,
+     "lose",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     2
+    ],
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 11,
+   "commit": "887a3fb7f8021b16a6bbc887748904d61ef2fd172fadf7766dd9983de2953deb",
+   "result": {
+    "dice": [
+     4,
+     2
+    ],
+    "total": 6,
+    "pointBefore": null,
+    "pointAfter": 6,
+    "verdict": "pointOn",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 12,
+   "commit": "6e077f5dbd3b6c703fabd03d121814d0ad05b7960452bcd9ad38e290b836f939",
+   "result": {
+    "dice": [
+     6,
+     2
+    ],
+    "total": 8,
+    "pointBefore": 6,
+    "pointAfter": 6,
+    "verdict": "roll",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     3,
+     600,
+     0,
+     -600,
+     "lose",
+     {
+      "actionCents": 600
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come8": 500,
+     "odds:pass": 2000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 13,
+   "commit": "ef0dcc39911a21de7b0791896eb0db7493a373df1d4db80762f5f67c3121f358",
+   "result": {
+    "dice": [
+     2,
+     4
+    ],
+    "total": 6,
+    "pointBefore": 6,
+    "pointAfter": null,
+    "verdict": "pointMade",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     200,
+     640,
+     440,
+     "win",
+     {
+      "actionCents": 400
+     }
+    ],
+    [
+     1,
+     300,
+     540,
+     240,
+     "win",
+     {
+      "actionCents": 400
+     }
+    ],
+    [
+     2,
+     2000,
+     5400,
+     3400,
+     "win",
+     {
+      "actionCents": 3000,
+      "pointsMade": 1
+     }
+    ],
+    [
+     3,
+     1000,
+     0,
+     -1000,
+     "lose",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come8": 500
+    },
+    "3": {}
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "point",
+     2
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 14,
+   "commit": "ba255dac36a5dcf5fc2854ea3f4d0534ec5dffaca7d1cf6a0309d67757780dad",
+   "result": {
+    "dice": [
+     2,
+     4
+    ],
+    "total": 6,
+    "pointBefore": null,
+    "pointAfter": 6,
+    "verdict": "pointOn",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     200,
+     400,
+     200,
+     "win",
+     {
+      "actionCents": 200
+     }
+    ],
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come8": 500
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 15,
+   "commit": "d261273a5114f12aa699d088c9c8eab01eef4e06d5f2a2f360f79d4ebe271826",
+   "result": {
+    "dice": [
+     6,
+     1
+    ],
+    "total": 7,
+    "pointBefore": 6,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     200,
+     0,
+     -200,
+     "lose",
+     {
+      "actionCents": 200
+     }
+    ],
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     4000,
+     1000,
+     -3000,
+     "lose",
+     {
+      "actionCents": 4000
+     }
+    ],
+    [
+     3,
+     600,
+     500,
+     -100,
+     "none",
+     {
+      "actionCents": 1100
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 16,
+   "commit": "464e4dc93dd6d8a2d6fdbe71c07e5f110454c94def072dd6437493f2babfcb9e",
+   "result": {
+    "dice": [
+     1,
+     3
+    ],
+    "total": 4,
+    "pointBefore": null,
+    "pointAfter": 4,
+    "verdict": "pointOn",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {},
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     3
+    ],
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 17,
+   "commit": "1698e3bc821a22f354b356138b125eb8609de88d22b0c0ed76ac68e69dd5298e",
+   "result": {
+    "dice": [
+     1,
+     2
+    ],
+    "total": 3,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 18,
+   "commit": "ca39c1dfa987a3bfce5cd3a9abddea57d92b4bec977a3aaa4dfbbe5d241e1ca2",
+   "result": {
+    "dice": [
+     1,
+     2
+    ],
+    "total": 3,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ],
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 19,
+   "commit": "c17648ef12c4b7ccf29965cb101a726f8936b3422e7c649f13fcb90d3dd49f06",
+   "result": {
+    "dice": [
+     2,
+     1
+    ],
+    "total": 3,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 20,
+   "commit": "636672cc420f722deddd6a2073e7c74a61320887bfa758963f52dff8fd8f3d70",
+   "result": {
+    "dice": [
+     5,
+     4
+    ],
+    "total": 9,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 21,
+   "commit": "8bcb250312872c1f4026dcac10c2fb517231afee733f340b8f0570768a641048",
+   "result": {
+    "dice": [
+     2,
+     1
+    ],
+    "total": 3,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     2,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ],
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 22,
+   "commit": "aa69bdb1e401f7986aa0e3a92d1790875b16dc0a88458ce629d536b5c9bb6fca",
+   "result": {
+    "dice": [
+     3,
+     5
+    ],
+    "total": 8,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     0,
+     350,
+     350,
+     "win",
+     {
+      "actionCents": 300
+     }
+    ],
+    [
+     3,
+     600,
+     0,
+     -600,
+     "lose",
+     {
+      "actionCents": 600
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {},
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 23,
+   "commit": "1af607f4d51a871dc28d8a2f3af3d8e77218045f2fcbb24c7673c5fd63e93bd7",
+   "result": {
+    "dice": [
+     2,
+     3
+    ],
+    "total": 5,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {
+     "come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 24,
+   "commit": "4947788eedc710724c2f03e699ca9377c127f1a9cd840ec2510305399feb74bf",
+   "result": {
+    "dice": [
+     1,
+     1
+    ],
+    "total": 2,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     2,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ],
+    [
+     3,
+     500,
+     1500,
+     1000,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 25,
+   "commit": "ff7182111f650310ed137d0ddaf715a9374240fa2793008ace05d39b68bf7b8a",
+   "result": {
+    "dice": [
+     6,
+     5
+    ],
+    "total": 11,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     1,
+     100,
+     200,
+     100,
+     "win",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 26,
+   "commit": "d7a5f6bc30523302e0b8f91c6e461114f93608d77a425115a999c674c50999ee",
+   "result": {
+    "dice": [
+     3,
+     3
+    ],
+    "total": 6,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     0,
+     350,
+     350,
+     "win",
+     {
+      "actionCents": 300
+     }
+    ],
+    [
+     2,
+     0,
+     700,
+     700,
+     "win",
+     {
+      "actionCents": 600
+     }
+    ],
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300
+    },
+    "1": {
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 27,
+   "commit": "7e1e7800a74e1e0a6b03e4be8976aff20cdd1448aee62e8198e98df35dab9b9a",
+   "result": {
+    "dice": [
+     3,
+     3
+    ],
+    "total": 6,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     100,
+     1250,
+     1150,
+     "win",
+     {
+      "actionCents": 500,
+      "hardways": 1
+     }
+    ],
+    [
+     2,
+     0,
+     700,
+     700,
+     "win",
+     {
+      "actionCents": 600
+     }
+    ],
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "odds:pass": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 28,
+   "commit": "b1a5993e0348ca99de9f139e7c11d7a84e13407d1504587426a2a8a6f4ff6191",
+   "result": {
+    "dice": [
+     5,
+     6
+    ],
+    "total": 11,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     1,
+     100,
+     200,
+     100,
+     "win",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "odds:pass": 200,
+     "odds:come6": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 29,
+   "commit": "e7d6c9ca4611cd357084e71102048a8c5d558ae8d9bce0857602c75a83d9e350",
+   "result": {
+    "dice": [
+     4,
+     5
+    ],
+    "total": 9,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     100,
+     200,
+     100,
+     "win",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come9": 200,
+     "come6": 200,
+     "odds:pass": 200,
+     "odds:come6": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come9": 100,
+     "come5": 100,
+     "odds:come5": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 30,
+   "commit": "a48c9f33033602fdf87296962e57f83471c31182bc0da450a5261d5b69366ed2",
+   "result": {
+    "dice": [
+     3,
+     5
+    ],
+    "total": 8,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     0,
+     350,
+     350,
+     "win",
+     {
+      "actionCents": 300
+     }
+    ],
+    [
+     3,
+     600,
+     0,
+     -600,
+     "lose",
+     {
+      "actionCents": 600
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "come9": 200,
+     "odds:pass": 200,
+     "odds:come6": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come5": 100,
+     "come9": 100,
+     "odds:come5": 100,
+     "odds:come9": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come8": 500,
+     "come6": 500,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 31,
+   "commit": "23a449c1c02de050ea48ae1536ab179b50cf502fae83861ae706661ba16d3682",
+   "result": {
+    "dice": [
+     3,
+     5
+    ],
+    "total": 8,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     0,
+     350,
+     350,
+     "win",
+     {
+      "actionCents": 300
+     }
+    ],
+    [
+     2,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ],
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "come9": 200,
+     "odds:pass": 200,
+     "odds:come6": 200,
+     "odds:come9": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come5": 100,
+     "come9": 100,
+     "odds:come5": 100,
+     "odds:come9": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  },
+  {
+   "round": 32,
+   "commit": "1b1679051419a5d1cc4163d7be4388dab4c5a94aa4d6b8a67a73af36b171fef4",
+   "result": {
+    "dice": [
+     2,
+     2
+    ],
+    "total": 4,
+    "pointBefore": 4,
+    "pointAfter": null,
+    "verdict": "pointMade",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     300,
+     1000,
+     700,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ],
+    [
+     2,
+     2000,
+     7000,
+     5000,
+     "win",
+     {
+      "actionCents": 3000
+     }
+    ],
+    [
+     3,
+     1000,
+     1000,
+     0,
+     "none",
+     {
+      "actionCents": 1000,
+      "pointsMade": 1
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "come9": 200,
+     "odds:come6": 200,
+     "odds:come9": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "come5": 100,
+     "come9": 100,
+     "odds:come5": 100,
+     "odds:come9": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "place6": 600
+    },
+    "3": {}
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "point",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 33,
+   "commit": "47c42ddfbf90e214c4a45da611e4841c7fda006a299fcf87d94ae89e964cf96e",
+   "result": {
+    "dice": [
+     3,
+     1
+    ],
+    "total": 4,
+    "pointBefore": null,
+    "pointAfter": 4,
+    "verdict": "pointOn",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200,
+     "come6": 200,
+     "come9": 200,
+     "odds:come6": 200,
+     "odds:come9": 200,
+     "place6": 300,
+     "place8": 300,
+     "hard6": 100
+    },
+    "1": {
+     "pass": 100,
+     "come5": 100,
+     "come9": 100,
+     "odds:come5": 100,
+     "odds:come9": 100
+    },
+    "2": {
+     "pass": 1000,
+     "come6": 500,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 34,
+   "commit": "fbd1c2cde33988f2f7518ecf80443f8202c82a2f5a345b64532067471d91aadd",
+   "result": {
+    "dice": [
+     2,
+     5
+    ],
+    "total": 7,
+    "pointBefore": 4,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 3,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     1900,
+     0,
+     -1900,
+     "lose",
+     {
+      "actionCents": 1900
+     }
+    ],
+    [
+     1,
+     700,
+     0,
+     -700,
+     "lose",
+     {
+      "actionCents": 700
+     }
+    ],
+    [
+     2,
+     4100,
+     0,
+     -4100,
+     "lose",
+     {
+      "actionCents": 4100
+     }
+    ],
+    [
+     3,
+     500,
+     500,
+     0,
+     "none",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "throw",
+     3
+    ],
+    [
+     "roll",
+     3
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 35,
+   "commit": "f55a87f65877eaa93257e59b672a650495c23290d9ffb41a5b873531b6444c89",
+   "result": {
+    "dice": [
+     5,
+     3
+    ],
+    "total": 8,
+    "pointBefore": null,
+    "pointAfter": 8,
+    "verdict": "pointOn",
+    "shooter": 0,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     0,
+     -500,
+     "lose",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {},
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     0
+    ],
+    [
+     "roll",
+     0
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 36,
+   "commit": "a4b32b5c8aa46a0bcea51979cb1f41a68276816cc5110b0028bdf9e7afa2f5ef",
+   "result": {
+    "dice": [
+     3,
+     4
+    ],
+    "total": 7,
+    "pointBefore": 8,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 0,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     900,
+     0,
+     -900,
+     "lose",
+     {
+      "actionCents": 900
+     }
+    ],
+    [
+     2,
+     4100,
+     1000,
+     -3100,
+     "lose",
+     {
+      "actionCents": 4100
+     }
+    ],
+    [
+     3,
+     600,
+     500,
+     -100,
+     "none",
+     {
+      "actionCents": 1100
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "roll",
+     0
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 37,
+   "commit": "d66d238e3e9df56c28570ae7f94ea34b8b173ad74c902b8ce82840b21fb3664c",
+   "result": {
+    "dice": [
+     5,
+     5
+    ],
+    "total": 10,
+    "pointBefore": null,
+    "pointAfter": 10,
+    "verdict": "pointOn",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     1
+    ],
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 38,
+   "commit": "ec0277c62a537d19f72766ac0bcef50db34b2a97b78e0c040a3a5b80a29b0d22",
+   "result": {
+    "dice": [
+     4,
+     3
+    ],
+    "total": 7,
+    "pointBefore": 10,
+    "pointAfter": null,
+    "verdict": "sevenOut",
+    "shooter": 1,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     0,
+     400,
+     0,
+     -400,
+     "lose",
+     {
+      "actionCents": 400
+     }
+    ],
+    [
+     1,
+     100,
+     0,
+     -100,
+     "lose",
+     {
+      "actionCents": 100
+     }
+    ],
+    [
+     2,
+     3600,
+     0,
+     -3600,
+     "lose",
+     {
+      "actionCents": 3600
+     }
+    ],
+    [
+     3,
+     500,
+     500,
+     0,
+     "none",
+     {
+      "actionCents": 1000
+     }
+    ]
+   ],
+   "boards": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "roll",
+     1
+    ],
+    [
+     "pay",
+     0
+    ],
+    [
+     "pay",
+     1
+    ],
+    [
+     "pay",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 39,
+   "commit": "dddf1be45797bc55d2e0273463a859a1890ba77967b1b3faab5a247dd8c7b492",
+   "result": {
+    "dice": [
+     3,
+     1
+    ],
+    "total": 4,
+    "pointBefore": null,
+    "pointAfter": 4,
+    "verdict": "pointOn",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000
+    },
+    "3": {
+     "dontPass": 500
+    }
+   },
+   "events": [
+    [
+     "shooter",
+     2
+    ],
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     3
+    ],
+    [
+     "puck",
+     null
+    ]
+   ]
+  },
+  {
+   "round": 40,
+   "commit": "45a44100c9478fe90d45177cb3d44dd54bf0c5e6f9dc6a15df7cf80267580874",
+   "result": {
+    "dice": [
+     4,
+     5
+    ],
+    "total": 9,
+    "pointBefore": 4,
+    "pointAfter": 4,
+    "verdict": "roll",
+    "shooter": 2,
+    "noRoll": false
+   },
+   "rows": [
+    [
+     3,
+     500,
+     1000,
+     500,
+     "win",
+     {
+      "actionCents": 500
+     }
+    ]
+   ],
+   "boards": {
+    "0": {
+     "pass": 200
+    },
+    "1": {
+     "pass": 100
+    },
+    "2": {
+     "pass": 1000,
+     "odds:pass": 2000,
+     "place6": 600
+    },
+    "3": {
+     "dontPass": 500,
+     "hard8": 100
+    }
+   },
+   "events": [
+    [
+     "throw",
+     2
+    ],
+    [
+     "roll",
+     2
+    ],
+    [
+     "pay",
+     3
+    ]
+   ]
+  }
+ ],
+ "wallets": {
+  "h1": 89600,
+  "h2": 97300
+ }
+}
