@@ -29,20 +29,21 @@ export function walletSigningKey(): Buffer {
   // __dirname is lib/shared at runtime, so this resolves to functions/.wallet-signing-key.
   const file = process.env.WALLET_KEY_FILE ?? resolve(__dirname, '../../.wallet-signing-key');
   try {
-    if (existsSync(file)) {
-      const hex = readFileSync(file, 'utf8').trim();
-      if (hex.length >= 32) {
-        cached = Buffer.from(hex, 'hex');
-        return cached;
+    if (!existsSync(file)) {
+      try {
+        writeFileSync(file, randomBytes(32).toString('hex'), { mode: 0o600, flag: 'wx' });
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
       }
     }
-    const key = randomBytes(32);
-    writeFileSync(file, key.toString('hex'), { mode: 0o600 });
-    cached = key;
+    const hex = readFileSync(file, 'utf8').trim();
+    // Reject malformed or not-yet-complete files without caching or replacing their contents.
+    if (!/^[0-9a-f]{64}$/i.test(hex)) throw new Error('Expected a 32-byte hexadecimal wallet signing key');
+    cached = Buffer.from(hex, 'hex');
     return cached;
-  } catch {
-    cached = randomBytes(32);
-    return cached;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Cannot load or persist wallet signing key at ${file}: ${message}. Set WALLET_SIGNING_KEY or fix WALLET_KEY_FILE.`);
   }
 }
 
