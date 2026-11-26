@@ -29,16 +29,21 @@ croupiers + habitués + autres joueurs ; récompenses = cosmétiques + pouvoirs.
 - Pas encore lancé : tests de règles et d'intégration (émulateurs). Les ports 9099/8080/5001/8088
   étaient occupés par les émulateurs de la salle de classe (lancés à 15 h 46).
 
-## En cours (26/11, matin)
-- Worktree de la session principale : `C:\Users\po.brillant\s2\base` (branche `sprint-2`). La copie
-  `Desktop\vingt-un-blackjack` reste sur `main`, intacte.
-- **A1** (backend) dans `C:\Users\po.brillant\s2\a1`, branche `s2-a1` ; **A2** (Flutter) dans
-  `C:\Users\po.brillant\s2\a2`, branche `s2-a2`. Chacun pousse sa branche à chaque étape verte et
-  vérifie son périmètre avec `node tools/sprint2/check_owners.mjs a1|a2`. A1 peut compléter
-  `shared/types.ts` / `games/common.ts` en ajout seulement, listé dans `tools/sprint2/requests/a1.md`
-  (miroir Dart à faire à la fusion). Seul A1 utilise les émulateurs pendant la phase A.
-- Si le poste a redémarré : `git fetch`, recréer les worktrees depuis `origin/s2-a1` / `origin/s2-a2`
-  et reprendre là où les commits s'arrêtent.
+## En cours (26/11, midi) — phase B
+- Phase A FUSIONNÉE dans `sprint-2` @ 4878c35 (A1 backend + A2 Flutter + retouches : raisons
+  FEATURE_UNAVAILABLE et BUY_IN_REQUIRED côté Dart, constantes du noyau dans contract.json, règle ESLint
+  de pureté du noyau). Vérifié : backend typecheck, lint, 138 unitaires, 45 règles, 62 intégration ;
+  Flutter 346 tests. Demandes et décisions de chaque chantier : `tools/sprint2/requests/*.md`.
+- La sonde de charge (`z_sim`, p95 < 400 ms) ÉCHOUE quand le poste est chargé (410 ms pendant un
+  `flutter test`) : lancer la suite d'intégration complète seule.
+- Worktree principal : `C:\Users\po.brillant\s2\base` (branche `sprint-2`). `Desktop\vingt-un-blackjack`
+  reste sur `main`, où une autre session a poussé 2 commits (README, push_classroom) : à fusionner en phase D.
+- Phase B : consignes communes `tools/sprint2/PHASE_B.md`. Worktrees `s2\rl` (s2-roulette), `s2\bc`
+  (s2-baccarat), `s2\ho` (s2-holdem), `s2\cr` (s2-craps), `s2\rv` (s2-romance). Verrou des émulateurs :
+  dossier `C:\Users\po.brillant\s2\emu.lock`.
+- Rendez-vous : mécanique complète + 3 personnages complets (Lucas, Camille, Jade) en phase B ; les
+  6 autres personnages par un agent « histoire » en phase C.
+- Si le poste a redémarré : `git fetch`, recréer les worktrees depuis `origin/s2-<chantier>`.
 
 ## Reste à faire (ordre)
 1. ~~Fin de A0~~ FAIT le 26/11 : 3 tests dto_parsing mis à jour (258 tests Flutter verts) ;
