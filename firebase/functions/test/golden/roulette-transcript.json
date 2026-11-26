@@ -1,0 +1,4231 @@
+{
+ "tableId": "rl-sim-01",
+ "wallets": {
+  "h1": 1001400,
+  "h2": 994400
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "commit": "6a6cb2c91ea5b7fa752d5b0433dffd4764f10d10b7065bf1900077b34fcd59c3",
+   "seed": "71563d9562e100087e28c684151f0d3d23d337afd6623b1b17c80642df95b184",
+   "number": 5,
+   "boards": {
+    "seat0": {
+     "odd": 100,
+     "n24": 100,
+     "co25": 100
+    },
+    "seat1": {
+     "red": 200
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     200,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     200,
+     400,
+     200,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     0,
+     -1300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     1400,
+     0,
+     "none",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 5,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 5,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 200,
+      "netCents": -100,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 200,
+      "returnCents": 400,
+      "netCents": 200,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 0,
+      "netCents": -1300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 1400,
+      "netCents": 0,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    5
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 2,
+   "commit": "29a140cc7818d7f599eb99cb0c17df73d17e950610ad26dad168666c942e24fd",
+   "seed": "c8cf1968eace0ce5991f46906ab7d66e0a3e59cd0d5f9aefd6da7776b9bd9edc",
+   "number": 11,
+   "boards": {
+    "seat0": {
+     "red": 100,
+     "n24": 100,
+     "co20": 100
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "even": 300
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     1600,
+     600,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     4000,
+     1900,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 11,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 11,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 1600,
+      "netCents": 600,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 4000,
+      "netCents": 1900,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    5,
+    11
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 3,
+   "commit": "784ee5cb82ebf784824332bbf460fd2ee421e8de46bfa21e6990e5be30feed15",
+   "seed": "a0f21fac04d80e3799761ff62cde4c9900000d7f091dfaac89b1e108028b92a2",
+   "number": 32,
+   "boards": {
+    "seat0": {
+     "even": 200,
+     "n24": 100,
+     "dozen1": 200
+    },
+    "seat1": {
+     "black": 300
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "high": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     400,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     2400,
+     1000,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 32,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 32,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 400,
+      "netCents": -100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "high"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 2400,
+      "netCents": 1000,
+      "wins": [
+       "ln31"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    5,
+    11,
+    32
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 4,
+   "commit": "f1f37f1eeef35e9d8fd459507002537bbd027747c8eea84be7fc71a64b007e32",
+   "seed": "ff8c28c92c6041276a012e527c544e07b5a158556d812c6d75379e0673a983ac",
+   "number": 8,
+   "boards": {
+    "seat0": {
+     "low": 200,
+     "n24": 100,
+     "n9": 100
+    },
+    "seat1": {
+     "even": 100
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "black": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     400,
+     400,
+     0,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     600,
+     -700,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     4000,
+     1900,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 8,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 8,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 400,
+      "returnCents": 400,
+      "netCents": 0,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 600,
+      "netCents": -700,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 4000,
+      "netCents": 1900,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    5,
+    11,
+    32,
+    8
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 5,
+   "commit": "168dc46ce7816dbe7aa6219852c7795684fad9494bb200d6b201f25dd853a6fb",
+   "seed": "4df29d57dc8b0ea4789fc2d01aa6c1e31c85a5f947b13e6fee122cbe6fe72c81",
+   "number": 28,
+   "boards": {
+    "seat0": {
+     "even": 300,
+     "n24": 100,
+     "dozen2": 300
+    },
+    "seat1": {
+     "red": 200,
+     "dozen2": 100
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "odd": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     700,
+     600,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     0,
+     -1000,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     0,
+     -1400,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 28,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 28,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 700,
+      "returnCents": 600,
+      "netCents": -100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 0,
+      "netCents": -1000,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 0,
+      "netCents": -1400,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    5,
+    11,
+    32,
+    8,
+    28
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 6,
+   "commit": "87c9b8204e0f5917fa5b77688857de198bf18436081e1f0f790be729c72e7d70",
+   "seed": "8559d5b6e70e33cf7c05662076fa709a69517e6eaca76a75b724f7e4c2c69dfc",
+   "number": 14,
+   "boards": {
+    "seat0": {
+     "high": 200,
+     "n24": 100,
+     "col3": 200
+    },
+    "seat1": {
+     "black": 300
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "black": 100,
+     "dozen1": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     0,
+     -500,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     200,
+     0,
+     -200,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 14,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 14,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 0,
+      "netCents": -500,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 200,
+      "returnCents": 0,
+      "netCents": -200,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    11,
+    32,
+    8,
+    28,
+    14
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 7,
+   "commit": "f72c4b63f9a7eca3fe8bfd970a9d25189f97a0c2d9505f1472b13b5d6a9debab",
+   "seed": "6fe8967d94f660b3d90d953a93fd418ec35863fc77c3ff01692343c36e02fd4e",
+   "number": 13,
+   "boards": {
+    "seat0": {
+     "black": 100,
+     "n24": 100,
+     "co20": 100
+    },
+    "seat1": {
+     "low": 100,
+     "dozen1": 100
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "black": 200
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     200,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     200,
+     200,
+     0,
+     "none",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     200,
+     400,
+     200,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     1500,
+     200,
+     "none",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     1400,
+     0,
+     "none",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 13,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 13,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 200,
+      "netCents": -100,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 200,
+      "returnCents": 200,
+      "netCents": 0,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 200,
+      "returnCents": 400,
+      "netCents": 200,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 1500,
+      "netCents": 200,
+      "wins": [
+       "col1"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 1400,
+      "netCents": 0,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    32,
+    8,
+    28,
+    14,
+    13
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 8,
+   "commit": "c0d60c2150c7764e9efda955b15a8e94928f4db6325b3306f5d584dc6f565e10",
+   "seed": "f70a20dbd32f4fa80fbaa074b24ad1c2b8d6e8dd558369c8cb2c2061b966488b",
+   "number": 23,
+   "boards": {
+    "seat0": {
+     "even": 100,
+     "n24": 100,
+     "col2": 100
+    },
+    "seat1": {
+     "low": 100
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "even": 200,
+     "dozen3": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     300,
+     0,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     0,
+     -1000,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 23,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 23,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 300,
+      "netCents": 0,
+      "wins": [
+       "col2"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 0,
+      "netCents": -1000,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    8,
+    28,
+    14,
+    13,
+    23
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 9,
+   "commit": "edfee67b13fbddddc79ec5a8d12d56b7d16f5e9a468372e0b23da51cf6aeaefb",
+   "seed": "ff367b36fba8cadb924ed8c2832c928cb47e566c27d99a1305dac96de40b0240",
+   "number": 12,
+   "boards": {
+    "seat0": {
+     "black": 100,
+     "n24": 100,
+     "co13": 100
+    },
+    "seat1": {
+     "odd": 200,
+     "dozen1": 100
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "high": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     300,
+     0,
+     "none",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     0,
+     -1400,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 12,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 12,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 300,
+      "netCents": 0,
+      "wins": [
+       "dozen1"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 0,
+      "netCents": -1400,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    28,
+    14,
+    13,
+    23,
+    12
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 10,
+   "commit": "8ebaf3db762f5242cd7c8037c8154c49ca87f5a732b1dcca54d46e305ce1c15a",
+   "seed": "2d8266a157c0b1ffbf48b10222c3dbae1b05b8d8fcc41e54b2d82d5339c2f91b",
+   "number": 29,
+   "boards": {
+    "seat1": {
+     "even": 100
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "odd": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     1,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     1500,
+     200,
+     "none",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     4000,
+     1900,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 29,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 29,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 1500,
+      "netCents": 200,
+      "wins": [
+       "dozen3"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 4000,
+      "netCents": 1900,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    14,
+    13,
+    23,
+    12,
+    29
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 11,
+   "commit": "41881205644f124a021ce57f9055547fd2c288fde3cb95c1f158a29ccba46c65",
+   "seed": "fb5a4e7502d64dc798400195956c3d8508a5aff952fafc513ee8efeac176ddd5",
+   "number": 22,
+   "boards": {
+    "seat0": {
+     "high": 100,
+     "n24": 100,
+     "n35": 100
+    },
+    "seat1": {
+     "black": 300,
+     "dozen1": 100
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "odd": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     200,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     400,
+     600,
+     200,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     0,
+     -1000,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     0,
+     -1400,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 22,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 22,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 200,
+      "netCents": -100,
+      "wins": [
+       "high"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 400,
+      "returnCents": 600,
+      "netCents": 200,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 0,
+      "netCents": -1000,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 0,
+      "netCents": -1400,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    13,
+    23,
+    12,
+    29,
+    22
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 12,
+   "commit": "15f53252ccc70e49b77f578b3bfcb73c953ac9dd4e90cf0dfc58d23e27ea0768",
+   "seed": "c286bb767f033854ed341f618d9b27401f2f64ee85e2618593f3e4aed0251bf0",
+   "number": 36,
+   "boards": {
+    "seat0": {
+     "high": 100,
+     "n24": 100,
+     "col2": 100
+    },
+    "seat1": {
+     "red": 300,
+     "dozen3": 100
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "black": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     200,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     400,
+     900,
+     500,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 36,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 36,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 200,
+      "netCents": -100,
+      "wins": [
+       "high"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 400,
+      "returnCents": 900,
+      "netCents": 500,
+      "wins": [
+       "red",
+       "dozen3"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    23,
+    12,
+    29,
+    22,
+    36
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 13,
+   "commit": "070e7fbf8aa6768608e644983e13d2ca9558c97abdb1f65ccceca9da528b55b5",
+   "seed": "09c6ed76c4cb2cc3d871aca2ba97247b687e15f57fe62a40ff59bd413a6aa98f",
+   "number": 3,
+   "boards": {
+    "seat1": {
+     "odd": 300
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     1,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     0,
+     -1300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     5000,
+     3600,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 3,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 3,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 0,
+      "netCents": -1300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 5000,
+      "netCents": 3600,
+      "wins": [
+       "tr0-2-3",
+       "odd"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    12,
+    29,
+    22,
+    36,
+    3
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 14,
+   "commit": "1217ba658affcf51b6f3aa4ddc6168d5c5753f6dc94567acde9aa3bba0bba7ad",
+   "seed": "3c80f5a97faa7262cb65ec9533e33b8380fd2dea1fac03fdc3403b95471cb8bc",
+   "number": 27,
+   "boards": {
+    "seat1": {
+     "black": 300
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "odd": 300,
+     "dozen3": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     1,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     400,
+     900,
+     500,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     0,
+     -1000,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 27,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 27,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 400,
+      "returnCents": 900,
+      "netCents": 500,
+      "wins": [
+       "odd",
+       "dozen3"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 0,
+      "netCents": -1000,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    29,
+    22,
+    36,
+    3,
+    27
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 15,
+   "commit": "c448cccfe1e5d91ad391e3e929fe26930a89688755562cce93e77dbb56f1cf62",
+   "seed": "f734d1fa600e927257bb447ce46bbb72c7bd5f942cdddd95a8715196899ff6dc",
+   "number": 9,
+   "boards": {
+    "seat1": {
+     "red": 200,
+     "dozen3": 100
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "low": 300
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     1,
+     "bot",
+     300,
+     400,
+     100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     1400,
+     0,
+     "none",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 9,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 9,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 400,
+      "netCents": 100,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 1400,
+      "netCents": 0,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    22,
+    36,
+    3,
+    27,
+    9
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 16,
+   "commit": "df95d6d90c39665a73d0898a72d10bdddbf3898dcb26996a5b1e603acba38949",
+   "seed": "1b6bd99a6dfb3cf2360ec5b53c2e991a23210938f0804116a197515f41c7a4eb",
+   "number": 2,
+   "boards": {
+    "seat1": {
+     "even": 100
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "low": 200,
+     "dozen2": 100
+    },
+    "seat0": {
+     "even": 100,
+     "n24": 100,
+     "n22": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     200,
+     -100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     400,
+     100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     600,
+     -700,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     4000,
+     1900,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 2,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 2,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 200,
+      "netCents": -100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 400,
+      "netCents": 100,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 600,
+      "netCents": -700,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 4000,
+      "netCents": 1900,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    36,
+    3,
+    27,
+    9,
+    2
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 17,
+   "commit": "917086e31d7ce6edfbbe18d4d50eec218b0e97d15e76e7432a966e646fcdaea5",
+   "seed": "e6a66b58f80cac1f2a68f4a4d9176f0ae52002f1a2e2a4d6ecb509d04a7ced80",
+   "number": 30,
+   "boards": {
+    "seat1": {
+     "odd": 300
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "black": 200
+    },
+    "seat0": {
+     "low": 300,
+     "n24": 100,
+     "n30": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     3600,
+     3100,
+     "bigWin",
+     "jackpot",
+     {
+      "straightUps": 1
+     }
+    ],
+    [
+     1,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     200,
+     0,
+     -200,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     0,
+     -1000,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     0,
+     -1400,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 30,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 30,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 3600,
+      "netCents": 3100,
+      "wins": [
+       "n30"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 200,
+      "returnCents": 0,
+      "netCents": -200,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 0,
+      "netCents": -1000,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 0,
+      "netCents": -1400,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    3,
+    27,
+    9,
+    2,
+    30
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": false
+   }
+  },
+  {
+   "round": 18,
+   "commit": "0644eae4e2627e81d25013fd0500e70bb3eba83598cbfbedbdbca92828707ab8",
+   "seed": "0a5847dfc1685d9129876c48a56b7d2d2046efa29fb668215348e222aea3c3ec",
+   "number": 7,
+   "boards": {
+    "seat1": {
+     "black": 300,
+     "dozen3": 100
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "red": 300
+    },
+    "seat0": {
+     "black": 300,
+     "n24": 100,
+     "dozen2": 300
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no",
+    "rouletteZeroSeries:closed"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     700,
+     0,
+     -700,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     400,
+     0,
+     -400,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 7,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 7,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 700,
+      "returnCents": 0,
+      "netCents": -700,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 400,
+      "returnCents": 0,
+      "netCents": -400,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    27,
+    9,
+    2,
+    30,
+    7
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 19,
+   "commit": "42e46b96ba94754a0717760bd851f6ebb5247e22329b56f8cd11c255cf96dabf",
+   "seed": "e44053b6a5082019d61a17c6996f7e596b779f57f1ebc3108e59088e5466fbcb",
+   "number": 15,
+   "boards": {
+    "seat1": {
+     "odd": 100
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat0": {
+     "red": 300,
+     "n24": 100,
+     "co8": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     0,
+     -500,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     0,
+     -1300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     1400,
+     0,
+     "none",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 15,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 15,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 0,
+      "netCents": -500,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 0,
+      "netCents": -1300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 1400,
+      "netCents": 0,
+      "wins": [
+       "odd"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    9,
+    2,
+    30,
+    7,
+    15
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 20,
+   "commit": "f576ff33f19da5a8d7614d375c0678a30e26cd2c90bcbada56bd6c7ac4cf51ef",
+   "seed": "7abfb5d44a5b07acdadfb7dab83bd7470469885e2b4866d7d5ce872207a84ee4",
+   "number": 10,
+   "boards": {
+    "seat1": {
+     "low": 300
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "high": 100
+    },
+    "seat0": {
+     "high": 200,
+     "n24": 100,
+     "dozen2": 200
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:no",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     0,
+     -500,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     0,
+     -100,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     1600,
+     600,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     4000,
+     1900,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 10,
+      "color": "black",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 10,
+      "color": "black"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 0,
+      "netCents": -500,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 0,
+      "netCents": -100,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 1600,
+      "netCents": 600,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 4000,
+      "netCents": 1900,
+      "wins": [
+       "black"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    2,
+    30,
+    7,
+    15,
+    10
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 21,
+   "commit": "592736b6d64bae60251c494e9a731451644353ee2c71f479933286b2401de53d",
+   "seed": "8420c3f88e3ee4c93990af75c3bfaab601502deb5b5b2e26b51e409230494967",
+   "number": 36,
+   "boards": {
+    "seat1": {
+     "black": 200
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat0": {
+     "low": 200,
+     "n24": 100,
+     "n26": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     400,
+     0,
+     -400,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     200,
+     0,
+     -200,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     2400,
+     1000,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 36,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 36,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 400,
+      "returnCents": 0,
+      "netCents": -400,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 200,
+      "returnCents": 0,
+      "netCents": -200,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 2400,
+      "netCents": 1000,
+      "wins": [
+       "ln31"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    30,
+    7,
+    15,
+    10,
+    36
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 22,
+   "commit": "e64f49eb961ddf4deaf3ea7b96fcd8c064d5838f2a3f73e63d52773b69857cbf",
+   "seed": "083246b38b6dbb853fe739008dc3a76cc99a6c8a8e68eaef6cc7e8b5cf27b695",
+   "number": 34,
+   "boards": {
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "high": 300
+    },
+    "seat0": {
+     "low": 200,
+     "n24": 100,
+     "co17": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     400,
+     0,
+     -400,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     3600,
+     2300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 34,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 34,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 400,
+      "returnCents": 0,
+      "netCents": -400,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "high"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 3600,
+      "netCents": 2300,
+      "wins": [
+       "dozen3",
+       "col1",
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    7,
+    15,
+    10,
+    36,
+    34
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 23,
+   "commit": "b94ca362932a2f48a3e2d4d285eb7484db39f4f2b1aa6a68dddf6d968291ce01",
+   "seed": "d2aed0705be1f42fe7299390da68e5c85202408836d1064a7cdf7fa00d83a7a3",
+   "number": 14,
+   "boards": {
+    "seat1": {
+     "even": 200,
+     "dozen1": 100
+    },
+    "seat3": {
+     "first4": 200,
+     "low": 800
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "low": 200
+    },
+    "seat0": {
+     "odd": 100,
+     "n24": 100,
+     "n32": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     400,
+     100,
+     "none",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     200,
+     400,
+     200,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1000,
+     1600,
+     600,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     0,
+     -1400,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 14,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 14,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 400,
+      "netCents": 100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 200,
+      "returnCents": 400,
+      "netCents": 200,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1000,
+      "returnCents": 1600,
+      "netCents": 600,
+      "wins": [
+       "low"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 0,
+      "netCents": -1400,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    15,
+    10,
+    36,
+    34,
+    14
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 24,
+   "commit": "6faf3f71fe09274ae0caf46107c84a72cba2eb9f8a6de57cf1868f1f12044c75",
+   "seed": "4682401c51a3eef232c03f4fecff368497ee7b1f82dd700da0b07ae29469faac",
+   "number": 14,
+   "boards": {
+    "seat1": {
+     "even": 300
+    },
+    "seat3": {
+     "red": 1000,
+     "n17": 100,
+     "sp0-3": 100
+    },
+    "seat4": {
+     "black": 2000,
+     "n0": 100
+    },
+    "seat2": {
+     "high": 300
+    },
+    "seat0": {
+     "high": 300,
+     "n24": 100,
+     "co29": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:no"
+   ],
+   "rows": [
+    [
+     0,
+     "bot",
+     500,
+     0,
+     -500,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     1,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     300,
+     0,
+     -300,
+     "lose",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1200,
+     2000,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     2100,
+     0,
+     -2100,
+     "lose",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 14,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 14,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     0,
+     {
+      "stakedCents": 500,
+      "returnCents": 0,
+      "netCents": -500,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 300,
+      "returnCents": 0,
+      "netCents": -300,
+      "wins": [],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1200,
+      "returnCents": 2000,
+      "netCents": 800,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 2100,
+      "returnCents": 0,
+      "netCents": -2100,
+      "wins": [],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    10,
+    36,
+    34,
+    14,
+    14
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  },
+  {
+   "round": 25,
+   "commit": "11db25628769bb02715d54601a9e38fd9e4ec54723e518f9daab9497229002a0",
+   "seed": "a96fdbe8cdd6350b928560cdaff45acf365524545c28b5748eb9c298613e50b0",
+   "number": 32,
+   "boards": {
+    "seat1": {
+     "red": 300
+    },
+    "seat3": {
+     "dozen3": 500,
+     "col1": 500,
+     "even": 300
+    },
+    "seat4": {
+     "tr0-2-3": 300,
+     "ln31": 400,
+     "odd": 700
+    },
+    "seat2": {
+     "even": 100
+    }
+   },
+   "markets": [
+    "rouletteRed:closed",
+    "rouletteRed:resolved:yes",
+    "rouletteZero:closed",
+    "rouletteZero:resolved:no",
+    "rouletteDozen3:closed",
+    "rouletteDozen3:resolved:yes"
+   ],
+   "rows": [
+    [
+     1,
+     "bot",
+     300,
+     600,
+     300,
+     "win",
+     null,
+     {}
+    ],
+    [
+     2,
+     "bot",
+     100,
+     200,
+     100,
+     "win",
+     null,
+     {}
+    ],
+    [
+     3,
+     "h1",
+     1300,
+     2100,
+     800,
+     "win",
+     null,
+     {}
+    ],
+    [
+     4,
+     "h2",
+     1400,
+     2400,
+     1000,
+     "win",
+     null,
+     {}
+    ]
+   ],
+   "events": [
+    [
+     "spin",
+     null,
+     {
+      "number": 32,
+      "color": "red",
+      "spinMs": 8000
+     }
+    ],
+    [
+     "result",
+     null,
+     {
+      "number": 32,
+      "color": "red"
+     }
+    ],
+    [
+     "payout",
+     1,
+     {
+      "stakedCents": 300,
+      "returnCents": 600,
+      "netCents": 300,
+      "wins": [
+       "red"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     2,
+     {
+      "stakedCents": 100,
+      "returnCents": 200,
+      "netCents": 100,
+      "wins": [
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     3,
+     {
+      "stakedCents": 1300,
+      "returnCents": 2100,
+      "netCents": 800,
+      "wins": [
+       "dozen3",
+       "even"
+      ],
+      "shield": false
+     }
+    ],
+    [
+     "payout",
+     4,
+     {
+      "stakedCents": 1400,
+      "returnCents": 2400,
+      "netCents": 1000,
+      "wins": [
+       "ln31"
+      ],
+      "shield": false
+     }
+    ]
+   ],
+   "last": [
+    36,
+    34,
+    14,
+    14,
+    32
+   ],
+   "series": {
+    "n": 1,
+    "startRound": 1,
+    "closed": true
+   }
+  }
+ ]
+}
