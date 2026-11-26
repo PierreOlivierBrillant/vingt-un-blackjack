@@ -1933,7 +1933,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get rouletteRulesSummary =>
-      'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Le numéro gagnant est tiré par seededRng(graine).nextInt(37).';
+      'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Au « Rien ne va plus », le numéro gagnant est tiré par seededRng(graine).nextInt(37), puis la bille est lancée.';
 
   @override
   String get rouletteRulesPayouts =>
@@ -1941,10 +1941,187 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get rouletteRulesRound =>
-      '20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète. Plafonds par mise et par tour.';
+      '20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro, voisins d\'un numéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète.';
 
   @override
   String get rouletteSeats => '7 places, une couleur de jetons par joueur.';
+
+  @override
+  String get rouletteRulesHowTo =>
+      'Touchez une case pour un plein, un bord entre deux numéros pour un cheval, un coin pour un carré, la ligne du bas pour une transversale ou un sixain, le bord du zéro pour les trios et le premier quatre. Appui long : retirer la mise d\'une case.';
+
+  @override
+  String rouletteRulesLimits(
+    String straight,
+    String split,
+    String street,
+    String max,
+    String round,
+    String min,
+  ) {
+    return 'Plafonds par case : plein $straight, cheval $split, transversale $street, carré et au-delà $max ; $round par tour. Mise minimale $min par case.';
+  }
+
+  @override
+  String get rouletteRulesShield =>
+      'Bouclier zéro (boutique) : pour un tour, si le zéro sort, la moitié de vos chances simples vous est rendue (la « partage »), ce qui ramène l\'avantage maison à 1,35 % sur ces mises.';
+
+  @override
+  String get rouletteRulesAnnounces =>
+      'Voisins du zéro : 17 numéros, 9 jetons · Tiers du cylindre : 12 numéros, 6 jetons · Orphelins : 8 numéros, 5 jetons · Jeu zéro : 7 numéros, 4 jetons · Voisins d\'un numéro : le numéro et 2 voisins de chaque côté, 5 pleins.';
+
+  @override
+  String get rouletteSayPlaceBets => 'Faites vos jeux !';
+
+  @override
+  String get rouletteSayNoMoreBets => 'Rien ne va plus !';
+
+  @override
+  String rouletteStatusBetting(int secs) {
+    return 'Faites vos jeux · $secs s';
+  }
+
+  @override
+  String get rouletteStatusSpinning => 'Rien ne va plus… la bille tourne';
+
+  @override
+  String rouletteStatusResult(String number, String result) {
+    return '$number : $result';
+  }
+
+  @override
+  String rouletteNumberRed(int n) {
+    return '$n rouge';
+  }
+
+  @override
+  String rouletteNumberBlack(int n) {
+    return '$n noir';
+  }
+
+  @override
+  String get rouletteNumberZero => '0 zéro';
+
+  @override
+  String get rouletteTabLayout => 'Tapis';
+
+  @override
+  String get rouletteTabRacetrack => 'Annonces';
+
+  @override
+  String get rouletteUndo => 'Annuler';
+
+  @override
+  String get rouletteClear => 'Effacer';
+
+  @override
+  String get rouletteRepeat => 'Rejouer';
+
+  @override
+  String get rouletteDouble => 'Doubler';
+
+  @override
+  String get rouletteShieldOn => 'Bouclier zéro activé';
+
+  @override
+  String rouletteShieldCount(int n) {
+    return 'Bouclier zéro ($n)';
+  }
+
+  @override
+  String get rouletteShieldNeedsEven =>
+      'Le bouclier zéro protège les chances simples : misez d\'abord sur rouge, noir, pair, impair, manque ou passe.';
+
+  @override
+  String rouletteTotal(String amount, String max) {
+    return 'Mise $amount · max $max';
+  }
+
+  @override
+  String get rouletteCapped => 'Plafond atteint pour cette case.';
+
+  @override
+  String get rouletteRoundLimit => 'Plafond du tour atteint.';
+
+  @override
+  String get rouletteNothingToRepeat => 'Rien à rejouer pour l\'instant.';
+
+  @override
+  String get rouletteBetsClosed => 'Rien ne va plus : vos mises sont jouées.';
+
+  @override
+  String get rouletteNextRound => 'Prochain tour dans un instant.';
+
+  @override
+  String get rouletteVoisins => 'Voisins du zéro';
+
+  @override
+  String get rouletteTiers => 'Tiers';
+
+  @override
+  String get rouletteOrphelins => 'Orphelins';
+
+  @override
+  String get rouletteJeuZero => 'Jeu zéro';
+
+  @override
+  String rouletteNeighboursOf(int n) {
+    return 'Voisins du $n';
+  }
+
+  @override
+  String get rouletteRacetrackHint =>
+      'Touchez un numéro pour jouer ses voisins (5 pleins), ou un secteur pour l\'annonce.';
+
+  @override
+  String get rouletteLow => 'MANQUE';
+
+  @override
+  String get rouletteHigh => 'PASSE';
+
+  @override
+  String get rouletteEven => 'PAIR';
+
+  @override
+  String get rouletteOdd => 'IMPAIR';
+
+  @override
+  String get rouletteDozen1 => '12 P';
+
+  @override
+  String get rouletteDozen2 => '12 M';
+
+  @override
+  String get rouletteDozen3 => '12 D';
+
+  @override
+  String get rouletteColumn => '2:1';
+
+  @override
+  String get rouletteHistory => 'Derniers';
+
+  @override
+  String get rouletteHot => 'Chauds';
+
+  @override
+  String get rouletteCold => 'Froids';
+
+  @override
+  String get rouletteStatStraightUps => 'Pleins gagnés';
+
+  @override
+  String get rouletteStatShieldSaves => 'Boucliers utiles';
+
+  @override
+  String get rouletteStraightUp => 'Plein !';
+
+  @override
+  String rouletteChip(String amount) {
+    return 'Jeton $amount';
+  }
+
+  @override
+  String get rouletteYourChips => 'Vos jetons';
 
   @override
   String get baccaratRulesSummary =>

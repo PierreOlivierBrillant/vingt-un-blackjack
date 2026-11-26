@@ -1918,7 +1918,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rouletteRulesSummary =>
-      'Single-zero European roulette: 37 pockets in the real wheel order. The winning number is drawn by seededRng(seed).nextInt(37).';
+      'Single-zero European roulette: 37 pockets in the real wheel order. At \"No more bets\" the winning number is drawn by seededRng(seed).nextInt(37), then the ball is launched.';
 
   @override
   String get rouletteRulesPayouts =>
@@ -1926,10 +1926,187 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rouletteRulesRound =>
-      '20 s of betting → \"No more bets\" (draw) → about 8 s of spin → payout → next round. Call bets (voisins du zéro, tiers, orphelins, jeu zéro), Undo, Clear, Repeat and Double are computed by the app, which sends your whole bet board. Limits per bet and per round.';
+      '20 s of betting → \"No more bets\" (draw) → about 8 s of spin → payout → next round. Call bets (voisins du zéro, tiers, orphelins, jeu zéro, neighbours of a number), Undo, Clear, Repeat and Double are computed by the app, which sends your whole bet board.';
 
   @override
   String get rouletteSeats => '7 seats, one chip colour per player.';
+
+  @override
+  String get rouletteRulesHowTo =>
+      'Tap a number for a straight up, the edge between two numbers for a split, a corner for a corner bet, the bottom line for a street or a six line, the zero\'s edge for the trios and the first four. Long press: take the bet off a spot.';
+
+  @override
+  String rouletteRulesLimits(
+    String straight,
+    String split,
+    String street,
+    String max,
+    String round,
+    String min,
+  ) {
+    return 'Limits per spot: straight $straight, split $split, street $street, corner and above $max; $round per spin. Minimum $min per spot.';
+  }
+
+  @override
+  String get rouletteRulesShield =>
+      'Zero shield (shop): for one spin, if the zero comes up, half of your even-money bets is returned (\"la partage\"), which brings the house edge down to 1.35% on those bets.';
+
+  @override
+  String get rouletteRulesAnnounces =>
+      'Voisins du zéro: 17 numbers, 9 chips · Tiers du cylindre: 12 numbers, 6 chips · Orphelins: 8 numbers, 5 chips · Jeu zéro: 7 numbers, 4 chips · Neighbours of a number: the number and 2 neighbours on each side, 5 straights.';
+
+  @override
+  String get rouletteSayPlaceBets => 'Place your bets!';
+
+  @override
+  String get rouletteSayNoMoreBets => 'No more bets!';
+
+  @override
+  String rouletteStatusBetting(int secs) {
+    return 'Place your bets · $secs s';
+  }
+
+  @override
+  String get rouletteStatusSpinning => 'No more bets… the ball is spinning';
+
+  @override
+  String rouletteStatusResult(String number, String result) {
+    return '$number: $result';
+  }
+
+  @override
+  String rouletteNumberRed(int n) {
+    return '$n red';
+  }
+
+  @override
+  String rouletteNumberBlack(int n) {
+    return '$n black';
+  }
+
+  @override
+  String get rouletteNumberZero => '0 zero';
+
+  @override
+  String get rouletteTabLayout => 'Layout';
+
+  @override
+  String get rouletteTabRacetrack => 'Call bets';
+
+  @override
+  String get rouletteUndo => 'Undo';
+
+  @override
+  String get rouletteClear => 'Clear';
+
+  @override
+  String get rouletteRepeat => 'Repeat';
+
+  @override
+  String get rouletteDouble => 'Double';
+
+  @override
+  String get rouletteShieldOn => 'Zero shield on';
+
+  @override
+  String rouletteShieldCount(int n) {
+    return 'Zero shield ($n)';
+  }
+
+  @override
+  String get rouletteShieldNeedsEven =>
+      'The zero shield protects even-money bets: bet on red, black, even, odd, 1-18 or 19-36 first.';
+
+  @override
+  String rouletteTotal(String amount, String max) {
+    return 'Bet $amount · max $max';
+  }
+
+  @override
+  String get rouletteCapped => 'Limit reached on this spot.';
+
+  @override
+  String get rouletteRoundLimit => 'Limit of the spin reached.';
+
+  @override
+  String get rouletteNothingToRepeat => 'Nothing to repeat yet.';
+
+  @override
+  String get rouletteBetsClosed => 'No more bets: your chips are in play.';
+
+  @override
+  String get rouletteNextRound => 'Next spin in a moment.';
+
+  @override
+  String get rouletteVoisins => 'Voisins du zéro';
+
+  @override
+  String get rouletteTiers => 'Tiers';
+
+  @override
+  String get rouletteOrphelins => 'Orphelins';
+
+  @override
+  String get rouletteJeuZero => 'Jeu zéro';
+
+  @override
+  String rouletteNeighboursOf(int n) {
+    return 'Neighbours of $n';
+  }
+
+  @override
+  String get rouletteRacetrackHint =>
+      'Tap a number to play its neighbours (5 straights), or a sector for the call bet.';
+
+  @override
+  String get rouletteLow => '1-18';
+
+  @override
+  String get rouletteHigh => '19-36';
+
+  @override
+  String get rouletteEven => 'EVEN';
+
+  @override
+  String get rouletteOdd => 'ODD';
+
+  @override
+  String get rouletteDozen1 => '1st 12';
+
+  @override
+  String get rouletteDozen2 => '2nd 12';
+
+  @override
+  String get rouletteDozen3 => '3rd 12';
+
+  @override
+  String get rouletteColumn => '2:1';
+
+  @override
+  String get rouletteHistory => 'Last';
+
+  @override
+  String get rouletteHot => 'Hot';
+
+  @override
+  String get rouletteCold => 'Cold';
+
+  @override
+  String get rouletteStatStraightUps => 'Straight ups won';
+
+  @override
+  String get rouletteStatShieldSaves => 'Zero shields that paid';
+
+  @override
+  String get rouletteStraightUp => 'Straight up!';
+
+  @override
+  String rouletteChip(String amount) {
+    return 'Chip $amount';
+  }
+
+  @override
+  String get rouletteYourChips => 'Your chips';
 
   @override
   String get baccaratRulesSummary =>

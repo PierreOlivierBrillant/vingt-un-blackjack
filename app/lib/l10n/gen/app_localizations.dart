@@ -3407,7 +3407,7 @@ abstract class AppLocalizations {
   /// No description provided for @rouletteRulesSummary.
   ///
   /// In fr, this message translates to:
-  /// **'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Le numéro gagnant est tiré par seededRng(graine).nextInt(37).'**
+  /// **'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Au « Rien ne va plus », le numéro gagnant est tiré par seededRng(graine).nextInt(37), puis la bille est lancée.'**
   String get rouletteRulesSummary;
 
   /// No description provided for @rouletteRulesPayouts.
@@ -3419,7 +3419,7 @@ abstract class AppLocalizations {
   /// No description provided for @rouletteRulesRound.
   ///
   /// In fr, this message translates to:
-  /// **'20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète. Plafonds par mise et par tour.'**
+  /// **'20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro, voisins d\'un numéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète.'**
   String get rouletteRulesRound;
 
   /// No description provided for @rouletteSeats.
@@ -3427,6 +3427,307 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'7 places, une couleur de jetons par joueur.'**
   String get rouletteSeats;
+
+  /// No description provided for @rouletteRulesHowTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez une case pour un plein, un bord entre deux numéros pour un cheval, un coin pour un carré, la ligne du bas pour une transversale ou un sixain, le bord du zéro pour les trios et le premier quatre. Appui long : retirer la mise d\'une case.'**
+  String get rouletteRulesHowTo;
+
+  /// No description provided for @rouletteRulesLimits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plafonds par case : plein {straight}, cheval {split}, transversale {street}, carré et au-delà {max} ; {round} par tour. Mise minimale {min} par case.'**
+  String rouletteRulesLimits(
+    String straight,
+    String split,
+    String street,
+    String max,
+    String round,
+    String min,
+  );
+
+  /// No description provided for @rouletteRulesShield.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bouclier zéro (boutique) : pour un tour, si le zéro sort, la moitié de vos chances simples vous est rendue (la « partage »), ce qui ramène l\'avantage maison à 1,35 % sur ces mises.'**
+  String get rouletteRulesShield;
+
+  /// No description provided for @rouletteRulesAnnounces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voisins du zéro : 17 numéros, 9 jetons · Tiers du cylindre : 12 numéros, 6 jetons · Orphelins : 8 numéros, 5 jetons · Jeu zéro : 7 numéros, 4 jetons · Voisins d\'un numéro : le numéro et 2 voisins de chaque côté, 5 pleins.'**
+  String get rouletteRulesAnnounces;
+
+  /// No description provided for @rouletteSayPlaceBets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faites vos jeux !'**
+  String get rouletteSayPlaceBets;
+
+  /// No description provided for @rouletteSayNoMoreBets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien ne va plus !'**
+  String get rouletteSayNoMoreBets;
+
+  /// No description provided for @rouletteStatusBetting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faites vos jeux · {secs} s'**
+  String rouletteStatusBetting(int secs);
+
+  /// No description provided for @rouletteStatusSpinning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien ne va plus… la bille tourne'**
+  String get rouletteStatusSpinning;
+
+  /// No description provided for @rouletteStatusResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'{number} : {result}'**
+  String rouletteStatusResult(String number, String result);
+
+  /// No description provided for @rouletteNumberRed.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} rouge'**
+  String rouletteNumberRed(int n);
+
+  /// No description provided for @rouletteNumberBlack.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} noir'**
+  String rouletteNumberBlack(int n);
+
+  /// No description provided for @rouletteNumberZero.
+  ///
+  /// In fr, this message translates to:
+  /// **'0 zéro'**
+  String get rouletteNumberZero;
+
+  /// No description provided for @rouletteTabLayout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis'**
+  String get rouletteTabLayout;
+
+  /// No description provided for @rouletteTabRacetrack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get rouletteTabRacetrack;
+
+  /// No description provided for @rouletteUndo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get rouletteUndo;
+
+  /// No description provided for @rouletteClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer'**
+  String get rouletteClear;
+
+  /// No description provided for @rouletteRepeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejouer'**
+  String get rouletteRepeat;
+
+  /// No description provided for @rouletteDouble.
+  ///
+  /// In fr, this message translates to:
+  /// **'Doubler'**
+  String get rouletteDouble;
+
+  /// No description provided for @rouletteShieldOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bouclier zéro activé'**
+  String get rouletteShieldOn;
+
+  /// No description provided for @rouletteShieldCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bouclier zéro ({n})'**
+  String rouletteShieldCount(int n);
+
+  /// No description provided for @rouletteShieldNeedsEven.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le bouclier zéro protège les chances simples : misez d\'abord sur rouge, noir, pair, impair, manque ou passe.'**
+  String get rouletteShieldNeedsEven;
+
+  /// No description provided for @rouletteTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise {amount} · max {max}'**
+  String rouletteTotal(String amount, String max);
+
+  /// No description provided for @rouletteCapped.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plafond atteint pour cette case.'**
+  String get rouletteCapped;
+
+  /// No description provided for @rouletteRoundLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plafond du tour atteint.'**
+  String get rouletteRoundLimit;
+
+  /// No description provided for @rouletteNothingToRepeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à rejouer pour l\'instant.'**
+  String get rouletteNothingToRepeat;
+
+  /// No description provided for @rouletteBetsClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien ne va plus : vos mises sont jouées.'**
+  String get rouletteBetsClosed;
+
+  /// No description provided for @rouletteNextRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain tour dans un instant.'**
+  String get rouletteNextRound;
+
+  /// No description provided for @rouletteVoisins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voisins du zéro'**
+  String get rouletteVoisins;
+
+  /// No description provided for @rouletteTiers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tiers'**
+  String get rouletteTiers;
+
+  /// No description provided for @rouletteOrphelins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orphelins'**
+  String get rouletteOrphelins;
+
+  /// No description provided for @rouletteJeuZero.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeu zéro'**
+  String get rouletteJeuZero;
+
+  /// No description provided for @rouletteNeighboursOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voisins du {n}'**
+  String rouletteNeighboursOf(int n);
+
+  /// No description provided for @rouletteRacetrackHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez un numéro pour jouer ses voisins (5 pleins), ou un secteur pour l\'annonce.'**
+  String get rouletteRacetrackHint;
+
+  /// No description provided for @rouletteLow.
+  ///
+  /// In fr, this message translates to:
+  /// **'MANQUE'**
+  String get rouletteLow;
+
+  /// No description provided for @rouletteHigh.
+  ///
+  /// In fr, this message translates to:
+  /// **'PASSE'**
+  String get rouletteHigh;
+
+  /// No description provided for @rouletteEven.
+  ///
+  /// In fr, this message translates to:
+  /// **'PAIR'**
+  String get rouletteEven;
+
+  /// No description provided for @rouletteOdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'IMPAIR'**
+  String get rouletteOdd;
+
+  /// No description provided for @rouletteDozen1.
+  ///
+  /// In fr, this message translates to:
+  /// **'12 P'**
+  String get rouletteDozen1;
+
+  /// No description provided for @rouletteDozen2.
+  ///
+  /// In fr, this message translates to:
+  /// **'12 M'**
+  String get rouletteDozen2;
+
+  /// No description provided for @rouletteDozen3.
+  ///
+  /// In fr, this message translates to:
+  /// **'12 D'**
+  String get rouletteDozen3;
+
+  /// No description provided for @rouletteColumn.
+  ///
+  /// In fr, this message translates to:
+  /// **'2:1'**
+  String get rouletteColumn;
+
+  /// No description provided for @rouletteHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Derniers'**
+  String get rouletteHistory;
+
+  /// No description provided for @rouletteHot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chauds'**
+  String get rouletteHot;
+
+  /// No description provided for @rouletteCold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Froids'**
+  String get rouletteCold;
+
+  /// No description provided for @rouletteStatStraightUps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pleins gagnés'**
+  String get rouletteStatStraightUps;
+
+  /// No description provided for @rouletteStatShieldSaves.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boucliers utiles'**
+  String get rouletteStatShieldSaves;
+
+  /// No description provided for @rouletteStraightUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plein !'**
+  String get rouletteStraightUp;
+
+  /// No description provided for @rouletteChip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeton {amount}'**
+  String rouletteChip(String amount);
+
+  /// No description provided for @rouletteYourChips.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos jetons'**
+  String get rouletteYourChips;
 
   /// No description provided for @baccaratRulesSummary.
   ///
