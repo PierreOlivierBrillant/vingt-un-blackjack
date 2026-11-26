@@ -3431,26 +3431,380 @@ abstract class AppLocalizations {
   /// No description provided for @baccaratRulesSummary.
   ///
   /// In fr, this message translates to:
-  /// **'Punto Banco, sabot de 8 jeux (416 cartes), coupe à 16 cartes de la fin. Brûlage selon la première carte, inclus dans la preuve d\'équité. Tableau de tirage officiel (3e carte de la Banque contre 0–9).'**
+  /// **'Punto Banco, sabot de 8 jeux (416 cartes), coupe à 16 cartes de la fin. Au premier coup de chaque sabot, la première carte est montrée et autant de cartes que sa valeur sont brûlées (as 1, figures et 10 : 10) : ce brûlage fait partie de la même preuve d\'équité que le coup.'**
   String get baccaratRulesSummary;
+
+  /// No description provided for @baccaratRulesValues.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur des cartes : as 1, 2 à 9 leur valeur, 10 et figures 0. Une main vaut la somme de ses cartes modulo 10 (7 + 8 = 5). Cartes données dans l\'ordre Joueur, Banquier, Joueur, Banquier. Un 8 ou un 9 en deux cartes est un « naturel » : personne ne tire.'**
+  String get baccaratRulesValues;
+
+  /// No description provided for @baccaratRulesDrawing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau de tirage officiel. Joueur tire sur 0 à 5 et reste sur 6 ou 7. Si le Joueur reste, la Banque tire sur 0 à 5. Si le Joueur a tiré une 3e carte (valeur p) : la Banque tire toujours sur 0 à 2 ; sur 3 sauf si p = 8 ; sur 4 si p vaut 2 à 7 ; sur 5 si p vaut 4 à 7 ; sur 6 si p vaut 6 ou 7 ; reste sur 7. La 3e carte est posée en travers.'**
+  String get baccaratRulesDrawing;
 
   /// No description provided for @baccaratRulesPayouts.
   ///
   /// In fr, this message translates to:
-  /// **'Joueur 1:1 · Banquier 0,95:1 (exact au centime) · Égalité 8:1 (Joueur et Banquier rendus) · Paire Joueur, Paire Banquier 11:1.'**
+  /// **'Joueur 1:1 · Banquier 0,95:1 (5 % de commission, exact au centime) · Égalité 8:1, et sur une égalité les mises Joueur et Banquier sont rendues · Paire Joueur, Paire Banquier 11:1 (deux premières cartes de même rang : R-D n\'est pas une paire).'**
   String get baccaratRulesPayouts;
+
+  /// No description provided for @baccaratRulesLimits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque case : au moins la mise minimale. Joueur et Banquier jusqu\'au maximum de la table, égalité et paires jusqu\'au cinquième du maximum, total d\'un coup jusqu\'à deux fois le maximum. Miser à la fois Joueur et Banquier est permis.'**
+  String get baccaratRulesLimits;
 
   /// No description provided for @baccaratRulesRound.
   ///
   /// In fr, this message translates to:
-  /// **'20 s de mises, puis la donne : squeeze animé, 3e carte posée en travers. Tendances affichées : Bead Plate et Big Road.'**
+  /// **'20 s de mises, puis Inès donne tout le coup d\'un seul geste : les cartes sont déjà publiques, le squeeze (la carte pliée lentement) n\'est qu\'une animation. Règlement à la fin de la donne.'**
   String get baccaratRulesRound;
+
+  /// No description provided for @baccaratRulesPower.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission offerte (boutique) : avec une mise Banquier, pas de 5 % sur un gain Banquier pour un coup.'**
+  String get baccaratRulesPower;
+
+  /// No description provided for @baccaratRulesRoads.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tendances du sabot : Bead Plate (un rond par coup, colonne par colonne), Big Road (nouvelle colonne à chaque changement de gagnant, égalités barrées en vert, points de paires) et Big Eye Boy (rouge : la Big Road répète son motif, bleu : elle le casse). Elles ne prédisent rien : chaque coup est indépendant.'**
+  String get baccaratRulesRoads;
+
+  /// No description provided for @baccaratRulesMarkets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marchés des spectateurs : « Le Banquier gagne ? », « Égalité ? », « Une paire ? » (fermés à la donne) et, sur les tables simulées, « Le Banquier gagne au moins 46 % des coups du sabot ? ».'**
+  String get baccaratRulesMarkets;
 
   /// No description provided for @baccaratSeats.
   ///
   /// In fr, this message translates to:
   /// **'7 places.'**
   String get baccaratSeats;
+
+  /// No description provided for @baccaratSpotPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur'**
+  String get baccaratSpotPlayer;
+
+  /// No description provided for @baccaratSpotBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banquier'**
+  String get baccaratSpotBanker;
+
+  /// No description provided for @baccaratSpotTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalité'**
+  String get baccaratSpotTie;
+
+  /// No description provided for @baccaratSpotPlayerPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire J.'**
+  String get baccaratSpotPlayerPair;
+
+  /// No description provided for @baccaratSpotBankerPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire B.'**
+  String get baccaratSpotBankerPair;
+
+  /// No description provided for @baccaratPaysPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'1:1'**
+  String get baccaratPaysPlayer;
+
+  /// No description provided for @baccaratPaysBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'0,95:1'**
+  String get baccaratPaysBanker;
+
+  /// No description provided for @baccaratPaysTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'8:1'**
+  String get baccaratPaysTie;
+
+  /// No description provided for @baccaratPaysPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'11:1'**
+  String get baccaratPaysPair;
+
+  /// No description provided for @baccaratBeadPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'J'**
+  String get baccaratBeadPlayer;
+
+  /// No description provided for @baccaratBeadBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'B'**
+  String get baccaratBeadBanker;
+
+  /// No description provided for @baccaratBeadTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'É'**
+  String get baccaratBeadTie;
+
+  /// No description provided for @baccaratRoadBead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bead Plate'**
+  String get baccaratRoadBead;
+
+  /// No description provided for @baccaratRoadBig.
+  ///
+  /// In fr, this message translates to:
+  /// **'Big Road'**
+  String get baccaratRoadBig;
+
+  /// No description provided for @baccaratRoadBigEye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Big Eye Boy'**
+  String get baccaratRoadBigEye;
+
+  /// No description provided for @baccaratShoeCards.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} cartes'**
+  String baccaratShoeCards(int n);
+
+  /// No description provided for @baccaratShoeNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sabot n° {n}'**
+  String baccaratShoeNumber(int n);
+
+  /// No description provided for @baccaratShoeStats.
+  ///
+  /// In fr, this message translates to:
+  /// **'B {banker} · J {player} · É {tie}'**
+  String baccaratShoeStats(int banker, int player, int tie);
+
+  /// No description provided for @baccaratWinsPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur gagne'**
+  String get baccaratWinsPlayer;
+
+  /// No description provided for @baccaratWinsBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banquier gagne'**
+  String get baccaratWinsBanker;
+
+  /// No description provided for @baccaratWinsTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalité'**
+  String get baccaratWinsTie;
+
+  /// No description provided for @baccaratNatural.
+  ///
+  /// In fr, this message translates to:
+  /// **'Naturel'**
+  String get baccaratNatural;
+
+  /// No description provided for @baccaratPairPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire Joueur'**
+  String get baccaratPairPlayer;
+
+  /// No description provided for @baccaratPairBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire Banquier'**
+  String get baccaratPairBanker;
+
+  /// No description provided for @baccaratSummaryBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banquier {banker} – {player}'**
+  String baccaratSummaryBanker(int banker, int player);
+
+  /// No description provided for @baccaratSummaryPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur {player} – {banker}'**
+  String baccaratSummaryPlayer(int player, int banker);
+
+  /// No description provided for @baccaratSummaryTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalité {total} – {total}'**
+  String baccaratSummaryTie(int total);
+
+  /// No description provided for @baccaratSummaryNatural.
+  ///
+  /// In fr, this message translates to:
+  /// **'naturel'**
+  String get baccaratSummaryNatural;
+
+  /// No description provided for @baccaratSummaryPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'paire'**
+  String get baccaratSummaryPair;
+
+  /// No description provided for @baccaratBurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brûlage : {count} cartes'**
+  String baccaratBurn(int count);
+
+  /// No description provided for @baccaratNewShoe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau sabot'**
+  String get baccaratNewShoe;
+
+  /// No description provided for @baccaratCutCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte de coupe : dernier coup du sabot'**
+  String get baccaratCutCard;
+
+  /// No description provided for @baccaratDealing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donne en cours'**
+  String get baccaratDealing;
+
+  /// No description provided for @baccaratStatusResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'{winner} · {amount}'**
+  String baccaratStatusResult(String winner, String amount);
+
+  /// No description provided for @baccaratChip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeton'**
+  String get baccaratChip;
+
+  /// No description provided for @baccaratConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Miser {amount}'**
+  String baccaratConfirm(String amount);
+
+  /// No description provided for @baccaratClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer'**
+  String get baccaratClear;
+
+  /// No description provided for @baccaratRepeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejouer'**
+  String get baccaratRepeat;
+
+  /// No description provided for @baccaratDouble.
+  ///
+  /// In fr, this message translates to:
+  /// **'Doubler'**
+  String get baccaratDouble;
+
+  /// No description provided for @baccaratBetPlaced.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise acceptée : {amount}'**
+  String baccaratBetPlaced(String amount);
+
+  /// No description provided for @baccaratDraftChanged.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise modifiée, pas encore envoyée'**
+  String get baccaratDraftChanged;
+
+  /// No description provided for @baccaratNoBet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez une case pour miser le jeton choisi.'**
+  String get baccaratNoBet;
+
+  /// No description provided for @baccaratBetsClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mises fermées : {amount} en jeu'**
+  String baccaratBetsClosed(String amount);
+
+  /// No description provided for @baccaratWaitNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mises fermées : prochain coup dans un instant.'**
+  String get baccaratWaitNext;
+
+  /// No description provided for @baccaratPower.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission offerte ({n})'**
+  String baccaratPower(int n);
+
+  /// No description provided for @baccaratPowerOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission offerte : Banquier payé 1:1 ce coup'**
+  String get baccaratPowerOn;
+
+  /// No description provided for @baccaratPowerNeedsBanker.
+  ///
+  /// In fr, this message translates to:
+  /// **'Misez sur le Banquier pour utiliser la Commission offerte.'**
+  String get baccaratPowerNeedsBanker;
+
+  /// No description provided for @baccaratStatBankerWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gains Banquier'**
+  String get baccaratStatBankerWins;
+
+  /// No description provided for @baccaratStatPlayerWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gains Joueur'**
+  String get baccaratStatPlayerWins;
+
+  /// No description provided for @baccaratStatTieWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalités gagnées'**
+  String get baccaratStatTieWins;
+
+  /// No description provided for @baccaratStatPairWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paires gagnées'**
+  String get baccaratStatPairWins;
+
+  /// No description provided for @baccaratStatNaturals.
+  ///
+  /// In fr, this message translates to:
+  /// **'Naturels'**
+  String get baccaratStatNaturals;
+
+  /// No description provided for @baccaratStatCommission.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission économisée'**
+  String get baccaratStatCommission;
 
   /// No description provided for @holdemRulesSummary.
   ///

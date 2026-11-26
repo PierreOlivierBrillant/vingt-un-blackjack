@@ -1933,18 +1933,226 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get baccaratRulesSummary =>
-      'Punto Banco, 8-deck shoe (416 cards), cut 16 cards from the end. Burn according to the first card, included in the fairness proof. Official drawing chart (Banker\'s third card against 0–9).';
+      'Punto Banco, 8-deck shoe (416 cards), cut 16 cards from the end. On the first coup of every shoe, the first card is shown and as many cards as its value are burned (ace 1, tens and faces 10): the burn is part of the same fairness proof as the coup.';
+
+  @override
+  String get baccaratRulesValues =>
+      'Card values: ace 1, 2 to 9 face value, tens and faces 0. A hand is worth the sum of its cards modulo 10 (7 + 8 = 5). Cards are dealt Player, Banker, Player, Banker. An 8 or 9 with two cards is a \"natural\": nobody draws.';
+
+  @override
+  String get baccaratRulesDrawing =>
+      'Official drawing chart. Player draws on 0 to 5 and stands on 6 or 7. If Player stands, Banker draws on 0 to 5. If Player drew a third card (value p): Banker always draws on 0 to 2; on 3 unless p = 8; on 4 if p is 2 to 7; on 5 if p is 4 to 7; on 6 if p is 6 or 7; stands on 7. The third card is laid sideways.';
 
   @override
   String get baccaratRulesPayouts =>
-      'Player 1:1 · Banker 0.95:1 (exact to the cent) · Tie 8:1 (Player and Banker returned) · Player Pair, Banker Pair 11:1.';
+      'Player 1:1 · Banker 0.95:1 (5% commission, exact to the cent) · Tie 8:1, and on a tie the Player and Banker bets are returned · Player Pair, Banker Pair 11:1 (first two cards of the same rank: K-Q is not a pair).';
+
+  @override
+  String get baccaratRulesLimits =>
+      'Each spot: at least the table minimum. Player and Banker up to the table maximum, tie and pairs up to a fifth of the maximum, a coup\'s total up to twice the maximum. Betting both Player and Banker is allowed.';
 
   @override
   String get baccaratRulesRound =>
-      '20 s of betting, then the deal: animated squeeze, third card laid sideways. Trends shown: Bead Plate and Big Road.';
+      '20 s of betting, then Inès deals the whole coup at once: the cards are already public, the squeeze (the card slowly bent) is only an animation. Settlement at the end of the deal.';
+
+  @override
+  String get baccaratRulesPower =>
+      'Commission-free (shop): with a Banker bet, no 5% on a Banker win for one coup.';
+
+  @override
+  String get baccaratRulesRoads =>
+      'Shoe trends: Bead Plate (one dot per coup, column by column), Big Road (a new column each time the winner changes, ties as green slashes, pair dots) and Big Eye Boy (red: the Big Road repeats its pattern, blue: it breaks it). They predict nothing: every coup is independent.';
+
+  @override
+  String get baccaratRulesMarkets =>
+      'Spectator markets: \"Banker wins?\", \"Tie?\", \"A pair?\" (closed at the deal) and, on simulated tables, \"Banker wins at least 46% of the coups of the shoe?\".';
 
   @override
   String get baccaratSeats => '7 seats.';
+
+  @override
+  String get baccaratSpotPlayer => 'Player';
+
+  @override
+  String get baccaratSpotBanker => 'Banker';
+
+  @override
+  String get baccaratSpotTie => 'Tie';
+
+  @override
+  String get baccaratSpotPlayerPair => 'P. Pair';
+
+  @override
+  String get baccaratSpotBankerPair => 'B. Pair';
+
+  @override
+  String get baccaratPaysPlayer => '1:1';
+
+  @override
+  String get baccaratPaysBanker => '0.95:1';
+
+  @override
+  String get baccaratPaysTie => '8:1';
+
+  @override
+  String get baccaratPaysPair => '11:1';
+
+  @override
+  String get baccaratBeadPlayer => 'P';
+
+  @override
+  String get baccaratBeadBanker => 'B';
+
+  @override
+  String get baccaratBeadTie => 'T';
+
+  @override
+  String get baccaratRoadBead => 'Bead Plate';
+
+  @override
+  String get baccaratRoadBig => 'Big Road';
+
+  @override
+  String get baccaratRoadBigEye => 'Big Eye Boy';
+
+  @override
+  String baccaratShoeCards(int n) {
+    return '$n cards';
+  }
+
+  @override
+  String baccaratShoeNumber(int n) {
+    return 'Shoe #$n';
+  }
+
+  @override
+  String baccaratShoeStats(int banker, int player, int tie) {
+    return 'B $banker · P $player · T $tie';
+  }
+
+  @override
+  String get baccaratWinsPlayer => 'Player wins';
+
+  @override
+  String get baccaratWinsBanker => 'Banker wins';
+
+  @override
+  String get baccaratWinsTie => 'Tie';
+
+  @override
+  String get baccaratNatural => 'Natural';
+
+  @override
+  String get baccaratPairPlayer => 'Player Pair';
+
+  @override
+  String get baccaratPairBanker => 'Banker Pair';
+
+  @override
+  String baccaratSummaryBanker(int banker, int player) {
+    return 'Banker $banker – $player';
+  }
+
+  @override
+  String baccaratSummaryPlayer(int player, int banker) {
+    return 'Player $player – $banker';
+  }
+
+  @override
+  String baccaratSummaryTie(int total) {
+    return 'Tie $total – $total';
+  }
+
+  @override
+  String get baccaratSummaryNatural => 'natural';
+
+  @override
+  String get baccaratSummaryPair => 'pair';
+
+  @override
+  String baccaratBurn(int count) {
+    return 'Burn: $count cards';
+  }
+
+  @override
+  String get baccaratNewShoe => 'New shoe';
+
+  @override
+  String get baccaratCutCard => 'Cut card: last coup of the shoe';
+
+  @override
+  String get baccaratDealing => 'Dealing';
+
+  @override
+  String baccaratStatusResult(String winner, String amount) {
+    return '$winner · $amount';
+  }
+
+  @override
+  String get baccaratChip => 'Chip';
+
+  @override
+  String baccaratConfirm(String amount) {
+    return 'Bet $amount';
+  }
+
+  @override
+  String get baccaratClear => 'Clear';
+
+  @override
+  String get baccaratRepeat => 'Repeat';
+
+  @override
+  String get baccaratDouble => 'Double';
+
+  @override
+  String baccaratBetPlaced(String amount) {
+    return 'Bet accepted: $amount';
+  }
+
+  @override
+  String get baccaratDraftChanged => 'Bet changed, not sent yet';
+
+  @override
+  String get baccaratNoBet => 'Tap a spot to bet the selected chip.';
+
+  @override
+  String baccaratBetsClosed(String amount) {
+    return 'Bets closed: $amount in play';
+  }
+
+  @override
+  String get baccaratWaitNext => 'Bets closed: next coup in a moment.';
+
+  @override
+  String baccaratPower(int n) {
+    return 'Commission-free ($n)';
+  }
+
+  @override
+  String get baccaratPowerOn => 'Commission-free: Banker paid 1:1 this coup';
+
+  @override
+  String get baccaratPowerNeedsBanker =>
+      'Bet on Banker to use Commission-free.';
+
+  @override
+  String get baccaratStatBankerWins => 'Banker wins';
+
+  @override
+  String get baccaratStatPlayerWins => 'Player wins';
+
+  @override
+  String get baccaratStatTieWins => 'Ties won';
+
+  @override
+  String get baccaratStatPairWins => 'Pairs won';
+
+  @override
+  String get baccaratStatNaturals => 'Naturals';
+
+  @override
+  String get baccaratStatCommission => 'Commission saved';
 
   @override
   String get holdemRulesSummary =>
