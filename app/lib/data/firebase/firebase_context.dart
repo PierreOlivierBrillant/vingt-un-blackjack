@@ -84,7 +84,8 @@ class FirebaseContext {
     ]).map((lists) => [for (final l in lists) ...l]);
   }
 
-  late final tableNames = FieldCache(this, (id) => FirestorePaths.table(id), (d) => d['name'] is String ? d['name']! as String : null);
+  /// Names of tables of ANY game (blackjack `tables/…`, others `gameTables/…`).
+  late final tableNames = FieldCache(this, FirestorePaths.anyTable, (d) => d['name'] is String ? d['name']! as String : null);
 
   /// marketId → "Table name #hand" (ledger details).
   late final marketLabels = FieldCache(this, (id) => FirestorePaths.market(id), (d) {

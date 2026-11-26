@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+  "romanceHubTitle": "Dates",
+  "romanceHubIntro": "The casino's dealers and regulars: chat, give gifts, play at their table… who knows? Everything stays PG-13, between adults.",
+  "romanceHubSoon": "Soon: chats, gifts, dates and Memories.",
+  "romanceDealers": "Dealers",
+  "romanceRegulars": "Regulars",
+  "romanceDatingTitle": "Meet players",
+  "romanceDatingBody": "Player-to-player dating, opt-in and without free text: disabled on this server for now.",
+  "romanceTierStranger": "Stranger",
+  "romanceAge": "{age} years old",
+  "romanceRoleLucas": "Blackjack dealer",
+  "romanceRoleCamille": "Roulette dealer",
+  "romanceRoleInes": "Baccarat dealer",
+  "romanceRoleAlex": "Hold'em dealer (they/them)",
+  "romanceRoleMarco": "Craps dealer",
+  "romanceRoleJade": "Bar mixologist",
+  "romanceRoleTheo": "Lounge pianist",
+  "romanceRoleNora": "Magician",
+  "romanceRoleHugo": "VIP concierge"
+}

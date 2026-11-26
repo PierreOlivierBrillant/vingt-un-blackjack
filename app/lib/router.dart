@@ -14,17 +14,23 @@ import 'features/auth/signup_screen.dart';
 import 'features/customize/customize_screen.dart';
 import 'features/dealer/dealer_demo_screen.dart';
 import 'features/friends/friends_screen.dart';
+import 'features/games/registry.dart';
 import 'features/kyc/kyc_screen.dart';
 import 'features/leaderboard/leaderboard_screen.dart';
 import 'features/lobby/lobby_screen.dart';
 import 'features/markets/market_detail_screen.dart';
 import 'features/markets/markets_screen.dart';
 import 'features/profile/profile_screen.dart';
+import 'features/romance/romance_hub_screen.dart';
+import 'features/romance/romance_routes.dart';
 import 'features/settings/settings_screen.dart';
 import 'features/shell/home_shell.dart';
 import 'features/shop/shop_screen.dart';
-import 'features/table/table_screen.dart';
 import 'features/wallet/wallet_screen.dart';
+
+/// The 5 tabs (Casino · Marchés · Rendez-vous · Portefeuille · Profil), in
+/// branch order; `HomeShell` draws one destination per entry.
+const kTabPaths = ['/lobby', '/markets', '/romance', '/wallet', '/profile'];
 
 const _publicPaths = {'/login', '/signup', '/server'};
 
@@ -102,7 +108,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ]),
           StatefulShellBranch(routes: [
-            GoRoute(path: '/leaderboard', builder: (_, _) => const LeaderboardScreen()),
+            GoRoute(path: '/romance', builder: (_, _) => const RomanceHubScreen(), routes: romanceRoutes(rootKey)),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(path: '/wallet', builder: (_, _) => const WalletScreen()),
@@ -112,11 +118,15 @@ final routerProvider = Provider<GoRouter>((ref) {
           ]),
         ],
       ),
+      // The ranking left the tabs (Sprint 2): opened from the profile and the lobby.
+      GoRoute(path: '/leaderboard', parentNavigatorKey: rootKey, builder: (_, _) => const LeaderboardScreen()),
+      // The game is in the id prefix (`gameOfTableId`): blackjack keeps its TableScreen.
       GoRoute(
         path: '/table/:id',
         parentNavigatorKey: rootKey,
-        builder: (_, s) => TableScreen(tableId: s.pathParameters['id']!, privateCode: s.uri.queryParameters['code']),
+        builder: (_, s) => tableScreenFor(s.pathParameters['id']!, privateCode: s.uri.queryParameters['code']),
       ),
+      for (final g in kGames.values) ...g.routes,
       GoRoute(path: '/dealer-demo', parentNavigatorKey: rootKey, builder: (_, _) => const DealerDemoScreen()),
       GoRoute(path: '/kyc', parentNavigatorKey: rootKey, builder: (_, _) => const KycScreen()),
       GoRoute(path: '/shop', parentNavigatorKey: rootKey, builder: (_, _) => const ShopScreen()),

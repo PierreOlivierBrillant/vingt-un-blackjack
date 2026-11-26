@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "holdemRulesSummary": "Texas hold'em No-Limit entre joueurs : ni commission ni pouvoir. Blinds par palier 1/2, 5/10, 25/50 $ ; cave de 40 à 100 grosses blinds, débitée en vous asseyant, recréditée en partant (après la main si vous y êtes).",
+  "holdemRulesRound": "Bouton tournant, règles du tête-à-tête, nouvel arrivant qui attend la grosse blind, relance minimale = dernière relance, un tapis incomplet ne rouvre pas les enchères, pots annexes, abattage automatique (meilleures 5 cartes sur 7). 20 s par décision ; deux expirations de suite → pause ; trois mains en pause → tapis recrédité et place libérée.",
+  "holdemRulesFairness": "Choix assumé : la graine révélée après la main rend les cartes couchées vérifiables, donc visibles par tous.",
+  "holdemSeats": "6 places.",
+  "holdemBuyInTitle": "Votre cave",
+  "holdemBuyInBody": "Entre {min} et {max} (40 à 100 grosses blinds), débitée en vous asseyant.",
+  "@holdemBuyInBody": {"placeholders": {"min": {"type": "String"}, "max": {"type": "String"}}},
+  "holdemBuyInSit": "S'asseoir"
+}

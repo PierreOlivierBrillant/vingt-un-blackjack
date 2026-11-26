@@ -39,7 +39,7 @@ class AudioplayersSoundService implements SoundService {
   @visibleForTesting
   static AudioContext get context => _context;
 
-  final _pools = <Sfx, _Pool>{};
+  final _pools = <SoundCue, _Pool>{};
   final _loops = <SoundChannel, _Loop>{};
   SoundLevels _levels = const SoundLevels();
   bool _suspended = false;
@@ -54,7 +54,7 @@ class AudioplayersSoundService implements SoundService {
         }
       }();
 
-  static int _ringSize(Sfx s) {
+  static int _ringSize(SoundCue s) {
     if (s.group != s.file) return 2; // variants: each one twice
     return switch (s) {
       Sfx.chipBetPlace || Sfx.chipStack || Sfx.coinSingle || Sfx.uiTap || Sfx.timerTick || Sfx.timerUrgent => 3,
@@ -63,20 +63,20 @@ class AudioplayersSoundService implements SoundService {
     };
   }
 
-  _Pool _pool(Sfx sfx) => _pools.putIfAbsent(sfx, () {
+  _Pool _pool(SoundCue sfx) => _pools.putIfAbsent(sfx, () {
         final pool = _Pool(sfx, _ringSize(sfx));
         pool.ready = _ensureInit().then((_) => pool.load()).catchError((Object e) => _log('load ${sfx.file}', e));
         return pool;
       });
 
   @override
-  Future<void> preload(Iterable<Sfx> sounds) async {
+  Future<void> preload(Iterable<SoundCue> sounds) async {
     if (_disposed) return;
     await Future.wait([for (final s in sounds) if (!s.loop) _pool(s).ready]);
   }
 
   @override
-  void play(Sfx sfx, {double volume = 1, double rate = 1}) {
+  void play(SoundCue sfx, {double volume = 1, double rate = 1}) {
     if (_disposed || _suspended || _levels.muted) return;
     final v = (volume * _levels.effects).clamp(0.0, 1.0);
     if (v <= 0) return;
@@ -85,7 +85,7 @@ class AudioplayersSoundService implements SoundService {
   }
 
   @override
-  void startLoop(SoundChannel channel, Sfx sfx, {double volume = 1}) {
+  void startLoop(SoundChannel channel, SoundCue sfx, {double volume = 1}) {
     if (_disposed) return;
     final current = _loops[channel];
     if (current != null && current.sfx == sfx) {
@@ -165,7 +165,7 @@ class AudioplayersSoundService implements SoundService {
 
 class _Pool {
   _Pool(this.sfx, this.size);
-  final Sfx sfx;
+  final SoundCue sfx;
   final int size;
   final _players = <AudioPlayer>[];
   final _volumes = <double>[];
@@ -226,7 +226,7 @@ class _Pool {
 
 class _Loop {
   _Loop(this.sfx, this.volume);
-  final Sfx sfx;
+  final SoundCue sfx;
   double volume;
   AudioPlayer? _player;
   bool _playing = false;

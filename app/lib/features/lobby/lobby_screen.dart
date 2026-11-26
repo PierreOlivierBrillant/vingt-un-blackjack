@@ -3,7 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/audio/app_sound_events.dart';
+import '../../core/audio/sfx.dart';
 import '../../core/audio/sound_providers.dart';
+import '../../core/characters/cast.dart';
+import '../../core/characters/character_spec.dart';
+import '../../core/characters/character_view.dart';
 import '../../core/ids.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
@@ -13,10 +17,14 @@ import '../../data/repositories.dart';
 import '../../domain/backend_constants.dart';
 import '../../domain/card_style.dart';
 import '../../domain/cards.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../ads/ad_widgets.dart';
 import '../cards/card_painters.dart';
+import '../games/common/game_sheets.dart';
+import '../games/game_join.dart';
+import '../games/registry.dart';
 
 String tierName(AppLocalizations l, String id) => switch (id) {
       'micro' => l.tierMicro,
@@ -35,12 +43,51 @@ class _SelectedTier extends Notifier<String?> {
   void select(String? id) => state = state == id ? null : id;
 }
 
+/// Game picked in the lobby selector (blackjack by default).
+final selectedGameProvider = NotifierProvider<SelectedGame, GameId>(SelectedGame.new);
+
+class SelectedGame extends Notifier<GameId> {
+  @override
+  GameId build() => GameId.blackjack;
+  void select(GameId g) => state = g;
+}
+
+/// Live public tables of [game] (blackjack: `tables`; others: `gameTables`).
+final _lobbyTablesProvider = Provider.family<AsyncValue<List<LiveTable>>, (GameId, String?)>((ref, k) {
+  final (game, tier) = k;
+  return game == GameId.blackjack ? ref.watch(liveTablesProvider(tier)) : ref.watch(gameLiveTablesProvider((game, tier)));
+});
+
+/// Tier cards of a kernel game: counters from its tables, limits from them
+/// when known (else the blackjack STAKE_TIER_LIMITS as an indication).
+List<StakeTier> _gameTiers(List<LiveTable> tables) => [
+      for (final id in Backend.stakeTiers)
+        () {
+          final base = StakeTier.of(id, tables: tables);
+          final mine = tables.where((t) => t.tierId == id).toList();
+          if (mine.isEmpty) return base;
+          return StakeTier(
+            id: id,
+            minBetCents: mine.map((t) => t.minBetCents).reduce((a, b) => a < b ? a : b),
+            maxBetCents: mine.map((t) => t.maxBetCents).reduce((a, b) => a > b ? a : b),
+            tablesLive: base.tablesLive,
+            playersOnline: base.playersOnline,
+            accent: base.accent,
+          );
+        }(),
+    ];
+
 class LobbyScreen extends ConsumerWidget {
   const LobbyScreen({super.key});
 
-  Future<void> _join(BuildContext context, WidgetRef ref, String tierId) async {
+  Future<void> _join(BuildContext context, WidgetRef ref, GameId game, String tierId) async {
     final l = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
+    if (game.isKernel) {
+      final r = await joinGameTable(context, ref, gameUi(game), mode: GameJoinMode.quick, stakeTier: tierId);
+      if (r != null && context.mounted) await context.push('/table/${r.tableId}');
+      return;
+    }
     try {
       final r = await withMatchmakingSounds(
         ref.read(soundProvider),
@@ -57,9 +104,12 @@ class LobbyScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final tiers = ref.watch(tiersProvider);
+    final game = ref.watch(selectedGameProvider);
+    final ui = gameUi(game);
     final selected = ref.watch(_selectedTierProvider);
-    final tables = ref.watch(liveTablesProvider(selected));
+    final tables = ref.watch(_lobbyTablesProvider((game, selected)));
+    final allTables = ref.watch(_lobbyTablesProvider((game, null)));
+    final tiers = game == GameId.blackjack ? ref.watch(tiersProvider) : allTables.whenData(_gameTiers);
     final wins = ref.watch(recentWinsProvider);
     // Other players' wins ring around the casino floor.
     ref.listen(recentWinsProvider, (_, n) {
@@ -70,18 +120,51 @@ class LobbyScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const BrandWordmark(size: 18),
-        actions: const [BalancePill()],
+        actions: [
+          IconButton(
+            key: const Key('lobby-leaderboard'),
+            tooltip: l.navLeaderboard,
+            icon: const Icon(Icons.leaderboard_outlined),
+            onPressed: () => context.push('/leaderboard'),
+          ),
+          const BalancePill(),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 24),
         children: [
           AsyncBody(value: wins, builder: (w) => RecentWinsTicker(wins: w)),
+          SectionHeader(l.lobbyChooseGame, icon: Icons.casino_outlined),
+          GameSelector(
+            selected: game,
+            onSelect: (g) {
+              if (g == game) return;
+              context.sfx(Sfx.uiToggle);
+              ref.read(selectedGameProvider.notifier).select(g);
+            },
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: _Hero(
-              onPlay: () => _join(context, ref, selected ?? 'low'),
-              onDemo: () => context.push('/dealer-demo'),
-              onPrivate: () => showPrivateTableSheet(context, stakeTier: selected ?? 'low'),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 320),
+              switchInCurve: Curves.easeOutCubic,
+              transitionBuilder: (child, a) => FadeTransition(
+                opacity: a,
+                child: SlideTransition(position: Tween(begin: const Offset(0.06, 0), end: Offset.zero).animate(a), child: child),
+              ),
+              child: game == GameId.blackjack
+                  ? _Hero(
+                      key: const ValueKey('hero-blackjack'),
+                      onPlay: () => _join(context, ref, game, selected ?? 'low'),
+                      onDemo: () => context.push('/dealer-demo'),
+                      onPrivate: () => showPrivateTableSheet(context, stakeTier: selected ?? 'low'),
+                    )
+                  : _GameHero(
+                      key: ValueKey('hero-${game.wire}'),
+                      ui: ui,
+                      onPlay: () => _join(context, ref, game, selected ?? 'low'),
+                      onPrivate: () => showPrivateTableSheet(context, stakeTier: selected ?? 'low', game: game),
+                    ),
             ),
           ),
           const Padding(padding: EdgeInsets.fromLTRB(16, 12, 16, 0), child: AdBanner()),
@@ -115,6 +198,8 @@ class LobbyScreen extends ConsumerWidget {
           ),
           AsyncBody(
             value: tables,
+            isEmpty: (list) => list.isEmpty,
+            empty: EmptyState(icon: ui.icon, text: l.lobbyNoTables),
             builder: (list) => Column(
               children: [
                 for (final t in list)
@@ -126,6 +211,105 @@ class LobbyScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Animated game picker: one tile per game of the registry ([kGames]) with
+/// its croupier's medallion; the selected one grows and glows in the
+/// game's accent. Games not playable yet carry a "SOON" ribbon.
+class GameSelector extends StatelessWidget {
+  const GameSelector({super.key, required this.selected, required this.onSelect});
+  final GameId selected;
+  final ValueChanged<GameId> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final games = kGames.values.toList();
+    return SizedBox(
+      height: 128,
+      child: ListView.separated(
+        key: const Key('game-selector'),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        scrollDirection: Axis.horizontal,
+        itemCount: games.length,
+        separatorBuilder: (_, _) => const SizedBox(width: 10),
+        itemBuilder: (context, i) => _GameTile(ui: games[i], selected: games[i].id == selected, onTap: () => onSelect(games[i].id)),
+      ),
+    );
+  }
+}
+
+class _GameTile extends StatelessWidget {
+  const _GameTile({required this.ui, required this.selected, required this.onTap});
+  final GameUi ui;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    return AnimatedScale(
+      scale: selected ? 1 : 0.92,
+      duration: const Duration(milliseconds: 260),
+      curve: Curves.easeOutBack,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 260),
+        width: 104,
+        decoration: BoxDecoration(
+          color: selected ? Color.alphaBlend(ui.accent.withValues(alpha: 0.16), p.surface) : p.surface,
+          borderRadius: BorderRadius.circular(AppTheme.radius),
+          border: Border.all(color: selected ? ui.accent : p.border, width: selected ? 2 : 1),
+          boxShadow: selected ? [BoxShadow(color: ui.accent.withValues(alpha: 0.35), blurRadius: 14)] : const [],
+        ),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            key: Key('game-chip-${ui.id.wire}'),
+            borderRadius: BorderRadius.circular(AppTheme.radius),
+            onTap: onTap,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 10, 6, 8),
+                  child: Column(
+                    children: [
+                      CharacterPortrait(spec: Cast.dealerOf(ui.id), size: 54),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(ui.icon, size: 14, color: ui.accent),
+                          const SizedBox(width: 3),
+                          Flexible(
+                            child: Text(
+                              ui.name(l),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: selected ? FontWeight.w900 : FontWeight.w700, fontSize: 12.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                if (!ui.playable)
+                  Positioned(
+                    top: 6,
+                    right: 6,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                      decoration: BoxDecoration(color: ui.accent, borderRadius: BorderRadius.circular(4)),
+                      child: Text(l.gameComingSoon, style: const TextStyle(color: Colors.white, fontSize: 8.5, fontWeight: FontWeight.w900)),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -161,9 +345,9 @@ class _RecentWinsTickerState extends State<RecentWinsTicker> with SingleTickerPr
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                w.kind == WinKind.market ? Icons.show_chart : Icons.emoji_events,
+                w.kind == WinKind.market ? Icons.show_chart : (w.game == GameId.blackjack ? Icons.emoji_events : gameUi(w.game).icon),
                 size: 14,
-                color: w.kind == WinKind.blackjack ? p.gold : p.win,
+                color: w.kind == WinKind.blackjack || w.kind == WinKind.jackpot ? p.gold : p.win,
               ),
               const SizedBox(width: 4),
               Text(w.username, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
@@ -208,7 +392,7 @@ class _RecentWinsTickerState extends State<RecentWinsTicker> with SingleTickerPr
 }
 
 class _Hero extends ConsumerWidget {
-  const _Hero({required this.onPlay, required this.onDemo, required this.onPrivate});
+  const _Hero({super.key, required this.onPlay, required this.onDemo, required this.onPrivate});
   final VoidCallback onPlay;
   final VoidCallback onDemo;
   final VoidCallback onPrivate;
@@ -303,6 +487,96 @@ class _Hero extends ConsumerWidget {
   }
 }
 
+/// Hero of a Sprint 2 game: its croupier's bust, name, tagline and the
+/// quick play / private table / rules buttons (disabled while the game is
+/// not playable yet).
+class _GameHero extends StatelessWidget {
+  const _GameHero({super.key, required this.ui, required this.onPlay, required this.onPrivate});
+  final GameUi ui;
+  final VoidCallback onPlay;
+  final VoidCallback onPrivate;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final dealer = Cast.dealerOf(ui.id);
+    final dark = Color.lerp(ui.accent, Colors.black, 0.72)!;
+    final outlined = OutlinedButton.styleFrom(
+      foregroundColor: Colors.white,
+      disabledForegroundColor: Colors.white38,
+      side: const BorderSide(color: Colors.white54),
+    );
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(colors: [Color.lerp(ui.accent, Colors.black, 0.45)!, dark]),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: 4,
+            bottom: 0,
+            child: CharacterPortrait(spec: dealer, size: 104, framing: CharacterFraming.bust, expression: CharacterExpression.smile),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 104),
+                  child: Text(l.gameHeroTitle(ui.name(l)), style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900)),
+                ),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.only(right: 104),
+                  child: Text(ui.tagline(l), style: const TextStyle(color: Colors.white70, fontSize: 12.5)),
+                ),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.only(right: 104),
+                  child: Text(
+                    ui.playable ? l.gameDealer(dealer.name) : '${l.gameDealer(dealer.name)} · ${l.gameComingSoonBody}',
+                    style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 11.5, fontStyle: FontStyle.italic),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    FilledButton.icon(
+                      key: const Key('lobby-play'),
+                      onPressed: ui.playable ? onPlay : null,
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      label: Text(l.lobbyQuickPlay),
+                    ),
+                    OutlinedButton.icon(
+                      key: const Key('lobby-private'),
+                      onPressed: ui.playable ? onPrivate : null,
+                      style: outlined,
+                      icon: const Icon(Icons.lock_outline),
+                      label: Text(l.lobbyPrivate),
+                    ),
+                    OutlinedButton.icon(
+                      key: const Key('lobby-rules'),
+                      onPressed: () => showGameRulesSheet(context, ui),
+                      style: outlined,
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: Text(l.gameRules),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _TierCard extends StatelessWidget {
   const _TierCard({required this.tier, required this.selected, required this.onTap});
   final StakeTier tier;
@@ -375,6 +649,8 @@ class _TableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = context.palette;
+    final ui = gameUi(table.game);
+    final blackjack = table.game == GameId.blackjack;
     return Panel(
       onTap: onPlay,
       child: Row(
@@ -383,10 +659,10 @@ class _TableCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: const Color(0xFF0B6B3A),
+              color: blackjack ? const Color(0xFF0B6B3A) : Color.lerp(ui.accent, Colors.black, 0.35),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.style, color: Colors.white),
+            child: Icon(ui.icon, color: Colors.white),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -408,7 +684,7 @@ class _TableCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '${context.money(table.minBetCents, compact: true)} – ${context.money(table.maxBetCents, compact: true)} · ${l.handNumber(table.handNumber)}',
+                  '${context.money(table.minBetCents, compact: true)} – ${context.money(table.maxBetCents, compact: true)} · ${blackjack ? l.handNumber(table.handNumber) : l.gameRoundNumber(table.handNumber)}',
                   style: TextStyle(color: p.textMuted, fontSize: 12),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -455,16 +731,19 @@ class _TableCard extends StatelessWidget {
 }
 
 /// Create a private table (no bots, shareable 6-char code) or join one.
-Future<void> showPrivateTableSheet(BuildContext context, {required String stakeTier}) =>
+/// [game] blackjack uses `joinMatchmaking`; the other games `gameJoin`
+/// (whose joinCode accepts a code of ANY game, the result says which).
+Future<void> showPrivateTableSheet(BuildContext context, {required String stakeTier, GameId game = GameId.blackjack}) =>
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => _PrivateTableSheet(stakeTier: stakeTier),
+      builder: (_) => _PrivateTableSheet(stakeTier: stakeTier, game: game),
     );
 
 class _PrivateTableSheet extends ConsumerStatefulWidget {
-  const _PrivateTableSheet({required this.stakeTier});
+  const _PrivateTableSheet({required this.stakeTier, required this.game});
   final String stakeTier;
+  final GameId game;
 
   @override
   ConsumerState<_PrivateTableSheet> createState() => _PrivateTableSheetState();
@@ -496,21 +775,41 @@ class _PrivateTableSheetState extends ConsumerState<_PrivateTableSheet> {
       _error = null;
     });
     try {
-      final r = await withMatchmakingSounds(
-        ref.read(soundProvider),
-        () => ref.read(lobbyRepositoryProvider).joinMatchmaking(
-              mode: mode,
-              stakeTier: _tier,
-              code: mode == MatchMode.joinCode ? code : null,
-              idempotencyKey: _keys[op] ??= newIdempotencyKey(),
-            ),
-      );
+      final String tableId;
+      final String? resultCode;
+      if (widget.game.isKernel) {
+        final r = await joinGameTable(
+          context,
+          ref,
+          gameUi(widget.game),
+          mode: GameJoinMode.values.byName(mode.name),
+          stakeTier: _tier,
+          code: mode == MatchMode.joinCode ? code : null,
+          idempotencyKey: _keys[op] ??= newIdempotencyKey(),
+          rethrowErrors: true,
+        );
+        if (r == null) return;
+        tableId = r.tableId;
+        resultCode = r.code;
+      } else {
+        final r = await withMatchmakingSounds(
+          ref.read(soundProvider),
+          () => ref.read(lobbyRepositoryProvider).joinMatchmaking(
+                mode: mode,
+                stakeTier: _tier,
+                code: mode == MatchMode.joinCode ? code : null,
+                idempotencyKey: _keys[op] ??= newIdempotencyKey(),
+              ),
+        );
+        tableId = r.tableId;
+        resultCode = r.code;
+      }
       _keys.remove(op);
       if (!mounted) return;
       final router = GoRouter.of(context);
       Navigator.of(context).pop();
-      final c = r.code ?? (mode == MatchMode.joinCode ? code : null);
-      await router.push(c == null ? '/table/${r.tableId}' : '/table/${r.tableId}?code=$c');
+      final c = resultCode ?? (mode == MatchMode.joinCode ? code : null);
+      await router.push(c == null ? '/table/$tableId' : '/table/$tableId?code=$c');
     } on Object catch (e) {
       if (mounted) setState(() => _error = localizeError(l, e));
     } finally {
@@ -521,6 +820,7 @@ class _PrivateTableSheetState extends ConsumerState<_PrivateTableSheet> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final ui = gameUi(widget.game);
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + MediaQuery.viewInsetsOf(context).bottom),
       child: SafeArea(
@@ -528,7 +828,11 @@ class _PrivateTableSheetState extends ConsumerState<_PrivateTableSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l.lobbyPrivate, style: Theme.of(context).textTheme.titleMedium),
+            Row(children: [
+              Icon(ui.icon, color: ui.accent),
+              const SizedBox(width: 8),
+              Expanded(child: Text(widget.game == GameId.blackjack ? l.lobbyPrivate : '${l.lobbyPrivate} · ${ui.name(l)}', style: Theme.of(context).textTheme.titleMedium)),
+            ]),
             const SizedBox(height: 4),
             Text(l.privateIntro, style: TextStyle(color: context.palette.textMuted, fontSize: 12.5)),
             const SizedBox(height: 12),

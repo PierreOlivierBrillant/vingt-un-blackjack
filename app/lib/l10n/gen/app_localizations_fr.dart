@@ -423,7 +423,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ledgerAd => 'Récompense publicitaire';
 
   @override
-  String get navLobby => 'Salon';
+  String get navLobby => 'Casino';
 
   @override
   String get navMarkets => 'Marchés';
@@ -1699,4 +1699,358 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get errReasonNoPrivateTable =>
       'Ouvrez d\'abord une table privée pour inviter quelqu\'un.';
+
+  @override
+  String get navRomance => 'Rendez-vous';
+
+  @override
+  String get lobbyChooseGame => 'Choisissez votre jeu';
+
+  @override
+  String get lobbyNoTables => 'Aucune table ouverte pour l\'instant.';
+
+  @override
+  String get gameBlackjack => 'Blackjack';
+
+  @override
+  String get gameRoulette => 'Roulette';
+
+  @override
+  String get gameBaccarat => 'Baccarat';
+
+  @override
+  String get gameHoldem => 'Texas hold\'em';
+
+  @override
+  String get gameCraps => 'Craps';
+
+  @override
+  String get gameTaglineRoulette =>
+      'Roulette européenne : 37 cases, un seul zéro, 7 places.';
+
+  @override
+  String get gameTaglineBaccarat =>
+      'Punto Banco, sabot de 8 jeux, 7 places. Le Banquier paie 0,95 pour 1.';
+
+  @override
+  String get gameTaglineHoldem =>
+      'No-limit entre joueurs, 6 places, sans commission ni pouvoir.';
+
+  @override
+  String get gameTaglineCraps =>
+      '8 places, lanceur tournant, vraies cotes derrière la ligne.';
+
+  @override
+  String gameHeroTitle(String game) {
+    return '$game en direct';
+  }
+
+  @override
+  String gameDealer(String name) {
+    return 'Votre croupier : $name';
+  }
+
+  @override
+  String get gameComingSoon => 'BIENTÔT';
+
+  @override
+  String get gameComingSoonBody =>
+      'Ce jeu ouvre bientôt : vous pouvez déjà regarder ses tables.';
+
+  @override
+  String get gameRules => 'Règles';
+
+  @override
+  String get gameHistory => 'Historique';
+
+  @override
+  String get gameHistoryEmpty => 'Aucun tour terminé pour l\'instant.';
+
+  @override
+  String gameRoundNumber(int n) {
+    return 'Tour n° $n';
+  }
+
+  @override
+  String gamePhaseBetting(int seconds) {
+    return 'Faites vos jeux · $seconds s';
+  }
+
+  @override
+  String get gamePhaseLive => 'Tour en cours';
+
+  @override
+  String gamePhaseLiveSecs(int seconds) {
+    return 'Tour en cours · $seconds s';
+  }
+
+  @override
+  String gamePhaseSettled(int seconds) {
+    return 'Tour terminé · suivant dans $seconds s';
+  }
+
+  @override
+  String get gameSeatFree => 'Libre';
+
+  @override
+  String get gameBot => 'Bot';
+
+  @override
+  String get gameYou => 'Vous';
+
+  @override
+  String gameStack(String amount) {
+    return 'Tapis $amount';
+  }
+
+  @override
+  String gameStake(String amount) {
+    return 'Mise $amount';
+  }
+
+  @override
+  String gameSeatedAt(int n) {
+    return 'Vous êtes à la place $n.';
+  }
+
+  @override
+  String gameQueuedAt(int n) {
+    return 'En file d\'attente (n° $n) : place attribuée au prochain tour.';
+  }
+
+  @override
+  String get gamePlayThis => 'Jouer à ce jeu';
+
+  @override
+  String get gameNotFound => 'Cette table n\'existe plus.';
+
+  @override
+  String get gameBackToLobby => 'Retour au casino';
+
+  @override
+  String get gamePlaceholderTitle => 'Table en préparation';
+
+  @override
+  String get gamePlaceholderBody =>
+      'Le croupier s\'installe : les mises et les animations de ce jeu arrivent bientôt.';
+
+  @override
+  String gameRoundResult(String amount) {
+    return 'Résultat du tour : $amount';
+  }
+
+  @override
+  String get gameFairBody =>
+      'Avant chaque tour, le serveur publie l\'empreinte SHA-256 d\'une graine secrète ; après le tour, il révèle la graine. Le tirage se recalcule à partir d\'elle : personne, pas même le casino, ne peut le changer en cours de route.';
+
+  @override
+  String get gameFairCurrentCommit =>
+      'Engagement du tour en cours (SHA-256 de la graine)';
+
+  @override
+  String gameFairLastRound(int n) {
+    return 'Tour n° $n : graine révélée';
+  }
+
+  @override
+  String get gameFairVerify => 'Vérifier le dernier tour';
+
+  @override
+  String get gameFairVerified =>
+      'Vérifié : SHA-256(graine) = engagement publié avant le tour, et le tirage recalculé correspond.';
+
+  @override
+  String get gameFairCommitOnly =>
+      'Vérifié : SHA-256(graine) = engagement publié avant le tour.';
+
+  @override
+  String gameMinMax(String min, String max) {
+    return 'Mise $min – $max';
+  }
+
+  @override
+  String get shopNoPowers =>
+      'Aucun pouvoir à ce jeu : entre joueurs, tout se joue à la loyale.';
+
+  @override
+  String get shopGroupHint => 'Un pouvoir ne sert qu\'aux tables de son jeu.';
+
+  @override
+  String get profileStatsTitle => 'Statistiques par jeu';
+
+  @override
+  String profileStatsRounds(int rounds, int won) {
+    String _temp0 = intl.Intl.pluralLogic(
+      rounds,
+      locale: localeName,
+      other: '$rounds tours',
+      one: '1 tour',
+      zero: 'Aucun tour',
+    );
+    return '$_temp0 · $won gagnés';
+  }
+
+  @override
+  String profileStatsBest(String amount) {
+    return 'Meilleur gain $amount';
+  }
+
+  @override
+  String get profileStatsNone => 'Pas encore joué';
+
+  @override
+  String get profileTitle => 'Titre';
+
+  @override
+  String get profileNoTitle => 'Aucun titre : gagnez-en au Rendez-vous.';
+
+  @override
+  String titleCharacter(String name) {
+    return 'Cœur de $name';
+  }
+
+  @override
+  String get titleDuo => 'Duo inséparable';
+
+  @override
+  String get filterAllGames => 'Tous les jeux';
+
+  @override
+  String marketPerRound(int n) {
+    return 'tour n° $n';
+  }
+
+  @override
+  String get gameLeaveConfirm =>
+      'Quitter la table ? Les mises pas encore verrouillées vous sont rendues.';
+
+  @override
+  String get rouletteRulesSummary =>
+      'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Le numéro gagnant est tiré par seededRng(graine).nextInt(37).';
+
+  @override
+  String get rouletteRulesPayouts =>
+      'Plein 35:1 · Cheval 17:1 · Transversale et trios 0-1-2 / 0-2-3 11:1 · Carré et premier quatre 8:1 · Sixain 5:1 · Douzaine, colonne 2:1 · Chances simples 1:1. Pas de « partage » par défaut (avantage maison 2,70 %).';
+
+  @override
+  String get rouletteRulesRound =>
+      '20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète. Plafonds par mise et par tour.';
+
+  @override
+  String get rouletteSeats => '7 places, une couleur de jetons par joueur.';
+
+  @override
+  String get baccaratRulesSummary =>
+      'Punto Banco, sabot de 8 jeux (416 cartes), coupe à 16 cartes de la fin. Brûlage selon la première carte, inclus dans la preuve d\'équité. Tableau de tirage officiel (3e carte de la Banque contre 0–9).';
+
+  @override
+  String get baccaratRulesPayouts =>
+      'Joueur 1:1 · Banquier 0,95:1 (exact au centime) · Égalité 8:1 (Joueur et Banquier rendus) · Paire Joueur, Paire Banquier 11:1.';
+
+  @override
+  String get baccaratRulesRound =>
+      '20 s de mises, puis la donne : squeeze animé, 3e carte posée en travers. Tendances affichées : Bead Plate et Big Road.';
+
+  @override
+  String get baccaratSeats => '7 places.';
+
+  @override
+  String get holdemRulesSummary =>
+      'Texas hold\'em No-Limit entre joueurs : ni commission ni pouvoir. Blinds par palier 1/2, 5/10, 25/50 \$ ; cave de 40 à 100 grosses blinds, débitée en vous asseyant, recréditée en partant (après la main si vous y êtes).';
+
+  @override
+  String get holdemRulesRound =>
+      'Bouton tournant, règles du tête-à-tête, nouvel arrivant qui attend la grosse blind, relance minimale = dernière relance, un tapis incomplet ne rouvre pas les enchères, pots annexes, abattage automatique (meilleures 5 cartes sur 7). 20 s par décision ; deux expirations de suite → pause ; trois mains en pause → tapis recrédité et place libérée.';
+
+  @override
+  String get holdemRulesFairness =>
+      'Choix assumé : la graine révélée après la main rend les cartes couchées vérifiables, donc visibles par tous.';
+
+  @override
+  String get holdemSeats => '6 places.';
+
+  @override
+  String get holdemBuyInTitle => 'Votre cave';
+
+  @override
+  String holdemBuyInBody(String min, String max) {
+    return 'Entre $min et $max (40 à 100 grosses blinds), débitée en vous asseyant.';
+  }
+
+  @override
+  String get holdemBuyInSit => 'S\'asseoir';
+
+  @override
+  String get crapsRulesSummary =>
+      'Ligne de passe et Ne passe pas (12 barré), Come et Don\'t Come, cotes 3-4-5× (vraies cotes) et cotes « lay ». Place : 4/10 à 9:5, 5/9 à 7:5, 6/8 à 7:6. Field : 2 payé 2:1, 12 payé 3:1.';
+
+  @override
+  String get crapsRulesPayouts =>
+      'Propositions : Any 7 4:1, Any Craps 7:1, Hardways 7:1 ou 9:1, Yo 15:1, 2 et 12 30:1, 3 15:1. Mises en dollars entiers ; place 6/8 et lay 5/9 ou 6/8 par multiples de 3 \$.';
+
+  @override
+  String get crapsRulesRound =>
+      'Chaque lancer est un tour, avec sa graine (nextInt(6)+1 deux fois). Places « off » au come-out ; mises contractuelles non retirables. Le lanceur doit miser Pass ou Don\'t Pass, lance d\'un geste ou automatiquement après 15 s ; le dé passe au suivant après un seven-out.';
+
+  @override
+  String get crapsSeats => '8 places, lanceur tournant.';
+
+  @override
+  String get romanceHubTitle => 'Rendez-vous';
+
+  @override
+  String get romanceHubIntro =>
+      'Croupiers et habitués du casino : discutez, offrez des cadeaux, jouez à leur table… et qui sait ? Tout reste PG-13, entre adultes.';
+
+  @override
+  String get romanceHubSoon =>
+      'Bientôt : discussions, cadeaux, rendez-vous et Souvenirs.';
+
+  @override
+  String get romanceDealers => 'Croupiers';
+
+  @override
+  String get romanceRegulars => 'Habitués';
+
+  @override
+  String get romanceDatingTitle => 'Rencontres';
+
+  @override
+  String get romanceDatingBody =>
+      'Rencontres entre joueurs, sur inscription et sans texte libre : désactivées sur ce serveur pour l\'instant.';
+
+  @override
+  String get romanceTierStranger => 'Inconnu·e';
+
+  @override
+  String romanceAge(int age) {
+    return '$age ans';
+  }
+
+  @override
+  String get romanceRoleLucas => 'Croupier de blackjack';
+
+  @override
+  String get romanceRoleCamille => 'Croupière de roulette';
+
+  @override
+  String get romanceRoleInes => 'Croupière de baccarat';
+
+  @override
+  String get romanceRoleAlex => 'Croupier·e de hold\'em (iel)';
+
+  @override
+  String get romanceRoleMarco => 'Croupier de craps';
+
+  @override
+  String get romanceRoleJade => 'Mixologue du bar';
+
+  @override
+  String get romanceRoleTheo => 'Pianiste du salon';
+
+  @override
+  String get romanceRoleNora => 'Magicienne';
+
+  @override
+  String get romanceRoleHugo => 'Concierge VIP';
 }

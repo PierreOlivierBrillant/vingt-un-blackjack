@@ -216,10 +216,14 @@ class CardFacePainter extends CustomPainter {
 }
 
 class CardBackPainter extends CustomPainter {
-  const CardBackPainter({required this.design, required this.color});
+  const CardBackPainter({required this.design, required this.color, this.medallion = '21'});
 
   final CardBackDesign design;
   final Color color;
+
+  /// Text of the central medallion ("21" at blackjack; each game's
+  /// `GameUi.cardMedallion` elsewhere). Empty = plain medallion.
+  final String medallion;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -303,7 +307,7 @@ class CardBackPainter extends CustomPainter {
     }
     canvas.restore();
 
-    // Inner frame + central medallion with a "21".
+    // Inner frame + central medallion with a "21" ([medallion]).
     canvas.drawRRect(
       inner.deflate(w * 0.035),
       Paint()
@@ -322,10 +326,13 @@ class CardBackPainter extends CustomPainter {
         ..strokeWidth = math.max(0.8, w * 0.02)
         ..color = Colors.white.withValues(alpha: 0.85),
     );
+    if (medallion.isEmpty) return;
+    // Longer texts shrink to stay inside the medallion.
+    final fs = mr * 0.95 * math.min(1.0, 2 / math.max(1, medallion.length));
     final tp = TextPainter(
       text: TextSpan(
-        text: '21',
-        style: TextStyle(fontFamily: kAppFont, color: Colors.white, fontSize: mr * 0.95, fontWeight: FontWeight.w900, height: 1),
+        text: medallion,
+        style: TextStyle(fontFamily: kAppFont, color: Colors.white, fontSize: fs, fontWeight: FontWeight.w900, height: 1),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -333,7 +340,7 @@ class CardBackPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CardBackPainter old) => old.design != design || old.color != color;
+  bool shouldRepaint(CardBackPainter old) => old.design != design || old.color != color || old.medallion != medallion;
 }
 
 /// A playing card at a given width. `card == null` or `faceUp == false`
@@ -346,6 +353,7 @@ class PlayingCardView extends StatelessWidget {
     this.faceUp = true,
     this.width = 64,
     this.elevation = 2,
+    this.backMedallion = '21',
   });
 
   final PlayingCard? card;
@@ -353,6 +361,9 @@ class PlayingCardView extends StatelessWidget {
   final bool faceUp;
   final double width;
   final double elevation;
+
+  /// Medallion text of the back (see [CardBackPainter.medallion]).
+  final String backMedallion;
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +388,7 @@ class PlayingCardView extends StatelessWidget {
         child: CustomPaint(
           painter: showFace
               ? CardFacePainter(card: card!, style: style.face)
-              : CardBackPainter(design: style.back, color: style.backColor),
+              : CardBackPainter(design: style.back, color: style.backColor, medallion: backMedallion),
         ),
       ),
     );

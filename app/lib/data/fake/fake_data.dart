@@ -10,6 +10,7 @@ import 'package:flutter/painting.dart';
 
 import '../../core/ids.dart';
 import '../../domain/backend_constants.dart';
+import '../../domain/games.dart';
 import '../../domain/lmsr.dart';
 import '../../domain/models.dart';
 import '../../domain/wire.dart';
@@ -112,7 +113,7 @@ abstract final class FakeData {
         () {
           final (uid, name, bot, points, table, seenMin) = _people[i];
           final weekly = i == 13 ? 0 : 40 + rng.nextInt(620);
-          return profileDoc(
+          final doc = profileDoc(
             uid: uid,
             username: name,
             avatar: uid == demoUid ? demoAvatar : avatarFor(uid),
@@ -128,9 +129,22 @@ abstract final class FakeData {
             kycVerified: !bot,
             createdAtMs: _ms(now, Duration(days: 30 + i)),
           );
+          // Sprint 2: per-game stats and a Rendez-vous title for the demo player.
+          if (uid == demoUid) {
+            doc['gameStats'] = demoGameStats;
+            doc['title'] = 'rv_camille_title';
+          }
+          return doc;
         }(),
     ];
   }
+
+  /// `profiles/{demo}.gameStats` (`GameStatsDoc` per kernel game; no hold'em yet).
+  static const demoGameStats = <String, Object?>{
+    'roulette': {'rounds': 42, 'won': 17, 'lost': 25, 'netCents': -3500, 'biggestWinCents': 17500, 'counters': {'straightUps': 1}},
+    'baccarat': {'rounds': 18, 'won': 9, 'lost': 8, 'netCents': 1240, 'biggestWinCents': 4000, 'counters': {}},
+    'craps': {'rounds': 63, 'won': 30, 'lost': 33, 'netCents': 2200, 'biggestWinCents': 9000, 'counters': {'pointsMade': 4}},
+  };
 
   static List<PlayerProfile> profiles(DateTime now) => [for (final d in profileDocs(now)) PlayerProfile.fromDoc(d)];
 
@@ -385,6 +399,8 @@ abstract final class FakeData {
       'Le croupier saute dans ≥ 28 % des mains de ce sabot ?',
       'Will the dealer bust in ≥ 28% of this shoe’s hands?'
     ),
+    'rouletteRed': ('Rouge ?', 'Red?'),
+    'crapsSeven': ('Sept au prochain lancer ?', 'Seven on the next roll?'),
   };
 
   static final _marketSpecs = <_MarketSpec>[
@@ -398,6 +414,9 @@ abstract final class FakeData {
         subjectUid: 'u-max', subject: 'max_dbl', seat: 3, outcome: 'yes', ageMin: 6),
     const _MarketSpec('m-onyx1-75-bust', 't-onyx-1', 'Onyx 1', 'dealerBust', 75, 2, 30, 12, 402000, 37, 'closed', ageMin: 7),
     const _MarketSpec('m-cobalt1-203-bust', 't-cobalt-1', 'Cobalt 1', 'dealerBust', 203, 3, 0, 0, 0, 0, 'void', ageMin: 9),
+    // Sprint 2 games (ids as published in gameTables/{id}.markets.round, see fake_game_data.dart).
+    const _MarketSpec('rl-sim-01__r42__rouletteRed', 'rl-sim-01', 'Roulette Rubis', 'rouletteRed', 42, 1, 30, 22, 264000, 21, 'open', ageMin: 5),
+    const _MarketSpec('cr-sim-01__r42__crapsSeven', 'cr-sim-01', 'Craps Topaze', 'crapsSeven', 42, 1, 0, 40, 98000, 9, 'open', ageMin: 8),
   ];
 
   static List<Doc> marketDocs(DateTime now) => [
@@ -414,6 +433,8 @@ abstract final class FakeData {
               'marketId': s.id,
               'tableId': s.tableId,
               'tableName': s.tableName,
+              'game': gameOfTableId(s.tableId).wire,
+              'humanTradeCount': s.trades ~/ 2,
               'kind': s.kind,
               'handNumber': s.hand,
               'shoeNumber': s.shoe,
@@ -503,7 +524,7 @@ abstract final class FakeData {
       return {
         'marketId': id,
         'tableId': m.tableId,
-        'kind': m.kind.name,
+        'kind': m.kind?.name ?? m.kindWire,
         'question': {'fr': m.question.fr, 'en': m.question.en},
         'yesShares': yes,
         'noShares': no,

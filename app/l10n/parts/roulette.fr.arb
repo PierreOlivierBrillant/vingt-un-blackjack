@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "rouletteRulesSummary": "Roulette européenne à un seul zéro : 37 cases dans l'ordre réel du cylindre. Le numéro gagnant est tiré par seededRng(graine).nextInt(37).",
+  "rouletteRulesPayouts": "Plein 35:1 · Cheval 17:1 · Transversale et trios 0-1-2 / 0-2-3 11:1 · Carré et premier quatre 8:1 · Sixain 5:1 · Douzaine, colonne 2:1 · Chances simples 1:1. Pas de « partage » par défaut (avantage maison 2,70 %).",
+  "rouletteRulesRound": "20 s de mises → « Rien ne va plus » (tirage) → lancer d'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l'app, qui envoie votre carte de mises complète. Plafonds par mise et par tour.",
+  "rouletteSeats": "7 places, une couleur de jetons par joueur."
+}

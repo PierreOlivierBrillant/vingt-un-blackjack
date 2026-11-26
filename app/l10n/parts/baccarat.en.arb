@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "baccaratRulesSummary": "Punto Banco, 8-deck shoe (416 cards), cut 16 cards from the end. Burn according to the first card, included in the fairness proof. Official drawing chart (Banker's third card against 0–9).",
+  "baccaratRulesPayouts": "Player 1:1 · Banker 0.95:1 (exact to the cent) · Tie 8:1 (Player and Banker returned) · Player Pair, Banker Pair 11:1.",
+  "baccaratRulesRound": "20 s of betting, then the deal: animated squeeze, third card laid sideways. Trends shown: Bead Plate and Big Road.",
+  "baccaratSeats": "7 seats."
+}

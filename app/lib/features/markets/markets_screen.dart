@@ -6,31 +6,33 @@ import '../../core/money.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/providers.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../games/registry.dart';
 
-String marketQuestion(AppLocalizations l, Market m) => switch (m.kind) {
-      MarketKind.dealerBust => l.mqDealerBusts,
-      MarketKind.playerWins => l.mqPlayerWins(m.playerName ?? '?'),
-      MarketKind.natural => l.mqNatural,
-      MarketKind.shoeDealerBustRate => l.mqShoe,
-      MarketKind.rouletteRed => l.mqRouletteRed,
-      MarketKind.rouletteZero => l.mqRouletteZero,
-      MarketKind.rouletteDozen3 => l.mqRouletteDozen3,
-      MarketKind.rouletteZeroSeries => l.mqRouletteZeroSeries,
-      MarketKind.baccaratBanker => l.mqBaccaratBanker,
-      MarketKind.baccaratTie => l.mqBaccaratTie,
-      MarketKind.baccaratPair => l.mqBaccaratPair,
-      MarketKind.baccaratBankerShoe => l.mqBaccaratBankerShoe,
-      MarketKind.holdemBoardAce => l.mqHoldemBoardAce,
-      MarketKind.holdemBoardFlush => l.mqHoldemBoardFlush,
-      MarketKind.crapsSeven => l.mqCrapsSeven,
-      MarketKind.crapsPoint => l.mqCrapsPoint,
-    };
+/// Question of a market, from its game's registry entry ([GameUi.marketQuestion]);
+/// a kind unknown to this client shows the server's text (never hidden).
+String marketQuestion(AppLocalizations l, Market m) {
+  final q = gameUi(m.gameOf).marketQuestion?.call(l, m);
+  if (q != null) return q;
+  final server = m.question.of(l.localeName);
+  return server.isNotEmpty ? server : (m.kindWire ?? m.id);
+}
 
-String marketSubtitle(AppLocalizations l, Market m) => m.kind.isSeries || m.handNumber == null
-    ? '${m.tableName} · ${l.marketPerShoe}'
-    : '${m.tableName} · ${l.handNumber(m.handNumber!)}';
+/// Icon of a market card ([GameUi.marketIcon]).
+IconData marketIconOf(Market m) => gameUi(m.gameOf).marketIcon?.call(m.kind) ?? Icons.show_chart;
+
+String marketSubtitle(AppLocalizations l, Market m) {
+  final game = m.gameOf;
+  final shoe = game == GameId.blackjack || game == GameId.baccarat;
+  final when = m.isSeries || m.handNumber == null
+      ? (shoe ? l.marketPerShoe : null)
+      : game == GameId.blackjack
+          ? l.handNumber(m.handNumber!)
+          : l.marketPerRound(m.handNumber!);
+  return [if (game != GameId.blackjack) gameUi(game).name(l), m.tableName, ?when].join(' · ');
+}
 
 String compactVolume(BuildContext context, int cents) {
   final dollars = cents ~/ 100;
@@ -51,6 +53,15 @@ class MarketsScreen extends ConsumerStatefulWidget {
 
 class _MarketsScreenState extends ConsumerState<MarketsScreen> {
   _Filter _filter = _Filter.all;
+
+  /// Game filter (null = every game).
+  GameId? _game;
+
+  /// Games of the registry (in lobby order) that have at least one market.
+  List<GameId> _gamesWithMarkets(List<Market>? markets) {
+    final present = {for (final m in markets ?? const <Market>[]) m.gameOf};
+    return [for (final g in kGames.keys) if (present.contains(g)) g];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +131,32 @@ class _MarketsScreenState extends ConsumerState<MarketsScreen> {
               ),
             ),
           ),
+          // One chip per game of the registry (only games that have markets now).
+          if (_gamesWithMarkets(markets.value) case final games when games.length > 1)
+            SizedBox(
+              height: 40,
+              child: SingleChildScrollView(
+                key: const Key('markets-games'),
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    for (final g in [null, ...games])
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: FilterChip(
+                          key: Key('markets-game-${g?.wire ?? 'all'}'),
+                          avatar: g == null ? null : Icon(gameUi(g).icon, size: 16, color: gameUi(g).accent),
+                          label: Text(g == null ? l.filterAllGames : gameUi(g).name(l)),
+                          selected: _game == g,
+                          showCheckmark: false,
+                          onSelected: (_) => setState(() => _game = g),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
           if (_filter == _Filter.mine)
             Column(
               children: [
@@ -140,10 +177,10 @@ class _MarketsScreenState extends ConsumerState<MarketsScreen> {
               final ids = positions.map((p) => p.marketId).toSet();
               final shown = list.where((m) => switch (_filter) {
                     _Filter.all => true,
-                    _Filter.hand => m.kind != MarketKind.shoeDealerBustRate,
-                    _Filter.shoe => m.kind == MarketKind.shoeDealerBustRate,
+                    _Filter.hand => !m.isSeries,
+                    _Filter.shoe => m.isSeries,
                     _Filter.mine => ids.contains(m.id),
-                  });
+                  } && (_game == null || m.gameOf == _game));
               return Column(
                 children: [
                   for (final m in shown)
@@ -185,18 +222,7 @@ class MarketCard extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(color: p.surfaceRaised, borderRadius: BorderRadius.circular(8)),
-                child: Icon(switch (m.kind) {
-                  MarketKind.dealerBust => Icons.local_fire_department_outlined,
-                  MarketKind.playerWins => Icons.person_outline,
-                  MarketKind.natural => Icons.auto_awesome,
-                  MarketKind.shoeDealerBustRate => Icons.inventory_2_outlined,
-                  MarketKind.rouletteRed || MarketKind.rouletteDozen3 => Icons.album_outlined,
-                  MarketKind.rouletteZero || MarketKind.rouletteZeroSeries => Icons.exposure_zero,
-                  MarketKind.baccaratBanker || MarketKind.baccaratTie || MarketKind.baccaratBankerShoe => Icons.account_balance_outlined,
-                  MarketKind.baccaratPair => Icons.copy_all_outlined,
-                  MarketKind.holdemBoardAce || MarketKind.holdemBoardFlush => Icons.style_outlined,
-                  MarketKind.crapsSeven || MarketKind.crapsPoint => Icons.casino_outlined,
-                }, color: p.textMuted),
+                child: Icon(marketIconOf(m), color: p.textMuted),
               ),
               const SizedBox(width: 10),
               Expanded(

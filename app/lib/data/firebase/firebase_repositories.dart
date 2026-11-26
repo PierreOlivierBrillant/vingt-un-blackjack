@@ -1,4 +1,4 @@
-/// The 11 Firebase repositories for one connected [FirebaseBackend]. Built
+/// The 12 Firebase repositories for one connected [FirebaseBackend]. Built
 /// (and disposed) by `firebaseRepositoriesProvider` when the backend host
 /// changes.
 library;
@@ -8,6 +8,7 @@ import '../connection_status.dart';
 import 'firebase_account_repositories.dart';
 import 'firebase_auth_repository.dart';
 import 'firebase_context.dart';
+import 'firebase_game_repository.dart';
 import 'firebase_markets_repository.dart';
 import 'firebase_social_repositories.dart';
 import 'firebase_table_repositories.dart';
@@ -23,6 +24,7 @@ class FirebaseRepositories {
   late final wallet = FirebaseWalletRepository(context);
   late final lobby = FirebaseLobbyRepository(context);
   late final table = FirebaseTableRepository(context);
+  late final games = FirebaseGameTableRepository(context);
   late final shop = FirebaseShopRepository(context);
   late final cosmetics = FirebaseCosmeticsRepository(context);
   late final leaderboard = FirebaseLeaderboardRepository(context);

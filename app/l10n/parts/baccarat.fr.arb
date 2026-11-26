@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "baccaratRulesSummary": "Punto Banco, sabot de 8 jeux (416 cartes), coupe à 16 cartes de la fin. Brûlage selon la première carte, inclus dans la preuve d'équité. Tableau de tirage officiel (3e carte de la Banque contre 0–9).",
+  "baccaratRulesPayouts": "Joueur 1:1 · Banquier 0,95:1 (exact au centime) · Égalité 8:1 (Joueur et Banquier rendus) · Paire Joueur, Paire Banquier 11:1.",
+  "baccaratRulesRound": "20 s de mises, puis la donne : squeeze animé, 3e carte posée en travers. Tendances affichées : Bead Plate et Big Road.",
+  "baccaratSeats": "7 places."
+}

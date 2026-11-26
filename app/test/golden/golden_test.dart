@@ -11,12 +11,17 @@ import 'package:vingtun/features/customize/customize_screen.dart';
 import 'package:vingtun/features/dealer/dealer_controller.dart';
 import 'package:vingtun/features/dealer/dealer_stage.dart';
 import 'package:vingtun/features/dealer/demo_round.dart';
+import 'package:vingtun/features/games/registry.dart';
 import 'package:vingtun/features/lobby/lobby_screen.dart';
 import 'package:vingtun/features/markets/market_detail_screen.dart';
 import 'package:vingtun/features/markets/markets_screen.dart';
+import 'package:vingtun/features/profile/profile_screen.dart';
+import 'package:vingtun/features/romance/romance_hub_screen.dart';
+import 'package:vingtun/features/shop/shop_screen.dart';
 import 'package:vingtun/features/wallet/wallet_screen.dart';
 
 import '../helpers.dart';
+import 'characters_golden.dart';
 
 /// Regenerate with: flutter test --update-goldens --tags golden
 void main() {
@@ -26,7 +31,18 @@ void main() {
     'markets': () => const MarketsScreen(),
     'market_detail': () => const MarketDetailScreen(marketId: 'm-onyx1-76-luna'),
     'customize': () => const CustomizeScreen(),
+    // Sprint 2: the four game tables (phase A placeholders), the Rendez-vous
+    // hub, and the screens now driven by the game registry.
+    'game_roulette': () => tableScreenFor('rl-sim-01'),
+    'game_baccarat': () => tableScreenFor('bc-sim-01'),
+    'game_holdem': () => tableScreenFor('ho-sim-01'),
+    'game_craps': () => tableScreenFor('cr-sim-01'),
+    'romance_hub': () => const RomanceHubScreen(),
+    'shop': () => const ShopScreen(),
+    'profile': () => const ProfileScreen(),
   };
+
+  charactersGoldens();
 
   for (final mode in const [ThemeMode.dark, ThemeMode.light]) {
     for (final e in screens.entries) {

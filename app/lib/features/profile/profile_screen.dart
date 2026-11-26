@@ -2,11 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/characters/cast.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/providers.dart';
 import '../../domain/backend_constants.dart';
+import '../../domain/cosmetics.dart';
+import '../../domain/game_table.dart';
 import '../../domain/models.dart';
+import '../../l10n/gen/app_localizations.dart';
+import '../games/registry.dart';
+
+/// Display name of a title cosmetic (`TITLE_IDS`): `rv_<character>_title` →
+/// "Cœur de Camille", `duo_title` → "Duo inséparable".
+String titleLabel(AppLocalizations l, String id) {
+  if (id == 'duo_title') return l.titleDuo;
+  final c = characterOfCosmetic(id);
+  return c == null ? id : l.titleCharacter(Cast.of(c).name);
+}
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -57,6 +70,8 @@ class ProfileScreen extends ConsumerWidget {
                         if (profile != null) ...[
                           const SizedBox(height: 8),
                           _RankProgress(points: points, tier: tier),
+                          const SizedBox(height: 6),
+                          _TitleLine(title: profile.title),
                         ],
                       ],
                     ),
@@ -65,6 +80,8 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
           ),
+          if (profile != null) _GameStatsPanel(profile: profile),
+          tile(Icons.leaderboard_outlined, l.navLeaderboard, '/leaderboard', key: const Key('nav-leaderboard')),
           tile(Icons.bolt, l.shopTitle, '/shop', subtitle: l.shopSubtitle, key: const Key('nav-shop')),
           tile(Icons.style, l.customizeTitle, '/customize', subtitle: l.customizeSubtitle, key: const Key('nav-customize')),
           tile(Icons.people_outline, l.friendsTitle, '/friends', key: const Key('nav-friends')),
@@ -81,6 +98,100 @@ class ProfileScreen extends ConsumerWidget {
               label: Text(l.signOut),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TitleLine extends StatelessWidget {
+  const _TitleLine({required this.title});
+  final String? title;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    final t = title;
+    return Row(
+      key: const Key('profile-title'),
+      children: [
+        Icon(Icons.workspace_premium_outlined, size: 16, color: t == null ? p.textMuted : p.gold),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            t == null ? l.profileNoTitle : titleLabel(l, t),
+            semanticsLabel: t == null ? null : '${l.profileTitle}: ${titleLabel(l, t)}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12, color: t == null ? p.textMuted : null, fontWeight: t == null ? null : FontWeight.w800),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Statistics of every game of the registry: rounds, won, net, best win and
+/// the game's own lines ([GameUi.statLines], from `gameStats.counters`).
+class _GameStatsPanel extends StatelessWidget {
+  const _GameStatsPanel({required this.profile});
+  final PlayerProfile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = context.palette;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Panel(
+        key: const Key('profile-stats'),
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l.profileStatsTitle, style: const TextStyle(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            for (final ui in kGames.values) _row(context, l, p, ui, profile.statsFor(ui.id)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _row(BuildContext context, AppLocalizations l, AppPalette p, GameUi ui, GameStats s) {
+    final extra = s.isEmpty ? const <StatLine>[] : (ui.statLines?.call(l, s) ?? const <StatLine>[]);
+    return Padding(
+      key: Key('profile-stats-${ui.id.wire}'),
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(ui.icon, size: 20, color: ui.accent),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(ui.name(l), style: const TextStyle(fontWeight: FontWeight.w700)),
+                Text(
+                  s.isEmpty
+                      ? l.profileStatsNone
+                      : [
+                          l.profileStatsRounds(s.rounds, s.won),
+                          if (s.biggestWinCents > 0) l.profileStatsBest(context.money(s.biggestWinCents, compact: true)),
+                          for (final (label, value) in extra) '$label $value',
+                        ].join(' · '),
+                  style: TextStyle(color: p.textMuted, fontSize: 11.5),
+                ),
+              ],
+            ),
+          ),
+          if (!s.isEmpty)
+            Text(
+              context.money(s.netCents, signed: true, compact: true),
+              style: TextStyle(fontWeight: FontWeight.w800, color: s.netCents >= 0 ? p.win : p.loss),
+            ),
         ],
       ),
     );

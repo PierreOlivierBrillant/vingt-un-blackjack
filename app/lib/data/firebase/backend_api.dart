@@ -6,12 +6,25 @@
 library;
 
 import '../../domain/card_style.dart';
+import '../../domain/game_table.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../domain/table_state.dart';
 
 abstract final class FirestorePaths {
   static const profiles = 'profiles';
   static const tables = 'tables';
+
+  /// Sprint 2: kernel-driven tables (`shared/games/common.ts`).
+  static const gameTables = 'gameTables';
+  static String gameTable(String id) => 'gameTables/$id';
+  static String gameBets(String tableId) => 'gameTables/$tableId/bets';
+  static String gameBet(String tableId, String uid) => 'gameTables/$tableId/bets/$uid';
+  static String gameHole(String tableId, String uid) => 'gameTables/$tableId/holes/$uid';
+  static String gameRounds(String tableId) => 'gameTables/$tableId/rounds';
+
+  /// Public document of ANY table id (blackjack `tables/…`, others `gameTables/…`).
+  static String anyTable(String id) => gameOfTableId(id).isKernel ? gameTable(id) : table(id);
   static const markets = 'markets';
   static const feed = 'feed';
   static const friendRequests = 'friendRequests';
@@ -99,6 +112,34 @@ abstract final class Payloads {
       };
 
   static Map<String, Object?> buyPower(PowerType power, int quantity) => {'powerId': power.name, 'quantity': quantity};
+
+  // ------------------------------------------------ Sprint 2: game tables --
+
+  /// `GameJoinRequest`: [stakeTier] always sent (ignored for joinCode),
+  /// [code] only for joinCode, [buyInCents] only when given (hold'em).
+  static Map<String, Object?> gameJoin(GameId game, GameJoinMode mode, String stakeTier, {String? code, int? buyInCents}) {
+    if (!game.isKernel) throw ArgumentError('gameJoin is for kernel-driven games, not ${game.wire}');
+    return {
+      'game': game.wire,
+      'mode': mode.name,
+      'stakeTier': stakeTier,
+      if (mode == GameJoinMode.joinCode && code != null) 'code': code.trim().toUpperCase(),
+      'buyInCents': ?buyInCents,
+    };
+  }
+
+  static Map<String, Object?> gameLeave(String tableId) => {'tableId': tableId};
+  static Map<String, Object?> gamePoke(String tableId) => {'tableId': tableId};
+
+  /// `GameActionRequest`: [action] must carry its `type` (kernel or game action).
+  static Map<String, Object?> gameAction(String tableId, int round, Map<String, Object?> action) {
+    if (action['type'] is! String) throw ArgumentError('a game action needs a "type"');
+    return {'tableId': tableId, 'round': round, 'action': action};
+  }
+
+  /// Kernel `setBets`: the WHOLE desired board (spotId → cents), power optional.
+  static Map<String, Object?> setBetsAction(Map<String, int> bets, {PowerType? power}) =>
+      {'type': 'setBets', 'bets': {for (final e in bets.entries) if (e.value > 0) e.key: e.value}, 'power': ?power?.name};
 
   static Map<String, Object?> tradeShares(
     String marketId,
