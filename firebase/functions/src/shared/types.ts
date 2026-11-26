@@ -235,6 +235,13 @@ export const KYC_MIN_AGE_YEARS = 18;
 export const POWER_PRICES_CENTS: Record<PowerId, Cents> = {
   freeSplit: 2_000, freeDouble: 2_500, freeInsurance: 1_000, peek: 3_000, secondChance: 4_000,
 };
+/**
+ * House-paid ("free") powers are free rolls whose value grows with the stake: cap the stake they
+ * can cover so one use is worth less than its shop price (insurance ≤ $5 → EV ≈ $3 for a $10 power;
+ * double/split only on hands of at most $10).
+ */
+export const FREE_POWER_MAX_STAKE_CENTS = 1_000;
+export const FREE_INSURANCE_MAX_CENTS = 500;
 export const POWER_MAX_QUANTITY_PER_PURCHASE = 10;
 export const POWER_MAX_INVENTORY = 99;
 

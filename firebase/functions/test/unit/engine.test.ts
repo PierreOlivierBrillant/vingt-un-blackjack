@@ -354,6 +354,11 @@ describe('powers', () => {
     expect(totalStaked(s2, 0)).toBe(1000);
     expect(code(() => act(start1('TS', '9D', 'AH', '7C'), 0, 'insurance', { amountCents: 0, power: 'freeInsurance' }))).toBe('POWER_NOT_APPLICABLE');
   });
+  it('free powers are capped so one use is worth less than its price (regression: free-roll insurance on big bets)', () => {
+    expect(code(() => act(start1('TS', '9D', 'AH', 'KC', [], 100_000), 0, 'insurance', { amountCents: 50_000, power: 'freeInsurance' }))).toBe('BAD_AMOUNT');
+    expect(code(() => act(start1('5S', '6D', 'TH', '9C', ['2S'], 5_000), 0, 'double', { power: 'freeDouble' }))).toBe('POWER_NOT_APPLICABLE');
+    expect(code(() => act(start1('8S', '8D', 'TH', '9C', ['3C', 'TS'], 5_000), 0, 'split', { power: 'freeSplit' }))).toBe('POWER_NOT_APPLICABLE');
+  });
   it('secondChance: a busting card is replaced once', () => {
     const s = act(start1('TS', '6D', 'TH', '7C', ['KC', '4S']), 0, 'hit', { power: 'secondChance' });
     expect(seat0(s).hands[0].cards).toEqual(['TS', '6D', '4S']);

@@ -295,12 +295,31 @@ export class TableMachine {
   // ------------------------------------------------------------------------------------------
   // markets
 
+  /**
+   * Opening YES price = the true prior of the event. Starting at 50 % made "NO" on dealerBust /
+   * natural a positive-EV buy every hand (free money for a script).
+   */
+  private priorYes(kind: MarketKind): number {
+    switch (kind) {
+      case 'dealerBust': return 0.28; // 6 decks, S17
+      case 'playerWins': return 0.43; // net > 0 (pushes count as NO)
+      case 'natural': {
+        const players = this.pub.seats.filter((s) => s !== null).length;
+        return 1 - Math.pow(1 - 0.0473, players + 1);
+      }
+      default: return 0.5;
+    }
+  }
+
   private market(kind: MarketKind, id: string, question: LocalizedText, extra: Partial<MarketDoc> = {}): MarketDoc {
+    const b = MARKET_LIQUIDITY[kind];
+    const p = this.priorYes(kind);
+    const shift = b * Math.log(p / (1 - p));
     return {
       marketId: id, tableId: this.pub.tableId, tableName: this.pub.name, kind,
       handNumber: kind === 'shoeDealerBustRate' ? null : this.pub.handNumber, shoeNumber: this.pub.shoe.shoeNumber,
       subjectUid: null, subjectUsername: null, subjectSeatIndex: null, question, status: 'open', outcome: null,
-      b: MARKET_LIQUIDITY[kind], qYes: 0, qNo: 0, priceYes: 0.5, volumeCents: 0, tradeCount: 0, payoutsDone: false,
+      b, qYes: Math.max(0, shift), qNo: Math.max(0, -shift), priceYes: p, volumeCents: 0, tradeCount: 0, payoutsDone: false,
       createdAtMs: this.now, closedAtMs: null, resolvedAtMs: null, ...extra,
     };
   }
@@ -586,7 +605,11 @@ export class TableMachine {
       if (!id || r.phase === 'settled') continue;
       const allLost = es.hands.every((h) => h.done && (h.busted || h.surrendered));
       const natural = r.phase === 'playerTurns' && es.hands.length === 1 && es.hands[0]!.blackjack;
-      if (allLost || natural) this.setMarket(id, 'closed');
+      // A human controls their own outcome (a second account could bet NO, then bust on purpose):
+      // their market stops trading as soon as their first decision is possible.
+      const seatDoc = this.pub.seats[es.seatIndex];
+      const humanActing = r.phase === 'playerTurns' && !!seatDoc && !seatDoc.isBot && r.turn !== null && r.turn.seatIndex >= es.seatIndex;
+      if (allLost || natural || humanActing) this.setMarket(id, 'closed');
     }
 
     if (r.phase === 'settled') {
@@ -686,6 +709,8 @@ export class TableMachine {
     actInPlace(r, seat.seatIndex, req.action, opts);
     if (req.power === 'peek') {
       this.effects.push({ kind: 'peek', uid, holeCard: r.dealer.cards[1], handNumber: this.pub.handNumber });
+      // The peeker knows the hole card: stop trading "dealer busts" so a second account cannot use it.
+      this.setMarket(this.pub.markets.dealerBust, 'closed');
     }
     this.afterEngineStep();
     const ledgerType: LedgerType | null = req.action === 'double' ? 'double' : req.action === 'split' ? 'split' : req.action === 'insurance' ? 'insurance' : null;

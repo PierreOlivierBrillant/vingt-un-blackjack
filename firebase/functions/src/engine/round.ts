@@ -23,7 +23,7 @@
  * exist for fast Monte-Carlo simulation.
  */
 import type { CardCode, HandResult, PlayerAction, PowerId, TableEventType } from '../shared/types';
-import { MAX_HANDS_PER_SEAT } from '../shared/types';
+import { FREE_INSURANCE_MAX_CENTS, FREE_POWER_MAX_STAKE_CENTS, MAX_HANDS_PER_SEAT } from '../shared/types';
 import { cardPoints, handValue, isAce, isTenValue, isTwoCardTwentyOne } from './cards';
 
 export type EngineErrorCode =
@@ -397,6 +397,7 @@ export function actInPlace(s: RoundState, seatIndex: number, action: PlayerActio
     const max = Math.floor(seat.hands[0].betCents / 2);
     if (!Number.isSafeInteger(amount) || amount < 0 || amount > max) throw new EngineError('BAD_AMOUNT');
     if (power === 'freeInsurance' && amount === 0) throw new EngineError('POWER_NOT_APPLICABLE');
+    if (power === 'freeInsurance' && amount > FREE_INSURANCE_MAX_CENTS) throw new EngineError('BAD_AMOUNT');
     seat.insurance.decided = true;
     seat.insurance.betCents = amount;
     seat.insurance.stakedCents = power === 'freeInsurance' ? 0 : amount;
@@ -451,6 +452,7 @@ export function actInPlace(s: RoundState, seatIndex: number, action: PlayerActio
     }
     case 'double': {
       if (!canDouble(h)) throw new EngineError('ILLEGAL_ACTION', 'cannot double');
+      if (power === 'freeDouble' && h.betCents > FREE_POWER_MAX_STAKE_CENTS) throw new EngineError('POWER_NOT_APPLICABLE');
       markPower();
       const extra = h.betCents;
       h.betCents += extra;
@@ -463,6 +465,7 @@ export function actInPlace(s: RoundState, seatIndex: number, action: PlayerActio
     }
     case 'split': {
       if (!canSplit(s, seat, h)) throw new EngineError('ILLEGAL_ACTION', 'cannot split');
+      if (power === 'freeSplit' && h.betCents > FREE_POWER_MAX_STAKE_CENTS) throw new EngineError('POWER_NOT_APPLICABLE');
       markPower();
       const aces = isAce(h.cards[0]);
       const second = h.cards.pop() as CardCode;
