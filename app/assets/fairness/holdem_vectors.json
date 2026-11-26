@@ -1,0 +1,2210 @@
+{
+ "about": "Hold'em vectors computed by firebase/functions (fairDealOrder(buildShoe(1), seed, 1), holdemDeckLayout, evaluateHand). Do not edit by hand.",
+ "deals": [
+  {
+   "seed": "0e5367876f41bafeca05bd11289af237356cf6777212cf0328538b6db3f43db8",
+   "commit": "cc572fab4d029b1d7f3a4ccee518732edbf2203bad54f332384dd331d38c063a",
+   "players": 2,
+   "order": [
+    0,
+    1
+   ],
+   "dealt": [
+    "2S",
+    "3D",
+    "AC",
+    "7S",
+    "7C",
+    "2C",
+    "6C",
+    "8H",
+    "3C",
+    "9S",
+    "AD",
+    "9H"
+   ],
+   "holes": {
+    "0": [
+     "2S",
+     "AC"
+    ],
+    "1": [
+     "3D",
+     "7S"
+    ]
+   },
+   "burns": [
+    "7C",
+    "3C",
+    "AD"
+   ],
+   "board": [
+    "2C",
+    "6C",
+    "8H",
+    "9S",
+    "9H"
+   ],
+   "hands": {
+    "0": {
+     "category": "twoPair",
+     "score": 2724398,
+     "best": [
+      "9S",
+      "9H",
+      "2S",
+      "2C",
+      "AC"
+     ]
+    },
+    "1": {
+     "category": "pair",
+     "score": 1677430,
+     "best": [
+      "9S",
+      "9H",
+      "8H",
+      "7S",
+      "6C"
+     ]
+    }
+   },
+   "winners": [
+    0
+   ]
+  },
+  {
+   "seed": "c654bc0b2f3add8b9958bbb98d629cc5fcdf0aecb8c978fda6e3030d8b31841c",
+   "commit": "37f561932b6537cd4a6e7c7c0de1262c9357701d671a34e8f15894827e773d95",
+   "players": 2,
+   "order": [
+    1,
+    0
+   ],
+   "dealt": [
+    "QH",
+    "JS",
+    "6S",
+    "9C",
+    "2D",
+    "3C",
+    "7H",
+    "6C",
+    "8D",
+    "KS",
+    "5S",
+    "AD"
+   ],
+   "holes": {
+    "0": [
+     "JS",
+     "9C"
+    ],
+    "1": [
+     "QH",
+     "6S"
+    ]
+   },
+   "burns": [
+    "2D",
+    "8D",
+    "5S"
+   ],
+   "board": [
+    "3C",
+    "7H",
+    "6C",
+    "KS",
+    "AD"
+   ],
+   "hands": {
+    "0": {
+     "category": "highCard",
+     "score": 973719,
+     "best": [
+      "AD",
+      "KS",
+      "JS",
+      "9C",
+      "7H"
+     ]
+    },
+    "1": {
+     "category": "pair",
+     "score": 1470172,
+     "best": [
+      "6S",
+      "6C",
+      "AD",
+      "KS",
+      "QH"
+     ]
+    }
+   },
+   "winners": [
+    1
+   ]
+  },
+  {
+   "seed": "462f6fd1da86f3b03bea565510564f178bf2b81b46ffff64a10dcf7e668510e1",
+   "commit": "fc7ad24f1228969262161cf1403b2e55ecdc94876d4d6821baea3e45eb6b1f6f",
+   "players": 3,
+   "order": [
+    3,
+    5,
+    0
+   ],
+   "dealt": [
+    "4H",
+    "JH",
+    "TH",
+    "KS",
+    "8C",
+    "AH",
+    "7S",
+    "KC",
+    "5S",
+    "2S",
+    "8D",
+    "8S",
+    "3H",
+    "3S"
+   ],
+   "holes": {
+    "0": [
+     "TH",
+     "AH"
+    ],
+    "3": [
+     "4H",
+     "KS"
+    ],
+    "5": [
+     "JH",
+     "8C"
+    ]
+   },
+   "burns": [
+    "7S",
+    "8D",
+    "3H"
+   ],
+   "board": [
+    "KC",
+    "5S",
+    "2S",
+    "8S",
+    "3S"
+   ],
+   "hands": {
+    "0": {
+     "category": "highCard",
+     "score": 973445,
+     "best": [
+      "AH",
+      "KC",
+      "TH",
+      "8S",
+      "5S"
+     ]
+    },
+    "3": {
+     "category": "flush",
+     "score": 6128946,
+     "best": [
+      "KS",
+      "8S",
+      "5S",
+      "3S",
+      "2S"
+     ]
+    },
+    "5": {
+     "category": "pair",
+     "score": 1609141,
+     "best": [
+      "8S",
+      "8C",
+      "KC",
+      "JH",
+      "5S"
+     ]
+    }
+   },
+   "winners": [
+    3
+   ]
+  },
+  {
+   "seed": "3ffd6de45bf8c32f186148bcdd3a76d779489d3c79d98ed0210a1b867689df4c",
+   "commit": "b4aa43c8106a61b575f0f2a514a49f199dede34a40a9af6a351965d90c129b03",
+   "players": 4,
+   "order": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "dealt": [
+    "QH",
+    "5H",
+    "KS",
+    "6C",
+    "5S",
+    "6H",
+    "6D",
+    "JC",
+    "4D",
+    "7D",
+    "2D",
+    "3S",
+    "3D",
+    "7S",
+    "KD",
+    "QS"
+   ],
+   "holes": {
+    "2": [
+     "QH",
+     "5S"
+    ],
+    "3": [
+     "5H",
+     "6H"
+    ],
+    "4": [
+     "KS",
+     "6D"
+    ],
+    "5": [
+     "6C",
+     "JC"
+    ]
+   },
+   "burns": [
+    "4D",
+    "3D",
+    "KD"
+   ],
+   "board": [
+    "7D",
+    "2D",
+    "3S",
+    "7S",
+    "QS"
+   ],
+   "hands": {
+    "2": {
+     "category": "twoPair",
+     "score": 2934645,
+     "best": [
+      "QS",
+      "QH",
+      "7S",
+      "7D",
+      "5S"
+     ]
+    },
+    "3": {
+     "category": "pair",
+     "score": 1539173,
+     "best": [
+      "7S",
+      "7D",
+      "QS",
+      "6H",
+      "5H"
+     ]
+    },
+    "4": {
+     "category": "pair",
+     "score": 1539526,
+     "best": [
+      "7S",
+      "7D",
+      "KS",
+      "QS",
+      "6D"
+     ]
+    },
+    "5": {
+     "category": "pair",
+     "score": 1539254,
+     "best": [
+      "7S",
+      "7D",
+      "QS",
+      "JC",
+      "6C"
+     ]
+    }
+   },
+   "winners": [
+    2
+   ]
+  },
+  {
+   "seed": "8ccd53a2e9191e29576b435c9a21fb3f9dc8c42ac9c273478b8583992bc3f31c",
+   "commit": "966b119a687dea41caeaee6692d8750652854333100d49ed65369c15d129a44b",
+   "players": 5,
+   "order": [
+    5,
+    0,
+    1,
+    2,
+    3
+   ],
+   "dealt": [
+    "JH",
+    "2H",
+    "8H",
+    "4H",
+    "4S",
+    "QS",
+    "6C",
+    "8C",
+    "KS",
+    "5C",
+    "9D",
+    "QC",
+    "4D",
+    "9C",
+    "3H",
+    "6H",
+    "TS",
+    "7C"
+   ],
+   "holes": {
+    "0": [
+     "2H",
+     "6C"
+    ],
+    "1": [
+     "8H",
+     "8C"
+    ],
+    "2": [
+     "4H",
+     "KS"
+    ],
+    "3": [
+     "4S",
+     "5C"
+    ],
+    "5": [
+     "JH",
+     "QS"
+    ]
+   },
+   "burns": [
+    "9D",
+    "3H",
+    "TS"
+   ],
+   "board": [
+    "QC",
+    "4D",
+    "9C",
+    "6H",
+    "7C"
+   ],
+   "hands": {
+    "0": {
+     "category": "pair",
+     "score": 1469591,
+     "best": [
+      "6H",
+      "6C",
+      "QC",
+      "9C",
+      "7C"
+     ]
+    },
+    "1": {
+     "category": "pair",
+     "score": 1608855,
+     "best": [
+      "8H",
+      "8C",
+      "QC",
+      "9C",
+      "7C"
+     ]
+    },
+    "2": {
+     "category": "pair",
+     "score": 1330633,
+     "best": [
+      "4H",
+      "4D",
+      "KS",
+      "QC",
+      "9C"
+     ]
+    },
+    "3": {
+     "category": "pair",
+     "score": 1330327,
+     "best": [
+      "4S",
+      "4D",
+      "QC",
+      "9C",
+      "7C"
+     ]
+    },
+    "5": {
+     "category": "pair",
+     "score": 1887127,
+     "best": [
+      "QS",
+      "QC",
+      "JH",
+      "9C",
+      "7C"
+     ]
+    }
+   },
+   "winners": [
+    5
+   ]
+  },
+  {
+   "seed": "ed7cf1b76095912874f8687eaf80b3ebde47302e08b827b4e74512862966f549",
+   "commit": "14a37792c2115894afecca664016ec8ae7e324f48ef396731493cc0038ca75af",
+   "players": 6,
+   "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    0
+   ],
+   "dealt": [
+    "KC",
+    "5H",
+    "TH",
+    "2H",
+    "QS",
+    "JH",
+    "6D",
+    "JD",
+    "8D",
+    "6C",
+    "9H",
+    "KH",
+    "9C",
+    "TS",
+    "QH",
+    "7S",
+    "TD",
+    "JS",
+    "AD",
+    "5C"
+   ],
+   "holes": {
+    "0": [
+     "JH",
+     "KH"
+    ],
+    "1": [
+     "KC",
+     "6D"
+    ],
+    "2": [
+     "5H",
+     "JD"
+    ],
+    "3": [
+     "TH",
+     "8D"
+    ],
+    "4": [
+     "2H",
+     "6C"
+    ],
+    "5": [
+     "QS",
+     "9H"
+    ]
+   },
+   "burns": [
+    "9C",
+    "TD",
+    "AD"
+   ],
+   "board": [
+    "TS",
+    "QH",
+    "7S",
+    "JS",
+    "5C"
+   ],
+   "hands": {
+    "0": {
+     "category": "pair",
+     "score": 1818058,
+     "best": [
+      "JS",
+      "JH",
+      "KH",
+      "QH",
+      "TS"
+     ]
+    },
+    "1": {
+     "category": "highCard",
+     "score": 904103,
+     "best": [
+      "KC",
+      "QH",
+      "JS",
+      "TS",
+      "7S"
+     ]
+    },
+    "2": {
+     "category": "twoPair",
+     "score": 2864476,
+     "best": [
+      "JS",
+      "JD",
+      "5H",
+      "5C",
+      "QH"
+     ]
+    },
+    "3": {
+     "category": "pair",
+     "score": 1748152,
+     "best": [
+      "TS",
+      "TH",
+      "QH",
+      "JS",
+      "8D"
+     ]
+    },
+    "4": {
+     "category": "highCard",
+     "score": 834166,
+     "best": [
+      "QH",
+      "JS",
+      "TS",
+      "7S",
+      "6C"
+     ]
+    },
+    "5": {
+     "category": "pair",
+     "score": 1887145,
+     "best": [
+      "QS",
+      "QH",
+      "JS",
+      "TS",
+      "9H"
+     ]
+    }
+   },
+   "winners": [
+    2
+   ]
+  },
+  {
+   "seed": "ab1aba0f60191a1c6f3e1f3a159cab55db964387cec136c0d3ba99c5ad3f88a4",
+   "commit": "4004508e7a9712733600b8beb8fd61492fa03f1a2a48e334426de7367b80a045",
+   "players": 2,
+   "order": [
+    0,
+    1
+   ],
+   "dealt": [
+    "KS",
+    "4C",
+    "QC",
+    "3C",
+    "7D",
+    "AH",
+    "9D",
+    "8H",
+    "KD",
+    "8C",
+    "5D",
+    "8S"
+   ],
+   "holes": {
+    "0": [
+     "KS",
+     "QC"
+    ],
+    "1": [
+     "4C",
+     "3C"
+    ]
+   },
+   "burns": [
+    "7D",
+    "KD",
+    "5D"
+   ],
+   "board": [
+    "AH",
+    "9D",
+    "8H",
+    "8C",
+    "8S"
+   ],
+   "hands": {
+    "0": {
+     "category": "trips",
+     "score": 3705069,
+     "best": [
+      "8S",
+      "8H",
+      "8C",
+      "AH",
+      "KS"
+     ]
+    },
+    "1": {
+     "category": "trips",
+     "score": 3705065,
+     "best": [
+      "8S",
+      "8H",
+      "8C",
+      "AH",
+      "9D"
+     ]
+    }
+   },
+   "winners": [
+    0
+   ]
+  },
+  {
+   "seed": "a927ac6af841a1d3d838f37d031c872f72e55c0a80aab0cb855cc7606c12167f",
+   "commit": "b03512d69799b8be6e875d653b456718c06819146cce2ada5e6c91c959dbc02b",
+   "players": 2,
+   "order": [
+    1,
+    0
+   ],
+   "dealt": [
+    "KS",
+    "2D",
+    "JD",
+    "3S",
+    "AH",
+    "2C",
+    "3H",
+    "QD",
+    "TD",
+    "8H",
+    "KH",
+    "7C"
+   ],
+   "holes": {
+    "0": [
+     "2D",
+     "3S"
+    ],
+    "1": [
+     "KS",
+     "JD"
+    ]
+   },
+   "burns": [
+    "AH",
+    "TD",
+    "KH"
+   ],
+   "board": [
+    "2C",
+    "3H",
+    "QD",
+    "8H",
+    "7C"
+   ],
+   "hands": {
+    "0": {
+     "category": "twoPair",
+     "score": 2306604,
+     "best": [
+      "3S",
+      "3H",
+      "2D",
+      "2C",
+      "QD"
+     ]
+    },
+    "1": {
+     "category": "highCard",
+     "score": 904071,
+     "best": [
+      "KS",
+      "QD",
+      "JD",
+      "8H",
+      "7C"
+     ]
+    }
+   },
+   "winners": [
+    0
+   ]
+  },
+  {
+   "seed": "22f05b87d3ef1471236da0d5d9e361501b943af84f940a586b98ca395da510fd",
+   "commit": "b3a226e6f9c167a9cc5378d604f441df3f315a9da10c2197057261e1a5f7f3b4",
+   "players": 3,
+   "order": [
+    3,
+    5,
+    0
+   ],
+   "dealt": [
+    "2S",
+    "AH",
+    "9C",
+    "8C",
+    "KH",
+    "6H",
+    "9H",
+    "TH",
+    "9D",
+    "4C",
+    "2D",
+    "JH",
+    "3H",
+    "AD"
+   ],
+   "holes": {
+    "0": [
+     "9C",
+     "6H"
+    ],
+    "3": [
+     "2S",
+     "8C"
+    ],
+    "5": [
+     "AH",
+     "KH"
+    ]
+   },
+   "burns": [
+    "9H",
+    "2D",
+    "3H"
+   ],
+   "board": [
+    "TH",
+    "9D",
+    "4C",
+    "JH",
+    "AD"
+   ],
+   "hands": {
+    "0": {
+     "category": "pair",
+     "score": 1679034,
+     "best": [
+      "9D",
+      "9C",
+      "AD",
+      "JH",
+      "TH"
+     ]
+    },
+    "3": {
+     "category": "highCard",
+     "score": 965272,
+     "best": [
+      "AD",
+      "JH",
+      "TH",
+      "9D",
+      "8C"
+     ]
+    },
+    "5": {
+     "category": "pair",
+     "score": 2026938,
+     "best": [
+      "AH",
+      "AD",
+      "KH",
+      "JH",
+      "TH"
+     ]
+    }
+   },
+   "winners": [
+    5
+   ]
+  },
+  {
+   "seed": "3786288cd18fe8f56d7015d3a1547d71038c394fd3c91a512a15c5f1985bf182",
+   "commit": "1d155d919aa316381805711b7b215cae9a64ebcd3d66131f0a1213cfe556415f",
+   "players": 4,
+   "order": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "dealt": [
+    "TH",
+    "4D",
+    "TD",
+    "QH",
+    "6C",
+    "KS",
+    "9C",
+    "QD",
+    "2D",
+    "AC",
+    "3D",
+    "JC",
+    "AD",
+    "QS",
+    "7D",
+    "QC"
+   ],
+   "holes": {
+    "2": [
+     "TH",
+     "6C"
+    ],
+    "3": [
+     "4D",
+     "KS"
+    ],
+    "4": [
+     "TD",
+     "9C"
+    ],
+    "5": [
+     "QH",
+     "QD"
+    ]
+   },
+   "burns": [
+    "2D",
+    "AD",
+    "7D"
+   ],
+   "board": [
+    "AC",
+    "3D",
+    "JC",
+    "QS",
+    "QC"
+   ],
+   "hands": {
+    "2": {
+     "category": "pair",
+     "score": 1887930,
+     "best": [
+      "QS",
+      "QC",
+      "AC",
+      "JC",
+      "TH"
+     ]
+    },
+    "3": {
+     "category": "pair",
+     "score": 1887963,
+     "best": [
+      "QS",
+      "QC",
+      "AC",
+      "KS",
+      "JC"
+     ]
+    },
+    "4": {
+     "category": "pair",
+     "score": 1887930,
+     "best": [
+      "QS",
+      "QC",
+      "AC",
+      "JC",
+      "TD"
+     ]
+    },
+    "5": {
+     "category": "quads",
+     "score": 8178894,
+     "best": [
+      "QS",
+      "QH",
+      "QD",
+      "QC",
+      "AC"
+     ]
+    }
+   },
+   "winners": [
+    5
+   ]
+  },
+  {
+   "seed": "b50758414b90142f81b273cc4bfa97aa2487e3abef978ec11c00eec8cbe2c7cb",
+   "commit": "bf3079f8c23d33f3e6a574425a6a99e04de0e71d247fdfe067de670e17d536b0",
+   "players": 5,
+   "order": [
+    5,
+    0,
+    1,
+    2,
+    3
+   ],
+   "dealt": [
+    "9C",
+    "AD",
+    "QC",
+    "AC",
+    "KC",
+    "3S",
+    "JS",
+    "8S",
+    "5C",
+    "KD",
+    "QD",
+    "TS",
+    "4H",
+    "KS",
+    "9D",
+    "7H",
+    "8C",
+    "2D"
+   ],
+   "holes": {
+    "0": [
+     "AD",
+     "JS"
+    ],
+    "1": [
+     "QC",
+     "8S"
+    ],
+    "2": [
+     "AC",
+     "5C"
+    ],
+    "3": [
+     "KC",
+     "KD"
+    ],
+    "5": [
+     "9C",
+     "3S"
+    ]
+   },
+   "burns": [
+    "QD",
+    "9D",
+    "8C"
+   ],
+   "board": [
+    "TS",
+    "4H",
+    "KS",
+    "7H",
+    "2D"
+   ],
+   "hands": {
+    "0": {
+     "category": "highCard",
+     "score": 973735,
+     "best": [
+      "AD",
+      "KS",
+      "JS",
+      "TS",
+      "7H"
+     ]
+    },
+    "1": {
+     "category": "highCard",
+     "score": 903815,
+     "best": [
+      "KS",
+      "QC",
+      "TS",
+      "8S",
+      "7H"
+     ]
+    },
+    "2": {
+     "category": "highCard",
+     "score": 973429,
+     "best": [
+      "AC",
+      "KS",
+      "TS",
+      "7H",
+      "5C"
+     ]
+    },
+    "3": {
+     "category": "trips",
+     "score": 4054439,
+     "best": [
+      "KS",
+      "KD",
+      "KC",
+      "TS",
+      "7H"
+     ]
+    },
+    "5": {
+     "category": "highCard",
+     "score": 895348,
+     "best": [
+      "KS",
+      "TS",
+      "9C",
+      "7H",
+      "4H"
+     ]
+    }
+   },
+   "winners": [
+    3
+   ]
+  },
+  {
+   "seed": "e739b69b69f481900708cfbbed4f89db7983d3cb39577baa4936cb150b69a240",
+   "commit": "07acb733d0e30d884c5b4d615e87700d1ae3e9ee73b432680e4cd2c6a253b4eb",
+   "players": 6,
+   "order": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    0
+   ],
+   "dealt": [
+    "KS",
+    "KH",
+    "4C",
+    "JH",
+    "TS",
+    "9C",
+    "5D",
+    "JC",
+    "4D",
+    "6C",
+    "4H",
+    "7D",
+    "AD",
+    "TC",
+    "2D",
+    "QD",
+    "7S",
+    "9S",
+    "6S",
+    "QC"
+   ],
+   "holes": {
+    "0": [
+     "9C",
+     "7D"
+    ],
+    "1": [
+     "KS",
+     "5D"
+    ],
+    "2": [
+     "KH",
+     "JC"
+    ],
+    "3": [
+     "4C",
+     "4D"
+    ],
+    "4": [
+     "JH",
+     "6C"
+    ],
+    "5": [
+     "TS",
+     "4H"
+    ]
+   },
+   "burns": [
+    "AD",
+    "7S",
+    "6S"
+   ],
+   "board": [
+    "TC",
+    "2D",
+    "QD",
+    "9S",
+    "QC"
+   ],
+   "hands": {
+    "0": {
+     "category": "twoPair",
+     "score": 2935194,
+     "best": [
+      "QD",
+      "QC",
+      "9S",
+      "9C",
+      "TC"
+     ]
+    },
+    "1": {
+     "category": "pair",
+     "score": 1887657,
+     "best": [
+      "QD",
+      "QC",
+      "KS",
+      "TC",
+      "9S"
+     ]
+    },
+    "2": {
+     "category": "straight",
+     "score": 5098409,
+     "best": [
+      "KH",
+      "QD",
+      "JC",
+      "TC",
+      "9S"
+     ]
+    },
+    "3": {
+     "category": "twoPair",
+     "score": 2933834,
+     "best": [
+      "QD",
+      "QC",
+      "4D",
+      "4C",
+      "TC"
+     ]
+    },
+    "4": {
+     "category": "pair",
+     "score": 1887145,
+     "best": [
+      "QD",
+      "QC",
+      "JH",
+      "TC",
+      "9S"
+     ]
+    },
+    "5": {
+     "category": "twoPair",
+     "score": 2935465,
+     "best": [
+      "QD",
+      "QC",
+      "TS",
+      "TC",
+      "9S"
+     ]
+    }
+   },
+   "winners": [
+    2
+   ]
+  }
+ ],
+ "hands": [
+  {
+   "cards": [
+    "AS",
+    "KS",
+    "QS",
+    "JS",
+    "TS",
+    "2H",
+    "3D"
+   ],
+   "category": "straightFlush",
+   "score": 9362618,
+   "best": [
+    "AS",
+    "KS",
+    "QS",
+    "JS",
+    "TS"
+   ]
+  },
+  {
+   "cards": [
+    "5H",
+    "4H",
+    "3H",
+    "2H",
+    "AH",
+    "KD",
+    "KC"
+   ],
+   "category": "straightFlush",
+   "score": 8733473,
+   "best": [
+    "5H",
+    "4H",
+    "3H",
+    "2H",
+    "AH"
+   ]
+  },
+  {
+   "cards": [
+    "9C",
+    "9D",
+    "9H",
+    "9S",
+    "KD",
+    "KC",
+    "2S"
+   ],
+   "category": "quads",
+   "score": 7969181,
+   "best": [
+    "9S",
+    "9H",
+    "9D",
+    "9C",
+    "KD"
+   ]
+  },
+  {
+   "cards": [
+    "QS",
+    "QH",
+    "QD",
+    "7C",
+    "7D",
+    "7S",
+    "2C"
+   ],
+   "category": "fullHouse",
+   "score": 7130231,
+   "best": [
+    "QS",
+    "QH",
+    "QD",
+    "7S",
+    "7D"
+   ]
+  },
+  {
+   "cards": [
+    "AS",
+    "AH",
+    "KD",
+    "KC",
+    "QS",
+    "QH",
+    "JD"
+   ],
+   "category": "twoPair",
+   "score": 3075548,
+   "best": [
+    "AS",
+    "AH",
+    "KD",
+    "KC",
+    "QS"
+   ]
+  },
+  {
+   "cards": [
+    "AS",
+    "2D",
+    "3C",
+    "4H",
+    "5S",
+    "9D",
+    "KC"
+   ],
+   "category": "straight",
+   "score": 4539169,
+   "best": [
+    "5S",
+    "4H",
+    "3C",
+    "2D",
+    "AS"
+   ]
+  },
+  {
+   "cards": [
+    "AS",
+    "KD",
+    "QC",
+    "JH",
+    "TS",
+    "9D",
+    "8C"
+   ],
+   "category": "straight",
+   "score": 5168314,
+   "best": [
+    "AS",
+    "KD",
+    "QC",
+    "JH",
+    "TS"
+   ]
+  },
+  {
+   "cards": [
+    "2S",
+    "7S",
+    "9S",
+    "JS",
+    "KS",
+    "AS",
+    "3H"
+   ],
+   "category": "flush",
+   "score": 6216599,
+   "best": [
+    "AS",
+    "KS",
+    "JS",
+    "9S",
+    "7S"
+   ]
+  },
+  {
+   "cards": [
+    "8D",
+    "8C",
+    "4S",
+    "4H",
+    "2D",
+    "2C",
+    "AS"
+   ],
+   "category": "twoPair",
+   "score": 2655310,
+   "best": [
+    "8D",
+    "8C",
+    "4S",
+    "4H",
+    "AS"
+   ]
+  },
+  {
+   "cards": [
+    "TS",
+    "TH",
+    "3D",
+    "6C",
+    "8S",
+    "QD",
+    "KH"
+   ],
+   "category": "pair",
+   "score": 1748424,
+   "best": [
+    "TS",
+    "TH",
+    "KH",
+    "QD",
+    "8S"
+   ]
+  },
+  {
+   "cards": [
+    "2C",
+    "4D",
+    "6H",
+    "8S",
+    "TC",
+    "QD",
+    "AH"
+   ],
+   "category": "highCard",
+   "score": 969350,
+   "best": [
+    "AH",
+    "QD",
+    "TC",
+    "8S",
+    "6H"
+   ]
+  },
+  {
+   "cards": [
+    "QH",
+    "2S",
+    "4C",
+    "7S",
+    "KS"
+   ],
+   "category": "highCard",
+   "score": 902978,
+   "best": [
+    "KS",
+    "QH",
+    "7S",
+    "4C",
+    "2S"
+   ]
+  },
+  {
+   "cards": [
+    "3C",
+    "2D",
+    "AC",
+    "7S",
+    "8C",
+    "3S"
+   ],
+   "category": "pair",
+   "score": 1261191,
+   "best": [
+    "3S",
+    "3C",
+    "AC",
+    "8C",
+    "7S"
+   ]
+  },
+  {
+   "cards": [
+    "KH",
+    "6D",
+    "AH",
+    "8S",
+    "5H",
+    "3S",
+    "TS"
+   ],
+   "category": "highCard",
+   "score": 973446,
+   "best": [
+    "AH",
+    "KH",
+    "TS",
+    "8S",
+    "6D"
+   ]
+  },
+  {
+   "cards": [
+    "TD",
+    "KD",
+    "6S",
+    "4C",
+    "6D"
+   ],
+   "category": "pair",
+   "score": 1469860,
+   "best": [
+    "6S",
+    "6D",
+    "KD",
+    "TD",
+    "4C"
+   ]
+  },
+  {
+   "cards": [
+    "JD",
+    "9H",
+    "QH",
+    "KD",
+    "9C",
+    "8D"
+   ],
+   "category": "pair",
+   "score": 1678795,
+   "best": [
+    "9H",
+    "9C",
+    "KD",
+    "QH",
+    "JD"
+   ]
+  },
+  {
+   "cards": [
+    "JD",
+    "JS",
+    "9H",
+    "2S",
+    "3D",
+    "7H",
+    "9S"
+   ],
+   "category": "twoPair",
+   "score": 2865559,
+   "best": [
+    "JS",
+    "JD",
+    "9S",
+    "9H",
+    "7H"
+   ]
+  },
+  {
+   "cards": [
+    "JC",
+    "QC",
+    "9H",
+    "5C",
+    "5H"
+   ],
+   "category": "pair",
+   "score": 1399993,
+   "best": [
+    "5H",
+    "5C",
+    "QC",
+    "JC",
+    "9H"
+   ]
+  },
+  {
+   "cards": [
+    "9S",
+    "TD",
+    "9C",
+    "9H",
+    "7C",
+    "5D"
+   ],
+   "category": "trips",
+   "score": 3774887,
+   "best": [
+    "9S",
+    "9H",
+    "9C",
+    "TD",
+    "7C"
+   ]
+  },
+  {
+   "cards": [
+    "7C",
+    "5S",
+    "9H",
+    "4H",
+    "TD",
+    "2D",
+    "AD"
+   ],
+   "category": "highCard",
+   "score": 960885,
+   "best": [
+    "AD",
+    "TD",
+    "9H",
+    "7C",
+    "5S"
+   ]
+  },
+  {
+   "cards": [
+    "QS",
+    "KS",
+    "6D",
+    "TC",
+    "4H"
+   ],
+   "category": "highCard",
+   "score": 903780,
+   "best": [
+    "KS",
+    "QS",
+    "TC",
+    "6D",
+    "4H"
+   ]
+  },
+  {
+   "cards": [
+    "2S",
+    "9D",
+    "TC",
+    "8C",
+    "4D",
+    "QC"
+   ],
+   "category": "highCard",
+   "score": 829828,
+   "best": [
+    "QC",
+    "TC",
+    "9D",
+    "8C",
+    "4D"
+   ]
+  },
+  {
+   "cards": [
+    "6S",
+    "QH",
+    "4C",
+    "8S",
+    "5H",
+    "QS",
+    "9D"
+   ],
+   "category": "pair",
+   "score": 1886598,
+   "best": [
+    "QS",
+    "QH",
+    "9D",
+    "8S",
+    "6S"
+   ]
+  },
+  {
+   "cards": [
+    "4D",
+    "4S",
+    "9H",
+    "3C",
+    "QS"
+   ],
+   "category": "pair",
+   "score": 1330323,
+   "best": [
+    "4S",
+    "4D",
+    "QS",
+    "9H",
+    "3C"
+   ]
+  },
+  {
+   "cards": [
+    "9D",
+    "2D",
+    "QS",
+    "8D",
+    "KS",
+    "QC"
+   ],
+   "category": "pair",
+   "score": 1887640,
+   "best": [
+    "QS",
+    "QC",
+    "KS",
+    "9D",
+    "8D"
+   ]
+  },
+  {
+   "cards": [
+    "QS",
+    "8H",
+    "KC",
+    "TH",
+    "5S",
+    "3H",
+    "7S"
+   ],
+   "category": "highCard",
+   "score": 903815,
+   "best": [
+    "KC",
+    "QS",
+    "TH",
+    "8H",
+    "7S"
+   ]
+  },
+  {
+   "cards": [
+    "JC",
+    "4D",
+    "9C",
+    "KH",
+    "QH"
+   ],
+   "category": "highCard",
+   "score": 904084,
+   "best": [
+    "KH",
+    "QH",
+    "JC",
+    "9C",
+    "4D"
+   ]
+  },
+  {
+   "cards": [
+    "QH",
+    "KD",
+    "3C",
+    "2C",
+    "8C",
+    "KS"
+   ],
+   "category": "pair",
+   "score": 1956995,
+   "best": [
+    "KS",
+    "KD",
+    "QH",
+    "8C",
+    "3C"
+   ]
+  },
+  {
+   "cards": [
+    "9H",
+    "AS",
+    "7C",
+    "TS",
+    "6H",
+    "4C",
+    "5S"
+   ],
+   "category": "highCard",
+   "score": 960886,
+   "best": [
+    "AS",
+    "TS",
+    "9H",
+    "7C",
+    "6H"
+   ]
+  },
+  {
+   "cards": [
+    "6S",
+    "QS",
+    "TD",
+    "JC",
+    "TC"
+   ],
+   "category": "pair",
+   "score": 1748150,
+   "best": [
+    "TD",
+    "TC",
+    "QS",
+    "JC",
+    "6S"
+   ]
+  },
+  {
+   "cards": [
+    "TS",
+    "4C",
+    "9H",
+    "KD",
+    "8D",
+    "5D"
+   ],
+   "category": "highCard",
+   "score": 895365,
+   "best": [
+    "KD",
+    "TS",
+    "9H",
+    "8D",
+    "5D"
+   ]
+  },
+  {
+   "cards": [
+    "4C",
+    "3H",
+    "QC",
+    "6H",
+    "3S",
+    "4H",
+    "5C"
+   ],
+   "category": "twoPair",
+   "score": 2376508,
+   "best": [
+    "4H",
+    "4C",
+    "3S",
+    "3H",
+    "QC"
+   ]
+  },
+  {
+   "cards": [
+    "TD",
+    "6H",
+    "6S",
+    "KH",
+    "QC"
+   ],
+   "category": "pair",
+   "score": 1469898,
+   "best": [
+    "6S",
+    "6H",
+    "KH",
+    "QC",
+    "TD"
+   ]
+  },
+  {
+   "cards": [
+    "TS",
+    "6D",
+    "KH",
+    "5H",
+    "KC",
+    "9D"
+   ],
+   "category": "pair",
+   "score": 1956502,
+   "best": [
+    "KH",
+    "KC",
+    "TS",
+    "9D",
+    "6D"
+   ]
+  },
+  {
+   "cards": [
+    "2S",
+    "6S",
+    "4S",
+    "3H",
+    "JC",
+    "KS",
+    "6D"
+   ],
+   "category": "pair",
+   "score": 1469876,
+   "best": [
+    "6S",
+    "6D",
+    "KS",
+    "JC",
+    "4S"
+   ]
+  },
+  {
+   "cards": [
+    "2D",
+    "9S",
+    "JS",
+    "3H",
+    "5S"
+   ],
+   "category": "highCard",
+   "score": 759090,
+   "best": [
+    "JS",
+    "9S",
+    "5S",
+    "3H",
+    "2D"
+   ]
+  },
+  {
+   "cards": [
+    "4S",
+    "6S",
+    "5S",
+    "9S",
+    "JC",
+    "KC"
+   ],
+   "category": "highCard",
+   "score": 899429,
+   "best": [
+    "KC",
+    "JC",
+    "9S",
+    "6S",
+    "5S"
+   ]
+  },
+  {
+   "cards": [
+    "JS",
+    "2S",
+    "QC",
+    "TH",
+    "TS",
+    "4S",
+    "5C"
+   ],
+   "category": "pair",
+   "score": 1748149,
+   "best": [
+    "TS",
+    "TH",
+    "QC",
+    "JS",
+    "5C"
+   ]
+  },
+  {
+   "cards": [
+    "2S",
+    "TH",
+    "JH",
+    "7C",
+    "7H"
+   ],
+   "category": "pair",
+   "score": 1538978,
+   "best": [
+    "7H",
+    "7C",
+    "JH",
+    "TH",
+    "2S"
+   ]
+  },
+  {
+   "cards": [
+    "5D",
+    "7H",
+    "QC",
+    "JH",
+    "9D",
+    "8H"
+   ],
+   "category": "highCard",
+   "score": 833927,
+   "best": [
+    "QC",
+    "JH",
+    "9D",
+    "8H",
+    "7H"
+   ]
+  },
+  {
+   "cards": [
+    "5D",
+    "TC",
+    "2H",
+    "2D",
+    "QC",
+    "3D",
+    "4H"
+   ],
+   "category": "pair",
+   "score": 1191077,
+   "best": [
+    "2H",
+    "2D",
+    "QC",
+    "TC",
+    "5D"
+   ]
+  },
+  {
+   "cards": [
+    "6C",
+    "7C",
+    "QD",
+    "9D",
+    "4D"
+   ],
+   "category": "highCard",
+   "score": 825188,
+   "best": [
+    "QD",
+    "9D",
+    "7C",
+    "6C",
+    "4D"
+   ]
+  },
+  {
+   "cards": [
+    "6D",
+    "JS",
+    "AS",
+    "AH",
+    "AC",
+    "5D"
+   ],
+   "category": "trips",
+   "score": 4124342,
+   "best": [
+    "AS",
+    "AH",
+    "AC",
+    "JS",
+    "6D"
+   ]
+  },
+  {
+   "cards": [
+    "3C",
+    "9S",
+    "TC",
+    "QC",
+    "9H",
+    "3D",
+    "4S"
+   ],
+   "category": "twoPair",
+   "score": 2724668,
+   "best": [
+    "9S",
+    "9H",
+    "3D",
+    "3C",
+    "QC"
+   ]
+  },
+  {
+   "cards": [
+    "KH",
+    "KC",
+    "6S",
+    "TD",
+    "2D"
+   ],
+   "category": "pair",
+   "score": 1956450,
+   "best": [
+    "KH",
+    "KC",
+    "TD",
+    "6S",
+    "2D"
+   ]
+  },
+  {
+   "cards": [
+    "KC",
+    "8S",
+    "3C",
+    "7C",
+    "6C",
+    "JH"
+   ],
+   "category": "highCard",
+   "score": 899190,
+   "best": [
+    "KC",
+    "JH",
+    "8S",
+    "7C",
+    "6C"
+   ]
+  },
+  {
+   "cards": [
+    "8C",
+    "2H",
+    "AC",
+    "TC",
+    "9C",
+    "6D",
+    "3H"
+   ],
+   "category": "highCard",
+   "score": 960902,
+   "best": [
+    "AC",
+    "TC",
+    "9C",
+    "8C",
+    "6D"
+   ]
+  },
+  {
+   "cards": [
+    "4D",
+    "AD",
+    "5H",
+    "AH",
+    "9C"
+   ],
+   "category": "pair",
+   "score": 2025812,
+   "best": [
+    "AH",
+    "AD",
+    "9C",
+    "5H",
+    "4D"
+   ]
+  },
+  {
+   "cards": [
+    "7H",
+    "5S",
+    "3H",
+    "KC",
+    "4C",
+    "7C"
+   ],
+   "category": "pair",
+   "score": 1539412,
+   "best": [
+    "7H",
+    "7C",
+    "KC",
+    "5S",
+    "4C"
+   ]
+  },
+  {
+   "cards": [
+    "QD",
+    "9S",
+    "8C",
+    "TD",
+    "6S",
+    "2C",
+    "3C"
+   ],
+   "category": "highCard",
+   "score": 829830,
+   "best": [
+    "QD",
+    "TD",
+    "9S",
+    "8C",
+    "6S"
+   ]
+  },
+  {
+   "cards": [
+    "9H",
+    "8C",
+    "AS",
+    "8H",
+    "8D"
+   ],
+   "category": "trips",
+   "score": 3705065,
+   "best": [
+    "8H",
+    "8D",
+    "8C",
+    "AS",
+    "9H"
+   ]
+  }
+ ]
+}

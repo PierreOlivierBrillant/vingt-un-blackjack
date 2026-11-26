@@ -1963,15 +1963,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get holdemRulesSummary =>
-      'Texas hold\'em No-Limit entre joueurs : ni commission ni pouvoir. Blinds par palier 1/2, 5/10, 25/50 \$ ; cave de 40 à 100 grosses blinds, débitée en vous asseyant, recréditée en partant (après la main si vous y êtes).';
+      'Texas hold\'em No-Limit entre joueurs, 6 places : ni commission ni pouvoir, tout le pot revient aux gagnants. Les tapis des bots appartiennent à la maison.';
 
   @override
-  String get holdemRulesRound =>
-      'Bouton tournant, règles du tête-à-tête, nouvel arrivant qui attend la grosse blind, relance minimale = dernière relance, un tapis incomplet ne rouvre pas les enchères, pots annexes, abattage automatique (meilleures 5 cartes sur 7). 20 s par décision ; deux expirations de suite → pause ; trois mains en pause → tapis recrédité et place libérée.';
+  String get holdemRulesBlinds =>
+      'Blinds par palier : 1/2 \$, 5/10 \$ ou 25/50 \$ (unité : 1 \$). Cave de 40 à 100 grosses blinds, débitée en vous asseyant ; recave entre deux mains, jusqu\'à 100 grosses blinds. Votre tapis vous est recrédité quand vous partez — à la fin de la main si vous y êtes.';
+
+  @override
+  String get holdemRulesButton =>
+      'Le bouton tourne d\'une place à chaque main (grosse blind mobile). En tête-à-tête, le bouton paie la petite blind, parle en premier avant le flop et en dernier ensuite. Un nouvel arrivant attend que la grosse blind arrive à sa place pour entrer dans le jeu.';
+
+  @override
+  String get holdemRulesBetting =>
+      'No-Limit : mise minimale d\'une grosse blind ; une relance doit être au moins égale à la dernière mise ou relance complète du tour. Le curseur indique le montant total « à » (relancer à 60 \$).';
+
+  @override
+  String get holdemRulesAllIn =>
+      'Tapis possible à tout moment, même pour moins que la relance minimale. Un tapis incomplet ne rouvre pas les enchères : ceux qui ont déjà parlé peuvent seulement suivre ou se coucher.';
+
+  @override
+  String get holdemRulesPots =>
+      'Quand un joueur à tapis ne peut pas couvrir une mise, un pot annexe se forme : il ne peut gagner que les pots auxquels il a contribué. La part d\'une mise que personne n\'a suivie revient à son auteur.';
+
+  @override
+  String get holdemRulesShowdown =>
+      'Abattage automatique : la meilleure main de 5 cartes parmi vos 2 cartes et les 5 du tableau. Un pot partagé se divise en dollars entiers, le dollar impair allant au premier gagnant après le bouton. Si tout le monde se couche, le dernier joueur prend le pot sans montrer ses cartes.';
+
+  @override
+  String get holdemRulesTimeouts =>
+      '20 s par décision : à l\'expiration, parole si c\'est possible, sinon la main est couchée. Deux expirations de suite vous mettent en pause ; en pause (ou sans jetons), au bout de 3 mains votre tapis est recrédité et votre place libérée.';
+
+  @override
+  String get holdemRulesMarkets =>
+      'Marchés spectateurs de chaque main : « Un As au tableau ? » et « 3 cartes ou plus d\'une même couleur au tableau ? ». Ils ferment au flop et se règlent sur le tableau prévu dès la donne, même si tout le monde se couche avant.';
 
   @override
   String get holdemRulesFairness =>
-      'Choix assumé : la graine révélée après la main rend les cartes couchées vérifiables, donc visibles par tous.';
+      'Choix assumé : le paquet est fixé dès la donne par la graine engagée (empreinte SHA-256 publiée avant). La graine révélée après la main rend toutes les cartes vérifiables — y compris celles des joueurs couchés, qui sont donc visibles par tous (bouton « Dernière main »).';
 
   @override
   String get holdemSeats => '6 places.';
@@ -1986,6 +2014,387 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get holdemBuyInSit => 'S\'asseoir';
+
+  @override
+  String get holdemRebuy => 'Recaver';
+
+  @override
+  String get holdemRebuyTitle => 'Recave';
+
+  @override
+  String holdemRebuyBody(String max) {
+    return 'Jusqu\'à $max de plus (tapis plafonné à 100 grosses blinds), débités de votre portefeuille.';
+  }
+
+  @override
+  String holdemRebuyConfirm(String amount) {
+    return 'Recaver $amount';
+  }
+
+  @override
+  String get holdemFold => 'Se coucher';
+
+  @override
+  String get holdemCheck => 'Parole';
+
+  @override
+  String holdemCall(String amount) {
+    return 'Suivre $amount';
+  }
+
+  @override
+  String holdemBetTo(String amount) {
+    return 'Miser $amount';
+  }
+
+  @override
+  String holdemRaiseTo(String amount) {
+    return 'Relancer à $amount';
+  }
+
+  @override
+  String holdemAllInTo(String amount) {
+    return 'Tapis $amount';
+  }
+
+  @override
+  String get holdemPresetMin => 'Min';
+
+  @override
+  String get holdemPresetHalfPot => '½ pot';
+
+  @override
+  String get holdemPresetPot => 'Pot';
+
+  @override
+  String get holdemPresetAllIn => 'Tapis';
+
+  @override
+  String get holdemSitOut => 'Pause';
+
+  @override
+  String get holdemSitIn => 'Revenir';
+
+  @override
+  String get holdemBadgeSb => 'PB';
+
+  @override
+  String get holdemBadgeBb => 'GB';
+
+  @override
+  String get holdemBadgeFold => 'Couché';
+
+  @override
+  String get holdemBadgeCheck => 'Parole';
+
+  @override
+  String get holdemBadgeCall => 'Suit';
+
+  @override
+  String get holdemBadgeBet => 'Mise';
+
+  @override
+  String get holdemBadgeRaise => 'Relance';
+
+  @override
+  String get holdemBadgeAllIn => 'Tapis';
+
+  @override
+  String get holdemBadgeWaitBB => 'Attend la GB';
+
+  @override
+  String get holdemBadgePaused => 'Pause';
+
+  @override
+  String get holdemBadgeLeaving => 'Part';
+
+  @override
+  String get holdemStreetPreflop => 'Préflop';
+
+  @override
+  String get holdemStreetFlop => 'Flop';
+
+  @override
+  String get holdemStreetTurn => 'Turn';
+
+  @override
+  String get holdemStreetRiver => 'River';
+
+  @override
+  String get holdemStreetShowdown => 'Fin de main';
+
+  @override
+  String holdemStatusStreet(String street, String status) {
+    return '$street · $status';
+  }
+
+  @override
+  String get holdemWaitingChips =>
+      'En attente d\'un deuxième joueur avec des jetons (recave possible)';
+
+  @override
+  String get holdemWaitingPlayers => 'En attente d\'un deuxième joueur';
+
+  @override
+  String get holdemYouWaitBB =>
+      'Vous entrerez dans le jeu quand la grosse blind arrivera à votre place.';
+
+  @override
+  String get holdemYouPaused =>
+      'Vous êtes en pause : pas de cartes pour vous (au bout de 3 mains, tapis recrédité et place libérée).';
+
+  @override
+  String get holdemYouFolded => 'Main couchée : attendez la suivante.';
+
+  @override
+  String get holdemYouAllIn => 'Tapis ! Plus aucune décision à prendre.';
+
+  @override
+  String holdemWaitTurn(String name) {
+    return 'Au tour de $name…';
+  }
+
+  @override
+  String get holdemNextHand => 'La prochaine main arrive.';
+
+  @override
+  String get holdemNoChips => 'Plus de jetons : recavez pour rejouer.';
+
+  @override
+  String holdemToCall(String amount) {
+    return 'À suivre : $amount';
+  }
+
+  @override
+  String holdemMyHand(String hand) {
+    return 'Votre main : $hand';
+  }
+
+  @override
+  String holdemPot(String amount) {
+    return 'Pot $amount';
+  }
+
+  @override
+  String holdemMainPot(String amount) {
+    return 'Pot principal $amount';
+  }
+
+  @override
+  String holdemSidePot(int n, String amount) {
+    return 'Pot annexe $n : $amount';
+  }
+
+  @override
+  String holdemSummary(String pot, String hand) {
+    return 'Pot $pot · $hand';
+  }
+
+  @override
+  String holdemSummaryNoShowdown(String pot) {
+    return 'Pot $pot · sans abattage';
+  }
+
+  @override
+  String get holdemStatPots => 'Pots gagnés';
+
+  @override
+  String get holdemStatShowdowns => 'Abattages gagnés';
+
+  @override
+  String get holdemStatAllIns => 'Tapis';
+
+  @override
+  String get holdemStatBestHand => 'Meilleure main';
+
+  @override
+  String get holdemCatHighCard => 'Hauteur';
+
+  @override
+  String get holdemCatPair => 'Paire';
+
+  @override
+  String get holdemCatTwoPair => 'Deux paires';
+
+  @override
+  String get holdemCatTrips => 'Brelan';
+
+  @override
+  String get holdemCatStraight => 'Quinte';
+
+  @override
+  String get holdemCatFlush => 'Couleur';
+
+  @override
+  String get holdemCatFullHouse => 'Full';
+
+  @override
+  String get holdemCatQuads => 'Carré';
+
+  @override
+  String get holdemCatStraightFlush => 'Quinte flush';
+
+  @override
+  String holdemOfRank(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'd\'as',
+      'king': 'de rois',
+      'queen': 'de dames',
+      'jack': 'de valets',
+      'ten': 'de 10',
+      'nine': 'de 9',
+      'eight': 'de 8',
+      'seven': 'de 7',
+      'six': 'de 6',
+      'five': 'de 5',
+      'four': 'de 4',
+      'three': 'de 3',
+      'other': 'de 2',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemToRank(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'à l\'as',
+      'king': 'au roi',
+      'queen': 'à la dame',
+      'jack': 'au valet',
+      'ten': 'au 10',
+      'nine': 'au 9',
+      'eight': 'au 8',
+      'seven': 'au 7',
+      'six': 'au 6',
+      'five': 'au 5',
+      'four': 'au 4',
+      'three': 'au 3',
+      'other': 'au 2',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemRankName(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'as',
+      'king': 'roi',
+      'queen': 'dame',
+      'jack': 'valet',
+      'ten': '10',
+      'nine': '9',
+      'eight': '8',
+      'seven': '7',
+      'six': '6',
+      'five': '5',
+      'four': '4',
+      'three': '3',
+      'other': '2',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemRankPlural(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'as',
+      'king': 'rois',
+      'queen': 'dames',
+      'jack': 'valets',
+      'ten': '10',
+      'nine': '9',
+      'eight': '8',
+      'seven': '7',
+      'six': '6',
+      'five': '5',
+      'four': '4',
+      'three': '3',
+      'other': '2',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemHandHighCard(String name) {
+    return 'Hauteur $name';
+  }
+
+  @override
+  String holdemHandPair(String of) {
+    return 'Paire $of';
+  }
+
+  @override
+  String holdemHandTwoPair(String high, String low) {
+    return 'Deux paires, $high et $low';
+  }
+
+  @override
+  String holdemHandTrips(String of) {
+    return 'Brelan $of';
+  }
+
+  @override
+  String holdemHandStraight(String to) {
+    return 'Quinte $to';
+  }
+
+  @override
+  String holdemHandFlush(String to) {
+    return 'Couleur $to';
+  }
+
+  @override
+  String holdemHandFullHouse(String trips, String pair) {
+    return 'Full aux $trips par les $pair';
+  }
+
+  @override
+  String holdemHandQuads(String of) {
+    return 'Carré $of';
+  }
+
+  @override
+  String holdemHandStraightFlush(String to) {
+    return 'Quinte flush $to';
+  }
+
+  @override
+  String get holdemHandRoyalFlush => 'Quinte flush royale';
+
+  @override
+  String get holdemLastHand => 'Dernière main';
+
+  @override
+  String get holdemLastHandBody =>
+      'La graine révélée après la main permet de recalculer toutes les cartes, y compris celles des joueurs couchés : elles sont donc visibles ici.';
+
+  @override
+  String get holdemLastHandNone => 'Aucune main terminée pour l\'instant.';
+
+  @override
+  String holdemLastHandRound(int n) {
+    return 'Main n° $n';
+  }
+
+  @override
+  String get holdemLastHandVerified =>
+      'Donne vérifiée : graine, ordre des cartes, mains et gagnants.';
+
+  @override
+  String get holdemLastHandFailed => 'Vérification échouée !';
+
+  @override
+  String get holdemLastHandBoard => 'Tableau';
+
+  @override
+  String get holdemLastHandFolded => 'couché';
+
+  @override
+  String get holdemLastHandWinner => 'gagne';
+
+  @override
+  String get holdemLastHandIfDealt => 'si la main était allée au bout';
 
   @override
   String get crapsRulesSummary =>

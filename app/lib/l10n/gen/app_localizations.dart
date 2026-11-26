@@ -3455,19 +3455,61 @@ abstract class AppLocalizations {
   /// No description provided for @holdemRulesSummary.
   ///
   /// In fr, this message translates to:
-  /// **'Texas hold\'em No-Limit entre joueurs : ni commission ni pouvoir. Blinds par palier 1/2, 5/10, 25/50 \$ ; cave de 40 à 100 grosses blinds, débitée en vous asseyant, recréditée en partant (après la main si vous y êtes).'**
+  /// **'Texas hold\'em No-Limit entre joueurs, 6 places : ni commission ni pouvoir, tout le pot revient aux gagnants. Les tapis des bots appartiennent à la maison.'**
   String get holdemRulesSummary;
 
-  /// No description provided for @holdemRulesRound.
+  /// No description provided for @holdemRulesBlinds.
   ///
   /// In fr, this message translates to:
-  /// **'Bouton tournant, règles du tête-à-tête, nouvel arrivant qui attend la grosse blind, relance minimale = dernière relance, un tapis incomplet ne rouvre pas les enchères, pots annexes, abattage automatique (meilleures 5 cartes sur 7). 20 s par décision ; deux expirations de suite → pause ; trois mains en pause → tapis recrédité et place libérée.'**
-  String get holdemRulesRound;
+  /// **'Blinds par palier : 1/2 \$, 5/10 \$ ou 25/50 \$ (unité : 1 \$). Cave de 40 à 100 grosses blinds, débitée en vous asseyant ; recave entre deux mains, jusqu\'à 100 grosses blinds. Votre tapis vous est recrédité quand vous partez — à la fin de la main si vous y êtes.'**
+  String get holdemRulesBlinds;
+
+  /// No description provided for @holdemRulesButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le bouton tourne d\'une place à chaque main (grosse blind mobile). En tête-à-tête, le bouton paie la petite blind, parle en premier avant le flop et en dernier ensuite. Un nouvel arrivant attend que la grosse blind arrive à sa place pour entrer dans le jeu.'**
+  String get holdemRulesButton;
+
+  /// No description provided for @holdemRulesBetting.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-Limit : mise minimale d\'une grosse blind ; une relance doit être au moins égale à la dernière mise ou relance complète du tour. Le curseur indique le montant total « à » (relancer à 60 \$).'**
+  String get holdemRulesBetting;
+
+  /// No description provided for @holdemRulesAllIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis possible à tout moment, même pour moins que la relance minimale. Un tapis incomplet ne rouvre pas les enchères : ceux qui ont déjà parlé peuvent seulement suivre ou se coucher.'**
+  String get holdemRulesAllIn;
+
+  /// No description provided for @holdemRulesPots.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand un joueur à tapis ne peut pas couvrir une mise, un pot annexe se forme : il ne peut gagner que les pots auxquels il a contribué. La part d\'une mise que personne n\'a suivie revient à son auteur.'**
+  String get holdemRulesPots;
+
+  /// No description provided for @holdemRulesShowdown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abattage automatique : la meilleure main de 5 cartes parmi vos 2 cartes et les 5 du tableau. Un pot partagé se divise en dollars entiers, le dollar impair allant au premier gagnant après le bouton. Si tout le monde se couche, le dernier joueur prend le pot sans montrer ses cartes.'**
+  String get holdemRulesShowdown;
+
+  /// No description provided for @holdemRulesTimeouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'20 s par décision : à l\'expiration, parole si c\'est possible, sinon la main est couchée. Deux expirations de suite vous mettent en pause ; en pause (ou sans jetons), au bout de 3 mains votre tapis est recrédité et votre place libérée.'**
+  String get holdemRulesTimeouts;
+
+  /// No description provided for @holdemRulesMarkets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marchés spectateurs de chaque main : « Un As au tableau ? » et « 3 cartes ou plus d\'une même couleur au tableau ? ». Ils ferment au flop et se règlent sur le tableau prévu dès la donne, même si tout le monde se couche avant.'**
+  String get holdemRulesMarkets;
 
   /// No description provided for @holdemRulesFairness.
   ///
   /// In fr, this message translates to:
-  /// **'Choix assumé : la graine révélée après la main rend les cartes couchées vérifiables, donc visibles par tous.'**
+  /// **'Choix assumé : le paquet est fixé dès la donne par la graine engagée (empreinte SHA-256 publiée avant). La graine révélée après la main rend toutes les cartes vérifiables — y compris celles des joueurs couchés, qui sont donc visibles par tous (bouton « Dernière main »).'**
   String get holdemRulesFairness;
 
   /// No description provided for @holdemSeats.
@@ -3493,6 +3535,522 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'S\'asseoir'**
   String get holdemBuyInSit;
+
+  /// No description provided for @holdemRebuy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recaver'**
+  String get holdemRebuy;
+
+  /// No description provided for @holdemRebuyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recave'**
+  String get holdemRebuyTitle;
+
+  /// No description provided for @holdemRebuyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu\'à {max} de plus (tapis plafonné à 100 grosses blinds), débités de votre portefeuille.'**
+  String holdemRebuyBody(String max);
+
+  /// No description provided for @holdemRebuyConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recaver {amount}'**
+  String holdemRebuyConfirm(String amount);
+
+  /// No description provided for @holdemFold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se coucher'**
+  String get holdemFold;
+
+  /// No description provided for @holdemCheck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parole'**
+  String get holdemCheck;
+
+  /// No description provided for @holdemCall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivre {amount}'**
+  String holdemCall(String amount);
+
+  /// No description provided for @holdemBetTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Miser {amount}'**
+  String holdemBetTo(String amount);
+
+  /// No description provided for @holdemRaiseTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Relancer à {amount}'**
+  String holdemRaiseTo(String amount);
+
+  /// No description provided for @holdemAllInTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis {amount}'**
+  String holdemAllInTo(String amount);
+
+  /// No description provided for @holdemPresetMin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Min'**
+  String get holdemPresetMin;
+
+  /// No description provided for @holdemPresetHalfPot.
+  ///
+  /// In fr, this message translates to:
+  /// **'½ pot'**
+  String get holdemPresetHalfPot;
+
+  /// No description provided for @holdemPresetPot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot'**
+  String get holdemPresetPot;
+
+  /// No description provided for @holdemPresetAllIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis'**
+  String get holdemPresetAllIn;
+
+  /// No description provided for @holdemSitOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pause'**
+  String get holdemSitOut;
+
+  /// No description provided for @holdemSitIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenir'**
+  String get holdemSitIn;
+
+  /// No description provided for @holdemBadgeSb.
+  ///
+  /// In fr, this message translates to:
+  /// **'PB'**
+  String get holdemBadgeSb;
+
+  /// No description provided for @holdemBadgeBb.
+  ///
+  /// In fr, this message translates to:
+  /// **'GB'**
+  String get holdemBadgeBb;
+
+  /// No description provided for @holdemBadgeFold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couché'**
+  String get holdemBadgeFold;
+
+  /// No description provided for @holdemBadgeCheck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parole'**
+  String get holdemBadgeCheck;
+
+  /// No description provided for @holdemBadgeCall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suit'**
+  String get holdemBadgeCall;
+
+  /// No description provided for @holdemBadgeBet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise'**
+  String get holdemBadgeBet;
+
+  /// No description provided for @holdemBadgeRaise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Relance'**
+  String get holdemBadgeRaise;
+
+  /// No description provided for @holdemBadgeAllIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis'**
+  String get holdemBadgeAllIn;
+
+  /// No description provided for @holdemBadgeWaitBB.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attend la GB'**
+  String get holdemBadgeWaitBB;
+
+  /// No description provided for @holdemBadgePaused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pause'**
+  String get holdemBadgePaused;
+
+  /// No description provided for @holdemBadgeLeaving.
+  ///
+  /// In fr, this message translates to:
+  /// **'Part'**
+  String get holdemBadgeLeaving;
+
+  /// No description provided for @holdemStreetPreflop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préflop'**
+  String get holdemStreetPreflop;
+
+  /// No description provided for @holdemStreetFlop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Flop'**
+  String get holdemStreetFlop;
+
+  /// No description provided for @holdemStreetTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Turn'**
+  String get holdemStreetTurn;
+
+  /// No description provided for @holdemStreetRiver.
+  ///
+  /// In fr, this message translates to:
+  /// **'River'**
+  String get holdemStreetRiver;
+
+  /// No description provided for @holdemStreetShowdown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin de main'**
+  String get holdemStreetShowdown;
+
+  /// No description provided for @holdemStatusStreet.
+  ///
+  /// In fr, this message translates to:
+  /// **'{street} · {status}'**
+  String holdemStatusStreet(String street, String status);
+
+  /// No description provided for @holdemWaitingChips.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente d\'un deuxième joueur avec des jetons (recave possible)'**
+  String get holdemWaitingChips;
+
+  /// No description provided for @holdemWaitingPlayers.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente d\'un deuxième joueur'**
+  String get holdemWaitingPlayers;
+
+  /// No description provided for @holdemYouWaitBB.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous entrerez dans le jeu quand la grosse blind arrivera à votre place.'**
+  String get holdemYouWaitBB;
+
+  /// No description provided for @holdemYouPaused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes en pause : pas de cartes pour vous (au bout de 3 mains, tapis recrédité et place libérée).'**
+  String get holdemYouPaused;
+
+  /// No description provided for @holdemYouFolded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Main couchée : attendez la suivante.'**
+  String get holdemYouFolded;
+
+  /// No description provided for @holdemYouAllIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis ! Plus aucune décision à prendre.'**
+  String get holdemYouAllIn;
+
+  /// No description provided for @holdemWaitTurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au tour de {name}…'**
+  String holdemWaitTurn(String name);
+
+  /// No description provided for @holdemNextHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'La prochaine main arrive.'**
+  String get holdemNextHand;
+
+  /// No description provided for @holdemNoChips.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus de jetons : recavez pour rejouer.'**
+  String get holdemNoChips;
+
+  /// No description provided for @holdemToCall.
+  ///
+  /// In fr, this message translates to:
+  /// **'À suivre : {amount}'**
+  String holdemToCall(String amount);
+
+  /// No description provided for @holdemMyHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre main : {hand}'**
+  String holdemMyHand(String hand);
+
+  /// No description provided for @holdemPot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot {amount}'**
+  String holdemPot(String amount);
+
+  /// No description provided for @holdemMainPot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot principal {amount}'**
+  String holdemMainPot(String amount);
+
+  /// No description provided for @holdemSidePot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot annexe {n} : {amount}'**
+  String holdemSidePot(int n, String amount);
+
+  /// No description provided for @holdemSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot {pot} · {hand}'**
+  String holdemSummary(String pot, String hand);
+
+  /// No description provided for @holdemSummaryNoShowdown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pot {pot} · sans abattage'**
+  String holdemSummaryNoShowdown(String pot);
+
+  /// No description provided for @holdemStatPots.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pots gagnés'**
+  String get holdemStatPots;
+
+  /// No description provided for @holdemStatShowdowns.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abattages gagnés'**
+  String get holdemStatShowdowns;
+
+  /// No description provided for @holdemStatAllIns.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis'**
+  String get holdemStatAllIns;
+
+  /// No description provided for @holdemStatBestHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Meilleure main'**
+  String get holdemStatBestHand;
+
+  /// No description provided for @holdemCatHighCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hauteur'**
+  String get holdemCatHighCard;
+
+  /// No description provided for @holdemCatPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire'**
+  String get holdemCatPair;
+
+  /// No description provided for @holdemCatTwoPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux paires'**
+  String get holdemCatTwoPair;
+
+  /// No description provided for @holdemCatTrips.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brelan'**
+  String get holdemCatTrips;
+
+  /// No description provided for @holdemCatStraight.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quinte'**
+  String get holdemCatStraight;
+
+  /// No description provided for @holdemCatFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couleur'**
+  String get holdemCatFlush;
+
+  /// No description provided for @holdemCatFullHouse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Full'**
+  String get holdemCatFullHouse;
+
+  /// No description provided for @holdemCatQuads.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carré'**
+  String get holdemCatQuads;
+
+  /// No description provided for @holdemCatStraightFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quinte flush'**
+  String get holdemCatStraightFlush;
+
+  /// No description provided for @holdemOfRank.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rank, select, ace{d\'as} king{de rois} queen{de dames} jack{de valets} ten{de 10} nine{de 9} eight{de 8} seven{de 7} six{de 6} five{de 5} four{de 4} three{de 3} other{de 2}}'**
+  String holdemOfRank(String rank);
+
+  /// No description provided for @holdemToRank.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rank, select, ace{à l\'as} king{au roi} queen{à la dame} jack{au valet} ten{au 10} nine{au 9} eight{au 8} seven{au 7} six{au 6} five{au 5} four{au 4} three{au 3} other{au 2}}'**
+  String holdemToRank(String rank);
+
+  /// No description provided for @holdemRankName.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rank, select, ace{as} king{roi} queen{dame} jack{valet} ten{10} nine{9} eight{8} seven{7} six{6} five{5} four{4} three{3} other{2}}'**
+  String holdemRankName(String rank);
+
+  /// No description provided for @holdemRankPlural.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rank, select, ace{as} king{rois} queen{dames} jack{valets} ten{10} nine{9} eight{8} seven{7} six{6} five{5} four{4} three{3} other{2}}'**
+  String holdemRankPlural(String rank);
+
+  /// No description provided for @holdemHandHighCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hauteur {name}'**
+  String holdemHandHighCard(String name);
+
+  /// No description provided for @holdemHandPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paire {of}'**
+  String holdemHandPair(String of);
+
+  /// No description provided for @holdemHandTwoPair.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux paires, {high} et {low}'**
+  String holdemHandTwoPair(String high, String low);
+
+  /// No description provided for @holdemHandTrips.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brelan {of}'**
+  String holdemHandTrips(String of);
+
+  /// No description provided for @holdemHandStraight.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quinte {to}'**
+  String holdemHandStraight(String to);
+
+  /// No description provided for @holdemHandFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couleur {to}'**
+  String holdemHandFlush(String to);
+
+  /// No description provided for @holdemHandFullHouse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Full aux {trips} par les {pair}'**
+  String holdemHandFullHouse(String trips, String pair);
+
+  /// No description provided for @holdemHandQuads.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carré {of}'**
+  String holdemHandQuads(String of);
+
+  /// No description provided for @holdemHandStraightFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quinte flush {to}'**
+  String holdemHandStraightFlush(String to);
+
+  /// No description provided for @holdemHandRoyalFlush.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quinte flush royale'**
+  String get holdemHandRoyalFlush;
+
+  /// No description provided for @holdemLastHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière main'**
+  String get holdemLastHand;
+
+  /// No description provided for @holdemLastHandBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'La graine révélée après la main permet de recalculer toutes les cartes, y compris celles des joueurs couchés : elles sont donc visibles ici.'**
+  String get holdemLastHandBody;
+
+  /// No description provided for @holdemLastHandNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune main terminée pour l\'instant.'**
+  String get holdemLastHandNone;
+
+  /// No description provided for @holdemLastHandRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Main n° {n}'**
+  String holdemLastHandRound(int n);
+
+  /// No description provided for @holdemLastHandVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donne vérifiée : graine, ordre des cartes, mains et gagnants.'**
+  String get holdemLastHandVerified;
+
+  /// No description provided for @holdemLastHandFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification échouée !'**
+  String get holdemLastHandFailed;
+
+  /// No description provided for @holdemLastHandBoard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau'**
+  String get holdemLastHandBoard;
+
+  /// No description provided for @holdemLastHandFolded.
+  ///
+  /// In fr, this message translates to:
+  /// **'couché'**
+  String get holdemLastHandFolded;
+
+  /// No description provided for @holdemLastHandWinner.
+  ///
+  /// In fr, this message translates to:
+  /// **'gagne'**
+  String get holdemLastHandWinner;
+
+  /// No description provided for @holdemLastHandIfDealt.
+  ///
+  /// In fr, this message translates to:
+  /// **'si la main était allée au bout'**
+  String get holdemLastHandIfDealt;
 
   /// No description provided for @crapsRulesSummary.
   ///

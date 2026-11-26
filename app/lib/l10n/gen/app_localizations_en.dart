@@ -1948,15 +1948,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holdemRulesSummary =>
-      'No-Limit Texas hold\'em between players: no rake, no powers. Blinds per tier 1/2, 5/10, 25/50 \$; buy-in 40 to 100 big blinds, debited when you sit down, credited back when you leave (after the hand if you are in it).';
+      'No-Limit Texas hold\'em between players, 6 seats: no rake, no powers, the whole pot goes to the winners. The bots\' stacks belong to the house.';
 
   @override
-  String get holdemRulesRound =>
-      'Rotating button, heads-up rules, newcomers wait for the big blind, minimum raise = last raise, an incomplete all-in does not reopen the betting, side pots, automatic showdown (best 5 of 7). 20 s per decision; two timeouts in a row → sitting out; three hands sitting out → stack credited back and seat freed.';
+  String get holdemRulesBlinds =>
+      'Blinds per tier: \$1/\$2, \$5/\$10 or \$25/\$50 (unit: \$1). Buy-in 40 to 100 big blinds, debited when you sit down; rebuy between hands, up to 100 big blinds. Your stack is credited back when you leave — at the end of the hand if you are in it.';
+
+  @override
+  String get holdemRulesButton =>
+      'The button moves one seat each hand (moving big blind). Heads-up, the button posts the small blind, acts first before the flop and last after it. A newcomer waits for the big blind to reach their seat before being dealt in.';
+
+  @override
+  String get holdemRulesBetting =>
+      'No-Limit: the minimum bet is one big blind; a raise must be at least the last full bet or raise of the street. The slider shows the total amount \"to\" (raise to \$60).';
+
+  @override
+  String get holdemRulesAllIn =>
+      'You may go all-in at any time, even for less than a minimum raise. An incomplete all-in does not reopen the betting: players who already acted may only call or fold.';
+
+  @override
+  String get holdemRulesPots =>
+      'When an all-in player cannot cover a bet, a side pot is formed: they can only win the pots they put chips in. The part of a bet nobody called goes back to its owner.';
+
+  @override
+  String get holdemRulesShowdown =>
+      'Automatic showdown: the best 5-card hand from your 2 cards and the 5 board cards. A split pot is divided in whole dollars, the odd dollar going to the first winner after the button. If everyone folds, the last player takes the pot without showing.';
+
+  @override
+  String get holdemRulesTimeouts =>
+      '20 s per decision: on timeout you check if possible, otherwise your hand is folded. Two timeouts in a row put you away; away (or out of chips) for 3 hands, your stack is credited back and your seat freed.';
+
+  @override
+  String get holdemRulesMarkets =>
+      'Spectator markets on each hand: \"An ace on the board?\" and \"3 or more cards of one suit on the board?\". They close at the flop and settle on the board fixed at the deal, even if everyone folds before.';
 
   @override
   String get holdemRulesFairness =>
-      'Deliberate choice: the seed revealed after the hand makes folded cards verifiable, hence visible to everyone.';
+      'Deliberate choice: the deck is fixed at the deal by the committed seed (its SHA-256 is published beforehand). The seed revealed after the hand makes every card verifiable — folded hands included, which are therefore visible to everyone (\"Last hand\" button).';
 
   @override
   String get holdemSeats => '6 seats.';
@@ -1971,6 +1999,387 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holdemBuyInSit => 'Sit down';
+
+  @override
+  String get holdemRebuy => 'Rebuy';
+
+  @override
+  String get holdemRebuyTitle => 'Rebuy';
+
+  @override
+  String holdemRebuyBody(String max) {
+    return 'Up to $max more (stack capped at 100 big blinds), debited from your wallet.';
+  }
+
+  @override
+  String holdemRebuyConfirm(String amount) {
+    return 'Rebuy $amount';
+  }
+
+  @override
+  String get holdemFold => 'Fold';
+
+  @override
+  String get holdemCheck => 'Check';
+
+  @override
+  String holdemCall(String amount) {
+    return 'Call $amount';
+  }
+
+  @override
+  String holdemBetTo(String amount) {
+    return 'Bet $amount';
+  }
+
+  @override
+  String holdemRaiseTo(String amount) {
+    return 'Raise to $amount';
+  }
+
+  @override
+  String holdemAllInTo(String amount) {
+    return 'All-in $amount';
+  }
+
+  @override
+  String get holdemPresetMin => 'Min';
+
+  @override
+  String get holdemPresetHalfPot => '½ pot';
+
+  @override
+  String get holdemPresetPot => 'Pot';
+
+  @override
+  String get holdemPresetAllIn => 'All-in';
+
+  @override
+  String get holdemSitOut => 'Sit out';
+
+  @override
+  String get holdemSitIn => 'I\'m back';
+
+  @override
+  String get holdemBadgeSb => 'SB';
+
+  @override
+  String get holdemBadgeBb => 'BB';
+
+  @override
+  String get holdemBadgeFold => 'Fold';
+
+  @override
+  String get holdemBadgeCheck => 'Check';
+
+  @override
+  String get holdemBadgeCall => 'Call';
+
+  @override
+  String get holdemBadgeBet => 'Bet';
+
+  @override
+  String get holdemBadgeRaise => 'Raise';
+
+  @override
+  String get holdemBadgeAllIn => 'All-in';
+
+  @override
+  String get holdemBadgeWaitBB => 'Waits for BB';
+
+  @override
+  String get holdemBadgePaused => 'Away';
+
+  @override
+  String get holdemBadgeLeaving => 'Leaving';
+
+  @override
+  String get holdemStreetPreflop => 'Preflop';
+
+  @override
+  String get holdemStreetFlop => 'Flop';
+
+  @override
+  String get holdemStreetTurn => 'Turn';
+
+  @override
+  String get holdemStreetRiver => 'River';
+
+  @override
+  String get holdemStreetShowdown => 'Hand over';
+
+  @override
+  String holdemStatusStreet(String street, String status) {
+    return '$street · $status';
+  }
+
+  @override
+  String get holdemWaitingChips =>
+      'Waiting for a second player with chips (rebuy available)';
+
+  @override
+  String get holdemWaitingPlayers => 'Waiting for a second player';
+
+  @override
+  String get holdemYouWaitBB =>
+      'You will be dealt in when the big blind reaches your seat.';
+
+  @override
+  String get holdemYouPaused =>
+      'You are away: no cards for you (after 3 hands, stack credited back and seat freed).';
+
+  @override
+  String get holdemYouFolded => 'Hand folded: wait for the next one.';
+
+  @override
+  String get holdemYouAllIn => 'All-in! No more decisions to make.';
+
+  @override
+  String holdemWaitTurn(String name) {
+    return '$name to act…';
+  }
+
+  @override
+  String get holdemNextHand => 'The next hand is coming.';
+
+  @override
+  String get holdemNoChips => 'Out of chips: rebuy to play again.';
+
+  @override
+  String holdemToCall(String amount) {
+    return 'To call: $amount';
+  }
+
+  @override
+  String holdemMyHand(String hand) {
+    return 'Your hand: $hand';
+  }
+
+  @override
+  String holdemPot(String amount) {
+    return 'Pot $amount';
+  }
+
+  @override
+  String holdemMainPot(String amount) {
+    return 'Main pot $amount';
+  }
+
+  @override
+  String holdemSidePot(int n, String amount) {
+    return 'Side pot $n: $amount';
+  }
+
+  @override
+  String holdemSummary(String pot, String hand) {
+    return 'Pot $pot · $hand';
+  }
+
+  @override
+  String holdemSummaryNoShowdown(String pot) {
+    return 'Pot $pot · no showdown';
+  }
+
+  @override
+  String get holdemStatPots => 'Pots won';
+
+  @override
+  String get holdemStatShowdowns => 'Showdowns won';
+
+  @override
+  String get holdemStatAllIns => 'All-ins';
+
+  @override
+  String get holdemStatBestHand => 'Best hand';
+
+  @override
+  String get holdemCatHighCard => 'High card';
+
+  @override
+  String get holdemCatPair => 'Pair';
+
+  @override
+  String get holdemCatTwoPair => 'Two pair';
+
+  @override
+  String get holdemCatTrips => 'Three of a kind';
+
+  @override
+  String get holdemCatStraight => 'Straight';
+
+  @override
+  String get holdemCatFlush => 'Flush';
+
+  @override
+  String get holdemCatFullHouse => 'Full house';
+
+  @override
+  String get holdemCatQuads => 'Four of a kind';
+
+  @override
+  String get holdemCatStraightFlush => 'Straight flush';
+
+  @override
+  String holdemOfRank(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'aces',
+      'king': 'kings',
+      'queen': 'queens',
+      'jack': 'jacks',
+      'ten': 'tens',
+      'nine': 'nines',
+      'eight': 'eights',
+      'seven': 'sevens',
+      'six': 'sixes',
+      'five': 'fives',
+      'four': 'fours',
+      'three': 'threes',
+      'other': 'twos',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemToRank(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'Ace',
+      'king': 'King',
+      'queen': 'Queen',
+      'jack': 'Jack',
+      'ten': 'Ten',
+      'nine': 'Nine',
+      'eight': 'Eight',
+      'seven': 'Seven',
+      'six': 'Six',
+      'five': 'Five',
+      'four': 'Four',
+      'three': 'Three',
+      'other': 'Two',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemRankName(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'Ace',
+      'king': 'King',
+      'queen': 'Queen',
+      'jack': 'Jack',
+      'ten': 'Ten',
+      'nine': 'Nine',
+      'eight': 'Eight',
+      'seven': 'Seven',
+      'six': 'Six',
+      'five': 'Five',
+      'four': 'Four',
+      'three': 'Three',
+      'other': 'Two',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemRankPlural(String rank) {
+    String _temp0 = intl.Intl.selectLogic(rank, {
+      'ace': 'aces',
+      'king': 'kings',
+      'queen': 'queens',
+      'jack': 'jacks',
+      'ten': 'tens',
+      'nine': 'nines',
+      'eight': 'eights',
+      'seven': 'sevens',
+      'six': 'sixes',
+      'five': 'fives',
+      'four': 'fours',
+      'three': 'threes',
+      'other': 'twos',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String holdemHandHighCard(String name) {
+    return '$name high';
+  }
+
+  @override
+  String holdemHandPair(String of) {
+    return 'Pair of $of';
+  }
+
+  @override
+  String holdemHandTwoPair(String high, String low) {
+    return 'Two pair, $high and $low';
+  }
+
+  @override
+  String holdemHandTrips(String of) {
+    return 'Three $of';
+  }
+
+  @override
+  String holdemHandStraight(String to) {
+    return '$to-high straight';
+  }
+
+  @override
+  String holdemHandFlush(String to) {
+    return '$to-high flush';
+  }
+
+  @override
+  String holdemHandFullHouse(String trips, String pair) {
+    return 'Full house, $trips full of $pair';
+  }
+
+  @override
+  String holdemHandQuads(String of) {
+    return 'Four $of';
+  }
+
+  @override
+  String holdemHandStraightFlush(String to) {
+    return '$to-high straight flush';
+  }
+
+  @override
+  String get holdemHandRoyalFlush => 'Royal flush';
+
+  @override
+  String get holdemLastHand => 'Last hand';
+
+  @override
+  String get holdemLastHandBody =>
+      'The seed revealed after the hand lets anyone recompute every card, folded hands included: they are therefore visible here.';
+
+  @override
+  String get holdemLastHandNone => 'No finished hand yet.';
+
+  @override
+  String holdemLastHandRound(int n) {
+    return 'Hand #$n';
+  }
+
+  @override
+  String get holdemLastHandVerified =>
+      'Deal verified: seed, card order, hands and winners.';
+
+  @override
+  String get holdemLastHandFailed => 'Verification failed!';
+
+  @override
+  String get holdemLastHandBoard => 'Board';
+
+  @override
+  String get holdemLastHandFolded => 'folded';
+
+  @override
+  String get holdemLastHandWinner => 'wins';
+
+  @override
+  String get holdemLastHandIfDealt => 'if the hand had gone to the end';
 
   @override
   String get crapsRulesSummary =>
