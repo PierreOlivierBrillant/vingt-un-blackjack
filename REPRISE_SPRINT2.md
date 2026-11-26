@@ -1,8 +1,37 @@
-# Reprise du Sprint 2 (4 jeux + méta « Rendez-vous ») — état au 2026-11-25 ~17 h
+# Reprise du Sprint 2 (4 jeux + méta « Rendez-vous ») — état au 2026-11-26, fin de cours
 
 Plan approuvé par l'utilisateur : **`PLAN_SPRINT2.md`** (à la racine de ce dépôt, branche `sprint-2`).
 Jeux : roulette européenne, baccarat Punto Banco, Texas hold'em NL, craps. Méta dating sim PG-13 :
 croupiers + habitués + autres joueurs ; récompenses = cosmétiques + pouvoirs.
+
+## >>> POUR REPRENDRE (lire en premier) <<<
+État au 26/11 en fin de cours : **phases A0 et A terminées, vérifiées et fusionnées dans `sprint-2`.
+Phase B interrompue en cours de route** (les 5 implémenteurs ont été arrêtés pour la fin du cours).
+Tout est sur GitHub ; rien d'utile ne restait seulement sur le poste.
+
+Branches de la phase B (chacune se termine par un commit « travail en cours … NON vérifié », qui peut
+ne pas compiler ni passer les tests) :
+
+| Chantier | Branche | Dernier commit | Où il en était à l'arrêt |
+|---|---|---|---|
+| Roulette | `s2-roulette` | 44f43e1 | backend commité (bd65fe4 : moteur, module, bots, marchés, vecteurs, tests) ; Flutter en cours (moteur Dart, géométrie, peintres, scène, lancer ; commandes de scène à faire) |
+| Baccarat | `s2-baccarat` | 59abb02 | backend commité (f16905e) ; Flutter en cours (modèle, tendances, équité, règles ; sons commencés) |
+| Hold'em | `s2-holdem` | 1c9e76c | contrat + vecteurs ; Flutter bien avancé (évaluateur, état, curseur, scène, écran, tests) ; **moteur backend à écrire** (seul `engineHand.ts` existe) |
+| Craps | `s2-craps` | 6c2fc38 | backend écrit (moteur, module, bots, golden, Monte-Carlo, intégration) mais pas encore vérifié ; raison Dart à refléter ; **Flutter pas commencé** |
+| Rendez-vous | `s2-romance` | 92f3cf4 | histoire commitée (363057e : Lucas, Camille, Jade complets + smalltalks des 6 autres, tests de contenu et parité, sync_story) ; serveur romance/dating en cours ; **Flutter pas commencé** |
+
+Marche à suivre (poste neuf) :
+1. `git clone https://github.com/PierreOlivierBrillant/vingt-un-blackjack.git`, puis des worktrees
+   COURTS (limite de 260 car. d'impellerc) : `git worktree add C:\Users\<user>\s2\base sprint-2`, et
+   pour chaque chantier `git worktree add C:\Users\<user>\s2\rl s2-roulette` (bc baccarat, ho holdem,
+   cr craps, rv romance). Laisser la copie principale sur `main`.
+2. Dans chaque worktree : `npm ci` (firebase/functions) et `flutter pub get` (app).
+3. Relancer les 5 implémenteurs en parallèle (sous-agents), chacun avec le préambule « Reprise » de
+   `tools/sprint2/briefs/README.md` + sa consigne `tools/sprint2/briefs/<chantier>.md`. Consignes
+   communes : `tools/sprint2/PHASE_B.md` (verrou des émulateurs `C:\Users\<user>\s2\emu.lock`).
+4. Puis phases C et D (plus bas, « Reste à faire » points 4 et 5), et l'agent « histoire » pour les 6
+   personnages incomplets de Rendez-vous (Inès, Alex, Marco, Théo, Nora, Hugo).
+5. `main` a reçu 2 commits d'une autre session (README, push_classroom) : à fusionner en phase D.
 
 ## Où en est-on
 - Branche **`sprint-2`** (partie de `main` 59bdfb8), poussée sur GitHub. Tout le Sprint 2 se fait sur
