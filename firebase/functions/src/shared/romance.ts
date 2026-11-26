@@ -214,6 +214,10 @@ export interface DatingMatchDoc {
   botReplyDueMs: EpochMs | null;
   /** Per-uid daily message counter (anti-spam). */
   sent: Record<Uid, { day: string; count: number }>;
+  /** Last preset LINE (not reaction/gift/invite): a 'reply' line is allowed only right after the other's line listing it. */
+  lastLine?: { fromUid: Uid; lineId: string } | null;
+  /** Per-uid duo affinity earned by messages today (capped by DUO_MESSAGE_AFFINITY_DAILY_CAP). */
+  duoDaily?: Record<Uid, { day: string; count: number }>;
 }
 
 /** `datingMatches/{pairId}/messages/{id}`. No free text, ever. */

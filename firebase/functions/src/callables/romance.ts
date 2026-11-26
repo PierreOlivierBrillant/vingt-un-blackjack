@@ -1,17 +1,12 @@
 /**
- * romance{op} — Rendez-vous meta (shared/romance.ts). PHASE A STUB: the request envelope is fully
- * validated (strict per-op shapes, src/callables/schemas.ts `romanceSchema`) and rate-limited per op
- * (ROMANCE_OP_RATE_LIMITS through `rateKeyOf`), then the call is refused with FEATURE_UNAVAILABLE
- * (failed-precondition) — nothing is written.
- *
- * TO THE RENDEZ-VOUS IMPLEMENTER (phase B): replace the handler (keep the export name `romance`,
- * already exported by src/index.ts). Table affinity already arrives as blind increments
- * `users/{uid}/romance/{DEALER_OF[game]}.tablePlay[day]` written by every table settlement
- * (blackjack and kernel games, humans who staked ≥ the table minimum / were dealt in): such a
- * document may hold ONLY `tablePlay` until your first write — fill the other RomanceDoc fields
- * with defaults when you read it.
+ * romance{op} — Rendez-vous meta (contract: shared/romance.ts, rules: src/romance/service.ts).
+ * The request envelope is validated by `romanceSchema` (src/callables/schemas.ts, strict per op) and
+ * rate-limited per op (ROMANCE_OP_RATE_LIMITS through `rateKeyOf`); everything else (affinity,
+ * scene replay, gifts, dates, rewards) is decided by the server in ONE transaction.
+ * Table affinity arrives as blind increments `users/{uid}/romance/{DEALER_OF[game]}.tablePlay[day]`
+ * written by every table settlement; `sync` (and every other op, for its character) folds them.
  */
-import { fail } from '../shared/errors';
+import { romanceOp } from '../romance/service';
 import { ROMANCE_OP_RATE_LIMITS, type RomanceRequest } from '../shared/romance';
 import { defineCallable } from './framework';
 import { romanceSchema } from './schemas';
@@ -21,7 +16,5 @@ export const romance = defineCallable({
   schema: romanceSchema as unknown as import('zod').ZodType<RomanceRequest>,
   tableIdOf: () => null,
   rateKeyOf: (d) => ({ key: `romance_op_${d.op}`, ...ROMANCE_OP_RATE_LIMITS[d.op] }),
-  handler: async () => {
-    throw fail.pre('FEATURE_UNAVAILABLE', 'Rendez-vous is not available yet');
-  },
+  handler: async (tx, data, { db, uid, now }) => ({ response: await romanceOp(tx, data, { db, uid, now }) }),
 });
