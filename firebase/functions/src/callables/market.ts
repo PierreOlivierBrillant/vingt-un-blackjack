@@ -1,6 +1,7 @@
 /** Spectator market trading (LMSR market maker, house-side rounding). */
 import { quoteBuy, quoteSell } from '../market/lmsr';
 import { fail } from '../shared/errors';
+import { gameOfTableId, type GameTableDoc } from '../shared/games/common';
 import { refs } from '../shared/paths';
 import type { MarketDoc, PositionDoc, PricePointDoc, ProfileDoc, TableDoc, TradeDoc } from '../shared/types';
 import { WalletSession } from '../shared/wallet';
@@ -17,12 +18,14 @@ export const tradeShares = defineCallable({
     const ms = await tx.get(r.market(data.marketId));
     if (!ms.exists) throw fail.notFound('MARKET_NOT_FOUND');
     const m = ms.data() as MarketDoc;
-    const [ts, ps, pos] = await Promise.all([tx.get(r.table(m.tableId)), tx.get(r.profile(uid)), tx.get(r.position(uid, data.marketId))]);
+    // The market's table lives in `tables` (blackjack) or `gameTables` (other games): the id prefix says which.
+    const tableRef = gameOfTableId(m.tableId) === 'blackjack' ? r.table(m.tableId) : r.gameTable(m.tableId);
+    const [ts, ps, pos] = await tx.getAll(tableRef, r.profile(uid), r.position(uid, data.marketId));
     if (!ps.exists) throw fail.pre('PROFILE_REQUIRED');
     const profile = ps.data() as ProfileDoc;
     const w = await WalletSession.load(db, tx, uid, now);
     if (m.status !== 'open') throw fail.pre('MARKET_CLOSED');
-    const table = ts.data() as TableDoc | undefined;
+    const table = ts.data() as Pick<TableDoc | GameTableDoc, 'seatedUids' | 'queue'> | undefined;
     const atTable = profile.currentTableId === m.tableId
       || (table && (table.seatedUids.includes(uid) || table.queue.some((q) => q.uid === uid)));
     if (atTable) throw fail.denied('OWN_TABLE_MARKET');
@@ -52,6 +55,8 @@ export const tradeShares = defineCallable({
     tx.update(r.market(m.marketId), {
       qYes: quote.after.qYes, qNo: quote.after.qNo, priceYes: quote.priceYesAfter,
       volumeCents: m.volumeCents + quote.amountCents, tradeCount: m.tradeCount + 1,
+      // humans' trades: the payout pass of a market nobody human traded is skipped (table/markets.ts)
+      humanTradeCount: (m.humanTradeCount ?? 0) + 1,
     });
     const tradeRef = r.trades(m.marketId).doc();
     const trade: TradeDoc = {

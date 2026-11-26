@@ -23,6 +23,11 @@ export async function settleMarketPayouts(db: Firestore, marketId: string): Prom
       if (!ms.exists) return true;
       const m = ms.data() as MarketDoc;
       if ((m.status !== 'resolved' && m.status !== 'void') || m.payoutsDone) return true;
+      if (m.humanTradeCount === 0) {
+        // Only bots traded (bots have no positions): nothing to pay, skip the positions query.
+        tx.update(r.market(marketId), { payoutsDone: true });
+        return true;
+      }
       const q = db.collectionGroup('positions').where('marketId', '==', marketId).where('status', '==', 'open').limit(BATCH);
       const ps = await tx.get(q);
       if (ps.empty) {

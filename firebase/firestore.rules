@@ -1,8 +1,9 @@
 rules_version = '2';
 
-// Server-authoritative model: clients only READ (and write their own settings document).
-// Every mutation of money, cards, bets, ranks, markets or friendships goes through callables
-// (Admin SDK, which bypasses these rules). Anything not matched below is denied.
+// Server-authoritative model: clients only READ (and write two settings fields of their own
+// settings document). Every mutation of money, cards, bets, ranks, markets, friendships,
+// cosmetics, affinity or dating goes through callables (Admin SDK, which bypasses these rules).
+// Anything not matched below is denied.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -14,18 +15,16 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == uid;
     }
 
-    // users/{uid}: whitelisted settings fields with strict enum values.
-    function validSettings(d) {
-      return d.keys().hasOnly(['theme', 'language', 'cardBack', 'cardFace', 'felt', 'updatedAtMs'])
-        && (!('theme' in d) || d.theme in ['dark', 'light', 'system'])
+    // users/{uid}: the client may only set theme and language (+ updatedAtMs). Card styles
+    // (cardBack / cardFace / felt) go through equipCardStyle, which checks exclusive cosmetics
+    // are unlocked (users/{uid}/unlocks/{id}).
+    function validSettingsValues(d) {
+      return (!('theme' in d) || d.theme in ['dark', 'light', 'system'])
         && (!('language' in d) || d.language in ['fr', 'en'])
-        && (!('cardBack' in d) || d.cardBack in ['classicBlue', 'classicRed', 'midnight', 'emerald', 'neonGrid', 'goldFiligree'])
-        && (!('cardFace' in d) || d.cardFace in ['classic', 'fourColor', 'neon'])
-        && (!('felt' in d) || d.felt in ['green', 'blue', 'red', 'purple', 'black'])
         && (!('updatedAtMs' in d) || d.updatedAtMs is int);
     }
 
-    // Public profiles (username, avatar, rank, stats).
+    // Public profiles (username, avatar, rank, stats, title).
     match /profiles/{uid} {
       allow read: if signedIn();
       allow write: if false;
@@ -34,17 +33,23 @@ service cloud.firestore {
     // Own settings.
     match /users/{uid} {
       allow read: if isUser(uid);
-      allow create, update: if isUser(uid) && validSettings(request.resource.data);
+      allow create: if isUser(uid)
+        && request.resource.data.keys().hasOnly(['theme', 'language', 'updatedAtMs'])
+        && validSettingsValues(request.resource.data);
+      allow update: if isUser(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['theme', 'language', 'updatedAtMs'])
+        && validSettingsValues(request.resource.data);
       allow delete: if false;
 
-      // private/wallet, private/kyc, private/suggestions, private/ads, ledger/*, inventory/*, positions/*
+      // private/wallet, private/kyc, private/suggestions, private/ads, private/dating, ledger/*,
+      // inventory/*, positions/*, romance/{characterId}, unlocks/{cosmeticId}: owner reads, nobody writes.
       match /{sub}/{doc=**} {
         allow read: if isUser(uid);
         allow write: if false;
       }
     }
 
-    // Public table state (seats, visible cards, phase, deadline).
+    // Blackjack: public table state (seats, visible cards, phase, deadline).
     match /tables/{tableId} {
       allow read: if signedIn();
       allow write: if false;
@@ -62,6 +67,35 @@ service cloud.firestore {
 
       // Finished hands with provably-fair proof.
       match /hands/{handId} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+
+    // Kernel-driven games (roulette, baccarat, hold'em, craps): public table state.
+    match /gameTables/{tableId} {
+      allow read: if signedIn();
+      allow write: if false;
+
+      // Seed, shoe / deck, secrets: nobody.
+      match /private/{doc=**} {
+        allow read, write: if false;
+      }
+
+      // Bet boards of the current round (public, written by the server only).
+      match /bets/{uid} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+
+      // Hold'em hole cards: only that player.
+      match /holes/{uid} {
+        allow read: if isUser(uid);
+        allow write: if false;
+      }
+
+      // Finished rounds with provably-fair proof.
+      match /rounds/{roundId} {
         allow read: if signedIn();
         allow write: if false;
       }
@@ -102,7 +136,21 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // usernames/*, tableCodes/*, idempotency/*, rateLimits/* and anything else: denied
-    // (no match block grants access).
+    // Player-to-player dating: the two members of an ACTIVE match (query:
+    // where('uids','array-contains',me).where('status','==','active')).
+    match /datingMatches/{pairId} {
+      allow read: if signedIn() && request.auth.uid in resource.data.uids && resource.data.status == 'active';
+      allow write: if false;
+
+      match /messages/{messageId} {
+        allow read: if signedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/datingMatches/$(pairId)).data.uids
+          && get(/databases/$(database)/documents/datingMatches/$(pairId)).data.status == 'active';
+        allow write: if false;
+      }
+    }
+
+    // usernames/*, tableCodes/*, idempotency/*, rateLimits/*, datingProfiles/*, datingLikes/*,
+    // datingBlocks/*, config/* and anything else: denied (no match block grants access).
   }
 }

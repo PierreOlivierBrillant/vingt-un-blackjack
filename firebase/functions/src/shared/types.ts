@@ -828,6 +828,9 @@ export const ERROR_REASONS = [
   ...ROULETTE_REASONS, ...BACCARAT_REASONS, ...HOLDEM_REASONS, ...CRAPS_REASONS,
   // Sprint 2 — Rendez-vous (see ./romance.ts)
   ...ROMANCE_REASONS,
+  // Sprint 2 (A1) — game or feature not implemented yet / withdrawn: gameJoin of a stub game,
+  // romance/dating before their implementation (failed-precondition)
+  'FEATURE_UNAVAILABLE',
 ] as const;
 export type ErrorReason = (typeof ERROR_REASONS)[number];
 

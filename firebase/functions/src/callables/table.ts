@@ -4,32 +4,37 @@ import type { Firestore, Transaction } from 'firebase-admin/firestore';
 import { cryptoRng } from '../engine/rng';
 import { fail } from '../shared/errors';
 import { refs } from '../shared/paths';
+import { gameOfTableId } from '../shared/games/common';
 import type { InventoryDoc, ProfileDoc, StakeTier, TableDoc } from '../shared/types';
+import { currentLocation } from '../games/location';
+import { applyOverdueAny } from '../games/overdue';
 import { pickFreeBots } from '../table/machine';
 import type { PlayerInfo } from '../table/model';
-import { applyOverdue, TableTx } from '../table/service';
+import { TableTx } from '../table/service';
 import { defineCallable, setOverdueHook } from './framework';
 import { S } from './schemas';
 
+// One hook for every callable and both collections (blackjack ids → tables, rl-/bc-/ho-/cr- → gameTables).
 setOverdueHook(async (db, tableId, now) => {
-  await applyOverdue(db, tableId, now);
+  await applyOverdueAny(db, tableId, now);
 });
 
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
-function newCode(): string {
+/** 6-char private table code (shared by blackjack and the kernel games: one tableCodes collection). */
+export function newTableCode(): string {
   let s = '';
   for (let i = 0; i < 6; i++) s += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
   return s;
 }
 
-async function requireProfile(db: Firestore, tx: Transaction, uid: string): Promise<ProfileDoc> {
+export async function requireProfile(db: Firestore, tx: Transaction, uid: string): Promise<ProfileDoc> {
   const p = await tx.get(refs(db).profile(uid));
   if (!p.exists) throw fail.pre('PROFILE_REQUIRED');
   return p.data() as ProfileDoc;
 }
 
-function playerInfo(p: ProfileDoc): PlayerInfo {
+export function playerInfo(p: ProfileDoc): PlayerInfo {
   return { uid: p.uid, username: p.username, avatar: p.avatar, rankTier: p.rankTier, isBot: false };
 }
 
@@ -55,18 +60,13 @@ export const joinMatchmaking = defineCallable({
     const profile = await requireProfile(db, tx, uid);
     const me = playerInfo(profile);
 
-    // already somewhere?
-    if (profile.currentTableId) {
-      const cur = await tx.get(r.table(profile.currentTableId));
-      const t = cur.data() as TableDoc | undefined;
-      const there = t && t.status === 'open' && (t.seats.some((s) => s?.uid === uid && s.status === 'active') || t.queue.some((q) => q.uid === uid));
-      if (there) {
-        if (data.mode === 'quick' && t.stakeTier === data.stakeTier && !t.isPrivate) {
-          const seat = t.seats.find((s) => s?.uid === uid);
-          return { response: { tableId: t.tableId, status: seat ? 'seated' : 'queued', seatIndex: seat?.seatIndex ?? null, code: null } };
-        }
-        throw fail.pre('ALREADY_SEATED');
+    // already somewhere (blackjack or any other game: one location per user)?
+    const loc = await currentLocation(db, tx, profile);
+    if (loc) {
+      if (data.mode === 'quick' && loc.game === 'blackjack' && loc.stakeTier === data.stakeTier && !loc.isPrivate) {
+        return { response: { tableId: loc.tableId, status: loc.status, seatIndex: loc.seatIndex, code: null } };
       }
+      throw fail.pre('ALREADY_SEATED');
     }
 
     if (data.mode === 'joinCode') {
@@ -74,6 +74,8 @@ export const joinMatchmaking = defineCallable({
       const code = data.code.toUpperCase();
       const cs = await tx.get(r.tableCode(code));
       if (!cs.exists) throw fail.notFound('BAD_CODE');
+      // Codes of the other games' tables are joined with gameJoin (hold'em needs a buy-in).
+      if (gameOfTableId(cs.get('tableId') as string) !== 'blackjack') throw fail.invalid('WRONG_GAME');
       const tt = await TableTx.load(db, tx, cs.get('tableId') as string, now, { uids: [uid] });
       tt.machine.advance();
       if (tt.pub.status !== 'open') throw fail.pre('TABLE_CLOSED');
@@ -83,15 +85,15 @@ export const joinMatchmaking = defineCallable({
     }
 
     if (data.mode === 'createPrivate') {
-      let code = newCode();
-      for (let i = 0; i < 5 && (await tx.get(r.tableCode(code))).exists; i++) code = newCode();
+      let code = newTableCode();
+      for (let i = 0; i < 5 && (await tx.get(r.tableCode(code))).exists; i++) code = newTableCode();
       const tableId = db.collection('tables').doc().id;
       const tt = await TableTx.create(db, tx, {
         // The join code stays secret: table names are public (lobby, market questions).
         tableId, name: `Privée ${tableId.slice(0, 4).toUpperCase()}`, stakeTier: data.stakeTier, isPrivate: true, simManaged: false, rankTier: profile.rankTier,
       }, now, { uids: [uid] });
       const res = tt.machine.join(me);
-      tt.commit(tx, () => tx.set(r.tableCode(code), { tableId, createdAtMs: now }));
+      tt.commit(tx, () => tx.set(r.tableCode(code), { tableId, game: 'blackjack', createdAtMs: now }));
       return { response: { tableId, status: res.status, seatIndex: res.seatIndex, code } };
     }
 
