@@ -493,6 +493,8 @@
   "errReasonBlocked": "Not possible with this player.",
   "errReasonLineNotAllowed": "That line is not available here.",
   "errReasonNoPrivateTable": "Open a private table first to invite someone.",
+  "errReasonBuyInRequired": "This is a hold'em table: pick hold'em in the lobby to choose your buy-in, then enter the code.",
+  "errReasonFeatureUnavailable": "Not available yet.",
   "navRomance": "Dates",
   "lobbyChooseGame": "Pick your game",
   "lobbyNoTables": "No open table right now.",

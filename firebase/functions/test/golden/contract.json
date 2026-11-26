@@ -50,6 +50,7 @@
   "BUY_IN_OUT_OF_RANGE",
   "REBUY_NOT_ALLOWED",
   "SITTING_OUT",
+  "BUY_IN_REQUIRED",
   "NOT_SHOOTER",
   "MUST_BET_LINE",
   "SCENE_NOT_AVAILABLE",
@@ -177,6 +178,29 @@
   "holdem": 6,
   "craps": 8
  },
+ "gamePhases": [
+  "idle",
+  "betting",
+  "live",
+  "settled",
+  "closed"
+ ],
+ "gameTiming": {
+  "bettingMs": 20000,
+  "decisionMs": 20000,
+  "settledMs": 6000,
+  "botMinMs": 700,
+  "botMaxMs": 1800
+ },
+ "gameMissedRoundsLimit": 5,
+ "gameEventsCap": 200,
+ "gameRankPoints": {
+  "bigWin": 15,
+  "win": 10,
+  "lose": -4,
+  "none": 0
+ },
+ "rankPointsDailyCapPerGame": 250,
  "characters": [
   "lucas",
   "camille",

@@ -39,6 +39,14 @@ abstract final class GameTiming {
   static const pokeGraceMs = 3000;
 }
 
+/// `GAME_RANK_POINTS` / `RANK_POINTS_DAILY_CAP_PER_GAME` (shared ladder of the kernel games).
+abstract final class GameRankPoints {
+  static const bigWin = 15;
+  static const win = 10;
+  static const lose = -4;
+  static const dailyCapPerGame = 250;
+}
+
 /// `GameLimits` (whole dollars, in cents). [extra] holds the game-specific
 /// limits (hold'em: smallBlindCents, bigBlindCents, minBuyInCents, maxBuyInCents).
 @immutable

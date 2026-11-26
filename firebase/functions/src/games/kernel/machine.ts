@@ -351,7 +351,9 @@ export class GameTableMachine {
       else {
         const min = this.pub.limits.extra.minBuyInCents ?? 0;
         const max = this.pub.limits.extra.maxBuyInCents ?? 0;
-        if (buyInCents === null || !Number.isSafeInteger(buyInCents) || buyInCents % 100 !== 0 || buyInCents < min || buyInCents > max) {
+        // No buy-in at all (e.g. a hold'em private code typed with another game selected): the client asks for one.
+        if (buyInCents === null) throw fail.pre('BUY_IN_REQUIRED');
+        if (!Number.isSafeInteger(buyInCents) || buyInCents % 100 !== 0 || buyInCents < min || buyInCents > max) {
           throw fail.invalid('BUY_IN_OUT_OF_RANGE');
         }
         stack = buyInCents;

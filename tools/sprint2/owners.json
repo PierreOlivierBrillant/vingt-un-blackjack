@@ -8,7 +8,8 @@
     "'lead' : fichiers réservés à la session principale (contrat figé, plans). Un chantier qui a besoin d'y changer",
     "quelque chose l'écrit dans tools/sprint2/requests/<chantier>.md au lieu de le modifier.",
     "Un motif 'allow' explicite d'un chantier l'emporte sur 'lead' : a1 peut compléter types.ts et games/common.ts,",
-    "en AJOUT seulement (valeurs en fin de liste, champs optionnels), chaque ajout étant noté dans requests/a1.md."
+    "en AJOUT seulement (valeurs en fin de liste, champs optionnels), chaque ajout étant noté dans requests/a1.md.",
+    "Phase B : chaque jeu (et Rendez-vous) peut refléter côté Dart les raisons d'erreur qu'il ajoute à sa liste TS (server_errors.dart, error_messages.dart, message dans son morceau ARB) ; la session principale règle les conflits triviaux à la fusion."
   ],
   "base": "sprint-2",
   "lead": [
@@ -99,7 +100,9 @@
         "tools/sfx/games/roulette.mjs",
         "app/test/**/roulette/**",
         "app/test/**/roulette*",
-        "app/assets/fairness/roulette*"
+        "app/assets/fairness/roulette*",
+        "app/lib/data/server_errors.dart",
+        "app/lib/data/error_messages.dart"
       ]
     },
     "baccarat": {
@@ -117,7 +120,9 @@
         "tools/sfx/games/baccarat.mjs",
         "app/test/**/baccarat/**",
         "app/test/**/baccarat*",
-        "app/assets/fairness/baccarat*"
+        "app/assets/fairness/baccarat*",
+        "app/lib/data/server_errors.dart",
+        "app/lib/data/error_messages.dart"
       ]
     },
     "holdem": {
@@ -135,7 +140,9 @@
         "tools/sfx/games/holdem.mjs",
         "app/test/**/holdem/**",
         "app/test/**/holdem*",
-        "app/assets/fairness/holdem*"
+        "app/assets/fairness/holdem*",
+        "app/lib/data/server_errors.dart",
+        "app/lib/data/error_messages.dart"
       ]
     },
     "craps": {
@@ -153,7 +160,9 @@
         "tools/sfx/games/craps.mjs",
         "app/test/**/craps/**",
         "app/test/**/craps*",
-        "app/assets/fairness/craps*"
+        "app/assets/fairness/craps*",
+        "app/lib/data/server_errors.dart",
+        "app/lib/data/error_messages.dart"
       ]
     },
     "romance": {
@@ -176,7 +185,12 @@
         "tools/sfx/games/romance.mjs",
         "app/test/**/romance/**",
         "app/test/**/romance*",
-        "app/test/**/dating*"
+        "app/test/**/dating*",
+        "app/lib/data/server_errors.dart",
+        "app/lib/data/error_messages.dart",
+        "firebase/firestore.rules",
+        "firebase/firestore.indexes.json",
+        "firebase/functions/test/rules/**"
       ]
     }
   }

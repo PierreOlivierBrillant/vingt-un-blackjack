@@ -291,7 +291,7 @@ describe('stack games (duel)', () => {
   it('buy-in validated and debited at join; queued buy-ins credited back when leaving the queue', () => {
     const w = new World(duel(), { tableId: 'ho-t1' });
     w.fund('h1', 50_000);
-    expect(reasonOf(() => w.tx((m) => m.join(human(1))))).toBe('BUY_IN_OUT_OF_RANGE');
+    expect(reasonOf(() => w.tx((m) => m.join(human(1))))).toBe('BUY_IN_REQUIRED');
     expect(reasonOf(() => w.tx((m) => m.join(human(1), 999)))).toBe('BUY_IN_OUT_OF_RANGE');
     expect(reasonOf(() => w.tx((m) => m.join(human(1), 10_000)))).toBe('BUY_IN_OUT_OF_RANGE'); // > 50 antes
     expect(reasonOf(() => w.tx((m) => m.join(human(1), 2_050)))).toBe('BUY_IN_OUT_OF_RANGE'); // whole dollars

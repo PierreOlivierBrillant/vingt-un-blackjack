@@ -15,7 +15,11 @@ export default tseslint.config(
   },
   {
     // The pure engine and market maker must never depend on Firebase.
-    files: ['src/engine/**/*.ts', 'src/market/**/*.ts'],
+    files: [
+      'src/engine/**/*.ts', 'src/market/**/*.ts',
+      // Sprint 2: the generic kernel (except tx.ts, its Firestore glue) and every game's pure engine/module
+      'src/games/kernel/{machine,module,bets,rank,effects,unavailable}.ts', 'src/games/*/engine*.ts',
+    ],
     rules: {
       'no-restricted-imports': ['error', { patterns: ['firebase-admin*', 'firebase-functions*', 'firebase/*', '**/shared/admin', '**/shared/paths', '**/shared/wallet'] }],
     },

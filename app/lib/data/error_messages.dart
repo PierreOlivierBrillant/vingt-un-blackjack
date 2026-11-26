@@ -86,6 +86,7 @@ String localizeServerReason(AppLocalizations l, ServerReason v) => switch (v) {
       ServerReason.BUY_IN_OUT_OF_RANGE => l.errReasonBuyInOutOfRange,
       ServerReason.REBUY_NOT_ALLOWED => l.errReasonRebuyNotAllowed,
       ServerReason.SITTING_OUT => l.errReasonSittingOut,
+      ServerReason.BUY_IN_REQUIRED => l.errReasonBuyInRequired,
       ServerReason.NOT_SHOOTER => l.errReasonNotShooter,
       ServerReason.MUST_BET_LINE => l.errReasonMustBetLine,
       ServerReason.SCENE_NOT_AVAILABLE => l.errReasonSceneNotAvailable,
@@ -100,6 +101,7 @@ String localizeServerReason(AppLocalizations l, ServerReason v) => switch (v) {
       ServerReason.BLOCKED => l.errReasonBlocked,
       ServerReason.LINE_NOT_ALLOWED => l.errReasonLineNotAllowed,
       ServerReason.NO_PRIVATE_TABLE => l.errReasonNoPrivateTable,
+      ServerReason.FEATURE_UNAVAILABLE => l.errReasonFeatureUnavailable,
     };
 
 String localizeFailure(AppLocalizations l, RepositoryFailure v) => switch (v) {

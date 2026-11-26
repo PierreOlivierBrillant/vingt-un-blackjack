@@ -223,7 +223,7 @@ describe('a stack game (duel as hold\'em)', () => {
   it('buy-in at join, turns enforced, rebuy only between hands, cash-out on leave', async () => {
     const a = await inprocPlayer();
     const b = await inprocPlayer();
-    expect(await reasonIn(run(games.gameJoin, a.uid, { game: 'holdem', mode: 'createPrivate', stakeTier: 'low' }))).toBe('BUY_IN_OUT_OF_RANGE');
+    expect(await reasonIn(run(games.gameJoin, a.uid, { game: 'holdem', mode: 'createPrivate', stakeTier: 'low' }))).toBe('BUY_IN_REQUIRED');
     expect(await reasonIn(run(games.gameJoin, a.uid, { game: 'holdem', mode: 'createPrivate', stakeTier: 'low', buyInCents: 999_900 }))).toBe('BUY_IN_OUT_OF_RANGE');
     const c = await run(games.gameJoin, a.uid, { game: 'holdem', mode: 'createPrivate', stakeTier: 'low', buyInCents: 2_000 });
     const tableId = c.tableId;

@@ -14,4 +14,8 @@
  */
 export const HOLDEM_POWER_IDS = [] as const;
 export const HOLDEM_MARKET_KINDS = ['holdemBoardAce', 'holdemBoardFlush'] as const;
-export const HOLDEM_REASONS = ['BUY_IN_OUT_OF_RANGE', 'REBUY_NOT_ALLOWED', 'SITTING_OUT'] as const;
+export const HOLDEM_REASONS = [
+  'BUY_IN_OUT_OF_RANGE', 'REBUY_NOT_ALLOWED', 'SITTING_OUT',
+  // gameJoin of a hold'em table without buyInCents (e.g. a private code typed with another game selected)
+  'BUY_IN_REQUIRED',
+] as const;

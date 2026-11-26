@@ -549,6 +549,8 @@
   "errReasonBlocked": "Action impossible avec ce joueur.",
   "errReasonLineNotAllowed": "Cette réplique n'est pas disponible ici.",
   "errReasonNoPrivateTable": "Ouvrez d'abord une table privée pour inviter quelqu'un.",
+  "errReasonBuyInRequired": "C'est une table de hold'em : choisissez le hold'em dans le salon pour indiquer votre cave, puis entrez le code.",
+  "errReasonFeatureUnavailable": "Pas encore disponible.",
   "navRomance": "Rendez-vous",
   "lobbyChooseGame": "Choisissez votre jeu",
   "lobbyNoTables": "Aucune table ouverte pour l'instant.",

@@ -62,6 +62,7 @@ enum ServerReason {
   BUY_IN_OUT_OF_RANGE,
   REBUY_NOT_ALLOWED,
   SITTING_OUT,
+  BUY_IN_REQUIRED,
   // craps
   NOT_SHOOTER,
   MUST_BET_LINE,
@@ -78,6 +79,8 @@ enum ServerReason {
   BLOCKED,
   LINE_NOT_ALLOWED,
   NO_PRIVATE_TABLE,
+  // Sprint 2 (A1) — game or feature not implemented yet / withdrawn
+  FEATURE_UNAVAILABLE,
 }
 
 ServerReason? serverReasonFromWire(Object? v) {

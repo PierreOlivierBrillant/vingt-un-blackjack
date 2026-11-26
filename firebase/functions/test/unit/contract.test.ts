@@ -5,7 +5,10 @@
  * Regenerate after an intended change: npx vitest run --config vitest.unit.config.mts test/unit/contract.test.ts -u
  */
 import { describe, expect, it } from 'vitest';
-import { ALL_GAMES, GAME_PREFIX, GAME_SEATS } from '../../src/shared/games/common';
+import {
+  ALL_GAMES, GAME_EVENTS_CAP, GAME_MISSED_ROUNDS_LIMIT, GAME_PHASES, GAME_PREFIX, GAME_RANK_POINTS, GAME_SEATS, GAME_TIMING,
+  RANK_POINTS_DAILY_CAP_PER_GAME,
+} from '../../src/shared/games/common';
 import { COSMETICS, EXCLUSIVE_CARD_BACKS, EXCLUSIVE_FELTS, TITLE_IDS } from '../../src/shared/cosmetics';
 import { AFFINITY_TIER_THRESHOLDS, CHARACTER_IDS, DEALER_OF } from '../../src/shared/romance';
 import {
@@ -39,6 +42,12 @@ describe('contract', () => {
       games: ALL_GAMES,
       gamePrefix: GAME_PREFIX,
       gameSeats: GAME_SEATS,
+      gamePhases: GAME_PHASES,
+      gameTiming: GAME_TIMING,
+      gameMissedRoundsLimit: GAME_MISSED_ROUNDS_LIMIT,
+      gameEventsCap: GAME_EVENTS_CAP,
+      gameRankPoints: GAME_RANK_POINTS,
+      rankPointsDailyCapPerGame: RANK_POINTS_DAILY_CAP_PER_GAME,
       characters: CHARACTER_IDS,
       dealerOf: DEALER_OF,
       affinityTierThresholds: AFFINITY_TIER_THRESHOLDS,

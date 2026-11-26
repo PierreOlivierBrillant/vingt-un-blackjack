@@ -3050,6 +3050,18 @@ abstract class AppLocalizations {
   /// **'Ouvrez d\'abord une table privée pour inviter quelqu\'un.'**
   String get errReasonNoPrivateTable;
 
+  /// No description provided for @errReasonBuyInRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'C\'est une table de hold\'em : choisissez le hold\'em dans le salon pour indiquer votre cave, puis entrez le code.'**
+  String get errReasonBuyInRequired;
+
+  /// No description provided for @errReasonFeatureUnavailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore disponible.'**
+  String get errReasonFeatureUnavailable;
+
   /// No description provided for @navRomance.
   ///
   /// In fr, this message translates to:

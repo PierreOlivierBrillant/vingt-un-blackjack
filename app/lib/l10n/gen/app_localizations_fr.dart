@@ -1701,6 +1701,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ouvrez d\'abord une table privée pour inviter quelqu\'un.';
 
   @override
+  String get errReasonBuyInRequired =>
+      'C\'est une table de hold\'em : choisissez le hold\'em dans le salon pour indiquer votre cave, puis entrez le code.';
+
+  @override
+  String get errReasonFeatureUnavailable => 'Pas encore disponible.';
+
+  @override
   String get navRomance => 'Rendez-vous';
 
   @override

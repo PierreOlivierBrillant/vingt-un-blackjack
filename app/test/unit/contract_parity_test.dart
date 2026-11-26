@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vingtun/data/server_errors.dart';
 import 'package:vingtun/domain/backend_constants.dart';
 import 'package:vingtun/domain/cosmetics.dart';
+import 'package:vingtun/domain/game_table.dart';
 import 'package:vingtun/domain/games.dart';
 import 'package:vingtun/domain/models.dart';
 
@@ -21,6 +22,21 @@ List<String> _strings(Object? v) => [for (final x in v! as List) x as String];
 
 void main() {
   final c = loadContract();
+
+  test('kernel constants mirror GAME_PHASES, GAME_TIMING, caps and GAME_RANK_POINTS', () {
+    expect(GamePhase.values.map((p) => p.name).toList(), _strings(c['gamePhases']));
+    expect(c['gameTiming'], {
+      'bettingMs': GameTiming.bettingMs,
+      'decisionMs': GameTiming.decisionMs,
+      'settledMs': GameTiming.settledMs,
+      'botMinMs': GameTiming.botMinMs,
+      'botMaxMs': GameTiming.botMaxMs,
+    });
+    expect(c['gameMissedRoundsLimit'], GameTiming.missedRoundsLimit);
+    expect(c['gameEventsCap'], GameTiming.eventsCap);
+    expect(c['gameRankPoints'], {'bigWin': GameRankPoints.bigWin, 'win': GameRankPoints.win, 'lose': GameRankPoints.lose, 'none': 0});
+    expect(c['rankPointsDailyCapPerGame'], GameRankPoints.dailyCapPerGame);
+  });
 
   test('ServerReason mirrors ERROR_REASONS (same order)', () {
     expect(ServerReason.values.map((r) => r.name).toList(), _strings(c['errorReasons']));

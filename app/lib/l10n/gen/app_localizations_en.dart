@@ -1686,6 +1686,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Open a private table first to invite someone.';
 
   @override
+  String get errReasonBuyInRequired =>
+      'This is a hold\'em table: pick hold\'em in the lobby to choose your buy-in, then enter the code.';
+
+  @override
+  String get errReasonFeatureUnavailable => 'Not available yet.';
+
+  @override
   String get navRomance => 'Dates';
 
   @override
