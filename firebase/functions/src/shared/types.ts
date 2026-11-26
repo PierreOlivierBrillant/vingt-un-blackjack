@@ -340,6 +340,14 @@ export interface WalletDoc {
   /** Deposits on UTC day `day` ("YYYY-MM-DD"), for the daily cap. */
   dailyDeposit: { day: string; amountCents: Cents };
   updatedAtMs: EpochMs;
+  /**
+   * HMAC over (uid, balance, totals) with a server-only key (see shared/secrets.ts). A client with
+   * direct emulator ("owner") access can rewrite a balance but cannot forge this signature, so a
+   * tampered wallet is rejected on load (WALLET_INTEGRITY) and its money cannot be played. Written
+   * by WalletSession; absent only on wallets created before this field existed (run the backfill,
+   * src/sim/signWallets.ts).
+   */
+  sig?: string;
 }
 
 /** `users/{uid}/private/kyc`. READ: owner. No birth date or document number is stored. */
@@ -753,6 +761,7 @@ export const ERROR_REASONS = [
   'NOT_FRIENDS', //            not-found
   'AD_COOLDOWN', //            failed-precondition
   'AD_DAILY_LIMIT', //         failed-precondition
+  'WALLET_INTEGRITY', //       failed-precondition (wallet signature missing/invalid: balance tampered outside the callables)
   'INTERNAL', //               internal
 ] as const;
 export type ErrorReason = (typeof ERROR_REASONS)[number];

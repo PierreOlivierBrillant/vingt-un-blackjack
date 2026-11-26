@@ -1,5 +1,6 @@
 functions/node_modules/
 functions/lib/
+functions/.wallet-signing-key
 .emulator-data/
 *-debug.log
 firebase-debug.log
