@@ -29,6 +29,17 @@ croupiers + habitués + autres joueurs ; récompenses = cosmétiques + pouvoirs.
 - Pas encore lancé : tests de règles et d'intégration (émulateurs). Les ports 9099/8080/5001/8088
   étaient occupés par les émulateurs de la salle de classe (lancés à 15 h 46).
 
+## En cours (26/11, matin)
+- Worktree de la session principale : `C:\Users\po.brillant\s2\base` (branche `sprint-2`). La copie
+  `Desktop\vingt-un-blackjack` reste sur `main`, intacte.
+- **A1** (backend) dans `C:\Users\po.brillant\s2\a1`, branche `s2-a1` ; **A2** (Flutter) dans
+  `C:\Users\po.brillant\s2\a2`, branche `s2-a2`. Chacun pousse sa branche à chaque étape verte et
+  vérifie son périmètre avec `node tools/sprint2/check_owners.mjs a1|a2`. A1 peut compléter
+  `shared/types.ts` / `games/common.ts` en ajout seulement, listé dans `tools/sprint2/requests/a1.md`
+  (miroir Dart à faire à la fusion). Seul A1 utilise les émulateurs pendant la phase A.
+- Si le poste a redémarré : `git fetch`, recréer les worktrees depuis `origin/s2-a1` / `origin/s2-a2`
+  et reprendre là où les commits s'arrêtent.
+
 ## Reste à faire (ordre)
 1. ~~Fin de A0~~ FAIT le 26/11 : 3 tests dto_parsing mis à jour (258 tests Flutter verts) ;
    `tools/sprint2/owners.json` + `check_owners.mjs <chantier>` (périmètre par chantier ; `--list`).
