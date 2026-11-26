@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "crapsRulesSummary": "Ligne de passe et Ne passe pas (12 barré), Come et Don't Come, cotes 3-4-5× (vraies cotes) et cotes « lay ». Place : 4/10 à 9:5, 5/9 à 7:5, 6/8 à 7:6. Field : 2 payé 2:1, 12 payé 3:1.",
+  "crapsRulesPayouts": "Propositions : Any 7 4:1, Any Craps 7:1, Hardways 7:1 ou 9:1, Yo 15:1, 2 et 12 30:1, 3 15:1. Mises en dollars entiers ; place 6/8 et lay 5/9 ou 6/8 par multiples de 3 $.",
+  "crapsRulesRound": "Chaque lancer est un tour, avec sa graine (nextInt(6)+1 deux fois). Places « off » au come-out ; mises contractuelles non retirables. Le lanceur doit miser Pass ou Don't Pass, lance d'un geste ou automatiquement après 15 s ; le dé passe au suivant après un seven-out.",
+  "crapsSeats": "8 places, lanceur tournant."
+}

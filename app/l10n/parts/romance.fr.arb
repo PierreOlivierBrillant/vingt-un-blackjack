@@ -1,0 +1,22 @@
+{
+  "@@locale": "fr",
+  "romanceHubTitle": "Rendez-vous",
+  "romanceHubIntro": "Croupiers et habitués du casino : discutez, offrez des cadeaux, jouez à leur table… et qui sait ? Tout reste PG-13, entre adultes.",
+  "romanceHubSoon": "Bientôt : discussions, cadeaux, rendez-vous et Souvenirs.",
+  "romanceDealers": "Croupiers",
+  "romanceRegulars": "Habitués",
+  "romanceDatingTitle": "Rencontres",
+  "romanceDatingBody": "Rencontres entre joueurs, sur inscription et sans texte libre : désactivées sur ce serveur pour l'instant.",
+  "romanceTierStranger": "Inconnu·e",
+  "romanceAge": "{age} ans",
+  "@romanceAge": {"placeholders": {"age": {"type": "int"}}},
+  "romanceRoleLucas": "Croupier de blackjack",
+  "romanceRoleCamille": "Croupière de roulette",
+  "romanceRoleInes": "Croupière de baccarat",
+  "romanceRoleAlex": "Croupier·e de hold'em (iel)",
+  "romanceRoleMarco": "Croupier de craps",
+  "romanceRoleJade": "Mixologue du bar",
+  "romanceRoleTheo": "Pianiste du salon",
+  "romanceRoleNora": "Magicienne",
+  "romanceRoleHugo": "Concierge VIP"
+}

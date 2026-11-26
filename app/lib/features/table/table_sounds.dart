@@ -15,11 +15,13 @@ import '../../core/audio/sound_providers.dart';
 import '../../core/audio/sound_service.dart';
 import '../dealer/dealer_feedback.dart';
 
-enum CelebrationKind { win, bigWin, blackjack, streak, dealerBust }
+/// [jackpot]: a game-specific big hit of the Sprint 2 games (straight up at
+/// roulette, royal flush, hard way…), shown with its own [Celebration.label].
+enum CelebrationKind { win, bigWin, blackjack, streak, dealerBust, jackpot }
 
 @immutable
 class Celebration {
-  const Celebration(this.kind, this.serial, {this.cents, this.streak});
+  const Celebration(this.kind, this.serial, {this.cents, this.streak, this.label});
   final CelebrationKind kind;
 
   /// Increases with every celebration (lets the overlay restart).
@@ -27,8 +29,12 @@ class Celebration {
   final int? cents;
   final int? streak;
 
+  /// Banner text overriding the default of [kind] (games' own hits).
+  final String? label;
+
   /// Big ones get the coin rain, the flash and the heavy haptics.
-  bool get big => kind == CelebrationKind.bigWin || kind == CelebrationKind.blackjack || (streak ?? 0) >= 5;
+  bool get big =>
+      kind == CelebrationKind.bigWin || kind == CelebrationKind.blackjack || kind == CelebrationKind.jackpot || (streak ?? 0) >= 5;
 
   @override
   String toString() => 'Celebration($kind${cents == null ? '' : ' $cents'}${streak == null ? '' : ' x$streak'})';

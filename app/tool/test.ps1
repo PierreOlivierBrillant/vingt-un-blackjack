@@ -1,5 +1,5 @@
 <#
-  Flutter client checks: l10n generation, static analysis, unit + widget +
+  Flutter client checks: ARB merge + l10n generation, static analysis, unit + widget +
   golden tests. Exit code is non-zero on the first failure.
 
     pwsh app/tool/test.ps1                 # everything
@@ -24,6 +24,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "$name failed (exit $LASTEXITCODE)" }
   }
   Step 'pub get' { flutter pub get }
+  # The ARB files read by gen-l10n are generated from l10n/parts/*.arb (see tool/merge_arb.dart).
+  Step 'merge ARB' { dart run tool/merge_arb.dart }
   Step 'gen-l10n' { flutter gen-l10n }
   Step 'analyze' { flutter analyze }
   $testArgs = @('test')

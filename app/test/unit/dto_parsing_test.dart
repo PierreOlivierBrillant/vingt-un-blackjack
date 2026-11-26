@@ -278,7 +278,20 @@ void main() {
     expect(shoe.id, 'm-shoe');
     expect(shoe.handNumber, isNull);
     expect(shoe.b, Backend.marketLiquidity[MarketKind.shoeDealerBustRate]);
-    expect(Market.fromDoc({'kind': 'weather'}), isNull);
+    // Sprint 2: an unknown kind is neither dropped nor fatal — it is kept with
+    // its server question (MarketsScreen shows it), kind null, raw kindWire.
+    final unknown = Market.fromDoc({
+      'kind': 'weather', 'tableId': 'rl-sim-01', 'handNumber': 3, 'status': 'open',
+      'question': {'fr': 'Pluie ?', 'en': 'Rain?'},
+    })!;
+    expect(unknown.kind, isNull);
+    expect(unknown.kindWire, 'weather');
+    expect(unknown.b, 60);
+    expect(unknown.gameOf, GameId.roulette);
+    expect(unknown.isSeries, isFalse);
+    expect(unknown.question.of('en'), 'Rain?');
+    expect(Market.fromDoc({'kind': 'dealerBust', 'tableId': 'tbl1'})!.gameOf, GameId.blackjack);
+    expect(Market.fromDoc({'kind': 'rouletteRed', 'tableId': 'x', 'game': 'craps'})!.gameOf, GameId.craps);
   });
 
   test('PositionDoc (one doc holds both sides)', () {

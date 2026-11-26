@@ -7,9 +7,11 @@ import '../../core/widgets.dart';
 import '../../data/error_messages.dart';
 import '../../data/providers.dart';
 import '../../domain/backend_constants.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../ads/ad_widgets.dart';
+import '../games/registry.dart';
 
 (String name, String desc) powerCopy(AppLocalizations l, PowerType t) => switch (t) {
       PowerType.freeSplit => (l.powerFreeSplit, l.powerFreeSplitDesc),
@@ -58,13 +60,28 @@ class ShopScreen extends ConsumerWidget {
         builder: (list) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text(l.shopIntro, style: TextStyle(color: context.palette.textMuted)),
+            Text('${l.shopIntro} ${l.shopGroupHint}', style: TextStyle(color: context.palette.textMuted)),
             const SizedBox(height: 12),
             const RewardedAdTile(),
-            const SizedBox(height: 12),
-            for (final o in list) ...[
-              _PowerTile(offer: o),
-              const SizedBox(height: 10),
+            // One group per game of the registry (POWER_GAME); a game without
+            // powers (hold'em, player vs player) says why.
+            for (final ui in kGames.values) ...[
+              Padding(
+                key: Key('shop-group-${ui.id.wire}'),
+                padding: const EdgeInsets.fromLTRB(2, 18, 2, 8),
+                child: Row(children: [
+                  Icon(ui.icon, size: 18, color: ui.accent),
+                  const SizedBox(width: 8),
+                  Text(ui.name(l), style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15)),
+                ]),
+              ),
+              if (ui.powers.isEmpty)
+                Text(l.shopNoPowers, style: TextStyle(color: context.palette.textMuted, fontSize: 12.5))
+              else
+                for (final o in list.where((o) => o.type.game == ui.id)) ...[
+                  _PowerTile(offer: o),
+                  const SizedBox(height: 10),
+                ],
             ],
           ],
         ),
@@ -136,8 +153,11 @@ const kDisarmPower = 'disarm';
 /// the chosen [PowerType] (or null). [usable] says which powers can apply
 /// now; [usedThisHand] disables everything (one power per hand).
 class PowersSheet extends ConsumerWidget {
-  const PowersSheet({super.key, this.armed, this.usedThisHand, this.usable});
+  const PowersSheet({super.key, this.armed, this.usedThisHand, this.usable, this.game});
   final PowerType? armed;
+
+  /// Only the powers of this game (`POWER_GAME`); null = every power.
+  final GameId? game;
   final PowerType? usedThisHand;
   final bool Function(PowerType)? usable;
 
@@ -159,7 +179,7 @@ class PowersSheet extends ConsumerWidget {
               style: TextStyle(color: context.palette.textMuted, fontSize: 12),
             ),
             const SizedBox(height: 8),
-            for (final o in offers)
+            for (final o in offers.where((o) => game == null || o.type.game == game))
               ListTile(
                 key: Key('power-${o.type.name}'),
                 enabled: used == null && o.owned > 0 && (usable?.call(o.type) ?? true),

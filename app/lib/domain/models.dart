@@ -16,6 +16,7 @@ import 'package:flutter/painting.dart';
 
 import 'backend_constants.dart';
 import 'card_style.dart';
+import 'game_table.dart' show GameStats;
 import 'games.dart';
 import 'table_state.dart' show ServerTablePhase;
 import 'wire.dart';
@@ -97,6 +98,8 @@ class PlayerProfile {
     this.lastSeenAt,
     this.kycVerified = false,
     this.createdAt,
+    this.gameStats = const {},
+    this.title,
   });
 
   factory PlayerProfile.fromDoc(Map<String, Object?> d, {String? id}) => PlayerProfile(
@@ -113,6 +116,11 @@ class PlayerProfile {
         lastSeenAt: asTime(d['lastSeenAtMs']),
         kycVerified: asBool(d['kycVerified']),
         createdAt: asTime(d['createdAtMs']),
+        gameStats: {
+          for (final e in asMap(d['gameStats']).entries)
+            if (GameId.fromWire(e.key) case final g? when g.isKernel && e.value is Map) g: GameStats.fromDoc(asMap(e.value)),
+        },
+        title: asString(d['title']),
       );
 
   final String uid;
@@ -136,6 +144,24 @@ class PlayerProfile {
   final DateTime? lastSeenAt;
   final bool kycVerified;
   final DateTime? createdAt;
+
+  /// Sprint 2: `gameStats` of the kernel-driven games (blackjack keeps [stats]).
+  final Map<GameId, GameStats> gameStats;
+
+  /// Equipped public title (`TITLE_IDS`, e.g. `rv_camille_title`), null = none.
+  final String? title;
+
+  /// Statistics of [game] in one shape (blackjack adapted from [stats]).
+  GameStats statsFor(GameId game) => game == GameId.blackjack
+      ? GameStats(
+          rounds: stats.handsPlayed,
+          won: stats.handsWon,
+          lost: stats.handsLost,
+          netCents: stats.netCents,
+          biggestWinCents: stats.biggestWinCents,
+          counters: {'blackjacks': stats.blackjacks, 'pushes': stats.handsPushed},
+        )
+      : gameStats[game] ?? const GameStats();
 
   int get avatarHue => avatarHueOf(avatar);
 
@@ -562,25 +588,37 @@ class LiveTable {
     this.hasMarket = false,
     this.rankTier = RankTier.bronze,
     this.updatedAt,
+    this.game = GameId.blackjack,
   });
 
+  /// `tables/{id}` (blackjack) or `gameTables/{id}` (Sprint 2 games: limits
+  /// nested in `limits`, `round` instead of `handNumber`, markets as
+  /// `{round, series}`, kernel phase `live` shown as [ServerTablePhase.playerTurns]).
   factory LiveTable.fromDoc(Map<String, Object?> d, {String? id}) {
+    final tableId = asString(d['tableId']) ?? id ?? '';
+    final game = GameId.fromWire(d['game']) ?? gameOfTableId(tableId);
     final markets = asMap(d['markets']);
+    final limits = asMap(d['limits']);
     final hasMarket = markets['dealerBust'] is String ||
         markets['natural'] is String ||
         markets['shoe'] is String ||
-        asMap(markets['players']).isNotEmpty;
+        asMap(markets['players']).isNotEmpty ||
+        asMap(markets['round']).isNotEmpty ||
+        asMap(markets['series']).isNotEmpty;
     final seats = asList(d['seats']);
     final seatedBots = seats.where((s) => s is Map && s['isBot'] == true).length;
     final seatedHumans = seats.where((s) => s is Map && s['isBot'] != true).length;
     return LiveTable(
-      id: asString(d['tableId']) ?? id ?? '',
+      game: game,
+      id: tableId,
       name: asString(d['name']) ?? id ?? '',
       tierId: asString(d['stakeTier']) ?? 'low',
-      minBetCents: asInt(d['minBetCents'], 100),
-      maxBetCents: asInt(d['maxBetCents'], 10000),
-      handNumber: asInt(d['handNumber']),
-      phase: enumByName(ServerTablePhase.values, d['phase']) ?? ServerTablePhase.idle,
+      minBetCents: asInt(d['minBetCents'], asInt(limits['minBetCents'], 100)),
+      maxBetCents: asInt(d['maxBetCents'], asInt(limits['maxBetCents'], 10000)),
+      handNumber: asInt(d['handNumber'], asInt(d['round'])),
+      seatsTotal: game.isKernel ? (seats.length > game.seats ? seats.length : game.seats) : Backend.seatsPerTable,
+      phase: enumByName(ServerTablePhase.values, d['phase']) ??
+          (d['phase'] == 'live' ? ServerTablePhase.playerTurns : ServerTablePhase.idle),
       humans: d['humanCount'] is num ? asInt(d['humanCount']) : seatedHumans,
       bots: d['botCount'] is num ? asInt(d['botCount']) : seatedBots,
       queueLength: asList(d['queue']).length,
@@ -610,6 +648,9 @@ class LiveTable {
   final bool hasMarket;
   final RankTier rankTier;
   final DateTime? updatedAt;
+
+  /// Game of the table (from `game`, else the id prefix).
+  final GameId game;
 
   int get seatsTaken => humans + bots;
 
@@ -1060,6 +1101,8 @@ class Market {
   const Market({
     required this.id,
     required this.kind,
+    this.kindWire,
+    this.game,
     required this.tableId,
     required this.tableName,
     required this.status,
@@ -1082,15 +1125,20 @@ class Market {
     this.resolvedAt,
   });
 
-  /// Null for an unknown kind.
+  /// Never fails and never hides a market: a kind this client does not know
+  /// yet is kept ([kind] null, [kindWire] = the server value) and shown with
+  /// its server-written [question]. (Nullable return type kept for source
+  /// compatibility; it is never null.)
   static Market? fromDoc(Map<String, Object?> d, {String? id}) {
     final kind = enumByName(MarketKind.values, d['kind']);
-    if (kind == null) return null;
+    final tableId = asString(d['tableId']) ?? '';
     return Market(
       id: asString(d['marketId']) ?? id ?? '',
-      tableId: asString(d['tableId']) ?? '',
+      tableId: tableId,
       tableName: asString(d['tableName']) ?? '',
       kind: kind,
+      kindWire: asString(d['kind']),
+      game: GameId.fromWire(d['game']),
       handNumber: asIntOrNull(d['handNumber']),
       shoeNumber: asInt(d['shoeNumber'], 1),
       subjectUid: asString(d['subjectUid']),
@@ -1099,7 +1147,7 @@ class Market {
       question: LocalizedText.fromDoc(asMap(d['question'])),
       status: MarketStatus.fromWire(d['status']) ?? MarketStatus.closed,
       outcome: enumByName(Outcome.values, d['outcome']),
-      b: asDouble(d['b'], Backend.marketLiquidity[kind] ?? 60),
+      b: asDouble(d['b'], (kind == null ? null : Backend.marketLiquidity[kind]) ?? 60),
       qYes: asDouble(d['qYes']),
       qNo: asDouble(d['qNo']),
       priceYes: asDouble(d['priceYes'], 0.5).clamp(0.0, 1.0),
@@ -1113,9 +1161,24 @@ class Market {
   }
 
   final String id;
-  final MarketKind kind;
+
+  /// Null for a kind unknown to this client (see [kindWire]).
+  final MarketKind? kind;
+
+  /// Raw `kind` of the document (also set for known kinds).
+  final String? kindWire;
+
+  /// `MarketDoc.game` (absent on older blackjack markets), see [gameOf].
+  final GameId? game;
   final String tableId;
   final String tableName;
+
+  /// Game of the market: [game], else the kind's, else the table id prefix.
+  GameId get gameOf => game ?? kind?.game ?? gameOfTableId(tableId);
+
+  /// Long market (not tied to one round): a series kind, or (unknown kind)
+  /// no round number.
+  bool get isSeries => kind?.isSeries ?? handNumber == null;
 
   /// Per-hand markets; null for the shoe market.
   final int? handNumber;
@@ -1186,7 +1249,7 @@ class MarketPosition {
   const MarketPosition({
     required this.marketId,
     this.tableId = '',
-    this.kind = MarketKind.dealerBust,
+    this.kind,
     this.question = const LocalizedText(),
     this.yesShares = 0,
     this.noShares = 0,
@@ -1200,7 +1263,7 @@ class MarketPosition {
   factory MarketPosition.fromDoc(Map<String, Object?> d, {String? id}) => MarketPosition(
         marketId: asString(d['marketId']) ?? id ?? '',
         tableId: asString(d['tableId']) ?? '',
-        kind: enumByName(MarketKind.values, d['kind']) ?? MarketKind.dealerBust,
+        kind: enumByName(MarketKind.values, d['kind']),
         question: LocalizedText.fromDoc(asMap(d['question'])),
         yesShares: asInt(d['yesShares']),
         noShares: asInt(d['noShares']),
@@ -1213,7 +1276,9 @@ class MarketPosition {
 
   final String marketId;
   final String tableId;
-  final MarketKind kind;
+
+  /// Null for a kind unknown to this client (its [question] is always shown).
+  final MarketKind? kind;
   final LocalizedText question;
   final int yesShares;
   final int noShares;

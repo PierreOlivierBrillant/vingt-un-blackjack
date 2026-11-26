@@ -74,9 +74,11 @@ class _CelebrationOverlayState extends State<CelebrationOverlay> with SingleTick
 
   String _banner(BuildContext context, Celebration c) {
     final l = context.l10n;
+    final label = c.label;
+    if (label != null) return label;
     return switch (c.kind) {
       CelebrationKind.blackjack => l.badgeBlackjack,
-      CelebrationKind.bigWin => l.celebrationBigWin,
+      CelebrationKind.bigWin || CelebrationKind.jackpot => l.celebrationBigWin,
       CelebrationKind.streak => l.celebrationStreak(c.streak ?? 0),
       CelebrationKind.dealerBust => l.celebrationDealerBust,
       CelebrationKind.win => l.celebrationWin,

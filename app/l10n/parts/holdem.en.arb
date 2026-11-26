@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "holdemRulesSummary": "No-Limit Texas hold'em between players: no rake, no powers. Blinds per tier 1/2, 5/10, 25/50 $; buy-in 40 to 100 big blinds, debited when you sit down, credited back when you leave (after the hand if you are in it).",
+  "holdemRulesRound": "Rotating button, heads-up rules, newcomers wait for the big blind, minimum raise = last raise, an incomplete all-in does not reopen the betting, side pots, automatic showdown (best 5 of 7). 20 s per decision; two timeouts in a row → sitting out; three hands sitting out → stack credited back and seat freed.",
+  "holdemRulesFairness": "Deliberate choice: the seed revealed after the hand makes folded cards verifiable, hence visible to everyone.",
+  "holdemSeats": "6 seats.",
+  "holdemBuyInTitle": "Your buy-in",
+  "holdemBuyInBody": "Between {min} and {max} (40 to 100 big blinds), debited when you sit down.",
+  "holdemBuyInSit": "Sit down"
+}

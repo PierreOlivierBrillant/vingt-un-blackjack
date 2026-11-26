@@ -18,6 +18,11 @@ enum SoundChannel {
 
   /// Distant slot machines, layered under [ambience] (follows the ambience level).
   slots,
+
+  /// Loop of the current game table (Sprint 2: roulette wheel, dice rattle,
+  /// Rendez-vous location...). Follows the effects level. `GameTableScaffold`
+  /// stops it when the table screen goes away.
+  game,
 }
 
 /// Output levels (0..1) and the master switch.
@@ -45,14 +50,14 @@ class SoundLevels {
 /// broken audio device simply plays nothing.
 abstract interface class SoundService {
   /// Decodes these sounds ahead of time (low-latency playback later).
-  Future<void> preload(Iterable<Sfx> sounds);
+  Future<void> preload(Iterable<SoundCue> sounds);
 
   /// Fire-and-forget one-shot. [volume] is relative (multiplied by the
   /// effects level); [rate] changes speed/pitch slightly when supported.
-  void play(Sfx sfx, {double volume = 1, double rate = 1});
+  void play(SoundCue sfx, {double volume = 1, double rate = 1});
 
   /// Starts (or replaces) the loop of [channel]. Same sound → no restart.
-  void startLoop(SoundChannel channel, Sfx sfx, {double volume = 1});
+  void startLoop(SoundChannel channel, SoundCue sfx, {double volume = 1});
 
   void stopLoop(SoundChannel channel);
 
@@ -71,11 +76,11 @@ abstract interface class SoundService {
 class MutedSoundService implements SoundService {
   const MutedSoundService();
   @override
-  Future<void> preload(Iterable<Sfx> sounds) async {}
+  Future<void> preload(Iterable<SoundCue> sounds) async {}
   @override
-  void play(Sfx sfx, {double volume = 1, double rate = 1}) {}
+  void play(SoundCue sfx, {double volume = 1, double rate = 1}) {}
   @override
-  void startLoop(SoundChannel channel, Sfx sfx, {double volume = 1}) {}
+  void startLoop(SoundChannel channel, SoundCue sfx, {double volume = 1}) {}
   @override
   void stopLoop(SoundChannel channel) {}
   @override
@@ -91,18 +96,18 @@ class MutedSoundService implements SoundService {
 @immutable
 class PlayedSound {
   const PlayedSound(this.sfx, this.volume, this.rate);
-  final Sfx sfx;
+  final SoundCue sfx;
   final double volume;
   final double rate;
   @override
-  String toString() => '${sfx.name}${volume == 1 ? '' : '@${volume.toStringAsFixed(2)}'}';
+  String toString() => '${sfx.label}${volume == 1 ? '' : '@${volume.toStringAsFixed(2)}'}';
 }
 
 /// Records everything (tests, debugging).
 class RecordingSoundService implements SoundService {
   final played = <PlayedSound>[];
-  final preloaded = <Sfx>{};
-  final loops = <SoundChannel, Sfx>{};
+  final preloaded = <SoundCue>{};
+  final loops = <SoundChannel, SoundCue>{};
 
   /// Every loop ever started, in order (`channel:sfx`, `channel:stop`).
   final loopLog = <String>[];
@@ -110,23 +115,23 @@ class RecordingSoundService implements SoundService {
   bool suspended = false;
   bool disposed = false;
 
-  List<Sfx> get sounds => [for (final p in played) p.sfx];
-  bool playedAny(Iterable<Sfx> s) => sounds.any(s.contains);
-  int count(Sfx s) => sounds.where((x) => x == s).length;
+  List<SoundCue> get sounds => [for (final p in played) p.sfx];
+  bool playedAny(Iterable<SoundCue> s) => sounds.any(s.contains);
+  int count(SoundCue s) => sounds.where((x) => x == s).length;
   void clear() {
     played.clear();
     loopLog.clear();
   }
 
   @override
-  Future<void> preload(Iterable<Sfx> sounds) async => preloaded.addAll(sounds);
+  Future<void> preload(Iterable<SoundCue> sounds) async => preloaded.addAll(sounds);
   @override
-  void play(Sfx sfx, {double volume = 1, double rate = 1}) => played.add(PlayedSound(sfx, volume, rate));
+  void play(SoundCue sfx, {double volume = 1, double rate = 1}) => played.add(PlayedSound(sfx, volume, rate));
   @override
-  void startLoop(SoundChannel channel, Sfx sfx, {double volume = 1}) {
+  void startLoop(SoundChannel channel, SoundCue sfx, {double volume = 1}) {
     if (loops[channel] == sfx) return;
     loops[channel] = sfx;
-    loopLog.add('${channel.name}:${sfx.name}');
+    loopLog.add('${channel.name}:${sfx.label}');
   }
 
   @override
@@ -163,7 +168,7 @@ class SoundGovernor implements SoundService {
 
   final _lastByGroup = <String, DateTime>{};
   final _voices = <DateTime>[]; // end times of the one-shots still ringing
-  final _fanfares = <(DateTime, Sfx)>[]; // ringing fanfares (70 % end)
+  final _fanfares = <(DateTime, SoundCue)>[]; // ringing fanfares (70 % end)
   SoundLevels _levels = const SoundLevels();
   bool _suspended = false;
 
@@ -174,12 +179,12 @@ class SoundGovernor implements SoundService {
   int dropped = 0;
 
   @override
-  Future<void> preload(Iterable<Sfx> sounds) => inner.preload(sounds);
+  Future<void> preload(Iterable<SoundCue> sounds) => inner.preload(sounds);
 
   @override
-  void play(Sfx sfx, {double volume = 1, double rate = 1}) {
+  void play(SoundCue sfx, {double volume = 1, double rate = 1}) {
     if (_levels.muted || _suspended || _levels.effects <= 0 || volume <= 0) return;
-    assert(!sfx.loop, '${sfx.name} is a loop: use startLoop');
+    assert(!sfx.loop, '${sfx.label} is a loop: use startLoop');
     final now = _now();
     final last = _lastByGroup[sfx.group];
     if (last != null && now.difference(last).inMilliseconds < sfx.cooldownMs) {
@@ -208,7 +213,7 @@ class SoundGovernor implements SoundService {
   }
 
   @override
-  void startLoop(SoundChannel channel, Sfx sfx, {double volume = 1}) => inner.startLoop(channel, sfx, volume: volume);
+  void startLoop(SoundChannel channel, SoundCue sfx, {double volume = 1}) => inner.startLoop(channel, sfx, volume: volume);
 
   @override
   void stopLoop(SoundChannel channel) => inner.stopLoop(channel);

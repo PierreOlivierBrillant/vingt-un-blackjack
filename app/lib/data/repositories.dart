@@ -18,11 +18,14 @@
 library;
 
 import '../domain/card_style.dart';
+import '../domain/game_table.dart';
+import '../domain/games.dart';
 import '../domain/lmsr.dart';
 import '../domain/models.dart';
 import '../domain/table_state.dart';
 import 'server_errors.dart';
 
+export '../domain/game_table.dart';
 export '../domain/table_state.dart';
 export 'server_errors.dart' show ServerReason;
 
@@ -183,6 +186,60 @@ abstract interface class TableRepository {
 
   /// Last finished hands (`tables/{id}/hands`, newest first).
   Stream<List<HandHistory>> watchHistory(String tableId, {int limit = 20});
+}
+
+/// Sprint 2: the kernel-driven tables (roulette, baccarat, hold'em, craps),
+/// `gameTables/{id}` + sub-collections and the callables gameJoin / gameLeave
+/// / gameAction / gamePoke of `shared/games/common.ts`. Generic: what an
+/// action or a bet spot means is up to each game (`lib/features/games/<jeu>/`).
+abstract interface class GameTableRepository {
+  /// uid of the signed-in player (to find "my" seat), null if signed out.
+  String? get myUid;
+
+  /// Public open tables of [game] (`gameTables` where game, status open, not
+  /// private; newest first), optionally filtered by tier client-side.
+  Stream<List<LiveTable>> watchLiveTables(GameId game, {String? tierId});
+
+  /// Real-time `gameTables/{id}`. Errors: [RepositoryException] notFound.
+  Stream<GameTableState> watchTable(String tableId);
+
+  /// Every bet board of the table (`bets/*`, bots included). Boards of an
+  /// older round may linger: filter with [GameBet.isFor].
+  Stream<List<GameBet>> watchBets(String tableId);
+
+  /// My hold'em hole cards (`holes/{me}`), null when none.
+  Stream<GameHole?> watchMyHole(String tableId);
+
+  /// Finished rounds (`rounds/*`, newest first) with their fairness proofs.
+  Stream<List<GameRound>> watchRounds(String tableId, {int limit = 20});
+
+  /// Callable `gameJoin`. joinCode accepts a code of ANY game (the result
+  /// says which, blackjack included). Hold'em: [buyInCents] required.
+  /// Errors: BAD_CODE, TABLE_FULL, ALREADY_SEATED, PROFILE_REQUIRED,
+  /// BUY_IN_OUT_OF_RANGE, INSUFFICIENT_FUNDS.
+  Future<GameJoinResult> join({
+    required GameId game,
+    required GameJoinMode mode,
+    String stakeTier = 'low',
+    String? code,
+    int? buyInCents,
+    required String idempotencyKey,
+  });
+
+  /// Callable `gameLeave` (generates its own requestId).
+  Future<GameLeaveResult> leave(String tableId);
+
+  /// Callable `gameAction` with any action (`{type: 'fold'}`, `{type: 'roll'}`…).
+  /// [round] must be the table's current round (else STALE_HAND).
+  Future<GameActionResult> act(String tableId, int round, Map<String, Object?> action, {required String idempotencyKey});
+
+  /// Kernel `setBets`: sends the WHOLE board of the round (the server debits
+  /// or refunds the difference). Undo / clear / repeat / double are computed
+  /// by the caller.
+  Future<GameActionResult> setBets(String tableId, int round, Map<String, int> bets, {PowerType? power, required String idempotencyKey});
+
+  /// Callable `gamePoke` (own requestId; harmless to repeat).
+  Future<GamePokeResult> poke(String tableId);
 }
 
 abstract interface class ShopRepository {

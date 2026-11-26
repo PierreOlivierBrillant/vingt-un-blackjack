@@ -5,9 +5,19 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets.dart';
 import '../../data/providers.dart';
+import '../../domain/games.dart';
 import '../../domain/models.dart';
 import '../../l10n/gen/app_localizations.dart';
+import '../games/registry.dart';
 import 'payment_sheet.dart';
+
+/// Game a ledger entry belongs to: its table's (id prefix), else its power's
+/// (`POWER_GAME`); null for wallet-only movements (deposit, ads, markets…).
+GameId? ledgerGameOf(LedgerEntry e) {
+  final t = e.tableId;
+  if (t != null && t.isNotEmpty) return gameOfTableId(t);
+  return e.power?.game;
+}
 
 // TODO(screens): dedicated labels for double/split/insurance/refund/
 // marketBuy/marketSell (interim: closest existing strings).
@@ -217,15 +227,34 @@ class _LedgerRow extends StatelessWidget {
     final p = context.palette;
     final positive = entry.amountCents > 0;
     final color = entry.amountCents == 0 ? p.textMuted : (positive ? p.win : Theme.of(context).colorScheme.onSurface);
+    // Sprint 2 games get their registry badge (blackjack rows look as before).
+    final game = ledgerGameOf(entry);
+    final ui = game == null || game == GameId.blackjack ? null : gameUi(game);
     return ListTile(
-      leading: CircleAvatar(
-        radius: 18,
-        backgroundColor: p.surfaceRaised,
-        child: Icon(ledgerIcon(entry.kind), size: 18, color: positive ? p.win : p.textMuted),
+      leading: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: p.surfaceRaised,
+            child: Icon(ledgerIcon(entry.kind), size: 18, color: positive ? p.win : p.textMuted),
+          ),
+          if (ui != null)
+            Positioned(
+              right: -4,
+              bottom: -4,
+              child: Container(
+                key: Key('ledger-game-${ui.id.wire}'),
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(color: ui.accent, shape: BoxShape.circle, border: Border.all(color: p.surface, width: 1.5)),
+                child: Icon(ui.icon, size: 11, color: Colors.white),
+              ),
+            ),
+        ],
       ),
       title: Text(ledgerLabel(l, entry.kind), style: const TextStyle(fontWeight: FontWeight.w700)),
       subtitle: Text(
-        [?entry.detail, relativeTime(context, entry.at, now)].join(' · '),
+        [?ui?.name(l), ?entry.detail, relativeTime(context, entry.at, now)].join(' · '),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

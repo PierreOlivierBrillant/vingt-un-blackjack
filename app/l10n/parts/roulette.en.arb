@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "rouletteRulesSummary": "Single-zero European roulette: 37 pockets in the real wheel order. The winning number is drawn by seededRng(seed).nextInt(37).",
+  "rouletteRulesPayouts": "Straight 35:1 · Split 17:1 · Street and trios 0-1-2 / 0-2-3 11:1 · Corner and first four 8:1 · Six line 5:1 · Dozen, column 2:1 · Even-money bets 1:1. No \"la partage\" by default (house edge 2.70%).",
+  "rouletteRulesRound": "20 s of betting → \"No more bets\" (draw) → about 8 s of spin → payout → next round. Call bets (voisins du zéro, tiers, orphelins, jeu zéro), Undo, Clear, Repeat and Double are computed by the app, which sends your whole bet board. Limits per bet and per round.",
+  "rouletteSeats": "7 seats, one chip colour per player."
+}

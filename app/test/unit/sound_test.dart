@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -16,6 +17,7 @@ import 'package:vingtun/domain/models.dart';
 import 'package:vingtun/domain/table_state.dart';
 import 'package:vingtun/features/dealer/dealer_controller.dart';
 import 'package:vingtun/features/dealer/dealer_feedback.dart';
+import 'package:vingtun/features/sound_catalog.dart';
 import 'package:vingtun/features/table/table_director.dart';
 import 'package:vingtun/features/table/table_sounds.dart';
 
@@ -54,29 +56,60 @@ void main() {
     final dir = Directory('assets/sfx');
     final files = {for (final f in dir.listSync().whereType<File>()) f.uri.pathSegments.last};
 
-    test('every Sfx has its WAV and every WAV is catalogued', () {
-      for (final s in Sfx.values) {
-        expect(files, contains('${s.file}.wav'), reason: s.name);
+    // Budget and quotas: tools/sfx/quotas.json (shared with tools/sfx/generate.mjs --check).
+    final quotas = jsonDecode(File('../tools/sfx/quotas.json').readAsStringSync()) as Map<String, Object?>;
+    final groupQuotas = (quotas['groups']! as Map).cast<String, num>();
+    const mib = 1024 * 1024;
+    final all = [for (final g in kSfxGroups.values) ...g];
+
+    test('every sound of every group has its WAV and every WAV is catalogued', () {
+      for (final s in all) {
+        expect(files, contains('${s.file}.wav'), reason: s.label);
       }
       final wavs = files.where((f) => f.endsWith('.wav')).toSet();
-      expect(wavs, {for (final s in Sfx.values) '${s.file}.wav'});
+      expect(wavs, {for (final s in all) '${s.file}.wav'});
+      expect({for (final s in all) s.file}.length, all.length, reason: 'duplicate file names');
+      // The Sprint 1 bank is frozen: 83 core sounds.
       expect(Sfx.values.length, 83);
+      expect(kSfxGroups['core'], Sfx.values);
     });
 
-    test('durations match the files, loops match the manifest, total ≤ 8 MiB', () {
-      final manifest = File('assets/sfx/MANIFEST.md').readAsStringSync();
-      var total = 0;
-      for (final s in Sfx.values) {
-        final f = File('assets/sfx/${s.file}.wav');
-        final bytes = f.readAsBytesSync();
-        total += bytes.length;
-        final (rate, frames) = wavInfo(bytes);
-        final ms = frames * 1000 / rate;
-        expect((ms - s.durationMs).abs(), lessThan(25), reason: '${s.file}: $ms ms vs ${s.durationMs}');
-        final row = manifest.split('\n').firstWhere((l) => l.startsWith('| `${s.file}.wav`'));
-        expect(row.contains('| oui |'), s.loop, reason: '${s.file} loop flag');
+    test('groups mirror quotas.json; Sprint 2 sounds are prefixed by their group', () {
+      expect(kSfxGroups.keys.toSet(), groupQuotas.keys.toSet());
+      for (final e in kSfxGroups.entries.where((e) => e.key != 'core')) {
+        for (final s in e.value) {
+          expect(s, isA<GameSfx>(), reason: s.label);
+          expect(s.file, startsWith('${e.key}_'), reason: '${s.label} must be named ${e.key}_…');
+        }
       }
-      expect(total, lessThanOrEqualTo(8 * 1024 * 1024));
+    });
+
+    test('durations match the files, loops match the manifests, Sprint 2 loops are mono 22 kHz', () {
+      for (final e in kSfxGroups.entries) {
+        final manifest = File(e.key == 'core' ? 'assets/sfx/MANIFEST.md' : 'assets/sfx/MANIFEST.${e.key}.md').readAsStringSync();
+        for (final s in e.value) {
+          final bytes = File('assets/sfx/${s.file}.wav').readAsBytesSync();
+          final (rate, frames) = wavInfo(bytes);
+          final ms = frames * 1000 / rate;
+          expect((ms - s.durationMs).abs(), lessThan(25), reason: '${s.file}: $ms ms vs ${s.durationMs}');
+          final row = manifest.split('\n').firstWhere((l) => l.startsWith('| `${s.file}.wav`'), orElse: () => '');
+          expect(row, isNotEmpty, reason: '${s.file} missing from the ${e.key} manifest');
+          expect(row.contains('| oui |'), s.loop, reason: '${s.file} loop flag');
+          expect(ByteData.sublistView(bytes).getUint16(22, Endian.little), 1, reason: '${s.file} must be mono');
+          if (e.key != 'core' && s.loop) expect(rate, 22050, reason: '${s.file}: loops are 22 050 Hz');
+        }
+      }
+    });
+
+    test('total ≤ ${quotas['totalMiB']} MiB and every group within its quota', () {
+      expect(groupQuotas.values.fold<num>(0, (a, b) => a + b), closeTo(quotas['totalMiB']! as num, 1e-9));
+      var total = 0;
+      for (final e in kSfxGroups.entries) {
+        final bytes = e.value.fold<int>(0, (a, s) => a + File('assets/sfx/${s.file}.wav').lengthSync());
+        total += bytes;
+        expect(bytes, lessThanOrEqualTo(groupQuotas[e.key]! * mib), reason: '${e.key}: ${(bytes / mib).toStringAsFixed(2)} MiB');
+      }
+      expect(total, lessThanOrEqualTo((quotas['totalMiB']! as num) * mib));
     });
 
     test('pubspec bundles the folder', () {
@@ -95,9 +128,22 @@ void main() {
     test('variant groups and preload sets only use one-shots', () {
       expect(Sfx.cardDeal3.group, 'card_deal');
       expect(Sfx.cardRevealHole.group, 'card_reveal_hole');
+      expect(const GameSfx('roulette_ball_tick_2', 100).group, 'roulette_ball_tick');
+      expect(const GameSfx('roulette_ball_tick', 100), const GameSfx('roulette_ball_tick', 100));
+      expect(const GameSfx('craps_dice_shake', 500).assetPath, 'assets/sfx/craps_dice_shake.wav');
       for (final s in [...kTableSfx, ...kUiSfx]) {
         expect(s.loop, isFalse, reason: s.name);
       }
+    });
+
+    test('a GameSfx plays through the governor like a core sound', () {
+      final rec = RecordingSoundService();
+      final g = SoundGovernor(rec, now: () => DateTime(2026));
+      const tick = GameSfx('roulette_ball_tick', 160, tier: SfxTier.ui, cooldownMs: 30);
+      g.play(tick);
+      g.play(tick); // same instant: rate-limited
+      expect(rec.sounds, [tick]);
+      expect(rec.played.single.toString(), 'roulette_ball_tick');
     });
   });
 
@@ -283,7 +329,7 @@ void main() {
 
     void playAll() => dealer.advance(dealer.remainingDuration + const Duration(milliseconds: 1));
 
-    List<Sfx> cardDeals() => [for (final s in rec.sounds) if (s.group == 'card_deal') s];
+    List<SoundCue> cardDeals() => [for (final s in rec.sounds) if (s.group == 'card_deal') s];
 
     test('a full hand: deals, stand, drum-rolled reveal, dealer bust, big win', () {
       final events = [

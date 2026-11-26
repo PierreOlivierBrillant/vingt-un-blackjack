@@ -157,12 +157,12 @@ Future<T> withMatchmakingSounds<T>(SoundService sound, Future<T> Function() sear
 
 /// Shortcuts for widgets.
 extension SfxWidgetRef on WidgetRef {
-  void sfx(Sfx s, {double volume = 1}) => read(soundProvider).play(s, volume: volume);
+  void sfx(SoundCue s, {double volume = 1}) => read(soundProvider).play(s, volume: volume);
 }
 
 extension SfxContext on BuildContext {
   /// Plays [s] from anywhere below the ProviderScope (no-op otherwise).
-  void sfx(Sfx s, {double volume = 1}) {
+  void sfx(SoundCue s, {double volume = 1}) {
     try {
       ProviderScope.containerOf(this, listen: false).read(soundProvider).play(s, volume: volume);
     } on Object {

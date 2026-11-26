@@ -10,8 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../bootstrap/firebase_backend.dart';
 import '../domain/card_style.dart';
+import '../domain/games.dart';
 import '../domain/models.dart';
 import 'connection_status.dart';
+import 'fake/fake_game_repository.dart';
 import 'fake/fake_repositories.dart';
 import 'firebase/firebase_repositories.dart';
 import 'repositories.dart';
@@ -76,6 +78,12 @@ final lobbyRepositoryProvider = Provider<LobbyRepository>(
 final tableRepositoryProvider = Provider<TableRepository>(
   (ref) => ref.watch(firebaseRepositoriesProvider)?.table ?? FakeTableRepository(),
 );
+/// Sprint 2: roulette, baccarat, hold'em and craps tables (`gameTables`).
+final gameTableRepositoryProvider = Provider<GameTableRepository>(
+  (ref) =>
+      ref.watch(firebaseRepositoriesProvider)?.games ??
+      FakeGameTableRepository(wallet: _fakeWallet(ref), now: ref.watch(clockProvider)),
+);
 final shopRepositoryProvider = Provider<ShopRepository>(
   (ref) =>
       ref.watch(firebaseRepositoriesProvider)?.shop ??
@@ -135,6 +143,33 @@ final peekProvider = StreamProvider.family<PeekResult?, String>(
 final tableHistoryProvider = StreamProvider.family<List<HandHistory>, String>(
   (ref, id) => ref.watch(tableRepositoryProvider).watchHistory(id, limit: 10),
 );
+// ------------------------------------------------ Sprint 2: game tables --
+
+/// Public open tables of one kernel game (`(game, tier)`; tier null = all).
+final gameLiveTablesProvider = StreamProvider.family<List<LiveTable>, (GameId, String?)>(
+  (ref, k) => ref.watch(gameTableRepositoryProvider).watchLiveTables(k.$1, tierId: k.$2),
+);
+
+/// `gameTables/{id}`.
+final gameTableProvider = StreamProvider.family<GameTableState, String>(
+  (ref, id) => ref.watch(gameTableRepositoryProvider).watchTable(id),
+);
+
+/// `gameTables/{id}/bets/*` (all boards; filter by round with [GameBet.isFor]).
+final gameBetsProvider = StreamProvider.family<List<GameBet>, String>(
+  (ref, id) => ref.watch(gameTableRepositoryProvider).watchBets(id),
+);
+
+/// `gameTables/{id}/holes/{me}` (hold'em).
+final gameHoleProvider = StreamProvider.family<GameHole?, String>(
+  (ref, id) => ref.watch(gameTableRepositoryProvider).watchMyHole(id),
+);
+
+/// Finished rounds (`rounds/*`, newest first): history + fairness proofs.
+final gameRoundsProvider = StreamProvider.family<List<GameRound>, String>(
+  (ref, id) => ref.watch(gameTableRepositoryProvider).watchRounds(id, limit: 10),
+);
+
 final powerOffersProvider =
     StreamProvider<List<PowerOffer>>((ref) => ref.watch(shopRepositoryProvider).watchOffers());
 final equippedStyleProvider =

@@ -851,7 +851,7 @@ abstract class AppLocalizations {
   /// No description provided for @navLobby.
   ///
   /// In fr, this message translates to:
-  /// **'Salon'**
+  /// **'Casino'**
   String get navLobby;
 
   /// No description provided for @navMarkets.
@@ -3049,6 +3049,570 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ouvrez d\'abord une table privée pour inviter quelqu\'un.'**
   String get errReasonNoPrivateTable;
+
+  /// No description provided for @navRomance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rendez-vous'**
+  String get navRomance;
+
+  /// No description provided for @lobbyChooseGame.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez votre jeu'**
+  String get lobbyChooseGame;
+
+  /// No description provided for @lobbyNoTables.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune table ouverte pour l\'instant.'**
+  String get lobbyNoTables;
+
+  /// No description provided for @gameBlackjack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Blackjack'**
+  String get gameBlackjack;
+
+  /// No description provided for @gameRoulette.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roulette'**
+  String get gameRoulette;
+
+  /// No description provided for @gameBaccarat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Baccarat'**
+  String get gameBaccarat;
+
+  /// No description provided for @gameHoldem.
+  ///
+  /// In fr, this message translates to:
+  /// **'Texas hold\'em'**
+  String get gameHoldem;
+
+  /// No description provided for @gameCraps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Craps'**
+  String get gameCraps;
+
+  /// No description provided for @gameTaglineRoulette.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roulette européenne : 37 cases, un seul zéro, 7 places.'**
+  String get gameTaglineRoulette;
+
+  /// No description provided for @gameTaglineBaccarat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Punto Banco, sabot de 8 jeux, 7 places. Le Banquier paie 0,95 pour 1.'**
+  String get gameTaglineBaccarat;
+
+  /// No description provided for @gameTaglineHoldem.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-limit entre joueurs, 6 places, sans commission ni pouvoir.'**
+  String get gameTaglineHoldem;
+
+  /// No description provided for @gameTaglineCraps.
+  ///
+  /// In fr, this message translates to:
+  /// **'8 places, lanceur tournant, vraies cotes derrière la ligne.'**
+  String get gameTaglineCraps;
+
+  /// No description provided for @gameHeroTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{game} en direct'**
+  String gameHeroTitle(String game);
+
+  /// No description provided for @gameDealer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre croupier : {name}'**
+  String gameDealer(String name);
+
+  /// No description provided for @gameComingSoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'BIENTÔT'**
+  String get gameComingSoon;
+
+  /// No description provided for @gameComingSoonBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce jeu ouvre bientôt : vous pouvez déjà regarder ses tables.'**
+  String get gameComingSoonBody;
+
+  /// No description provided for @gameRules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Règles'**
+  String get gameRules;
+
+  /// No description provided for @gameHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique'**
+  String get gameHistory;
+
+  /// No description provided for @gameHistoryEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun tour terminé pour l\'instant.'**
+  String get gameHistoryEmpty;
+
+  /// No description provided for @gameRoundNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour n° {n}'**
+  String gameRoundNumber(int n);
+
+  /// No description provided for @gamePhaseBetting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faites vos jeux · {seconds} s'**
+  String gamePhaseBetting(int seconds);
+
+  /// No description provided for @gamePhaseLive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour en cours'**
+  String get gamePhaseLive;
+
+  /// No description provided for @gamePhaseLiveSecs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour en cours · {seconds} s'**
+  String gamePhaseLiveSecs(int seconds);
+
+  /// No description provided for @gamePhaseSettled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour terminé · suivant dans {seconds} s'**
+  String gamePhaseSettled(int seconds);
+
+  /// No description provided for @gameSeatFree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libre'**
+  String get gameSeatFree;
+
+  /// No description provided for @gameBot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bot'**
+  String get gameBot;
+
+  /// No description provided for @gameYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous'**
+  String get gameYou;
+
+  /// No description provided for @gameStack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapis {amount}'**
+  String gameStack(String amount);
+
+  /// No description provided for @gameStake.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise {amount}'**
+  String gameStake(String amount);
+
+  /// No description provided for @gameSeatedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes à la place {n}.'**
+  String gameSeatedAt(int n);
+
+  /// No description provided for @gameQueuedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'En file d\'attente (n° {n}) : place attribuée au prochain tour.'**
+  String gameQueuedAt(int n);
+
+  /// No description provided for @gamePlayThis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jouer à ce jeu'**
+  String get gamePlayThis;
+
+  /// No description provided for @gameNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette table n\'existe plus.'**
+  String get gameNotFound;
+
+  /// No description provided for @gameBackToLobby.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour au casino'**
+  String get gameBackToLobby;
+
+  /// No description provided for @gamePlaceholderTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Table en préparation'**
+  String get gamePlaceholderTitle;
+
+  /// No description provided for @gamePlaceholderBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le croupier s\'installe : les mises et les animations de ce jeu arrivent bientôt.'**
+  String get gamePlaceholderBody;
+
+  /// No description provided for @gameRoundResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résultat du tour : {amount}'**
+  String gameRoundResult(String amount);
+
+  /// No description provided for @gameFairBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avant chaque tour, le serveur publie l\'empreinte SHA-256 d\'une graine secrète ; après le tour, il révèle la graine. Le tirage se recalcule à partir d\'elle : personne, pas même le casino, ne peut le changer en cours de route.'**
+  String get gameFairBody;
+
+  /// No description provided for @gameFairCurrentCommit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagement du tour en cours (SHA-256 de la graine)'**
+  String get gameFairCurrentCommit;
+
+  /// No description provided for @gameFairLastRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour n° {n} : graine révélée'**
+  String gameFairLastRound(int n);
+
+  /// No description provided for @gameFairVerify.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier le dernier tour'**
+  String get gameFairVerify;
+
+  /// No description provided for @gameFairVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifié : SHA-256(graine) = engagement publié avant le tour, et le tirage recalculé correspond.'**
+  String get gameFairVerified;
+
+  /// No description provided for @gameFairCommitOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifié : SHA-256(graine) = engagement publié avant le tour.'**
+  String get gameFairCommitOnly;
+
+  /// No description provided for @gameMinMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise {min} – {max}'**
+  String gameMinMax(String min, String max);
+
+  /// No description provided for @shopNoPowers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun pouvoir à ce jeu : entre joueurs, tout se joue à la loyale.'**
+  String get shopNoPowers;
+
+  /// No description provided for @shopGroupHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un pouvoir ne sert qu\'aux tables de son jeu.'**
+  String get shopGroupHint;
+
+  /// No description provided for @profileStatsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques par jeu'**
+  String get profileStatsTitle;
+
+  /// No description provided for @profileStatsRounds.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rounds, plural, =0{Aucun tour} =1{1 tour} other{{rounds} tours}} · {won} gagnés'**
+  String profileStatsRounds(int rounds, int won);
+
+  /// No description provided for @profileStatsBest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Meilleur gain {amount}'**
+  String profileStatsBest(String amount);
+
+  /// No description provided for @profileStatsNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore joué'**
+  String get profileStatsNone;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get profileTitle;
+
+  /// No description provided for @profileNoTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun titre : gagnez-en au Rendez-vous.'**
+  String get profileNoTitle;
+
+  /// No description provided for @titleCharacter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cœur de {name}'**
+  String titleCharacter(String name);
+
+  /// No description provided for @titleDuo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Duo inséparable'**
+  String get titleDuo;
+
+  /// No description provided for @filterAllGames.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les jeux'**
+  String get filterAllGames;
+
+  /// No description provided for @marketPerRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'tour n° {n}'**
+  String marketPerRound(int n);
+
+  /// No description provided for @gameLeaveConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter la table ? Les mises pas encore verrouillées vous sont rendues.'**
+  String get gameLeaveConfirm;
+
+  /// No description provided for @rouletteRulesSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roulette européenne à un seul zéro : 37 cases dans l\'ordre réel du cylindre. Le numéro gagnant est tiré par seededRng(graine).nextInt(37).'**
+  String get rouletteRulesSummary;
+
+  /// No description provided for @rouletteRulesPayouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plein 35:1 · Cheval 17:1 · Transversale et trios 0-1-2 / 0-2-3 11:1 · Carré et premier quatre 8:1 · Sixain 5:1 · Douzaine, colonne 2:1 · Chances simples 1:1. Pas de « partage » par défaut (avantage maison 2,70 %).'**
+  String get rouletteRulesPayouts;
+
+  /// No description provided for @rouletteRulesRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'20 s de mises → « Rien ne va plus » (tirage) → lancer d\'environ 8 s → paiement → tour suivant. Annonces (voisins du zéro, tiers, orphelins, jeu zéro), Annuler, Effacer, Rejouer et Doubler sont calculés par l\'app, qui envoie votre carte de mises complète. Plafonds par mise et par tour.'**
+  String get rouletteRulesRound;
+
+  /// No description provided for @rouletteSeats.
+  ///
+  /// In fr, this message translates to:
+  /// **'7 places, une couleur de jetons par joueur.'**
+  String get rouletteSeats;
+
+  /// No description provided for @baccaratRulesSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Punto Banco, sabot de 8 jeux (416 cartes), coupe à 16 cartes de la fin. Brûlage selon la première carte, inclus dans la preuve d\'équité. Tableau de tirage officiel (3e carte de la Banque contre 0–9).'**
+  String get baccaratRulesSummary;
+
+  /// No description provided for @baccaratRulesPayouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur 1:1 · Banquier 0,95:1 (exact au centime) · Égalité 8:1 (Joueur et Banquier rendus) · Paire Joueur, Paire Banquier 11:1.'**
+  String get baccaratRulesPayouts;
+
+  /// No description provided for @baccaratRulesRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'20 s de mises, puis la donne : squeeze animé, 3e carte posée en travers. Tendances affichées : Bead Plate et Big Road.'**
+  String get baccaratRulesRound;
+
+  /// No description provided for @baccaratSeats.
+  ///
+  /// In fr, this message translates to:
+  /// **'7 places.'**
+  String get baccaratSeats;
+
+  /// No description provided for @holdemRulesSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Texas hold\'em No-Limit entre joueurs : ni commission ni pouvoir. Blinds par palier 1/2, 5/10, 25/50 \$ ; cave de 40 à 100 grosses blinds, débitée en vous asseyant, recréditée en partant (après la main si vous y êtes).'**
+  String get holdemRulesSummary;
+
+  /// No description provided for @holdemRulesRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bouton tournant, règles du tête-à-tête, nouvel arrivant qui attend la grosse blind, relance minimale = dernière relance, un tapis incomplet ne rouvre pas les enchères, pots annexes, abattage automatique (meilleures 5 cartes sur 7). 20 s par décision ; deux expirations de suite → pause ; trois mains en pause → tapis recrédité et place libérée.'**
+  String get holdemRulesRound;
+
+  /// No description provided for @holdemRulesFairness.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choix assumé : la graine révélée après la main rend les cartes couchées vérifiables, donc visibles par tous.'**
+  String get holdemRulesFairness;
+
+  /// No description provided for @holdemSeats.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 places.'**
+  String get holdemSeats;
+
+  /// No description provided for @holdemBuyInTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre cave'**
+  String get holdemBuyInTitle;
+
+  /// No description provided for @holdemBuyInBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entre {min} et {max} (40 à 100 grosses blinds), débitée en vous asseyant.'**
+  String holdemBuyInBody(String min, String max);
+
+  /// No description provided for @holdemBuyInSit.
+  ///
+  /// In fr, this message translates to:
+  /// **'S\'asseoir'**
+  String get holdemBuyInSit;
+
+  /// No description provided for @crapsRulesSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ligne de passe et Ne passe pas (12 barré), Come et Don\'t Come, cotes 3-4-5× (vraies cotes) et cotes « lay ». Place : 4/10 à 9:5, 5/9 à 7:5, 6/8 à 7:6. Field : 2 payé 2:1, 12 payé 3:1.'**
+  String get crapsRulesSummary;
+
+  /// No description provided for @crapsRulesPayouts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Propositions : Any 7 4:1, Any Craps 7:1, Hardways 7:1 ou 9:1, Yo 15:1, 2 et 12 30:1, 3 15:1. Mises en dollars entiers ; place 6/8 et lay 5/9 ou 6/8 par multiples de 3 \$.'**
+  String get crapsRulesPayouts;
+
+  /// No description provided for @crapsRulesRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque lancer est un tour, avec sa graine (nextInt(6)+1 deux fois). Places « off » au come-out ; mises contractuelles non retirables. Le lanceur doit miser Pass ou Don\'t Pass, lance d\'un geste ou automatiquement après 15 s ; le dé passe au suivant après un seven-out.'**
+  String get crapsRulesRound;
+
+  /// No description provided for @crapsSeats.
+  ///
+  /// In fr, this message translates to:
+  /// **'8 places, lanceur tournant.'**
+  String get crapsSeats;
+
+  /// No description provided for @romanceHubTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rendez-vous'**
+  String get romanceHubTitle;
+
+  /// No description provided for @romanceHubIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupiers et habitués du casino : discutez, offrez des cadeaux, jouez à leur table… et qui sait ? Tout reste PG-13, entre adultes.'**
+  String get romanceHubIntro;
+
+  /// No description provided for @romanceHubSoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bientôt : discussions, cadeaux, rendez-vous et Souvenirs.'**
+  String get romanceHubSoon;
+
+  /// No description provided for @romanceDealers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupiers'**
+  String get romanceDealers;
+
+  /// No description provided for @romanceRegulars.
+  ///
+  /// In fr, this message translates to:
+  /// **'Habitués'**
+  String get romanceRegulars;
+
+  /// No description provided for @romanceDatingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rencontres'**
+  String get romanceDatingTitle;
+
+  /// No description provided for @romanceDatingBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rencontres entre joueurs, sur inscription et sans texte libre : désactivées sur ce serveur pour l\'instant.'**
+  String get romanceDatingBody;
+
+  /// No description provided for @romanceTierStranger.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu·e'**
+  String get romanceTierStranger;
+
+  /// No description provided for @romanceAge.
+  ///
+  /// In fr, this message translates to:
+  /// **'{age} ans'**
+  String romanceAge(int age);
+
+  /// No description provided for @romanceRoleLucas.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupier de blackjack'**
+  String get romanceRoleLucas;
+
+  /// No description provided for @romanceRoleCamille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupière de roulette'**
+  String get romanceRoleCamille;
+
+  /// No description provided for @romanceRoleInes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupière de baccarat'**
+  String get romanceRoleInes;
+
+  /// No description provided for @romanceRoleAlex.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupier·e de hold\'em (iel)'**
+  String get romanceRoleAlex;
+
+  /// No description provided for @romanceRoleMarco.
+  ///
+  /// In fr, this message translates to:
+  /// **'Croupier de craps'**
+  String get romanceRoleMarco;
+
+  /// No description provided for @romanceRoleJade.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mixologue du bar'**
+  String get romanceRoleJade;
+
+  /// No description provided for @romanceRoleTheo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pianiste du salon'**
+  String get romanceRoleTheo;
+
+  /// No description provided for @romanceRoleNora.
+  ///
+  /// In fr, this message translates to:
+  /// **'Magicienne'**
+  String get romanceRoleNora;
+
+  /// No description provided for @romanceRoleHugo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Concierge VIP'**
+  String get romanceRoleHugo;
 }
 
 class _AppLocalizationsDelegate

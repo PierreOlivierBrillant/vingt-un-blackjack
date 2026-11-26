@@ -1,0 +1,19 @@
+{
+  "$comment": [
+    "Budget de la banque de sons (app/assets/sfx), lu par generate.mjs --check et par app/test/unit/sound_test.dart.",
+    "Unités : Mio (1 Mio = 1 048 576 octets). 'core' = les 83 sons du Sprint 1 (tools/sfx/sounds.mjs, figés) ;",
+    "chaque autre groupe = un fichier tools/sfx/games/<groupe>.mjs, dont les sons portent le préfixe '<groupe>_'.",
+    "La somme des quotas vaut le total : un groupe ne peut pas déborder sur un autre.",
+    "Rappel des formats : WAV PCM 16 bits mono ; 32 000 Hz (brillant) ou 22 050 Hz (grave, ambiance) ;",
+    "les BOUCLES des nouveaux groupes sont obligatoirement en 22 050 Hz (≈ 43 Kio par seconde)."
+  ],
+  "totalMiB": 12,
+  "groups": {
+    "core": 6.5,
+    "roulette": 1.25,
+    "baccarat": 0.85,
+    "holdem": 0.85,
+    "craps": 1.1,
+    "romance": 1.45
+  }
+}
