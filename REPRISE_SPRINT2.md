@@ -30,8 +30,8 @@ croupiers + habitués + autres joueurs ; récompenses = cosmétiques + pouvoirs.
   étaient occupés par les émulateurs de la salle de classe (lancés à 15 h 46).
 
 ## Reste à faire (ordre)
-1. **Fin de A0** : corriger les 3 tests ci-dessus ; ajouter `tools/sprint2/owners.json` +
-   `check_owners.mjs` (périmètre de fichiers par chantier, refuse tout fichier hors périmètre).
+1. ~~Fin de A0~~ FAIT le 26/11 : 3 tests dto_parsing mis à jour (258 tests Flutter verts) ;
+   `tools/sprint2/owners.json` + `check_owners.mjs <chantier>` (périmètre par chantier ; `--list`).
 2. **A1 backend** (un agent) et **A2 Flutter** (un agent) en parallèle, chacun dans son worktree :
    - A1 : noyau `src/games/kernel/` (GameTableMachine pure + GameTableTx + interface GameModule),
      registre `src/games/registry.ts` avec modules stubs, callables `src/callables/games.ts`

@@ -1,0 +1,183 @@
+{
+  "$comment": [
+    "Périmètre de fichiers de chaque chantier du Sprint 2 (lu par check_owners.mjs).",
+    "Glob : ** = n'importe quels dossiers, * = n'importe quels caractères sauf '/', ? = un caractère.",
+    "Un fichier est accepté s'il correspond à un motif 'allow' (ou 'generated') du chantier et à aucun motif 'deny'.",
+    "'generated' : fichiers dérivés (ARB fusionnés, code l10n, contract.json, banque de sons) que tout chantier peut",
+    "régénérer ; ils sont régénérés de toute façon à chaque fusion, les conflits s'y règlent en relançant le générateur.",
+    "'lead' : fichiers réservés à la session principale (contrat figé, plans). Un chantier qui a besoin d'y changer",
+    "quelque chose l'écrit dans tools/sprint2/requests/<chantier>.md au lieu de le modifier.",
+    "Un motif 'allow' explicite d'un chantier l'emporte sur 'lead' : a1 peut compléter types.ts et games/common.ts,",
+    "en AJOUT seulement (valeurs en fin de liste, champs optionnels), chaque ajout étant noté dans requests/a1.md."
+  ],
+  "base": "sprint-2",
+  "lead": [
+    "PLAN_SPRINT2.md",
+    "REPRISE_SPRINT2.md",
+    "PLAN.md",
+    "REPRISE.md",
+    "tools/sprint2/owners.json",
+    "tools/sprint2/check_owners.mjs",
+    "firebase/functions/src/shared/types.ts",
+    "firebase/functions/src/shared/games/common.ts"
+  ],
+  "generated": [
+    "app/lib/l10n/app_fr.arb",
+    "app/lib/l10n/app_en.arb",
+    "app/lib/l10n/gen/**",
+    "firebase/functions/test/golden/contract.json",
+    "app/assets/sfx/**"
+  ],
+  "deny": [
+    "app/lib/features/dealer/dealer_painters.dart",
+    "app/lib/features/table/table_screen.dart",
+    "app/integration_test/app_flow_test.dart",
+    "tools/start_classroom.ps1",
+    "tools/push_classroom.ps1",
+    "tools/install_student.ps1",
+    "tools/classroom/**"
+  ],
+  "chantiers": {
+    "a1": {
+      "description": "Backend : noyau générique, registre, callables, retouches blackjack, règles, index, bots, simulation, modules factices coin/duel, sonde de charge.",
+      "allow": [
+        "tools/sprint2/requests/a1.md",
+        "firebase/functions/src/shared/types.ts",
+        "firebase/functions/src/shared/games/common.ts",
+        "firebase/firestore.rules",
+        "firebase/firestore.indexes.json",
+        "firebase/functions/package.json",
+        "firebase/functions/package-lock.json",
+        "firebase/functions/vitest.*.config.mts",
+        "firebase/functions/src/index.ts",
+        "firebase/functions/src/games/**",
+        "firebase/functions/src/callables/**",
+        "firebase/functions/src/table/**",
+        "firebase/functions/src/market/**",
+        "firebase/functions/src/sim/**",
+        "firebase/functions/src/romance/**",
+        "firebase/functions/src/shared/paths.ts",
+        "firebase/functions/src/shared/wallet.ts",
+        "firebase/functions/src/shared/admin.ts",
+        "firebase/functions/src/shared/errors.ts",
+        "firebase/functions/src/shared/time.ts",
+        "firebase/functions/src/shared/cosmetics.ts",
+        "firebase/functions/test/**",
+        "tools/test_all.ps1",
+        "tools/seed.ps1",
+        "tools/sim_runner.ps1"
+      ]
+    },
+    "a2": {
+      "description": "Flutter : sons par groupe, ARB en morceaux, 5 onglets, registres, StageController, CharacterPainter, GameTableScaffold, écrans pilotés par registre, hub Rendez-vous vide.",
+      "allow": [
+        "tools/sprint2/requests/a2.md",
+        "tools/sfx/**",
+        "tools/test_flutter.ps1",
+        "app/pubspec.yaml",
+        "app/pubspec.lock",
+        "app/l10n.yaml",
+        "app/l10n/**",
+        "app/tool/**",
+        "app/lib/**",
+        "app/test/**",
+        "app/assets/**"
+      ]
+    },
+    "roulette": {
+      "description": "Roulette européenne : moteur, module, bots, marchés, équité, écran, animations, sons, textes, tests.",
+      "allow": [
+        "tools/sprint2/requests/roulette.md",
+        "firebase/functions/src/games/roulette/**",
+        "firebase/functions/src/shared/games/roulette.ts",
+        "firebase/functions/test/unit/roulette/**",
+        "firebase/functions/test/unit/roulette*.test.ts",
+        "firebase/functions/test/golden/roulette*",
+        "firebase/functions/test/integration/roulette*.test.ts",
+        "app/lib/features/games/roulette/**",
+        "app/l10n/parts/roulette.*.arb",
+        "tools/sfx/games/roulette.mjs",
+        "app/test/**/roulette/**",
+        "app/test/**/roulette*",
+        "app/assets/fairness/roulette*"
+      ]
+    },
+    "baccarat": {
+      "description": "Baccarat Punto Banco : moteur, module, bots, marchés, équité, écran, animations, sons, textes, tests.",
+      "allow": [
+        "tools/sprint2/requests/baccarat.md",
+        "firebase/functions/src/games/baccarat/**",
+        "firebase/functions/src/shared/games/baccarat.ts",
+        "firebase/functions/test/unit/baccarat/**",
+        "firebase/functions/test/unit/baccarat*.test.ts",
+        "firebase/functions/test/golden/baccarat*",
+        "firebase/functions/test/integration/baccarat*.test.ts",
+        "app/lib/features/games/baccarat/**",
+        "app/l10n/parts/baccarat.*.arb",
+        "tools/sfx/games/baccarat.mjs",
+        "app/test/**/baccarat/**",
+        "app/test/**/baccarat*",
+        "app/assets/fairness/baccarat*"
+      ]
+    },
+    "holdem": {
+      "description": "Texas Hold'em No-Limit : moteur, évaluateur, module, bots, marchés, équité, écran, animations, sons, textes, tests.",
+      "allow": [
+        "tools/sprint2/requests/holdem.md",
+        "firebase/functions/src/games/holdem/**",
+        "firebase/functions/src/shared/games/holdem.ts",
+        "firebase/functions/test/unit/holdem/**",
+        "firebase/functions/test/unit/holdem*.test.ts",
+        "firebase/functions/test/golden/holdem*",
+        "firebase/functions/test/integration/holdem*.test.ts",
+        "app/lib/features/games/holdem/**",
+        "app/l10n/parts/holdem.*.arb",
+        "tools/sfx/games/holdem.mjs",
+        "app/test/**/holdem/**",
+        "app/test/**/holdem*",
+        "app/assets/fairness/holdem*"
+      ]
+    },
+    "craps": {
+      "description": "Craps : moteur, module, bots, marchés, équité, écran, animations, sons, textes, tests.",
+      "allow": [
+        "tools/sprint2/requests/craps.md",
+        "firebase/functions/src/games/craps/**",
+        "firebase/functions/src/shared/games/craps.ts",
+        "firebase/functions/test/unit/craps/**",
+        "firebase/functions/test/unit/craps*.test.ts",
+        "firebase/functions/test/golden/craps*",
+        "firebase/functions/test/integration/craps*.test.ts",
+        "app/lib/features/games/craps/**",
+        "app/l10n/parts/craps.*.arb",
+        "tools/sfx/games/craps.mjs",
+        "app/test/**/craps/**",
+        "app/test/**/craps*",
+        "app/assets/fairness/craps*"
+      ]
+    },
+    "romance": {
+      "description": "Rendez-vous : histoire JSON, callables romance/dating, bots de rencontre, hub, visual novel, cadeaux, Souvenirs, rencontres, tests.",
+      "allow": [
+        "tools/sprint2/requests/romance.md",
+        "tools/sync_story.mjs",
+        "firebase/functions/src/romance/**",
+        "firebase/functions/src/shared/romance.ts",
+        "firebase/functions/src/callables/romance.ts",
+        "firebase/functions/src/callables/dating.ts",
+        "firebase/functions/test/unit/romance/**",
+        "firebase/functions/test/unit/romance*.test.ts",
+        "firebase/functions/test/unit/dating*.test.ts",
+        "firebase/functions/test/integration/romance*.test.ts",
+        "firebase/functions/test/integration/dating*.test.ts",
+        "app/lib/features/romance/**",
+        "app/assets/story/**",
+        "app/l10n/parts/romance.*.arb",
+        "tools/sfx/games/romance.mjs",
+        "app/test/**/romance/**",
+        "app/test/**/romance*",
+        "app/test/**/dating*"
+      ]
+    }
+  }
+}

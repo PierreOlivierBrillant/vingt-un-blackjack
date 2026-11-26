@@ -7,6 +7,7 @@ import 'package:vingtun/data/fake/fake_data.dart';
 import 'package:vingtun/domain/backend_constants.dart';
 import 'package:vingtun/domain/card_style.dart';
 import 'package:vingtun/domain/cards.dart';
+import 'package:vingtun/domain/games.dart';
 import 'package:vingtun/domain/models.dart';
 import 'package:vingtun/domain/table_state.dart';
 import 'package:vingtun/domain/wire.dart';
@@ -208,6 +209,7 @@ void main() {
     const types = [
       'welcomeBonus', 'deposit', 'withdrawal', 'bet', 'double', 'split', 'insurance', 'payout', 'refund',
       'powerPurchase', 'marketBuy', 'marketSell', 'marketPayout', 'adReward',
+      'buyIn', 'cashOut', 'gift', 'reservation',
     ];
     expect(LedgerKind.values.map((k) => k.name), types);
     final e = LedgerEntry.fromDoc({
@@ -224,7 +226,7 @@ void main() {
     expect(d.method, PaymentMethod.bankTransfer);
     final b = LedgerEntry.fromDoc({'entryId': 'e3', 'type': 'double', 'amountCents': -2500, 'balanceAfterCents': 0, 'createdAtMs': t0, 'tableId': 'tbl1', 'handNumber': 12})!;
     expect((b.tableId, b.handNumber), ('tbl1', 12));
-    expect(LedgerEntry.fromDoc({'type': 'jackpot'}), isNull);
+    expect(LedgerEntry.fromDoc({'type': 'lottery'}), isNull);
   });
 
   test('InventoryDoc → offers with POWER_PRICES_CENTS', () {
@@ -235,7 +237,7 @@ void main() {
     expect(InventoryItem.fromDoc({'powerId': 'nuke', 'quantity': 1}), isNull);
     final offers = PowerOffer.fromInventory(items);
     expect(offers.map((o) => o.type), PowerType.values);
-    expect(offers.map((o) => o.priceCents), [2000, 2500, 1000, 3000, 4000]);
+    expect(offers.map((o) => o.priceCents), [2000, 2500, 1000, 3000, 4000, 1500, 1500, 2500]);
     expect(offers.firstWhere((o) => o.type == PowerType.peek).owned, 3);
     expect(offers.firstWhere((o) => o.type == PowerType.freeDouble).maxBuyable, 1);
     expect(offers.firstWhere((o) => o.type == PowerType.freeSplit).maxBuyable, 10);
@@ -341,7 +343,9 @@ void main() {
     expect(w.avatar, 'avatar12');
     expect(w.at, ms(t0));
     expect(w.tableId, isNull);
-    expect(RecentWin.fromDoc({'kind': 'jackpot'}), isNull);
+    expect(RecentWin.fromDoc({'kind': 'lottery'}), isNull);
+    final j = RecentWin.fromDoc({'username': 'Bo', 'kind': 'jackpot', 'amountCents': 900000, 'game': 'roulette', 'createdAtMs': t0}, id: 'f2')!;
+    expect((j.kind, j.game), (WinKind.jackpot, GameId.roulette));
   });
 
   test('HandHistoryDoc and PeekDoc', () {
