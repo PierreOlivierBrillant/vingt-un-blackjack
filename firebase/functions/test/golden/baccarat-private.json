@@ -1,0 +1,1756 @@
+[
+ {
+  "round": 1,
+  "commit": "7edbc25499553e1b9fb41262e7c9abfc8162306456b0b0010a489a947c45531a",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 1000
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "tie": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "3D",
+    "9D",
+    "AH"
+   ],
+   "banker": [
+    "JS",
+    "4C"
+   ],
+   "playerTotal": 3,
+   "bankerTotal": 4,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": {
+    "card": "6D",
+    "count": 6
+   }
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 404,
+   "coups": 1
+  },
+  "events": [
+   [
+    "burn",
+    "6D",
+    6
+   ],
+   [
+    "card",
+    "player",
+    0,
+    "3D",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "JS",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "9D",
+    2
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "4C",
+    4
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "AH",
+    3
+   ],
+   [
+    "result",
+    "banker",
+    3,
+    4,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    950
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 2,
+  "commit": "7a71eb655a8e3fad3a888a4c7390b5f3e7c8d57802b2e84cdbe940d7e940a537",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 2000,
+     "bankerPair": 100
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "playerPair": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "9H",
+    "QS"
+   ],
+   "banker": [
+    "KD",
+    "8D"
+   ],
+   "playerTotal": 9,
+   "bankerTotal": 8,
+   "winner": "player",
+   "natural": true,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 400,
+   "coups": 2
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "9H",
+    9
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "KD",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "QS",
+    9
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "8D",
+    8
+   ],
+   [
+    "result",
+    "player",
+    9,
+    8,
+    true,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -2100
+   ],
+   [
+    1,
+    400
+   ]
+  ]
+ },
+ {
+  "round": 3,
+  "commit": "40f9642edf1e8c8e17d18bf0e4623fd916fc9cf6dd17e986335a3a48e7f84d65",
+  "bets": [
+   [
+    0,
+    {
+     "player": 300
+    }
+   ],
+   [
+    1,
+    {
+     "banker": 700,
+     "tie": 200
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "8H",
+    "TD"
+   ],
+   "banker": [
+    "4S",
+    "TS"
+   ],
+   "playerTotal": 8,
+   "bankerTotal": 4,
+   "winner": "player",
+   "natural": true,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 396,
+   "coups": 3
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "8H",
+    8
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "4S",
+    4
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "TD",
+    8
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "TS",
+    4
+   ],
+   [
+    "result",
+    "player",
+    8,
+    4,
+    true,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    300
+   ],
+   [
+    1,
+    -900
+   ]
+  ]
+ },
+ {
+  "round": 4,
+  "commit": "e6dd753a2be4a946881e73ef1ace0534aa90e865dd3788f44242e16d1b5c9e65",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 1000
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "tie": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "3H",
+    "KS",
+    "4C"
+   ],
+   "banker": [
+    "5C",
+    "7H",
+    "3C"
+   ],
+   "playerTotal": 7,
+   "bankerTotal": 5,
+   "winner": "player",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 390,
+   "coups": 4
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "3H",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "5C",
+    5
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "KS",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "7H",
+    2
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "4C",
+    7
+   ],
+   [
+    "card",
+    "banker",
+    2,
+    "3C",
+    5
+   ],
+   [
+    "result",
+    "player",
+    7,
+    5,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -1000
+   ],
+   [
+    1,
+    400
+   ]
+  ]
+ },
+ {
+  "round": 5,
+  "commit": "16815ba2b431dcc6a7df5950912926be559115e1cd92df05964b3a4f182bebe5",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 2000,
+     "bankerPair": 100
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "playerPair": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "QD",
+    "5D",
+    "TS"
+   ],
+   "banker": [
+    "TH",
+    "TS",
+    "2C"
+   ],
+   "playerTotal": 5,
+   "bankerTotal": 2,
+   "winner": "player",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": true,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 384,
+   "coups": 5
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "QD",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "TH",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "5D",
+    5
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "TS",
+    0
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "TS",
+    5
+   ],
+   [
+    "card",
+    "banker",
+    2,
+    "2C",
+    2
+   ],
+   [
+    "result",
+    "player",
+    5,
+    2,
+    false,
+    false,
+    true
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "yes"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -900
+   ],
+   [
+    1,
+    400
+   ]
+  ]
+ },
+ {
+  "round": 6,
+  "commit": "ad9208a63cde2a9fc2551fdf0ef79ea7d38aa102724aca65f50d5745fab4e5e7",
+  "bets": [
+   [
+    0,
+    {
+     "player": 300
+    }
+   ],
+   [
+    1,
+    {
+     "banker": 700,
+     "tie": 200
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "JH",
+    "4C",
+    "5H"
+   ],
+   "banker": [
+    "TD",
+    "7S"
+   ],
+   "playerTotal": 9,
+   "bankerTotal": 7,
+   "winner": "player",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 379,
+   "coups": 6
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "JH",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "TD",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "4C",
+    4
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "7S",
+    7
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "5H",
+    9
+   ],
+   [
+    "result",
+    "player",
+    9,
+    7,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    300
+   ],
+   [
+    1,
+    -900
+   ]
+  ]
+ },
+ {
+  "round": 7,
+  "commit": "578171d03c7e5c68d8e0f2706d6649ffbd3ad1e6ba752a7e25a6cc308e1b5977",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 1000
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "tie": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "QD",
+    "4D",
+    "AC"
+   ],
+   "banker": [
+    "TH",
+    "7S"
+   ],
+   "playerTotal": 5,
+   "bankerTotal": 7,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 374,
+   "coups": 7
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "QD",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "TH",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "4D",
+    4
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "7S",
+    7
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "AC",
+    5
+   ],
+   [
+    "result",
+    "banker",
+    5,
+    7,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    950
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 8,
+  "commit": "e92a365c9f5c824557bb33697d6619d1608828e14a63ec2f5585ee12899fcb3d",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 2000,
+     "bankerPair": 100
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "playerPair": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "KH",
+    "3H",
+    "KC"
+   ],
+   "banker": [
+    "5S",
+    "JH"
+   ],
+   "playerTotal": 3,
+   "bankerTotal": 5,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 369,
+   "coups": 8
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "KH",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "5S",
+    5
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "3H",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "JH",
+    5
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "KC",
+    3
+   ],
+   [
+    "result",
+    "banker",
+    3,
+    5,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    1800
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 9,
+  "commit": "931d005db452820edfcf1d361f609c4441fded85d30f2c4f225095ea27b82d96",
+  "bets": [
+   [
+    0,
+    {
+     "player": 300
+    }
+   ],
+   [
+    1,
+    {
+     "banker": 700,
+     "tie": 200
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "6S",
+    "7S",
+    "2H"
+   ],
+   "banker": [
+    "AH",
+    "2H",
+    "2S"
+   ],
+   "playerTotal": 5,
+   "bankerTotal": 5,
+   "winner": "tie",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 363,
+   "coups": 9
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "6S",
+    6
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "AH",
+    1
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "7S",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "2H",
+    3
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "2H",
+    5
+   ],
+   [
+    "card",
+    "banker",
+    2,
+    "2S",
+    5
+   ],
+   [
+    "result",
+    "tie",
+    5,
+    5,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    0
+   ],
+   [
+    1,
+    1600
+   ]
+  ]
+ },
+ {
+  "round": 10,
+  "commit": "379e7cbc8ddb03e2f8e9be89220c2a12c0283c6c8e9f1a1419a4fb71d6f7d573",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 1000
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "tie": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "3D",
+    "7S",
+    "6C"
+   ],
+   "banker": [
+    "3D",
+    "KH",
+    "KD"
+   ],
+   "playerTotal": 6,
+   "bankerTotal": 3,
+   "winner": "player",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 357,
+   "coups": 10
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "3D",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "3D",
+    3
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "7S",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "KH",
+    3
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "6C",
+    6
+   ],
+   [
+    "card",
+    "banker",
+    2,
+    "KD",
+    3
+   ],
+   [
+    "result",
+    "player",
+    6,
+    3,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -1000
+   ],
+   [
+    1,
+    400
+   ]
+  ]
+ },
+ {
+  "round": 11,
+  "commit": "fa41776a4bcf20f8d928ff3a8e7744cc6a2d57703e4c377091921d8ced71a999",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 2000,
+     "bankerPair": 100
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "playerPair": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "AC",
+    "3C",
+    "AD"
+   ],
+   "banker": [
+    "7H",
+    "KS"
+   ],
+   "playerTotal": 5,
+   "bankerTotal": 7,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 352,
+   "coups": 11
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "AC",
+    1
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "7H",
+    7
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "3C",
+    4
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "KS",
+    7
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "AD",
+    5
+   ],
+   [
+    "result",
+    "banker",
+    5,
+    7,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    1800
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 12,
+  "commit": "f886e3a7af57d0eea03f08f3523edc41949f9788825d82465a464f8ef4ad0c19",
+  "bets": [
+   [
+    0,
+    {
+     "player": 300
+    }
+   ],
+   [
+    1,
+    {
+     "banker": 700,
+     "tie": 200
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "JH",
+    "QH",
+    "TD"
+   ],
+   "banker": [
+    "KD",
+    "7S"
+   ],
+   "playerTotal": 0,
+   "bankerTotal": 7,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 347,
+   "coups": 12
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "JH",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "KD",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "QH",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "7S",
+    7
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "TD",
+    0
+   ],
+   [
+    "result",
+    "banker",
+    0,
+    7,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -300
+   ],
+   [
+    1,
+    465
+   ]
+  ]
+ },
+ {
+  "round": 13,
+  "commit": "f298e2a3a673329e9e840f1f0612d2ff60bf9a12934041547b21c556a17e7b27",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 1000
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "tie": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "7C",
+    "5D",
+    "AH"
+   ],
+   "banker": [
+    "QS",
+    "3C",
+    "3H"
+   ],
+   "playerTotal": 3,
+   "bankerTotal": 6,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 341,
+   "coups": 13
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "7C",
+    7
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "QS",
+    0
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "5D",
+    2
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "3C",
+    3
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "AH",
+    3
+   ],
+   [
+    "card",
+    "banker",
+    2,
+    "3H",
+    6
+   ],
+   [
+    "result",
+    "banker",
+    3,
+    6,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    950
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 14,
+  "commit": "77f386c8e18aa69fb5f80bd6dd19abc9b0e520e682d600a6146934687167e76e",
+  "bets": [
+   [
+    0,
+    {
+     "banker": 2000,
+     "bankerPair": 100
+    }
+   ],
+   [
+    1,
+    {
+     "player": 500,
+     "playerPair": 100
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "AD",
+    "3S"
+   ],
+   "banker": [
+    "5C",
+    "3D"
+   ],
+   "playerTotal": 4,
+   "bankerTotal": 8,
+   "winner": "banker",
+   "natural": true,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 337,
+   "coups": 14
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "AD",
+    1
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "5C",
+    5
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "3S",
+    4
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "3D",
+    8
+   ],
+   [
+    "result",
+    "banker",
+    4,
+    8,
+    true,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    1800
+   ],
+   [
+    1,
+    -600
+   ]
+  ]
+ },
+ {
+  "round": 15,
+  "commit": "7b335f5dd7ba1c57eded01795f5a59767fe0293857995dd30704def9dd604d6b",
+  "bets": [
+   [
+    0,
+    {
+     "player": 300
+    }
+   ],
+   [
+    1,
+    {
+     "banker": 700,
+     "tie": 200
+    }
+   ]
+  ],
+  "coup": {
+   "player": [
+    "4D",
+    "6S",
+    "JS"
+   ],
+   "banker": [
+    "9D",
+    "5H"
+   ],
+   "playerTotal": 0,
+   "bankerTotal": 4,
+   "winner": "banker",
+   "natural": false,
+   "playerPair": false,
+   "bankerPair": false,
+   "burn": null
+  },
+  "shoe": {
+   "n": 1,
+   "remaining": 332,
+   "coups": 15
+  },
+  "events": [
+   [
+    "card",
+    "player",
+    0,
+    "4D",
+    4
+   ],
+   [
+    "card",
+    "banker",
+    0,
+    "9D",
+    9
+   ],
+   [
+    "card",
+    "player",
+    1,
+    "6S",
+    0
+   ],
+   [
+    "card",
+    "banker",
+    1,
+    "5H",
+    4
+   ],
+   [
+    "card",
+    "player",
+    2,
+    "JS",
+    0
+   ],
+   [
+    "result",
+    "banker",
+    0,
+    4,
+    false,
+    false,
+    false
+   ]
+  ],
+  "markets": [
+   [
+    "baccaratBanker",
+    "resolved",
+    "yes"
+   ],
+   [
+    "baccaratTie",
+    "resolved",
+    "no"
+   ],
+   [
+    "baccaratPair",
+    "resolved",
+    "no"
+   ]
+  ],
+  "nets": [
+   [
+    0,
+    -300
+   ],
+   [
+    1,
+    465
+   ]
+  ]
+ }
+]
