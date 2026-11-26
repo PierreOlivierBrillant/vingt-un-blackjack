@@ -43,6 +43,8 @@ if (-not $ComputerName) {
   }
   $ComputerName = @(Get-Content $hostsFile | ForEach-Object { ($_ -replace '#.*$', '').Trim() } | Where-Object { $_ })
 }
+# powershell -File passes "-ComputerName A,B" as ONE string "A,B": split it (see the example above).
+$ComputerName = @($ComputerName | ForEach-Object { $_ -split '[,\s]+' } | Where-Object { $_ })
 if ($ComputerName.Count -eq 0) { throw 'No student machine given.' }
 
 if (-not $TeacherIp) {
@@ -91,7 +93,10 @@ $remote = {
   $result.Emulators = $emus -join ','
   if ($emus.Count -eq 0) { $result.Status = 'no emulator running (student: start it, or run the one-line install)'; return [pscustomobject]$result }
   if ($ReportOnly) { $result.Status = 'ready'; return [pscustomobject]$result }
-  $tmp = Join-Path $env:TEMP ('vingt-un-' + [guid]::NewGuid().ToString('N') + '.apk')
+  # GetTempPath() gives the long form of %TEMP%: on these machines %TEMP% holds an 8.3 short name
+  # (e.g. C:\Users\ABCDEF~1.XYZ\...) that makes Windows PowerShell 5.1's Remove-Item THROW (ItemNotFound,
+  # even with -ErrorAction SilentlyContinue), which used to abort the remote block after the install.
+  $tmp = Join-Path ([IO.Path]::GetTempPath()) ('vingt-un-' + [guid]::NewGuid().ToString('N') + '.apk')
   try {
     Invoke-WebRequest -Uri $Url -OutFile $tmp -UseBasicParsing -TimeoutSec 300
     if ((Get-FileHash -Algorithm SHA256 $tmp).Hash.ToLowerInvariant() -ne $Sha) { $result.Status = 'checksum mismatch: not installed'; return [pscustomobject]$result }
@@ -107,7 +112,7 @@ $remote = {
   } catch {
     $result.Status = "error: $($_.Exception.Message)"
   } finally {
-    Remove-Item -Force $tmp -ErrorAction SilentlyContinue
+    try { if ([IO.File]::Exists($tmp)) { [IO.File]::Delete($tmp) } } catch { }
   }
   return [pscustomobject]$result
 }
